@@ -1,14 +1,285 @@
 {
-  "papers": [],
+  "papers": [
+    {
+      "openalex_id": "W7151881441",
+      "title": "New development: Developmentalism, accounting and digital activism—insights from public unrest in Indonesia",
+      "abstract": "",
+      "journal_name": "Public Money & Management",
+      "published_date": "2026-04-08",
+      "url": "https://doi.org/10.1080/09540962.2026.2653061",
+      "doi": "https://doi.org/10.1080/09540962.2026.2653061",
+      "keywords": [
+        "Unrest",
+        "Accounting information system",
+        "Government (linguistics)",
+        "Public accounting",
+        "Audit"
+      ],
+      "authors": [
+        "Sultan Suhab",
+        "Harun Harun",
+        "Chris Durden",
+        "Imam Mujahidin Fahmid",
+        "Titik Ceriyani Miswaty",
+        "Yi An"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7151786999",
+      "title": "Micro-Dimensions of Digital Policy Design Instruments: A Comparative Analysis Across Brazilian States",
+      "abstract": "",
+      "journal_name": "Journal of Comparative Policy Analysis Research and Practice",
+      "published_date": "2026-04-08",
+      "url": "https://doi.org/10.1080/13876988.2026.2646679",
+      "doi": "https://doi.org/10.1080/13876988.2026.2646679",
+      "keywords": [
+        "State (computer science)",
+        "Key (lock)",
+        "Public policy",
+        "Government (linguistics)"
+      ],
+      "authors": [
+        "Lizandro Lui",
+        "Thayná Gomes Rosa",
+        "Rafael Barbosa de Aguiar",
+        "Luciana Leite Lima"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7151830821",
+      "title": "The Impact of Extending Paid Maternity and Paternity Leave on Female Employment: A Comparative Policy Analysis in Sub-Saharan Africa",
+      "abstract": "",
+      "journal_name": "Journal of Comparative Policy Analysis Research and Practice",
+      "published_date": "2026-04-08",
+      "url": "https://doi.org/10.1080/13876988.2026.2644405",
+      "doi": "https://doi.org/10.1080/13876988.2026.2644405",
+      "keywords": [
+        "Policy analysis",
+        "Public policy",
+        "Government (linguistics)",
+        "Gender analysis",
+        "Social policy"
+      ],
+      "authors": [
+        "Alfredo Hidalgo-San Martín",
+        "Aleta Sprague",
+        "Amy Raub",
+        "Pragya Bhuwania",
+        "Bijetri Bose",
+        "Rachel Kidman",
+        "Jody Heymann"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7151994132",
+      "title": "Policy information and opinion change: panel studies from European Union referendums",
+      "abstract": "",
+      "journal_name": "Journal of European Public Policy",
+      "published_date": "2026-04-08",
+      "url": "https://doi.org/10.1080/13501763.2026.2654570",
+      "doi": "https://doi.org/10.1080/13501763.2026.2654570",
+      "keywords": [
+        "European union",
+        "Public opinion",
+        "European integration",
+        "European commission",
+        "European studies"
+      ],
+      "authors": [
+        "Jannik Fenger"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7151779291",
+      "title": "Framing social inclusion in Canadian intellectual disability policy",
+      "abstract": "Abstract The concept of social inclusion meets the criteria of a “magic concept” because it is broadly stretched, normatively attractive, and denies the possibility of conflicting interests and logics. However, when this broad concept is operationalized in policies targeting specific groups it is often reduced in scope by narrowly defined policy designs. This paper asks how do disability policies define and operationalize social inclusion? Drawing from a critical frame analysis of all disability policies at Canada’s provincial and federal levels, six policy frames are identified that encapsulate different meanings of social inclusion for people with intellectual and developmental disabilities in Canadian policy design. Comparison is facilitated by engaging critiques of inclusion policy from the disability politics literature to help explain emergent trends and areas of divergence in social inclusion framing. This facilitates a discussion of policy design characteristics during the “inclusion era” of Canadian disability policy.",
+      "journal_name": "Journal of Public Policy",
+      "published_date": "2026-04-08",
+      "url": "https://doi.org/10.1017/s0143814x26101111",
+      "doi": "https://doi.org/10.1017/s0143814x26101111",
+      "keywords": [
+        "Operationalization",
+        "Framing (construction)",
+        "Inclusion (mineral)",
+        "Intellectual disability",
+        "Social policy",
+        "Medical model of disability",
+        "Scope (computer science)",
+        "Public policy"
+      ],
+      "authors": [
+        "Daniel Dickson"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7151874540",
+      "title": null,
+      "abstract": "",
+      "journal_name": "Social Policy and Administration",
+      "published_date": "2026-04-08",
+      "url": "https://doi.org/10.1111/spol.v60.3",
+      "doi": "https://doi.org/10.1111/spol.v60.3",
+      "keywords": [],
+      "authors": [],
+      "category": "PP"
+    }
+  ],
   "stats": {
-    "total": 0,
-    "pa_count": 0,
-    "pp_count": 0,
-    "journals": 0,
-    "today": 0,
-    "last_update": "未开始爬取",
-    "by_journal": [],
-    "trend": []
+    "total": 6,
+    "pa_count": 1,
+    "pp_count": 5,
+    "journals": 5,
+    "last_update": "2026-04-10 13:17:05",
+    "by_journal": [
+      {
+        "name": "Journal of Comparative Policy Analysis Research and Practice",
+        "count": 2
+      },
+      {
+        "name": "Public Money & Management",
+        "count": 1
+      },
+      {
+        "name": "Journal of European Public Policy",
+        "count": 1
+      },
+      {
+        "name": "Journal of Public Policy",
+        "count": 1
+      },
+      {
+        "name": "Social Policy and Administration",
+        "count": 1
+      }
+    ],
+    "trend": [
+      {
+        "date": "2026-03-12",
+        "count": 0
+      },
+      {
+        "date": "2026-03-13",
+        "count": 0
+      },
+      {
+        "date": "2026-03-14",
+        "count": 0
+      },
+      {
+        "date": "2026-03-15",
+        "count": 0
+      },
+      {
+        "date": "2026-03-16",
+        "count": 0
+      },
+      {
+        "date": "2026-03-17",
+        "count": 0
+      },
+      {
+        "date": "2026-03-18",
+        "count": 0
+      },
+      {
+        "date": "2026-03-19",
+        "count": 0
+      },
+      {
+        "date": "2026-03-20",
+        "count": 0
+      },
+      {
+        "date": "2026-03-21",
+        "count": 0
+      },
+      {
+        "date": "2026-03-22",
+        "count": 0
+      },
+      {
+        "date": "2026-03-23",
+        "count": 0
+      },
+      {
+        "date": "2026-03-24",
+        "count": 0
+      },
+      {
+        "date": "2026-03-25",
+        "count": 0
+      },
+      {
+        "date": "2026-03-26",
+        "count": 0
+      },
+      {
+        "date": "2026-03-27",
+        "count": 0
+      },
+      {
+        "date": "2026-03-28",
+        "count": 0
+      },
+      {
+        "date": "2026-03-29",
+        "count": 0
+      },
+      {
+        "date": "2026-03-30",
+        "count": 0
+      },
+      {
+        "date": "2026-03-31",
+        "count": 0
+      },
+      {
+        "date": "2026-04-01",
+        "count": 0
+      },
+      {
+        "date": "2026-04-02",
+        "count": 0
+      },
+      {
+        "date": "2026-04-03",
+        "count": 0
+      },
+      {
+        "date": "2026-04-04",
+        "count": 0
+      },
+      {
+        "date": "2026-04-05",
+        "count": 0
+      },
+      {
+        "date": "2026-04-06",
+        "count": 0
+      },
+      {
+        "date": "2026-04-07",
+        "count": 0
+      },
+      {
+        "date": "2026-04-08",
+        "count": 6
+      },
+      {
+        "date": "2026-04-09",
+        "count": 0
+      },
+      {
+        "date": "2026-04-10",
+        "count": 0
+      }
+    ],
+    "today": 0
   },
-  "export_time": ""
+  "export_time": "2026-04-10T13:17:05.954471"
 }
