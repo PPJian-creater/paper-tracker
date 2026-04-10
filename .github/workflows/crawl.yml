@@ -1,0 +1,81 @@
+name: 每日爬取SSCI文献
+
+on:
+  # 每天 UTC 00:00 执行（北京时间 08:00）
+  schedule:
+    - cron: '0 0 * * *'
+  
+  # 允许手动触发
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '爬取模式'
+        required: true
+        default: 'daily'
+        type: choice
+        options:
+          - daily
+          - initial
+
+# 权限设置
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 设置Python环境
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: 安装依赖
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+        
+    - name: 执行爬虫
+      run: |
+        if [ "${{ github.event.inputs.mode }}" = "initial" ]; then
+          python scripts/crawler.py --days 30
+        else
+          python scripts/crawler.py --days 2
+        fi
+      env:
+        EMAIL: ${{ secrets.EMAIL }}
+        
+    - name: 导出数据
+      run: python scripts/export.py
+      
+    - name: 提交数据更新
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add data/
+        git diff --staged --quiet || git commit -m "Update papers data $(date +'%Y-%m-%d')"
+        git push
+        
+    - name: 上传构建产物
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./
+        
+  deploy:
+    needs: crawl
+    runs-on: ubuntu-latest
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
+    steps:
+    - name: 部署到GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
