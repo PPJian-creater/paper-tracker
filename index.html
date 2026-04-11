@@ -21,6 +21,7 @@
             --pp-color: #0369a1;
             --pol-color: #4f46e5;
             --china-color: #0891b2;
+            --cn-color: #d97706;
             --accent-blue: #3b82f6;
         }
         .navbar {
@@ -82,6 +83,7 @@
         .paper-card.pp::before { background: var(--pp-color); }
         .paper-card.pol::before { background: var(--pol-color); }
         .paper-card.china::before { background: var(--china-color); }
+        .paper-card.cn::before { background: var(--cn-color); }
         .paper-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
@@ -139,6 +141,7 @@
         .tag-pp { background: #e0f2fe; color: #0369a1; }
         .tag-pol { background: #e0e7ff; color: #4f46e5; }
         .tag-china { background: #cffafe; color: #0891b2; }
+        .tag-cn { background: #fef3c7; color: #d97706; }
         .journal-tag {
             font-size: 12px;
             color: #64748b;
@@ -655,6 +658,7 @@
                         <button onclick="filterJournals('pp')" class="filter-tab" data-journal-filter="pp">公共政策</button>
                         <button onclick="filterJournals('pol')" class="filter-tab" data-journal-filter="pol">政治学</button>
                         <button onclick="filterJournals('china')" class="filter-tab" data-journal-filter="china">中国研究</button>
+                        <button onclick="filterJournals('cn')" class="filter-tab" data-journal-filter="cn">国内期刊</button>
                     </div>
                     <div class="flex-1">
                         <input type="text" id="journal-search" placeholder="搜索期刊名称..." 
@@ -949,7 +953,8 @@
             pa: ["Public Administration Review", "Public Administration", "Governance", "Journal of Public Administration Research and Theory", "Public Management Review", "The American Review of Public Administration", "International Public Management Journal", "Administration & Society", "Public Administration and Development", "International Review of Administrative Sciences", "Australian Journal of Public Administration", "Public Money & Management", "Public Performance & Management Review", "Administrative Theory & Praxis", "Regulation & Governance", "Government Information Quarterly", "International Journal of Public Administration", "Journal of Chinese Governance", "Public Administration Quarterly", "Chinese Public Administration Review"],
             pp: ["Policy Sciences", "Journal of Public Policy", "Policy Studies Journal", "Journal of Policy Analysis and Management", "Review of Policy Research", "Policy & Politics", "Policy Studies", "Social Policy & Administration", "Critical Policy Studies", "Journal of European Public Policy", "Policy and Society", "European Policy Analysis", "Journal of Comparative Policy Analysis", "Public Policy and Administration", "Policy & Internet", "Journal of Asian Public Policy", "Politics & Policy", "Policy Design and Practice", "Behavioural Public Policy", "Research Policy", "Science and Public Policy", "Journal of Social Policy"],
             pol: ["American Journal of Political Science", "American Political Science Review", "Annual Review of Political Science", "British Journal of Political Science", "Comparative Political Studies", "Comparative Politics", "Democratization", "Electoral Studies", "European Journal of Political Research", "European Political Science Review", "European Union Politics", "International Organization", "International Security", "International Studies Quarterly", "Journal of Conflict Resolution", "Journal of Democracy", "Journal of Theoretical Politics", "Legislative Studies Quarterly", "PS: Political Science & Politics", "Party Politics", "Perspectives on Politics", "Philosophy & Public Affairs", "Political Analysis", "Political Behavior", "Political Geography", "Political Psychology", "Political Research Quarterly", "Political Science Research and Methods", "Political Theory", "Politics & Gender", "Public Choice", "Public Opinion Quarterly", "Research & Politics", "Scandinavian Political Studies", "The Journal of Politics", "West European Politics"],
-            china: ["China Information", "China Perspectives", "Journal of Chinese Political Science", "Journal of Contemporary China", "Modern China", "The China Journal", "The China Quarterly"]
+            china: ["China Information", "China Perspectives", "Journal of Chinese Political Science", "Journal of Contemporary China", "Modern China", "The China Journal", "The China Quarterly"],
+            cn: ["中国社会科学", "经济研究", "管理世界", "政治学研究", "社会学研究", "中国行政管理", "公共管理学报", "公共行政评论", "公共管理评论", "公共管理与政策评论", "电子政务", "行政论坛", "甘肃行政学院学报", "治理研究", "经济社会体制比较", "社会"]
         };
 
         const journalUrls = {
@@ -1037,7 +1042,24 @@
             "Journal of Contemporary China": "https://www.tandfonline.com/toc/cjcc20/current",
             "Modern China": "https://journals.sagepub.com/home/mcx",
             "The China Journal": "https://www.journals.uchicago.edu/toc/tcj/current",
-            "The China Quarterly": "https://www.cambridge.org/core/journals/china-quarterly"
+            "The China Quarterly": "https://www.cambridge.org/core/journals/china-quarterly",
+            // 国内期刊
+            "中国社会科学": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYbKdc6M6Q4f84dZaEhmtC7f6zvAbEfdMMfxVFjddKrKdQ-KwANGalTnv_4Vdu-H647W5oGcyKmwv9Y2_rlhwVF1r1GQTvxCKoT9vqb_qWaPHQ==&uniplatform=NZKPT&language=CHS",
+            "经济研究": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYYrh43hb-e71aSNIUjQg-IIDVfEuA8dzRykHE8cepAqi9PavUYZfDBCoojNixJLSfq2AveTySqyNL_ZLXSxIVTUr-MMTP1_AmqKzxXXYTnjdA==&uniplatform=NZKPT&language=CHS",
+            "管理世界": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYYwJhNkhgLl1Zb0NHJR3RVi4YO7v0aDgoHeqLDqUmIR4KAmYwe4RLYeZZL3uobAqmyM0EUtqm8quAhI3-bnUgt-SKXyi2xgWKcoeiJp8WuMmw==&uniplatform=NZKPT&language=CHS",
+            "政治学研究": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYZkP9whno6CUzrhfrrzSSeC7TMEQillLuX6RpfvCrputfqnTvA9aMlKCSNuODhdqpcm65zzKeNcExNuExohHQ8rER9n672FvPR8wEljzyDzeA==&uniplatform=NZKPT&language=CHS",
+            "社会学研究": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYZD-021vwCsq9Vao52GWuOL-LLQWp5cZh7seMa20zudfKiHE1fVzOQ1to-SfsFlavYai1jDr5uwzG2G3jebUZp08E-DTQmgm_n4DToq3342Ug==&uniplatform=NZKPT&language=CHS",
+            "中国行政管理": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYZapC7IExg1w86tn5zDH38Zp91ugI9Q9Sk5An_Zm1swcoK_n1szLRCtYu5PM3GQeljCNgY0sXA4VGYcb8bb3bMkzvnSV7rZyAFYMbeZNnwmJQ==&uniplatform=NZKPT&language=CHS",
+            "公共管理学报": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYaN1drNMt-elzAfKUlP4U5t5pgnbnjyM52m8nOH34-JryLEoCJrTJjxiyUA1rRl6HpGOBMJgWUXqoQC8nXkZ5TZ1AhWi7L4LdV34zZoEocv7g==&uniplatform=NZKPT&language=CHS",
+            "公共行政评论": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYY74I0YmvcgQjSLoJ9IIIY-SNK6LYQ5kOlfvqBFM41GPMv8pNQHRZOGIxdstIKbejFeq4YmuwcJCUiBb8O-17u-G1-zQyVxka1nLwNKs6OZUA==&uniplatform=NZKPT&language=CHS",
+            "公共管理评论": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYatm0RDab7AFgRXFCBB_ZDbbvnYwuR7IS-crZoX8uPXeAoR6bV4vFP4bi61onbEkgy2Exr2M6UfK893SduWqsVM3y3uri3ayLYn7znKNszwuQ==&uniplatform=NZKPT&language=CHS",
+            "公共管理与政策评论": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYb_XVl_MJwGrAbbcv2a87pO8lZ_DTo2HteKT_qxMMWau9YhUATBKLy2xPPhMlBus6L0Nit6zxkyBZCc4NhhEXNi9KBx82V1sJEqX9YyjMJ6Vw==&uniplatform=NZKPT&language=CHS",
+            "电子政务": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYbRHkoM2oQT8kxLGZGqZxypKriluNrychukuMhPAhCrGo3aM8I6aX2zTcbC-6jAd0D7T5WZ85eoRj5dgGcyWBc2JmClYEnhSYz-5ojpy8g-mQ==&uniplatform=NZKPT&language=CHS",
+            "行政论坛": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYaFQ-1c27AhKdzpx0j-L0n0iXa00jlAsDJHU4EJea3cJwDkFBH2IrF25ZkI6PINmK0sEY5SeXsiZEj8rB6cNQ_0qPe_v8O9XJuy-VntFWr8Uw==&uniplatform=NZKPT&language=CHS",
+            "甘肃行政学院学报": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYbp9o1KBwdojmLUdTjQVRK6VdtMq4LthI7jNRaLPFAzUvRIfNoDLYQMyLVFzhIabeBDbrq0eVyjma8Lz27RZXRuhNEmWoi3XDzEL8VtfdRD6g==&uniplatform=NZKPT&language=CHS",
+            "治理研究": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYaeSpKzhghkt1HJJcq5E5VB7lOw_XxlGQ6y_REoVLUVso38Ug3ZWjWsnNnvjVJvvbDm-ylYeSLZCp2nYMqxga3TGa3JjLELPTJy4Ftmt5Jjqg==&uniplatform=NZKPT&language=CHS",
+            "经济社会体制比较": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYZN9PgsV9gxAQhWjWFyDqoUhc4jqThQgNfOghoI5gkmaCyI4yr6ajvq7iFkCeCG0SvRK8gzd15QxGdBhpxJ7e5x2NCBPIA0o6dfZLewk3AvDg==&uniplatform=NZKPT&language=CHS",
+            "社会": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYbDPuP672yq8WborfWMg57p_vgmwK3yQlDdqq1nk5hUCfg-eTCTv96_XhapxFxxJ3ST2-g4JnIL9BstlMN-4buNpXo-GWKqPRJw2auq1-sptg==&uniplatform=NZKPT&language=CHS"
         };
 
         // ==================== 初始化 ====================
@@ -1399,7 +1421,7 @@
             }
             
             html += '</div>';
-            html += '<button onclick="toggleSavePaper(\'' + paperId + '\', this)" class="bookmark-btn flex-shrink-0 ' + (paperFolders[paperId] ? 'saved' : '') + '">';
+            html += '<button onclick="toggleSavePaper(\'' + paperId + '\', this)" data-paper-id="' + paperId + '" class="bookmark-btn flex-shrink-0 ' + (paperFolders[paperId] ? 'saved' : '') + '" title="' + (paperFolders[paperId] ? '已收藏' : '添加到收藏') + '">';
             html += '<i class="fas fa-bookmark"></i>';
             html += '</button>';
             html += '</div></div>';
@@ -2047,7 +2069,8 @@
                 'PA': '<span class="category-tag tag-pa">PA</span>',
                 'PP': '<span class="category-tag tag-pp">PP</span>',
                 'POL': '<span class="category-tag tag-pol">POL</span>',
-                'CHINA': '<span class="category-tag tag-china">CHINA</span>'
+                'CHINA': '<span class="category-tag tag-china">CHINA</span>',
+                'CN': '<span class="category-tag tag-cn">国内</span>'
             };
             return tags[category] || tags['PA'];
         }
@@ -2115,7 +2138,8 @@
                 { key: 'pa', name: '公共行政', class: 'tag-pa' },
                 { key: 'pp', name: '公共政策', class: 'tag-pp' },
                 { key: 'pol', name: '政治学', class: 'tag-pol' },
-                { key: 'china', name: '中国研究', class: 'tag-china' }
+                { key: 'china', name: '中国研究', class: 'tag-china' },
+                { key: 'cn', name: '国内期刊', class: 'tag-cn' }
             ];
             
             categories.forEach(cat => {
@@ -2622,8 +2646,8 @@
         }
 
         function refreshPaperCard(paperId) {
-            // 更新所有列表中的收藏按钮状态
-            ['pa-papers-list', 'pp-papers-list', 'pol-papers-list', 'china-papers-list', 'random-papers', 'search-results', 'favorites-list'].forEach(id => {
+            // 更新所有列表中的收藏按钮状态（包括今日更新视图）
+            ['pa-papers-list', 'pp-papers-list', 'pol-papers-list', 'china-papers-list', 'random-papers', 'search-results', 'favorites-list', 'today-papers-by-category'].forEach(id => {
                 const container = document.getElementById(id);
                 if (container) {
                     // 通过data-paper-id查找按钮
