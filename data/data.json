@@ -46192,20 +46192,197 @@
         "Xiao Ma"
       ],
       "category": "CHINA"
+    },
+    {
+      "openalex_id": "W7153305005",
+      "title": "Negotiating Values: Implementing Change in the Allocation of Transplant Organs",
+      "abstract": "",
+      "journal_name": "International Journal of Public Administration",
+      "published_date": "2026-04-10",
+      "url": "https://doi.org/10.1080/01900692.2026.2645893",
+      "doi": "https://doi.org/10.1080/01900692.2026.2645893",
+      "keywords": [
+        "Negotiation",
+        "Government (linguistics)",
+        "Work (physics)",
+        "Process (computing)",
+        "Corporate governance"
+      ],
+      "authors": [
+        "Nicola Lombardi"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7153173113",
+      "title": "When boards connect during challenging times: exploring the link between nonprofit board interlock and expenditure reduction",
+      "abstract": "",
+      "journal_name": "Public Management Review",
+      "published_date": "2026-04-09",
+      "url": "https://doi.org/10.1080/14719037.2026.2651909",
+      "doi": "https://doi.org/10.1080/14719037.2026.2651909",
+      "keywords": [
+        "Interlock",
+        "Link (geometry)",
+        "Reduction (mathematics)",
+        "Regulator",
+        "Government (linguistics)"
+      ],
+      "authors": [
+        "Jeongyoon Lee",
+        "Junoh Jeon"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7152990042",
+      "title": null,
+      "abstract": "",
+      "journal_name": "Journal of Policy Analysis and Management",
+      "published_date": "2026-04-10",
+      "url": "https://doi.org/10.1002/pam.v45.3",
+      "doi": "https://doi.org/10.1002/pam.v45.3",
+      "keywords": [],
+      "authors": [],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7153158619",
+      "title": "Access to Safety Net Programs in the U.S. During the <scp>COVID</scp> ‐19 Pandemic: Barriers and Lessons From a Scoping Review",
+      "abstract": "ABSTRACT The COVID‐19 pandemic triggered historic expansions of the U.S. social safety net to mitigate unprecedented economic hardship. However, increased government spending and program expansions on paper do not automatically translate into equitable access in practice. Following the PRISMA‐ScR guidelines, this scoping review synthesizes 33 peer‐reviewed studies published between 2020 and 2025 examining access to federal social safety net programs, including food assistance, Medicaid, unemployment insurance, Temporary Assistance for Needy Families, and housing and energy assistance. The review identified six categories of barriers to access: racial and ethnic disparities, administrative barriers, policy design barriers, instrumental barriers, geographic and demographic disparities, and COVID‐19 specific factors. At the same time, four opportunities were identified that improved access: program expansions, staff and community efforts, convenience of remote services, and Pandemic Electronic Benefit Transfer (P‐EBT). Findings highlight the dual reality of entrenched exclusions and innovative adaptations, underscoring the need for reforms that institutionalize equity and resilience in the social safety net.",
+      "journal_name": "Social Policy and Administration",
+      "published_date": "2026-04-09",
+      "url": "https://doi.org/10.1111/spol.70065",
+      "doi": "https://doi.org/10.1111/spol.70065",
+      "keywords": [
+        "Safety net",
+        "Government (linguistics)",
+        "Equity (law)",
+        "Subsidy",
+        "Ethnic group",
+        "Unemployment",
+        "Pandemic",
+        "Psychological resilience"
+      ],
+      "authors": [
+        "Soohyun Yoon",
+        "Jeehae Kang"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7153284771",
+      "title": "PSR volume 120 issue 2 Cover and Front matter",
+      "abstract": "",
+      "journal_name": "American Political Science Review",
+      "published_date": "2026-04-10",
+      "url": "https://doi.org/10.1017/s0003055425101093",
+      "doi": "https://doi.org/10.1017/s0003055425101093",
+      "keywords": [],
+      "authors": [],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7153030937",
+      "title": "PSR volume 120 issue 2 Cover and Back matter",
+      "abstract": "",
+      "journal_name": "American Political Science Review",
+      "published_date": "2026-04-10",
+      "url": "https://doi.org/10.1017/s000305542510110x",
+      "doi": "https://doi.org/10.1017/s000305542510110x",
+      "keywords": [],
+      "authors": [],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7153351682",
+      "title": "On the Historical Roots of Interstate Conflicts: Evidence From Folklore Motifs",
+      "abstract": "We show empirically that interstate conflicts are less likely among countries that share more of their oral tradition. Popular tales and narratives are related to expectations and beliefs about other parties’ behavior, and larger cultural similarities reduce negotiation failures between states. To validate this interpretation, we show that countries with more oral tradition in common are more likely to form military alliances, more likely to participate in the same international organizations, more likely to vote similarly in the UN general assembly, more likely to trade with each other and, in case a conflicts breaks out, more likely to terminate it with a negotiation.",
+      "journal_name": "Journal of Conflict Resolution",
+      "published_date": "2026-04-09",
+      "url": "https://doi.org/10.1177/00220027261441301",
+      "doi": "https://doi.org/10.1177/00220027261441301",
+      "keywords": [
+        "Folklore",
+        "Negotiation",
+        "Narrative",
+        "Oral tradition",
+        "Cultural diversity"
+      ],
+      "authors": [
+        "Marcello D’Amato",
+        "Francesco Flaviano Russo"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7153302833",
+      "title": "Capturing News, Capturing Democracy: Trump and the Voice of America. By Kate Wright, Martin Scott and Mel Bunce. Oxford: Oxford University Press, 2024. 294p.",
+      "abstract": "",
+      "journal_name": "Perspectives on Politics",
+      "published_date": "2026-04-10",
+      "url": "https://doi.org/10.1017/s1537592726104630",
+      "doi": "https://doi.org/10.1017/s1537592726104630",
+      "keywords": [
+        "Performance art",
+        "S Voice"
+      ],
+      "authors": [
+        "Nicholas John Cull"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7153022814",
+      "title": "The Third Sword: On the Political Role of Prophets. By James Bernard Murphy. Cambridge: Cambridge University Press, 2023. 198p.",
+      "abstract": "",
+      "journal_name": "Perspectives on Politics",
+      "published_date": "2026-04-10",
+      "url": "https://doi.org/10.1017/s1537592725103587",
+      "doi": "https://doi.org/10.1017/s1537592725103587",
+      "keywords": [
+        "Politics",
+        "Period (music)"
+      ],
+      "authors": [
+        "Terrence L. Johnson"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7153035527",
+      "title": "Prediction paradoxes and litigation incentives",
+      "abstract": "Abstract Predictions can be self-fulfilling but also, and less obviously, self-negating. An elected official might predict a disaster, devote resources to mitigate the projected disaster, and then be regarded as over-cautious and wasteful when the disaster is largely avoided because of the precautions that were taken. Officials might therefore have an incentive to devote fewer resources to mitigation. This Article considers the likelihood that this is so, as it requires a limited degree of rationality on the part of voters as well as political actors. It then turns to the behavior of judges as predictors, or prophets, and the steps they can take in the form of motivating lawyers to litigate against repeat-player defendants. Conventional wisdom has it that repeat players, like factory owners that pollute, will spend more on litigation than will one-off plaintiffs that try to show they were wrongfully damaged by the defendant. The legal system can level the playing field in several ways. Most require judges to know whether they are good predictors of future and potential losses. One suggestion is that judges are unlike politicians and other investors in precautions, because judges rarely bear the cost of precaution-taking. If, for example, they see less pollution following their awarding substantial fees to plaintiff lawyers, they might reason that they brought about the correct amount of litigation or should even go further in encouraging precaution-taking.",
+      "journal_name": "Public Choice",
+      "published_date": "2026-04-10",
+      "url": "https://doi.org/10.1007/s11127-026-01391-9",
+      "doi": "https://doi.org/10.1007/s11127-026-01391-9",
+      "keywords": [
+        "Plaintiff",
+        "Incentive",
+        "Rationality",
+        "Politics",
+        "Public finance",
+        "Field (mathematics)"
+      ],
+      "authors": [
+        "Saul Levmore"
+      ],
+      "category": "POL"
     }
   ],
   "stats": {
-    "total": 2111,
-    "pa_count": 515,
-    "pp_count": 482,
-    "pol_count": 959,
+    "total": 2121,
+    "pa_count": 517,
+    "pp_count": 484,
+    "pol_count": 965,
     "china_count": 155,
     "journals": 85,
-    "last_update": "2026-04-11 08:00:09",
+    "last_update": "2026-04-11 09:17:51",
     "by_journal": [
       {
         "name": "Perspectives on Politics",
-        "count": 95
+        "count": 97
       },
       {
         "name": "Research Policy",
@@ -46221,7 +46398,7 @@
       },
       {
         "name": "Public Management Review",
-        "count": 55
+        "count": 56
       },
       {
         "name": "Political Geography",
@@ -46257,7 +46434,7 @@
       },
       {
         "name": "Public Choice",
-        "count": 39
+        "count": 40
       },
       {
         "name": "Political Psychology",
@@ -46273,7 +46450,7 @@
       },
       {
         "name": "International Journal of Public Administration",
-        "count": 33
+        "count": 34
       },
       {
         "name": "Political Research Quarterly",
@@ -46281,6 +46458,10 @@
       },
       {
         "name": "Journal of Policy Analysis and Management",
+        "count": 32
+      },
+      {
+        "name": "Social Policy and Administration",
         "count": 31
       },
       {
@@ -46290,10 +46471,6 @@
       {
         "name": "The Journal of Politics",
         "count": 31
-      },
-      {
-        "name": "Social Policy and Administration",
-        "count": 30
       },
       {
         "name": "Governance",
@@ -46336,16 +46513,16 @@
         "count": 26
       },
       {
+        "name": "American Political Science Review",
+        "count": 26
+      },
+      {
         "name": "Public Administration",
         "count": 25
       },
       {
-        "name": "American Political Science Review",
-        "count": 24
-      },
-      {
         "name": "Journal of Conflict Resolution",
-        "count": 24
+        "count": 25
       },
       {
         "name": "Political Behavior",
@@ -46655,11 +46832,11 @@
       },
       {
         "date": "2026-04-09",
-        "count": 14
+        "count": 17
       },
       {
         "date": "2026-04-10",
-        "count": 0
+        "count": 7
       },
       {
         "date": "2026-04-11",
@@ -46668,5 +46845,5 @@
     ],
     "today": 0
   },
-  "export_time": "2026-04-11T08:00:09.466975"
+  "export_time": "2026-04-11T09:17:51.464178"
 }
