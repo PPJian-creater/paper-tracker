@@ -1059,8 +1059,13 @@
             // 检查是否已验证（使用 localStorage 长期记住）
             if (currentUserPIN && VALID_PINS.includes(currentUserPIN)) {
                 document.getElementById('pin-overlay').style.display = 'none';
-                initUserData();
+                initUserData(); // 用保存的 PIN 重新加载用户数据
                 updateUserInfo();
+            } else {
+                // 没有保存的 PIN，显示验证界面
+                document.getElementById('pin-overlay').style.display = 'flex';
+                const pinInput = document.getElementById('pin-input');
+                if (pinInput) pinInput.focus();
             }
         });
 
@@ -1225,6 +1230,9 @@
 
         // ==================== 初始化 ====================
         document.addEventListener('DOMContentLoaded', function() {
+            // 先初始化默认用户数据（确保变量不为空）
+            initUserData();
+            // 再加载文献数据
             loadData();
         });
 
@@ -1306,7 +1314,6 @@
                         data = JSON.parse(cachedData);
                         if (data && data.papers && data.papers.length > 0) {
                             processLoadedData(data);
-                            loadingEl.classList.add('hidden');
                             // 后台刷新数据
                             fetchFreshData().then(freshData => {
                                 if (freshData && freshData.papers && freshData.papers.length > 0) {
@@ -1314,10 +1321,12 @@
                                     sessionStorage.setItem('research-atlas-data', JSON.stringify(freshData));
                                     sessionStorage.setItem('research-atlas-data-time', Date.now().toString());
                                 }
-                            });
+                            }).catch(err => console.log('后台刷新失败:', err));
                             return;
                         }
-                    } catch (e) { console.log('缓存数据解析失败'); }
+                    } catch (e) { 
+                        console.log('缓存数据解析失败:', e); 
+                    }
                 }
                 
                 // 从服务器加载数据
@@ -1340,8 +1349,6 @@
                     sessionStorage.setItem('research-atlas-data', JSON.stringify(data));
                     sessionStorage.setItem('research-atlas-data-time', Date.now().toString());
                 } catch (e) { console.log('数据缓存失败'); }
-                
-                loadingEl.classList.add('hidden');
             } catch (error) {
                 console.error('加载数据失败:', error);
                 loadingEl.classList.add('hidden');
@@ -1395,8 +1402,8 @@
         }
         
         function processLoadedData(data) {
+            try {
                 if (!data) {
-                    showLoadError('无法连接到数据文件', '请检查 data/data.json 是否存在，或查看浏览器控制台(F12)获取详细错误信息。');
                     throw new Error('无法加载数据文件');
                 }
                 
@@ -1407,15 +1414,24 @@
                 
                 // 过滤无效文献（书评、刊期信息等）
                 allPapers = filterInvalidPapers(data.papers);
-            allJournals = [...new Set(allPapers.map(p => p.journal_name))].filter(Boolean).sort();
-            
-            allPapers.forEach(paper => {
-                if (!paper.category) paper.category = inferCategory(paper.journal_name);
-            });
-            
-            updateStats(data.stats);
-            initCharts(data.stats);
-            renderAll();
+                allJournals = [...new Set(allPapers.map(p => p.journal_name))].filter(Boolean).sort();
+                
+                allPapers.forEach(paper => {
+                    if (!paper.category) paper.category = inferCategory(paper.journal_name);
+                });
+                
+                updateStats(data.stats);
+                initCharts(data.stats);
+                renderAll();
+                
+                // 隐藏加载状态
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('error-state').classList.add('hidden');
+            } catch (error) {
+                console.error('处理数据失败:', error);
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('error-state').classList.remove('hidden');
+            }
         }
 
         function inferCategory(journalName) {
