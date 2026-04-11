@@ -5481,5 +5481,163 @@
       "Justine Gail Margarethe Ross"
     ],
     "category": "PP"
+  },
+  {
+    "openalex_id": "W7152570739",
+    "title": "Coproduction encouragement can backfire: evidence from randomized controlled trials",
+    "abstract": "",
+    "journal_name": "International Public Management Journal",
+    "published_date": "2026-04-09",
+    "url": "https://doi.org/10.1080/10967494.2026.2648235",
+    "doi": "https://doi.org/10.1080/10967494.2026.2648235",
+    "keywords": [
+      "Coproduction",
+      "Randomized controlled trial",
+      "Control (management)",
+      "Qualitative research",
+      "Work (physics)"
+    ],
+    "authors": [
+      "Mette Kjærgaard Thomsen",
+      "Morten Jakobsen"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7152512680",
+    "title": "Personality traits and the endorsement of competing leadership roles: evidence from officer cadets enrolled in the Danish Defense College",
+    "abstract": "",
+    "journal_name": "International Public Management Journal",
+    "published_date": "2026-04-09",
+    "url": "https://doi.org/10.1080/10967494.2026.2634841",
+    "doi": "https://doi.org/10.1080/10967494.2026.2634841",
+    "keywords": [
+      "Big Five personality traits",
+      "Danish",
+      "Officer",
+      "Personality",
+      "Leadership style"
+    ],
+    "authors": [
+      "Morten Brænder",
+      "Shahidul Hassan",
+      "Vilhelm Stefan Holsting"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7152715219",
+    "title": "Dynamic capabilities in institutionalized public services: managerial microfoundations and direct performance effects in English hospitals",
+    "abstract": "",
+    "journal_name": "International Public Management Journal",
+    "published_date": "2026-04-09",
+    "url": "https://doi.org/10.1080/10967494.2026.2648238",
+    "doi": "https://doi.org/10.1080/10967494.2026.2648238",
+    "keywords": [
+      "Microfoundations",
+      "Dynamic capabilities",
+      "Public sector",
+      "Capability approach",
+      "Public policy"
+    ],
+    "authors": [
+      "Sérgio Nogueira Seabra",
+      "Andrew M. Pettigrew",
+      "William L. Swann"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7152791166",
+    "title": "Machine learning in public administration research: review and prospects",
+    "abstract": "",
+    "journal_name": "International Public Management Journal",
+    "published_date": "2026-04-09",
+    "url": "https://doi.org/10.1080/10967494.2025.2599087",
+    "doi": "https://doi.org/10.1080/10967494.2025.2599087",
+    "keywords": [
+      "Public sector",
+      "Administration (probate law)"
+    ],
+    "authors": [
+      "Min Yao",
+      "Lei Liu"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7152742274",
+    "title": "Policy Innovation Through Play: A Game‐Based Approach for Designing Local Welfare Policies in Thailand",
+    "abstract": "ABSTRACT This article investigates the causal mechanisms linking participatory processes to policy innovation in resource‐constrained welfare systems. Utilizing Design‐Based Action Research, the study examines “ MeSitthi ,” a policy board game deployed with 27 stakeholders in Northern Thailand. Addressing the theoretical gap between Policy Innovation as a Process (PIAP) and Output (PIAO), the research identifies the “ECIR” mechanisms—Empathy Anchoring, Cognitive Friction, Iterative Constraint Navigation, and Role‐Shifting—as the drivers of innovation. Contrary to the assumption that gamification acts through simplification, findings support the “Hard Fun” paradox: high difficulty (7.35/10) stimulated deep engagement with high enjoyment (8.60/10). The simulation required participants to navigate scarcity and administrative ambiguity, resulting in four feasible and context‐responsive policy prototypes. The study concludes that game‐based constraints and ECIR mechanisms function as diagnostic instruments, rendering the cognitive dynamics of policy design observable and enabling citizens to rehearse democratic governance.",
+    "journal_name": "Public Administration and Development",
+    "published_date": "2026-04-09",
+    "url": "https://doi.org/10.1002/pad.70079",
+    "doi": "https://doi.org/10.1002/pad.70079",
+    "keywords": [
+      "Scarcity",
+      "Rendering (computer graphics)",
+      "Constraint (computer-aided design)",
+      "Welfare",
+      "Process (computing)",
+      "Citizen journalism",
+      "Cognition"
+    ],
+    "authors": [
+      "Chatthip Chaichakan",
+      "Dararat khampeng"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7152632324",
+    "title": "Leveraging an Unhappiness Lens for Smarter Policies",
+    "abstract": "ABSTRACT Traditional policy research has largely focused on enhancing happiness or well‐being, privileging positive outcomes as the primary metric of success. We argue that a systematic focus on the drivers of unhappiness—rather than solely on happiness—offers a complementary analytical framework that can uncover hidden societal deficits and broaden the repertoire of policy interventions. By foregrounding unhappiness, scholars and practitioners can identify latent demand, structural inequities, and unintended negative side effects that are often obscured in happiness‐centric analyses. We first articulate why a shift away from predominantly happiness‐driven policies is conceptually necessary, demonstrating that unhappiness signals distinct causal pathways and policy levers. Second, we explain how adopting an unhappiness lens can lead to different—and potentially better—policy outcomes. By integrating unhappiness into the policy toolkit, this paper expands the analytical horizon of scholars and offers policymakers actionable insights for more resilient, equitable, and responsive governance. We introduce several novel theoretical issues that provide a strong foundation for a research agenda on unhappiness and its policy implications. We also caution that misusing unhappiness‐based arguments poses ethical risks and could exacerbate the very problems such arguments aim to address.",
+    "journal_name": "Policy Studies Journal",
+    "published_date": "2026-04-09",
+    "url": "https://doi.org/10.1111/psj.70123",
+    "doi": "https://doi.org/10.1111/psj.70123",
+    "keywords": [
+      "Foregrounding",
+      "Unintended consequences",
+      "Happiness",
+      "Foundation (evidence)",
+      "Policy learning",
+      "Through-the-lens metering"
+    ],
+    "authors": [
+      "Marine Coupaud",
+      "Gilles Grolleau",
+      "Naoufel Mzoughi"
+    ],
+    "category": "PP"
+  },
+  {
+    "openalex_id": "W7152393743",
+    "title": "Editorial Board",
+    "abstract": "",
+    "journal_name": "Research Policy",
+    "published_date": "2026-04-09",
+    "url": "https://doi.org/10.1016/s0048-7333(26)00077-6",
+    "doi": "https://doi.org/10.1016/s0048-7333(26)00077-6",
+    "keywords": [],
+    "authors": [],
+    "category": "PP"
+  },
+  {
+    "openalex_id": "W7152900086",
+    "title": "AI in science: When and where it makes a difference",
+    "abstract": "",
+    "journal_name": "Research Policy",
+    "published_date": "2026-04-09",
+    "url": "https://doi.org/10.1016/j.respol.2026.105478",
+    "doi": "https://doi.org/10.1016/j.respol.2026.105478",
+    "keywords": [],
+    "authors": [
+      "Stefano Bianchini",
+      "Valentina Di Girolamo",
+      "Julien Ravet",
+      "David Arranz"
+    ],
+    "category": "PP"
   }
 ]
