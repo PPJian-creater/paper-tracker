@@ -689,65 +689,95 @@
         </div>
 
         <div id="tab-search" class="tab-content hidden">
-            <div class="search-container p-6 mb-6">
-                <div class="flex gap-4 mb-4">
-                    <div class="flex-1 relative">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                        <input type="text" id="search-input" placeholder="输入关键词搜索..." 
-                               class="w-full pl-12 pr-4 py-3 bg-slate-50 rounded-lg border border-slate-200 focus:bg-white transition outline-none focus:ring-2 focus:ring-blue-500"
-                               onkeypress="if(event.key==='Enter')doSearch()">
-                    </div>
-                    <button onclick="doSearch()" class="px-8 py-3 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition font-medium">
-                        <i class="fas fa-search mr-2"></i>搜索
+            <!-- 高级搜索 -->
+            <div class="bg-white rounded-xl border border-slate-200 p-6 mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-lg font-semibold text-slate-800">
+                        <i class="fas fa-search-plus mr-2 text-blue-600"></i>高级检索
+                    </h2>
+                    <button onclick="resetAdvancedSearch()" class="text-sm text-slate-500 hover:text-blue-600 transition">
+                        <i class="fas fa-redo mr-1"></i>重置条件
                     </button>
                 </div>
                 
-                <div class="mb-4">
-                    <p class="text-sm text-slate-500 mb-2">搜索范围（可多选）：</p>
-                    <div class="checkbox-group">
-                        <label class="checkbox-item checked" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" value="title" checked onchange="updateSearchFields()">
-                            <i class="fas fa-heading"></i>
-                            <span>标题</span>
-                        </label>
-                        <label class="checkbox-item checked" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" value="abstract" checked onchange="updateSearchFields()">
-                            <i class="fas fa-align-left"></i>
-                            <span>摘要</span>
-                        </label>
-                        <label class="checkbox-item" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" value="author" onchange="updateSearchFields()">
-                            <i class="fas fa-user"></i>
-                            <span>作者</span>
-                        </label>
-                        <label class="checkbox-item" onclick="toggleCheckbox(this)">
-                            <input type="checkbox" value="keyword" onchange="updateSearchFields()">
-                            <i class="fas fa-tags"></i>
-                            <span>关键词</span>
-                        </label>
+                <!-- 检索条件行 -->
+                <div id="advanced-search-conditions" class="space-y-3 mb-4">
+                    <!-- 第一行条件 -->
+                    <div class="search-condition-row flex items-center gap-3" data-row="0">
+                        <select class="condition-field px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-sm w-28">
+                            <option value="title">标题</option>
+                            <option value="author">作者</option>
+                            <option value="keyword">关键词</option>
+                            <option value="abstract">摘要</option>
+                            <option value="journal">期刊</option>
+                        </select>
+                        <input type="text" class="condition-value flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" placeholder="请输入检索词...">
+                        <button onclick="removeSearchCondition(0)" class="text-slate-400 hover:text-red-500 transition px-2" style="display:none;">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 </div>
                 
-                <div class="flex flex-wrap gap-3">
-                    <select id="search-category" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white">
+                <!-- 逻辑关系选择 -->
+                <div class="flex items-center gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
+                    <span class="text-sm text-slate-600">检索词关系：</span>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="search-logic" value="and" checked class="text-blue-600">
+                        <span class="text-sm">并且（AND）</span>
+                    </label>
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="radio" name="search-logic" value="or" class="text-blue-600">
+                        <span class="text-sm">或者（OR）</span>
+                    </label>
+                    <button onclick="addSearchCondition()" class="ml-auto text-sm text-blue-600 hover:text-blue-700 transition">
+                        <i class="fas fa-plus mr-1"></i>添加条件
+                    </button>
+                </div>
+                
+                <!-- 时间范围 -->
+                <div class="flex flex-wrap items-center gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
+                    <span class="text-sm text-slate-600">发表时间：</span>
+                    <div class="flex items-center gap-2">
+                        <input type="date" id="search-date-start" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
+                        <span class="text-slate-400">至</span>
+                        <input type="date" id="search-date-end" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="flex gap-2 ml-4">
+                        <button onclick="setDateRange(7)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100">近7天</button>
+                        <button onclick="setDateRange(30)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100">近30天</button>
+                        <button onclick="setDateRange(365)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100">近1年</button>
+                    </div>
+                </div>
+                
+                <!-- 领域筛选 -->
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="text-sm text-slate-600">文献领域：</span>
+                    <select id="search-category-advanced" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 bg-white">
                         <option value="">全部领域</option>
-                        <option value="PA">公共行政</option>
-                        <option value="PP">公共政策</option>
-                        <option value="POL">政治学</option>
-                        <option value="CHINA">中国研究</option>
+                        <option value="PA">公共行政 (PA)</option>
+                        <option value="PP">公共政策 (PP)</option>
+                        <option value="POL">政治学 (POL)</option>
+                        <option value="CHINA">中国研究 (CHINA)</option>
                     </select>
-                    <select id="search-time" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white">
-                        <option value="">全部时间</option>
-                        <option value="7">最近7天</option>
-                        <option value="30">最近30天</option>
-                        <option value="90">最近90天</option>
-                        <option value="365">最近1年</option>
-                    </select>
+                </div>
+                
+                <!-- 搜索按钮 -->
+                <div class="flex justify-center">
+                    <button onclick="doAdvancedSearch()" class="px-12 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-lg shadow-lg shadow-blue-200">
+                        <i class="fas fa-search mr-2"></i>检索
+                    </button>
                 </div>
             </div>
             
-            <div id="search-results-info" class="mb-4 text-sm text-slate-500"></div>
+            <!-- 搜索结果 -->
+            <div id="search-results-info" class="mb-4 flex items-center justify-between">
+                <span class="text-sm text-slate-500"></span>
+                <button onclick="exportSearchResults()" class="text-sm text-blue-600 hover:text-blue-700 transition" style="display:none;" id="export-btn">
+                    <i class="fas fa-download mr-1"></i>导出结果
+                </button>
+            </div>
             <div id="search-results" class="space-y-4"></div>
+            <div id="search-pagination" class="mt-6"></div>
         </div>
     </main>
 
@@ -1565,12 +1595,15 @@
             }
         }
 
-        function createPaperCard(paper) {
+        function createPaperCard(paper, options = {}) {
             const categoryClass = paper.category ? paper.category.toLowerCase() : 'pa';
             const categoryTag = getCategoryTag(paper.category);
             const isSaved = paperFolders[paper.openalex_id];
             const bookmarkClass = isSaved ? 'saved' : '';
             const paperId = paper.openalex_id || '';
+            
+            // 判断是否是搜索结果显示（包含HTML高亮标签）
+            const isSearchResult = options.isSearchResult || false;
             
             // 使用数据属性存储ID，避免在HTML属性中使用复杂表达式
             let html = '<div class="paper-card ' + categoryClass + ' p-5" draggable="true" data-paper-id="' + escapeHtml(paperId) + '" ondragstart="dragStart(event)" ondragend="dragEnd(event)">';
@@ -1582,7 +1615,8 @@
             html += '<span class="text-xs text-slate-400">' + escapeHtml(paper.published_date || '') + '</span>';
             html += '</div>';
             html += '<h3 class="text-lg font-semibold text-slate-800 mb-2 leading-tight cursor-pointer hover:text-blue-600 transition" onclick="showPaperDetailById(this)">';
-            html += escapeHtml(paper.title || '无标题');
+            // 搜索结果显示时保留HTML标签（高亮），其他情况转义
+            html += isSearchResult ? (paper.title || '无标题') : escapeHtml(paper.title || '无标题');
             html += '</h3>';
             html += '<p class="text-sm text-slate-600 mb-2">';
             html += '<i class="fas fa-users mr-1 text-slate-400"></i>';
@@ -1593,7 +1627,10 @@
             const abstractClass = hasLongAbstract ? 'abstract-text text-sm abstract-collapsed cursor-pointer' : 'abstract-text text-sm';
             const abstractClickAttr = hasLongAbstract ? 'onclick="toggleAbstract(\'' + abstractId + '\')"' : '';
             
-            html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>' + escapeHtml(paper.abstract || '暂无摘要') + '</p>';
+            html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>';
+            // 搜索结果显示时保留HTML标签（高亮），其他情况转义
+            html += isSearchResult ? (paper.abstract || '暂无摘要') : escapeHtml(paper.abstract || '暂无摘要');
+            html += '</p>';
             
             if (hasLongAbstract) {
                 html += '<div class="expand-btn" onclick="toggleAbstract(\'' + abstractId + '\')"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>';
@@ -1687,8 +1724,13 @@
         }
 
         function toggleAbstract(abstractId) {
-            const abstractEl = document.getElementById('abstract-' + abstractId);
-            if (!abstractEl) return;
+            // 修复：确保ID不重复添加'abstract-'前缀
+            const fullId = abstractId.startsWith('abstract-') ? abstractId : 'abstract-' + abstractId;
+            const abstractEl = document.getElementById(fullId);
+            if (!abstractEl) {
+                console.log('未找到摘要元素:', fullId);
+                return;
+            }
             
             const card = abstractEl.closest('.paper-card');
             const btn = card ? card.querySelector('.expand-btn') : null;
@@ -2337,25 +2379,57 @@
             renderSearchResults(results, keyword);
         }
 
-        function renderSearchResults(papers, keyword) {
+        function renderSearchResults(papers, keyword, conditions, logic) {
             const container = document.getElementById('search-results');
+            const infoEl = document.getElementById('search-results-info');
+            
+            // 更新导出按钮显示状态
+            const exportBtn = document.getElementById('export-btn');
+            if (exportBtn) {
+                exportBtn.style.display = papers.length > 0 ? 'inline-block' : 'none';
+            }
+            
             if (papers.length === 0) {
-                container.innerHTML = `<div class="text-center py-12 text-slate-400"><i class="fas fa-search text-4xl mb-3"></i><p>未找到相关文献</p></div>`;
+                container.innerHTML = '<div class="text-center py-12 text-slate-500"><i class="fas fa-inbox text-4xl mb-4"></i><p>未找到符合条件的文献</p><p class="text-sm mt-2">请尝试调整检索条件</p></div>';
+                if (infoEl) infoEl.querySelector('span').textContent = '';
                 return;
             }
             
+            // 构建检索描述
+            let searchDesc = '找到 <strong>' + papers.length + '</strong> 篇文献';
+            if (conditions && conditions.length > 0) {
+                const logicText = logic === 'and' ? ' 且 ' : ' 或 ';
+                const conditionDesc = conditions.map(c => {
+                    const fieldNames = { title: '标题', author: '作者', keyword: '关键词', abstract: '摘要', journal: '期刊' };
+                    return fieldNames[c.field] + '="' + c.value + '"';
+                }).join(logicText);
+                searchDesc += ' · 检索条件：' + conditionDesc;
+            }
+            
+            if (infoEl) infoEl.querySelector('span').innerHTML = searchDesc;
+            
+            // 分页
             const state = paginationState.search;
             const start = (state.currentPage - 1) * PAPERS_PER_PAGE;
             const end = start + PAPERS_PER_PAGE;
             const pagePapers = papers.slice(start, end);
             
+            // 高亮所有条件的检索词
             let html = pagePapers.map(paper => {
-                const highlightedPaper = {
-                    ...paper,
-                    title: highlightKeyword(paper.title, keyword),
-                    abstract: highlightKeyword(paper.abstract, keyword)
-                };
-                return createPaperCard(highlightedPaper);
+                let highlightedPaper = { ...paper };
+                if (conditions && conditions.length > 0) {
+                    conditions.forEach(condition => {
+                        if (condition.field === 'title') {
+                            highlightedPaper.title = highlightKeyword(highlightedPaper.title, condition.value);
+                        } else if (condition.field === 'abstract') {
+                            highlightedPaper.abstract = highlightKeyword(highlightedPaper.abstract, condition.value);
+                        }
+                    });
+                } else if (keyword) {
+                    highlightedPaper.title = highlightKeyword(highlightedPaper.title, keyword);
+                    highlightedPaper.abstract = highlightKeyword(highlightedPaper.abstract, keyword);
+                }
+                return createPaperCard(highlightedPaper, { isSearchResult: true });
             }).join('');
             
             // 添加分页导航
@@ -2364,6 +2438,30 @@
             }
             
             container.innerHTML = html;
+        }
+        
+        // 导出搜索结果
+        function exportSearchResults() {
+            if (!searchResults || searchResults.length === 0) return;
+            
+            let csv = '标题,作者,期刊,发表日期,领域,关键词,摘要\n';
+            searchResults.forEach(paper => {
+                const authors = paper.authors ? paper.authors.join('; ') : '';
+                const keywords = paper.keywords ? paper.keywords.join('; ') : '';
+                csv += '"' + (paper.title || '').replace(/"/g, '""') + '",';
+                csv += '"' + authors.replace(/"/g, '""') + '",';
+                csv += '"' + (paper.journal_name || '').replace(/"/g, '""') + '",';
+                csv += (paper.published_date || '') + ',';
+                csv += (paper.category || '') + ',';
+                csv += '"' + keywords.replace(/"/g, '""') + '",';
+                csv += '"' + (paper.abstract || '').replace(/"/g, '""') + '"\n';
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = '检索结果_' + new Date().toISOString().split('T')[0] + '.csv';
+            link.click();
         }
 
         function highlightKeyword(text, keyword) {
