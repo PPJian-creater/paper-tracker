@@ -1019,6 +1019,8 @@
                 document.getElementById('pin-overlay').style.display = 'none';
                 initUserData();
                 updateUserInfo();
+                // 重新加载数据（使用新的 PIN 对应的用户数据）
+                loadData();
                 showToast('验证成功，欢迎访问！');
             } else {
                 error.classList.remove('hidden');
@@ -1058,9 +1060,12 @@
             
             // 检查是否已验证（使用 localStorage 长期记住）
             if (currentUserPIN && VALID_PINS.includes(currentUserPIN)) {
+                // 已验证，隐藏覆盖层并加载数据
                 document.getElementById('pin-overlay').style.display = 'none';
-                initUserData(); // 用保存的 PIN 重新加载用户数据
+                initUserData();
                 updateUserInfo();
+                // 加载文献数据
+                loadData();
             } else {
                 // 没有保存的 PIN，显示验证界面
                 document.getElementById('pin-overlay').style.display = 'flex';
@@ -1228,13 +1233,7 @@
             "社会": "https://navi.cnki.net/knavi/detail?p=JmAg6vXLXYbDPuP672yq8WborfWMg57p_vgmwK3yQlDdqq1nk5hUCfg-eTCTv96_XhapxFxxJ3ST2-g4JnIL9BstlMN-4buNpXo-GWKqPRJw2auq1-sptg==&uniplatform=NZKPT&language=CHS"
         };
 
-        // ==================== 初始化 ====================
-        document.addEventListener('DOMContentLoaded', function() {
-            // 先初始化默认用户数据（确保变量不为空）
-            initUserData();
-            // 再加载文献数据
-            loadData();
-        });
+        // 注意：所有初始化逻辑已整合到上面的 DOMContentLoaded 中
 
         // ==================== 数据抓取指南 ====================
         function showCrawlGuide() {
@@ -1313,16 +1312,18 @@
                     try {
                         data = JSON.parse(cachedData);
                         if (data && data.papers && data.papers.length > 0) {
+                            console.log('使用缓存数据:', data.papers.length, '篇');
                             processLoadedData(data);
-                            // 后台刷新数据
+                            // 后台刷新数据（不阻塞）
                             fetchFreshData().then(freshData => {
                                 if (freshData && freshData.papers && freshData.papers.length > 0) {
+                                    console.log('后台刷新数据成功:', freshData.papers.length, '篇');
                                     processLoadedData(freshData);
                                     sessionStorage.setItem('research-atlas-data', JSON.stringify(freshData));
                                     sessionStorage.setItem('research-atlas-data-time', Date.now().toString());
                                 }
                             }).catch(err => console.log('后台刷新失败:', err));
-                            return;
+                            return; // 使用缓存后返回，不执行后面的加载
                         }
                     } catch (e) { 
                         console.log('缓存数据解析失败:', e); 
