@@ -24,6 +24,8 @@ def export_data():
         'total': len(papers),
         'pa_count': sum(1 for p in papers if p.get('category') == 'PA'),
         'pp_count': sum(1 for p in papers if p.get('category') == 'PP'),
+        'pol_count': sum(1 for p in papers if p.get('category') == 'POL'),
+        'china_count': sum(1 for p in papers if p.get('category') == 'CHINA'),
         'journals': len(set(p['journal_name'] for p in papers)),
         'last_update': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     }
@@ -67,7 +69,7 @@ def export_data():
         json.dump(output, f, ensure_ascii=False, indent=2)
     
     print(f"导出完成: {len(papers)} 篇文献")
-    print(f"  PA: {stats['pa_count']}, PP: {stats['pp_count']}")
+    print(f"  PA: {stats['pa_count']}, PP: {stats['pp_count']}, POL: {stats['pol_count']}, CHINA: {stats['china_count']}")
     print(f"  今日新增: {stats['today']}")
     
     return output

@@ -66,6 +66,53 @@ JOURNALS_CONFIG = {
         {"name": "Review of Policy Research", "issn": "1541-132X"},
         {"name": "Science and Public Policy", "issn": "0302-3427"},
         {"name": "Social Policy & Administration", "issn": "0144-5596"}
+    ],
+    "political_science": [
+        {"name": "American Journal of Political Science", "issn": "0092-5853"},
+        {"name": "American Political Science Review", "issn": "0003-0554"},
+        {"name": "Annual Review of Political Science", "issn": "1094-2939"},
+        {"name": "British Journal of Political Science", "issn": "0007-1234"},
+        {"name": "Comparative Political Studies", "issn": "0010-4140"},
+        {"name": "Comparative Politics", "issn": "0010-4159"},
+        {"name": "Democratization", "issn": "1351-0347"},
+        {"name": "Electoral Studies", "issn": "0261-3794"},
+        {"name": "European Journal of Political Research", "issn": "0304-4130"},
+        {"name": "European Political Science Review", "issn": "1755-7739"},
+        {"name": "European Union Politics", "issn": "1465-1165"},
+        {"name": "International Organization", "issn": "0020-8183"},
+        {"name": "International Security", "issn": "0162-2889"},
+        {"name": "International Studies Quarterly", "issn": "0020-8833"},
+        {"name": "Journal of Conflict Resolution", "issn": "0022-0027"},
+        {"name": "Journal of Democracy", "issn": "1045-5736"},
+        {"name": "Journal of Theoretical Politics", "issn": "0951-6298"},
+        {"name": "Legislative Studies Quarterly", "issn": "0362-9805"},
+        {"name": "PS: Political Science & Politics", "issn": "1049-0965"},
+        {"name": "Party Politics", "issn": "1354-0688"},
+        {"name": "Perspectives on Politics", "issn": "1537-5927"},
+        {"name": "Philosophy & Public Affairs", "issn": "0048-3915"},
+        {"name": "Political Analysis", "issn": "1047-1987"},
+        {"name": "Political Behavior", "issn": "0190-9320"},
+        {"name": "Political Geography", "issn": "0962-6298"},
+        {"name": "Political Psychology", "issn": "0162-895X"},
+        {"name": "Political Research Quarterly", "issn": "1065-9129"},
+        {"name": "Political Science Research and Methods", "issn": "2049-8470"},
+        {"name": "Political Theory", "issn": "0090-5917"},
+        {"name": "Politics & Gender", "issn": "1743-923X"},
+        {"name": "Public Choice", "issn": "0048-5829"},
+        {"name": "Public Opinion Quarterly", "issn": "0033-362X"},
+        {"name": "Research & Politics", "issn": "2053-1680"},
+        {"name": "Scandinavian Political Studies", "issn": "0080-6757"},
+        {"name": "The Journal of Politics", "issn": "0022-3816"},
+        {"name": "West European Politics", "issn": "0140-2382"}
+    ],
+    "china_studies": [
+        {"name": "China Information", "issn": "0920-203X"},
+        {"name": "China Perspectives", "issn": "2070-3449"},
+        {"name": "Journal of Chinese Political Science", "issn": "1080-6954"},
+        {"name": "Journal of Contemporary China", "issn": "1067-0564"},
+        {"name": "Modern China", "issn": "0097-7004"},
+        {"name": "The China Journal", "issn": "1324-9347"},
+        {"name": "The China Quarterly", "issn": "0305-7410"}
     ]
 }
 
@@ -298,7 +345,9 @@ def crawl_journals(days=30):
     # 处理所有期刊
     all_journals = (
         [(j, 'PA') for j in JOURNALS_CONFIG['public_administration']] +
-        [(j, 'PP') for j in JOURNALS_CONFIG['public_policy']]
+        [(j, 'PP') for j in JOURNALS_CONFIG['public_policy']] +
+        [(j, 'POL') for j in JOURNALS_CONFIG['political_science']] +
+        [(j, 'CHINA') for j in JOURNALS_CONFIG['china_studies']]
     )
     
     for journal, category in all_journals:
