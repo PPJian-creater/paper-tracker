@@ -346,6 +346,32 @@
     </style>
 </head>
 <body>
+    <!-- PIN 验证覆盖层 -->
+    <div id="pin-overlay" class="fixed inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-slate-900 z-[100] flex items-center justify-center">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 transform transition-all">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-lock text-2xl text-blue-600"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">访问验证</h2>
+                <p class="text-slate-500">请输入 PIN 码以访问 Research Atlas</p>
+            </div>
+            <div class="space-y-4">
+                <input type="password" id="pin-input" placeholder="输入 PIN 码" 
+                    class="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none text-center text-lg tracking-widest transition-all">
+                <button onclick="verifyPIN()" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    <i class="fas fa-unlock mr-2"></i>验证并进入
+                </button>
+            </div>
+            <p id="pin-error" class="text-red-500 text-sm text-center mt-4 hidden">
+                <i class="fas fa-exclamation-circle mr-1"></i>PIN 码错误，请重试
+            </p>
+            <p class="text-xs text-slate-400 text-center mt-6">
+                如需访问权限，请联系管理员获取 PIN 码
+            </p>
+        </div>
+    </div>
+
     <nav class="navbar sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-18 py-3">
@@ -386,6 +412,9 @@
                 </div>
                 <div class="text-sm text-blue-200">
                     收录 <span id="total-count" class="font-semibold text-white">0</span> 篇文献
+                </div>
+                <div id="user-info" class="text-sm text-blue-200 ml-4 hidden">
+                    <!-- 用户信息将在这里显示 -->
                 </div>
             </div>
         </div>
@@ -688,6 +717,43 @@
                     <div class="folder-sidebar">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="font-semibold text-slate-800">
+                                <i class="fas fa-star text-yellow-500 mr-2"></i>收藏夹管理
+                            </h3>
+                            <div class="flex gap-2">
+                                <button onclick="exportFavorites()" class="px-3 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition flex items-center gap-1.5" title="导出收藏夹备份">
+                                    <i class="fas fa-download"></i>导出
+                                </button>
+                                <button onclick="document.getElementById('import-file').click()" class="px-3 py-1.5 bg-emerald-600 text-white text-sm rounded-lg hover:bg-emerald-700 transition flex items-center gap-1.5" title="导入收藏夹备份">
+                                    <i class="fas fa-upload"></i>导入
+                                </button>
+                                <input type="file" id="import-file" accept=".json" style="display: none;" onchange="importFavorites(this)">
+                            </div>
+                        </div>
+                        <div id="folder-list" class="space-y-2">
+                            <!-- 文件夹列表 -->
+                        </div>
+                        <button onclick="showCreateFolderModal()" class="mt-4 w-full py-2 border-2 border-dashed border-slate-300 rounded-lg text-slate-500 hover:border-blue-500 hover:text-blue-600 transition">
+                            <i class="fas fa-plus mr-1"></i>新建文件夹
+                        </button>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 id="current-folder-title" class="text-xl font-bold text-slate-800">全部收藏</h2>
+                        <div class="flex gap-2">
+                            <button id="batch-delete-btn" onclick="batchDeleteFavorites()" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition opacity-50 cursor-not-allowed" disabled>
+                                <i class="fas fa-trash-alt mr-1"></i>
+                                删除 (<span id="selected-count">0</span>)
+                            </button>
+                        </div>
+                    </div>
+                    <div id="favorites-list" class="space-y-4">
+                        <div class="text-center py-12 text-slate-400">
+                            <i class="fas fa-folder-open text-4xl mb-3"></i>
+                            <p>暂无收藏文献</p>
+                            <p class="text-sm mt-2">点击文献卡片上的书签图标添加到收藏</p>
+                        </div>
+                    </div>
                                 <i class="fas fa-folder text-amber-500 mr-2"></i>收藏夹
                             </h3>
                             <button onclick="showCreateFolderModal()" class="text-blue-600 hover:text-blue-800 w-8 h-8 rounded-lg hover:bg-blue-50 flex items-center justify-center">
@@ -924,12 +990,107 @@
 
     <script>
 
+        // ==================== PIN 访问控制 ====================
+        // 10个有趣的学术风格 PIN 码（管理员可修改）
+        const VALID_PINS = [
+            'admin2024',        // 管理员专属
+            'ilovepa',          // 我爱公共行政 ❤️
+            'ssci4ever',        // SSCI永远的神 🏆
+            'readpapers',       // 读论文达人 📚
+            'phdlife',          // 博士生存模式 🎓
+            'tenurepls',        // 求终身教职 🙏
+            'citationking',     // 引用量之王 👑
+            'dataminer',        // 数据挖掘工 ⛏️
+            'theorynerd',       // 理论书呆子 🤓
+            'methodology'       // 方法论专家 📊
+        ];
+        let currentUserPIN = localStorage.getItem('research-atlas-saved-pin') || '';
+
+        // 验证 PIN
+        function verifyPIN() {
+            const input = document.getElementById('pin-input');
+            const error = document.getElementById('pin-error');
+            const pin = input.value.trim();
+
+            if (VALID_PINS.includes(pin)) {
+                currentUserPIN = pin;
+                // 保存到 localStorage 实现长期记住
+                localStorage.setItem('research-atlas-saved-pin', pin);
+                document.getElementById('pin-overlay').style.display = 'none';
+                initUserData();
+                updateUserInfo();
+                showToast('验证成功，欢迎访问！');
+            } else {
+                error.classList.remove('hidden');
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // 退出登录/切换用户
+        function logout() {
+            if (confirm('确定要退出登录吗？')) {
+                localStorage.removeItem('research-atlas-saved-pin');
+                currentUserPIN = '';
+                location.reload();
+            }
+        }
+
+        // 更新导航栏用户信息显示
+        function updateUserInfo() {
+            const userInfoEl = document.getElementById('user-info');
+            if (userInfoEl && currentUserPIN) {
+                const username = currentUserPIN.replace(/\d+$/, '');
+                userInfoEl.innerHTML = '<i class="fas fa-user mr-1"></i>' + username + 
+                    ' <button onclick="logout()" class="ml-2 text-xs underline hover:text-white transition">[退出]</button>';
+                userInfoEl.classList.remove('hidden');
+            }
+        }
+
+        // PIN 输入框回车事件
+        document.addEventListener('DOMContentLoaded', function() {
+            const pinInput = document.getElementById('pin-input');
+            if (pinInput) {
+                pinInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') verifyPIN();
+                });
+            }
+            
+            // 检查是否已验证（使用 localStorage 长期记住）
+            if (currentUserPIN && VALID_PINS.includes(currentUserPIN)) {
+                document.getElementById('pin-overlay').style.display = 'none';
+                initUserData();
+                updateUserInfo();
+            }
+        });
+
+        // 根据 PIN 获取存储键前缀
+        function getStoragePrefix() {
+            return currentUserPIN ? `research-atlas-${currentUserPIN}-` : 'research-atlas-anonymous-';
+        }
+
+        // 初始化用户数据（基于 PIN 隔离）
+        function initUserData() {
+            const prefix = getStoragePrefix();
+            favorites = JSON.parse(localStorage.getItem(prefix + 'favorites') || '[]');
+            folders = JSON.parse(localStorage.getItem(prefix + 'folders') || '[{"id": "all", "name": "全部收藏"}]');
+            paperFolders = JSON.parse(localStorage.getItem(prefix + 'paper-folders') || '{}');
+            renderFolders();
+            updateFavCount();
+        }
+
+        // 保存用户数据
+        function saveUserData() {
+            const prefix = getStoragePrefix();
+            localStorage.setItem(prefix + 'favorites', JSON.stringify(favorites));
+            localStorage.setItem(prefix + 'folders', JSON.stringify(folders));
+            localStorage.setItem(prefix + 'paper-folders', JSON.stringify(paperFolders));
+        }
+
         // ==================== 数据存储 ====================
         let allPapers = [];
         let allJournals = [];
-        let favorites = JSON.parse(localStorage.getItem('research-atlas-favorites') || '[]');
-        let folders = JSON.parse(localStorage.getItem('research-atlas-folders') || '[{"id": "all", "name": "全部收藏"}]');
-        let paperFolders = JSON.parse(localStorage.getItem('research-atlas-paper-folders') || '{}');
+        // 注意：favorites/folders/paperFolders 现在在 initUserData() 中初始化
         let currentFolder = 'all';
         let currentPaperId = null;
         let draggedPaperId = null;
@@ -2202,6 +2363,103 @@
             if (draggedPaperId) addPaperToFolder(draggedPaperId, folderId);
         }
 
+        // ==================== 收藏夹导出/导入功能 ====================
+        
+        // 导出收藏夹
+        function exportFavorites() {
+            const exportData = {
+                version: '1.0',
+                exportDate: new Date().toISOString(),
+                user: currentUserPIN,
+                folders: folders,
+                paperFolders: paperFolders,
+                papers: allPapers.filter(p => paperFolders[p.openalex_id]).map(p => ({
+                    openalex_id: p.openalex_id,
+                    title: p.title,
+                    authors: p.authors,
+                    journal_name: p.journal_name,
+                    published_date: p.published_date,
+                    category: p.category,
+                    keywords: p.keywords,
+                    abstract: p.abstract,
+                    url: p.url,
+                    doi: p.doi
+                }))
+            };
+            
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `收藏夹备份_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+            
+            showToast(`已导出 ${exportData.papers.length} 篇收藏文献`);
+        }
+        
+        // 导入收藏夹
+        function importFavorites(input) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importData = JSON.parse(e.target.result);
+                    
+                    // 验证数据格式
+                    if (!importData.paperFolders || !importData.folders) {
+                        throw new Error('无效的备份文件格式');
+                    }
+                    
+                    // 确认导入
+                    const paperCount = Object.keys(importData.paperFolders).length;
+                    if (!confirm(`确定要导入备份吗？\n\n包含：\n- ${importData.folders.length - 1} 个文件夹\n- ${paperCount} 篇收藏文献\n\n注意：这将合并到现有收藏中，不会覆盖。`)) {
+                        input.value = '';
+                        return;
+                    }
+                    
+                    // 合并文件夹
+                    importData.folders.forEach(folder => {
+                        if (folder.id !== 'all' && !folders.find(f => f.id === folder.id)) {
+                            folders.push(folder);
+                        }
+                    });
+                    
+                    // 合并收藏关系
+                    Object.assign(paperFolders, importData.paperFolders);
+                    
+                    // 合并文献数据
+                    if (importData.papers) {
+                        importData.papers.forEach(paper => {
+                            if (!allPapers.find(p => p.openalex_id === paper.openalex_id)) {
+                                allPapers.push(paper);
+                            }
+                        });
+                    }
+                    
+                    // 保存并刷新
+                    saveUserData();
+                    saveFolders();
+                    renderFolders();
+                    renderFavorites();
+                    updateFavCount();
+                    
+                    showToast(`成功导入 ${paperCount} 篇文献`);
+                    
+                } catch (error) {
+                    alert('导入失败：' + error.message);
+                } finally {
+                    input.value = '';
+                }
+            };
+            reader.readAsText(file);
+        }
+        
         function renderFolders() {
             const container = document.getElementById('folder-list');
             if (!container) return;
@@ -2798,11 +3056,11 @@
         }
 
         function saveFolders() {
-            localStorage.setItem('research-atlas-folders', JSON.stringify(folders));
+            saveUserData();
         }
 
         function savePaperFolders() {
-            localStorage.setItem('research-atlas-paper-folders', JSON.stringify(paperFolders));
+            saveUserData();
         }
         
         // Toast提示
