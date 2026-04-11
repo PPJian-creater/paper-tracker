@@ -1,9 +1,9 @@
 name: 每日爬取SSCI文献
 
 on:
-  # 每天 UTC 00:00 执行（北京时间 08:00）
+  # 每天 UTC 16:00 执行（北京时间 00:00）
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 16 * * *'
   
   # 允许手动触发
   workflow_dispatch:
@@ -22,6 +22,9 @@ permissions:
   contents: write
   pages: write
   id-token: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   crawl:
@@ -44,7 +47,7 @@ jobs:
     - name: 执行爬虫
       run: |
         if [ "${{ github.event.inputs.mode }}" = "initial" ]; then
-          python scripts/crawler.py --days 30
+          python scripts/crawler.py --days 120
         else
           python scripts/crawler.py --days 2
         fi
