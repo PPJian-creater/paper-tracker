@@ -374,17 +374,17 @@
 
     <nav class="navbar sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-18 py-3">
-                <div class="flex items-center gap-4">
-                    <div class="w-11 h-11 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/30">
-                        <i class="fas fa-atlas"></i>
+            <div class="flex justify-between items-center h-16">
+                <!-- 左侧：Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-blue-500/30">
+                        <i class="fas fa-atlas text-sm"></i>
                     </div>
-                    <div>
-                        <h1 class="text-xl font-bold text-white tracking-tight">Research Atlas</h1>
-                        <p class="text-xs text-slate-400">文献追踪系统</p>
-                    </div>
+                    <h1 class="text-lg font-bold text-white tracking-tight">Research Atlas</h1>
                 </div>
-                <div class="hidden md:flex items-center gap-2">
+                
+                <!-- 中间：导航菜单 -->
+                <div class="hidden md:flex items-center gap-1">
                     <button onclick="switchTab('discover')" class="nav-item active" data-tab="discover">
                         <i class="fas fa-compass"></i>发现
                     </button>
@@ -410,11 +410,15 @@
                         <i class="fas fa-search"></i>搜索
                     </button>
                 </div>
-                <div class="text-sm text-blue-200">
-                    收录 <span id="total-count" class="font-semibold text-white">0</span> 篇文献
-                </div>
-                <div id="user-info" class="text-sm text-blue-200 ml-4 hidden">
-                    <!-- 用户信息将在这里显示 -->
+                
+                <!-- 右侧：用户信息和统计 -->
+                <div class="flex items-center gap-4">
+                    <span class="text-xs text-blue-300 hidden lg:inline">
+                        <span id="total-count">0</span> 篇
+                    </span>
+                    <div id="user-info" class="hidden">
+                        <!-- 用户信息将在这里显示 -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -712,90 +716,43 @@
         </div>
 
         <div id="tab-favorites" class="tab-content hidden">
-            <div class="flex gap-6">
-                <div class="w-72 flex-shrink-0">
-                    <div class="folder-sidebar">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="font-semibold text-slate-800">
-                                <i class="fas fa-star text-yellow-500 mr-2"></i>收藏夹管理
-                            </h3>
-                            <div class="flex gap-2">
-                                <button onclick="exportFavorites()" class="px-3 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition flex items-center gap-1.5" title="导出收藏夹备份">
-                                    <i class="fas fa-download"></i>导出
-                                </button>
-                                <button onclick="document.getElementById('import-file').click()" class="px-3 py-1.5 bg-emerald-600 text-white text-sm rounded-lg hover:bg-emerald-700 transition flex items-center gap-1.5" title="导入收藏夹备份">
-                                    <i class="fas fa-upload"></i>导入
-                                </button>
-                                <input type="file" id="import-file" accept=".json" style="display: none;" onchange="importFavorites(this)">
-                            </div>
-                        </div>
-                        <div id="folder-list" class="space-y-2">
-                            <!-- 文件夹列表 -->
-                        </div>
-                        <button onclick="showCreateFolderModal()" class="mt-4 w-full py-2 border-2 border-dashed border-slate-300 rounded-lg text-slate-500 hover:border-blue-500 hover:text-blue-600 transition">
-                            <i class="fas fa-plus mr-1"></i>新建文件夹
+            <!-- 顶部操作栏 -->
+            <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <!-- 左侧：文件夹筛选 -->
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm text-slate-500 mr-2">当前文件夹:</span>
+                        <select id="folder-select" onchange="selectFolder(this.value)" class="px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white min-w-[150px]">
+                            <option value="all">全部收藏</option>
+                        </select>
+                        <button onclick="showCreateFolderModal()" class="px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition flex items-center gap-1">
+                            <i class="fas fa-plus"></i>新建
                         </button>
                     </div>
-                </div>
-                <div class="flex-1">
-                    <div class="flex justify-between items-center mb-4">
-                        <h2 id="current-folder-title" class="text-xl font-bold text-slate-800">全部收藏</h2>
-                        <div class="flex gap-2">
-                            <button id="batch-delete-btn" onclick="batchDeleteFavorites()" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition opacity-50 cursor-not-allowed" disabled>
-                                <i class="fas fa-trash-alt mr-1"></i>
-                                删除 (<span id="selected-count">0</span>)
-                            </button>
-                        </div>
-                    </div>
-                    <div id="favorites-list" class="space-y-4">
-                        <div class="text-center py-12 text-slate-400">
-                            <i class="fas fa-folder-open text-4xl mb-3"></i>
-                            <p>暂无收藏文献</p>
-                            <p class="text-sm mt-2">点击文献卡片上的书签图标添加到收藏</p>
-                        </div>
-                    </div>
-                                <i class="fas fa-folder text-amber-500 mr-2"></i>收藏夹
-                            </h3>
-                            <button onclick="showCreateFolderModal()" class="text-blue-600 hover:text-blue-800 w-8 h-8 rounded-lg hover:bg-blue-50 flex items-center justify-center">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                        <div id="folder-list" class="space-y-1">
-                            <div class="folder-item active" onclick="selectFolder('all')" ondragover="allowDrop(event)" ondrop="dropOnFolder(event, 'all')">
-                                <i class="fas fa-folder-open text-slate-400"></i>
-                                <span class="flex-1">全部收藏</span>
-                                <span id="folder-count-all" class="text-xs bg-slate-200 px-2 py-0.5 rounded-full">0</span>
-                            </div>
-                        </div>
+                    
+                    <!-- 右侧：操作按钮 -->
+                    <div class="flex items-center gap-2">
+                        <button id="batch-delete-btn" onclick="batchDeleteFavorites()" class="px-3 py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 transition opacity-50 cursor-not-allowed flex items-center gap-1" disabled>
+                            <i class="fas fa-trash-alt"></i>
+                            删除 (<span id="selected-count">0</span>)
+                        </button>
+                        <button onclick="exportFavorites()" class="px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition flex items-center gap-1">
+                            <i class="fas fa-download"></i>导出
+                        </button>
+                        <button onclick="document.getElementById('import-file').click()" class="px-3 py-2 bg-emerald-600 text-white text-sm rounded-lg hover:bg-emerald-700 transition flex items-center gap-1">
+                            <i class="fas fa-upload"></i>导入
+                        </button>
+                        <input type="file" id="import-file" accept=".json" style="display: none;" onchange="importFavorites(this)">
                     </div>
                 </div>
-                
-                <div class="flex-1">
-                    <div class="flex justify-between items-center mb-4">
-                        <div>
-                            <h2 id="current-folder-name" class="text-xl font-bold text-slate-800">全部收藏</h2>
-                            <div class="text-sm text-slate-500">
-                                共 <span id="current-folder-count">0</span> 篇文献
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <label class="flex items-center gap-2 px-3 py-2 bg-slate-100 rounded-lg cursor-pointer hover:bg-slate-200 transition">
-                                <input type="checkbox" id="select-all-favorites" onchange="toggleSelectAllFavorites()" class="w-4 h-4 text-blue-600 rounded">
-                                <span class="text-sm text-slate-700">全选</span>
-                            </label>
-                            <button onclick="deleteSelectedFavorites()" id="batch-delete-btn" class="hidden px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition text-sm font-medium">
-                                <i class="fas fa-trash-alt mr-1"></i>
-                                删除 (<span id="selected-count">0</span>)
-                            </button>
-                        </div>
-                    </div>
-                    <div id="favorites-list" class="space-y-4">
-                        <div class="text-center py-12 text-slate-400">
-                            <i class="fas fa-folder-open text-4xl mb-3"></i>
-                            <p>暂无收藏文献</p>
-                            <p class="text-sm mt-2">点击文献卡片上的书签图标添加到收藏</p>
-                        </div>
-                    </div>
+            </div>
+            
+            <!-- 收藏列表 -->
+            <div id="favorites-list" class="space-y-4">
+                <div class="text-center py-12 text-slate-400">
+                    <i class="fas fa-folder-open text-4xl mb-3"></i>
+                    <p>暂无收藏文献</p>
+                    <p class="text-sm mt-2">点击文献卡片上的书签图标添加到收藏</p>
                 </div>
             </div>
         </div>
@@ -1041,16 +998,14 @@
         // 更新导航栏用户信息显示
         function updateUserInfo() {
             try {
-                console.log('updateUserInfo 开始');
                 const userInfoEl = document.getElementById('user-info');
                 if (userInfoEl && currentUserPIN) {
                     const username = currentUserPIN.replace(/\d+$/, '');
-                    userInfoEl.innerHTML = '<i class="fas fa-user mr-1"></i>' + username + 
-                        ' <button onclick="logout()" class="ml-2 text-xs underline hover:text-white transition">[退出]</button>';
+                    userInfoEl.innerHTML = `
+                        <span class="text-xs text-blue-200 mr-2"><i class="fas fa-user mr-1"></i>${username}</span>
+                        <button onclick="logout()" class="text-xs text-blue-300 hover:text-white underline">退出</button>
+                    `;
                     userInfoEl.classList.remove('hidden');
-                    console.log('用户信息已更新:', username);
-                } else {
-                    console.log('user-info 元素不存在或没有 PIN');
                 }
             } catch (e) {
                 console.error('updateUserInfo 失败:', e);
@@ -2575,48 +2530,32 @@
         }
         
         function renderFolders() {
-            const container = document.getElementById('folder-list');
-            if (!container) return;
+            // 更新下拉选择框
+            const select = document.getElementById('folder-select');
+            if (!select) return;
             
-            // 清空容器
-            container.innerHTML = '';
+            // 保存当前选中值
+            const currentValue = select.value;
             
-            // 重新创建"全部收藏"文件夹项
-            const allFolderDiv = document.createElement('div');
-            allFolderDiv.className = `folder-item ${currentFolder === 'all' ? 'active' : ''}`;
-            allFolderDiv.onclick = () => selectFolder('all');
-            allFolderDiv.innerHTML = `
-                <i class="fas fa-folder${currentFolder === 'all' ? '-open' : ''} text-slate-400"></i>
-                <span class="flex-1 truncate">全部收藏</span>
-                <span id="folder-count-all" class="text-xs bg-slate-200 px-2 py-0.5 rounded-full">${Object.keys(paperFolders).length}</span>
-            `;
-            container.appendChild(allFolderDiv);
+            // 清空并重新构建选项
+            select.innerHTML = '<option value="all">全部收藏</option>';
             
             folders.filter(f => f.id !== 'all').forEach(folder => {
                 const count = Object.values(paperFolders).filter(fId => fId === folder.id).length;
-                const div = document.createElement('div');
-                div.className = `folder-item ${currentFolder === folder.id ? 'active' : ''}`;
-                div.onclick = () => selectFolder(folder.id);
-                div.ondragover = (e) => allowDrop(e);
-                div.ondrop = (e) => dropOnFolder(e, folder.id);
-                div.innerHTML = `
-                    <i class="fas fa-folder${currentFolder === folder.id ? '-open' : ''} text-slate-400"></i>
-                    <span class="flex-1 truncate">${folder.name}</span>
-                    <span class="text-xs bg-slate-200 px-2 py-0.5 rounded-full">${count}</span>
-                    <button onclick="deleteFolder('${folder.id}', event)" class="text-slate-400 hover:text-red-500 ml-2">
-                        <i class="fas fa-times"></i>
-                    </button>
-                `;
-                container.appendChild(div);
+                const option = document.createElement('option');
+                option.value = folder.id;
+                option.textContent = `${folder.name} (${count})`;
+                select.appendChild(option);
             });
+            
+            // 恢复选中状态
+            select.value = currentFolder || 'all';
         }
 
         function selectFolder(folderId) {
             currentFolder = folderId;
             renderFolders();
             renderFavorites();
-            const folder = folders.find(f => f.id === folderId);
-            document.getElementById('current-folder-name').textContent = folder ? folder.name : '全部收藏';
         }
 
         // ==================== 收藏分页状态 ====================
@@ -2631,7 +2570,9 @@
             } else {
                 papers = allPapers.filter(p => paperFolders[p.openalex_id] === currentFolder);
             }
-            document.getElementById('current-folder-count').textContent = papers.length;
+            
+            // 更新文件夹下拉框显示
+            renderFolders();
             
             // 收藏分页
             favoritesPagination.papers = papers;
