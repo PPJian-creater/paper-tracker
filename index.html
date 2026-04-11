@@ -815,9 +815,19 @@
             <!-- 搜索结果 -->
             <div id="search-results-info" class="mb-4 flex items-center justify-between">
                 <span class="text-sm text-slate-500"></span>
-                <button onclick="exportSearchResults()" class="text-sm text-blue-600 hover:text-blue-700 transition" style="display:none;" id="export-btn">
-                    <i class="fas fa-download mr-1"></i>导出结果
-                </button>
+                <div class="relative" id="export-dropdown-container" style="display:none;">
+                    <button onclick="toggleExportDropdown()" class="text-sm text-blue-600 hover:text-blue-700 transition flex items-center">
+                        <i class="fas fa-download mr-1"></i>导出结果<i class="fas fa-chevron-down ml-1 text-xs"></i>
+                    </button>
+                    <div id="export-dropdown" class="hidden absolute right-0 mt-1 w-40 bg-white border border-slate-200 rounded-lg shadow-lg z-10">
+                        <button onclick="exportSearchResults('all')" class="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 first:rounded-t-lg">
+                            <i class="fas fa-file-export mr-2 text-blue-500"></i>快速导出全部
+                        </button>
+                        <button onclick="showExportFieldSelector()" class="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 last:rounded-b-lg">
+                            <i class="fas fa-check-square mr-2 text-green-500"></i>自定义字段
+                        </button>
+                    </div>
+                </div>
             </div>
             <div id="search-results" class="space-y-4"></div>
             <div id="search-pagination" class="mt-6"></div>
@@ -832,6 +842,62 @@
             <div class="flex justify-end gap-2">
                 <button onclick="closeModal('create-folder-modal')" class="px-4 py-2 text-slate-600 hover:text-slate-800">取消</button>
                 <button onclick="createFolder()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">创建</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 导出字段选择弹窗 -->
+    <div id="export-fields-modal" class="modal" onclick="if(event.target.id === 'export-fields-modal') closeModal('export-fields-modal')">
+        <div class="modal-content" style="width: 450px;" onclick="event.stopPropagation()">
+            <h3 class="text-lg font-bold mb-4">选择导出字段</h3>
+            <div class="mb-4 max-h-80 overflow-y-auto">
+                <label class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded cursor-pointer">
+                    <input type="checkbox" id="export-field-all" onchange="toggleAllExportFields(this)" checked>
+                    <span class="font-medium">全选/取消全选</span>
+                </label>
+                <div class="border-t border-slate-200 my-2"></div>
+                <label class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded cursor-pointer">
+                    <input type="checkbox" class="export-field" value="title" checked>
+                    <span>标题</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded cursor-pointer">
+                    <input type="checkbox" class="export-field" value="authors" checked>
+                    <span>作者</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded cursor-pointer">
+                    <input type="checkbox" class="export-field" value="journal_name" checked>
+                    <span>期刊名称</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded cursor-pointer">
+                    <input type="checkbox" class="export-field" value="published_date" checked>
+                    <span>发表日期</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded cursor-pointer">
+                    <input type="checkbox" class="export-field" value="category" checked>
+                    <span>领域分类</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded cursor-pointer">
+                    <input type="checkbox" class="export-field" value="keywords" checked>
+                    <span>关键词</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded cursor-pointer">
+                    <input type="checkbox" class="export-field" value="abstract" checked>
+                    <span>摘要</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded cursor-pointer">
+                    <input type="checkbox" class="export-field" value="url" checked>
+                    <span>文献网址</span>
+                </label>
+                <label class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded cursor-pointer">
+                    <input type="checkbox" class="export-field" value="doi">
+                    <span>DOI</span>
+                </label>
+            </div>
+            <div class="flex justify-end gap-2">
+                <button onclick="closeModal('export-fields-modal')" class="px-4 py-2 text-slate-600 hover:text-slate-800">取消</button>
+                <button onclick="exportWithSelectedFields()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                    <i class="fas fa-download mr-1"></i>导出
+                </button>
             </div>
         </div>
     </div>
@@ -1325,9 +1391,8 @@
             
             // 添加摘要展示
             if (hasAbstract) {
-                const abstractClass = isLongAbstract ? 'compact-abstract text-xs text-slate-600 mt-2 line-clamp-2 cursor-pointer' : 'compact-abstract text-xs text-slate-600 mt-2';
-                const clickAttr = isLongAbstract ? 'onclick="toggleCompactAbstract(\'' + abstractId + '\', this)"' : '';
-                html += '<p id="' + abstractId + '" class="' + abstractClass + '" ' + clickAttr + '>' + escapeHtml(paper.abstract) + '</p>';
+                const abstractClass = isLongAbstract ? 'compact-abstract text-xs text-slate-600 mt-2 line-clamp-2' : 'compact-abstract text-xs text-slate-600 mt-2';
+                html += '<p id="' + abstractId + '" class="' + abstractClass + '">' + escapeHtml(paper.abstract) + '</p>';
                 if (isLongAbstract) {
                     html += '<span class="text-xs text-blue-500 cursor-pointer hover:text-blue-700 mt-1 inline-block" onclick="toggleCompactAbstract(\'' + abstractId + '\', this)">展开更多 <i class="fas fa-chevron-down"></i></span>';
                 }
@@ -1344,18 +1409,30 @@
         
         // 紧凑版摘要展开/收起
         function toggleCompactAbstract(abstractId, triggerEl) {
-            event.stopPropagation();
+            if (event) event.stopPropagation();
             const el = document.getElementById(abstractId);
             if (!el) return;
             
-            const isExpanded = el.classList.contains('line-clamp-2');
-            if (isExpanded) {
+            const isCollapsed = el.classList.contains('line-clamp-2');
+            if (isCollapsed) {
                 el.classList.remove('line-clamp-2');
                 triggerEl.innerHTML = '收起 <i class="fas fa-chevron-up"></i>';
             } else {
                 el.classList.add('line-clamp-2');
                 triggerEl.innerHTML = '展开更多 <i class="fas fa-chevron-down"></i>';
             }
+        }
+        
+        // 为紧凑卡片绑定事件委托 - 使用标志确保只绑定一次
+        if (!window.compactToggleBound) {
+            window.compactToggleBound = true;
+            document.addEventListener('click', function(e) {
+                const btn = e.target.closest('.compact-toggle-btn');
+                if (btn) {
+                    const targetId = btn.getAttribute('data-target');
+                    toggleCompactAbstract(targetId, btn);
+                }
+            });
         }
         
         function refreshTodayPapers() {
@@ -1881,7 +1958,7 @@
             if (paper.abstract) {
                 html += isSearchResult ? paper.abstract : escapeHtml(paper.abstract);
             } else {
-                html += '<span class="text-slate-400 italic" title="OpenAlex API暂未收录该文献摘要，请点击标题访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></span>';
+                html += '<span class="text-slate-400 italic" title="暂未收录该文献摘要，请访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></span>';
             }
             html += '</p>';
             
@@ -1929,7 +2006,22 @@
         
         // 通过按钮获取paper ID
         function showAddToFolderModalByBtn(button) {
+            event.stopPropagation();
             const paperId = button.dataset.paperId;
+            
+            // 如果已收藏，则取消收藏
+            if (paperFolders[paperId]) {
+                delete paperFolders[paperId];
+                savePaperFolders();
+                renderFolders();
+                updateFavCount();
+                if (!document.getElementById('tab-favorites').classList.contains('hidden')) renderFavorites();
+                refreshPaperCard(paperId);
+                showToast('已取消收藏');
+                return;
+            }
+            
+            // 未收藏，显示文件夹选择弹窗
             showAddToFolderModal(paperId);
         }
         
@@ -2223,7 +2315,7 @@
             if (paper.abstract) {
                 html += escapeHtml(paper.abstract);
             } else {
-                html += '<span class="text-slate-400 italic" title="OpenAlex API暂未收录该文献摘要，请点击标题访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></span>';
+                html += '<span class="text-slate-400 italic" title="暂未收录该文献摘要，请访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></span>';
             }
             html += '</p>';
             
@@ -2904,9 +2996,9 @@
             const infoEl = document.getElementById('search-results-info');
             
             // 更新导出按钮显示状态
-            const exportBtn = document.getElementById('export-btn');
-            if (exportBtn) {
-                exportBtn.style.display = papers.length > 0 ? 'inline-block' : 'none';
+            const exportContainer = document.getElementById('export-dropdown-container');
+            if (exportContainer) {
+                exportContainer.style.display = papers.length > 0 ? 'block' : 'none';
             }
             
             if (papers.length === 0) {
@@ -2960,34 +3052,125 @@
             container.innerHTML = html;
         }
         
+        // 导出下拉菜单控制
+        function toggleExportDropdown() {
+            const dropdown = document.getElementById('export-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+        
+        // 点击其他地方关闭下拉菜单
+        document.addEventListener('click', function(e) {
+            const container = document.getElementById('export-dropdown-container');
+            const dropdown = document.getElementById('export-dropdown');
+            if (container && !container.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+        
+        // 显示导出字段选择弹窗
+        function showExportFieldSelector() {
+            document.getElementById('export-fields-modal').classList.add('active');
+            document.getElementById('export-dropdown').classList.add('hidden');
+        }
+        
+        // 全选/取消全选导出字段
+        function toggleAllExportFields(checkbox) {
+            const fields = document.querySelectorAll('.export-field');
+            fields.forEach(field => field.checked = checkbox.checked);
+        }
+        
+        // 根据选择的字段导出
+        function exportWithSelectedFields() {
+            const selectedFields = Array.from(document.querySelectorAll('.export-field:checked')).map(cb => cb.value);
+            if (selectedFields.length === 0) {
+                alert('请至少选择一个导出字段');
+                return;
+            }
+            exportSearchResults('custom', selectedFields);
+            closeModal('export-fields-modal');
+        }
+        
         // 导出搜索结果
-        function exportSearchResults() {
+        function exportSearchResults(mode, selectedFields) {
             const results = paginationState.search.filteredPapers;
             if (!results || results.length === 0) {
                 alert('没有可导出的搜索结果');
                 return;
             }
             
-            // 构建CSV内容，使用UTF-8 BOM确保Excel正确识别中文
-            let csv = '\uFEFF标题,作者,期刊,发表日期,领域,关键词,摘要\n';
+            // 定义所有可用字段
+            const fieldNames = {
+                'title': '标题',
+                'authors': '作者',
+                'journal_name': '期刊名称',
+                'published_date': '发表日期',
+                'category': '领域分类',
+                'keywords': '关键词',
+                'abstract': '摘要',
+                'url': '文献网址',
+                'doi': 'DOI'
+            };
+            
+            // 确定要导出的字段
+            let fieldsToExport;
+            if (mode === 'all') {
+                fieldsToExport = ['title', 'authors', 'journal_name', 'published_date', 'category', 'keywords', 'abstract', 'url'];
+            } else if (mode === 'custom' && selectedFields) {
+                fieldsToExport = selectedFields;
+            } else {
+                fieldsToExport = ['title', 'authors', 'journal_name', 'published_date', 'category', 'keywords', 'abstract', 'url'];
+            }
+            
+            // 构建CSV表头
+            let csv = '\uFEFF' + fieldsToExport.map(f => fieldNames[f]).join(',') + '\n';
+            
+            // 清理数据中的特殊字符
+            const cleanText = (text) => {
+                if (!text) return '';
+                // 移除所有HTML标签（包括高亮mark标签）
+                const noHtml = text.replace(/<[^>]*>/g, '');
+                return noHtml.replace(/"/g, '""').replace(/[\r\n]+/g, ' ');
+            };
             
             results.forEach(paper => {
-                // 清理数据中的特殊字符
-                const cleanText = (text) => {
-                    if (!text) return '';
-                    return text.replace(/"/g, '""').replace(/[\r\n]+/g, ' ');
-                };
-                
-                const authors = paper.authors ? paper.authors.join('; ') : '';
-                const keywords = paper.keywords ? paper.keywords.join('; ') : '';
-                
-                csv += '"' + cleanText(paper.title) + '",';
-                csv += '"' + cleanText(authors) + '",';
-                csv += '"' + cleanText(paper.journal_name) + '",';
-                csv += (paper.published_date || '') + ',';
-                csv += (paper.category || '') + ',';
-                csv += '"' + cleanText(keywords) + '",';
-                csv += '"' + cleanText(paper.abstract) + '"\n';
+                const row = fieldsToExport.map(field => {
+                    let value = '';
+                    switch(field) {
+                        case 'title':
+                            value = paper.title || '';
+                            break;
+                        case 'authors':
+                            value = paper.authors ? paper.authors.join('; ') : '';
+                            break;
+                        case 'journal_name':
+                            value = paper.journal_name || '';
+                            break;
+                        case 'published_date':
+                            value = paper.published_date || '';
+                            break;
+                        case 'category':
+                            value = paper.category || '';
+                            break;
+                        case 'keywords':
+                            value = paper.keywords ? paper.keywords.join('; ') : '';
+                            break;
+                        case 'abstract':
+                            value = paper.abstract || '';
+                            break;
+                        case 'url':
+                            value = paper.url || '';
+                            break;
+                        case 'doi':
+                            value = paper.doi || '';
+                            break;
+                    }
+                    // URL和日期不需要引号，其他字段需要
+                    if (field === 'url' || field === 'published_date') {
+                        return cleanText(value);
+                    }
+                    return '"' + cleanText(value) + '"';
+                });
+                csv += row.join(',') + '\n';
             });
             
             // 创建并下载文件
@@ -3035,7 +3218,7 @@
                     <div class="mb-4">
                         <h3 class="font-semibold text-slate-800 mb-2">摘要</h3>
                         <p class="text-slate-600 leading-relaxed">
-                            ${paper.abstract ? paper.abstract.replace(/</g, '&lt;').replace(/>/g, '&gt;') : '<span class="text-slate-400 italic" title="OpenAlex API暂未收录该文献摘要，请点击标题访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></span>'}
+                            ${paper.abstract ? paper.abstract.replace(/</g, '&lt;').replace(/>/g, '&gt;') : '<span class="text-slate-400 italic" title="暂未收录该文献摘要，请访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></span>'}
                         </p>
                     </div>
                     ${paper.keywords && paper.keywords.length > 0 ? `
