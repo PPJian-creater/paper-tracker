@@ -1412,21 +1412,46 @@
                     return;
                 }
                 
+                console.log('开始处理数据，原始文献数:', data.papers.length);
+                
                 // 过滤无效文献（书评、刊期信息等）
                 allPapers = filterInvalidPapers(data.papers);
+                console.log('过滤后文献数:', allPapers.length);
+                
                 allJournals = [...new Set(allPapers.map(p => p.journal_name))].filter(Boolean).sort();
                 
                 allPapers.forEach(paper => {
                     if (!paper.category) paper.category = inferCategory(paper.journal_name);
                 });
                 
-                updateStats(data.stats);
-                initCharts(data.stats);
-                renderAll();
+                // 更新统计（独立try-catch，确保即使失败也不影响其他）
+                try {
+                    updateStats(data.stats);
+                } catch (e) {
+                    console.error('更新统计失败:', e);
+                }
                 
-                // 隐藏加载状态
+                // 初始化图表
+                try {
+                    initCharts(data.stats);
+                } catch (e) {
+                    console.error('初始化图表失败:', e);
+                }
+                
+                // 渲染所有内容
+                try {
+                    renderAll();
+                } catch (e) {
+                    console.error('渲染内容失败:', e);
+                }
+                
+                console.log('数据处理完成');
+                
+                // 隐藏加载和错误状态
                 document.getElementById('loading-state').classList.add('hidden');
                 document.getElementById('error-state').classList.add('hidden');
+                document.getElementById('empty-state').classList.add('hidden');
+                
             } catch (error) {
                 console.error('处理数据失败:', error);
                 document.getElementById('loading-state').classList.add('hidden');
