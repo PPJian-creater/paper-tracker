@@ -1040,17 +1040,29 @@
 
         // 更新导航栏用户信息显示
         function updateUserInfo() {
-            const userInfoEl = document.getElementById('user-info');
-            if (userInfoEl && currentUserPIN) {
-                const username = currentUserPIN.replace(/\d+$/, '');
-                userInfoEl.innerHTML = '<i class="fas fa-user mr-1"></i>' + username + 
-                    ' <button onclick="logout()" class="ml-2 text-xs underline hover:text-white transition">[退出]</button>';
-                userInfoEl.classList.remove('hidden');
+            try {
+                console.log('updateUserInfo 开始');
+                const userInfoEl = document.getElementById('user-info');
+                if (userInfoEl && currentUserPIN) {
+                    const username = currentUserPIN.replace(/\d+$/, '');
+                    userInfoEl.innerHTML = '<i class="fas fa-user mr-1"></i>' + username + 
+                        ' <button onclick="logout()" class="ml-2 text-xs underline hover:text-white transition">[退出]</button>';
+                    userInfoEl.classList.remove('hidden');
+                    console.log('用户信息已更新:', username);
+                } else {
+                    console.log('user-info 元素不存在或没有 PIN');
+                }
+            } catch (e) {
+                console.error('updateUserInfo 失败:', e);
             }
         }
 
         // PIN 输入框回车事件
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOMContentLoaded 触发');
+            console.log('currentUserPIN:', currentUserPIN);
+            console.log('VALID_PINS:', VALID_PINS);
+            
             const pinInput = document.getElementById('pin-input');
             if (pinInput) {
                 pinInput.addEventListener('keypress', function(e) {
@@ -1059,14 +1071,33 @@
             }
             
             // 检查是否已验证（使用 localStorage 长期记住）
-            if (currentUserPIN && VALID_PINS.includes(currentUserPIN)) {
-                // 已验证，隐藏覆盖层并加载数据
-                document.getElementById('pin-overlay').style.display = 'none';
-                initUserData();
-                updateUserInfo();
-                // 加载文献数据
-                loadData();
+            const isValidPIN = currentUserPIN && VALID_PINS.includes(currentUserPIN);
+            console.log('PIN 是否有效:', isValidPIN);
+            
+            if (isValidPIN) {
+                try {
+                    console.log('已验证，隐藏覆盖层');
+                    // 已验证，隐藏覆盖层
+                    document.getElementById('pin-overlay').style.display = 'none';
+                    // 初始化用户数据
+                    console.log('初始化用户数据...');
+                    initUserData();
+                    console.log('更新用户信息...');
+                    updateUserInfo();
+                    // 延迟加载文献数据，确保 DOM 完全就绪
+                    console.log('准备加载数据...');
+                    setTimeout(function() {
+                        console.log('调用 loadData...');
+                        loadData();
+                    }, 100);
+                } catch (e) {
+                    console.error('初始化失败:', e);
+                    console.error('错误堆栈:', e.stack);
+                    // 出错时显示 PIN 界面
+                    document.getElementById('pin-overlay').style.display = 'flex';
+                }
             } else {
+                console.log('未验证，显示 PIN 界面');
                 // 没有保存的 PIN，显示验证界面
                 document.getElementById('pin-overlay').style.display = 'flex';
                 const pinInput = document.getElementById('pin-input');
@@ -1081,12 +1112,24 @@
 
         // 初始化用户数据（基于 PIN 隔离）
         function initUserData() {
-            const prefix = getStoragePrefix();
-            favorites = JSON.parse(localStorage.getItem(prefix + 'favorites') || '[]');
-            folders = JSON.parse(localStorage.getItem(prefix + 'folders') || '[{"id": "all", "name": "全部收藏"}]');
-            paperFolders = JSON.parse(localStorage.getItem(prefix + 'paper-folders') || '{}');
-            renderFolders();
-            updateFavCount();
+            try {
+                console.log('initUserData 开始');
+                const prefix = getStoragePrefix();
+                console.log('存储前缀:', prefix);
+                favorites = JSON.parse(localStorage.getItem(prefix + 'favorites') || '[]');
+                folders = JSON.parse(localStorage.getItem(prefix + 'folders') || '[{"id": "all", "name": "全部收藏"}]');
+                paperFolders = JSON.parse(localStorage.getItem(prefix + 'paper-folders') || '{}');
+                console.log('用户数据加载完成，文件夹数:', folders.length);
+                renderFolders();
+                updateFavCount();
+                console.log('initUserData 完成');
+            } catch (e) {
+                console.error('initUserData 失败:', e);
+                // 使用默认值
+                favorites = [];
+                folders = [{"id": "all", "name": "全部收藏"}];
+                paperFolders = {};
+            }
         }
 
         // 保存用户数据
@@ -1291,14 +1334,22 @@
         // ==================== 数据加载 ====================
         // ==================== 数据加载 ====================
         async function loadData() {
+            console.log('开始加载数据...');
             const loadingEl = document.getElementById('loading-state');
             const errorEl = document.getElementById('error-state');
             const emptyEl = document.getElementById('empty-state');
+            
+            if (!loadingEl || !errorEl || !emptyEl) {
+                console.error('找不到必要的 DOM 元素');
+                return;
+            }
             
             try {
                 loadingEl.classList.remove('hidden');
                 errorEl.classList.add('hidden');
                 emptyEl.classList.add('hidden');
+                
+                console.log('尝试获取数据...');
                 
                 // 尝试从sessionStorage读取缓存数据
                 const cachedData = sessionStorage.getItem('research-atlas-data');
@@ -1331,19 +1382,24 @@
                 }
                 
                 // 从服务器加载数据
+                console.log('调用 fetchFreshData...');
                 data = await fetchFreshData();
+                console.log('fetchFreshData 返回:', data ? '有数据' : '无数据');
                 
                 if (!data) {
                     throw new Error('无法加载数据文件');
                 }
                 
                 if (!data.papers || data.papers.length === 0) {
+                    console.log('数据为空');
                     loadingEl.classList.add('hidden');
                     emptyEl.classList.remove('hidden');
                     return;
                 }
                 
+                console.log('调用 processLoadedData, 文献数:', data.papers.length);
                 processLoadedData(data);
+                console.log('processLoadedData 完成');
                 
                 // 缓存数据
                 try {
@@ -1352,6 +1408,7 @@
                 } catch (e) { console.log('数据缓存失败'); }
             } catch (error) {
                 console.error('加载数据失败:', error);
+                console.error('错误堆栈:', error.stack);
                 loadingEl.classList.add('hidden');
                 errorEl.classList.remove('hidden');
             }
@@ -1403,12 +1460,14 @@
         }
         
         function processLoadedData(data) {
+            console.log('processLoadedData 被调用');
             try {
                 if (!data) {
                     throw new Error('无法加载数据文件');
                 }
                 
                 if (!data.papers || data.papers.length === 0) {
+                    console.log('数据为空，显示 empty-state');
                     showEmptyState();
                     return;
                 }
@@ -1420,6 +1479,7 @@
                 console.log('过滤后文献数:', allPapers.length);
                 
                 allJournals = [...new Set(allPapers.map(p => p.journal_name))].filter(Boolean).sort();
+                console.log('期刊数量:', allJournals.length);
                 
                 allPapers.forEach(paper => {
                     if (!paper.category) paper.category = inferCategory(paper.journal_name);
@@ -1427,6 +1487,7 @@
                 
                 // 更新统计（独立try-catch，确保即使失败也不影响其他）
                 try {
+                    console.log('更新统计...');
                     updateStats(data.stats);
                 } catch (e) {
                     console.error('更新统计失败:', e);
@@ -1434,6 +1495,7 @@
                 
                 // 初始化图表
                 try {
+                    console.log('初始化图表...');
                     initCharts(data.stats);
                 } catch (e) {
                     console.error('初始化图表失败:', e);
@@ -1441,22 +1503,32 @@
                 
                 // 渲染所有内容
                 try {
+                    console.log('渲染所有内容...');
                     renderAll();
                 } catch (e) {
                     console.error('渲染内容失败:', e);
                 }
                 
-                console.log('数据处理完成');
+                console.log('数据处理完成，准备隐藏 loading');
                 
                 // 隐藏加载和错误状态
-                document.getElementById('loading-state').classList.add('hidden');
-                document.getElementById('error-state').classList.add('hidden');
-                document.getElementById('empty-state').classList.add('hidden');
+                const loadingEl = document.getElementById('loading-state');
+                const errorEl = document.getElementById('error-state');
+                const emptyEl = document.getElementById('empty-state');
+                
+                if (loadingEl) loadingEl.classList.add('hidden');
+                if (errorEl) errorEl.classList.add('hidden');
+                if (emptyEl) emptyEl.classList.add('hidden');
+                
+                console.log('loading 已隐藏');
                 
             } catch (error) {
                 console.error('处理数据失败:', error);
-                document.getElementById('loading-state').classList.add('hidden');
-                document.getElementById('error-state').classList.remove('hidden');
+                console.error('错误堆栈:', error.stack);
+                const loadingEl = document.getElementById('loading-state');
+                const errorEl = document.getElementById('error-state');
+                if (loadingEl) loadingEl.classList.add('hidden');
+                if (errorEl) errorEl.classList.remove('hidden');
             }
         }
 
@@ -2505,10 +2577,20 @@
         function renderFolders() {
             const container = document.getElementById('folder-list');
             if (!container) return;
-            const allFolder = container.querySelector('[onclick="selectFolder(\'all\')"]');
+            
+            // 清空容器
             container.innerHTML = '';
-            container.appendChild(allFolder);
-            document.getElementById('folder-count-all').textContent = Object.keys(paperFolders).length;
+            
+            // 重新创建"全部收藏"文件夹项
+            const allFolderDiv = document.createElement('div');
+            allFolderDiv.className = `folder-item ${currentFolder === 'all' ? 'active' : ''}`;
+            allFolderDiv.onclick = () => selectFolder('all');
+            allFolderDiv.innerHTML = `
+                <i class="fas fa-folder${currentFolder === 'all' ? '-open' : ''} text-slate-400"></i>
+                <span class="flex-1 truncate">全部收藏</span>
+                <span id="folder-count-all" class="text-xs bg-slate-200 px-2 py-0.5 rounded-full">${Object.keys(paperFolders).length}</span>
+            `;
+            container.appendChild(allFolderDiv);
             
             folders.filter(f => f.id !== 'all').forEach(folder => {
                 const count = Object.values(paperFolders).filter(fId => fId === folder.id).length;
