@@ -269,11 +269,12 @@
             color: #64748b;
         }
         .filter-tab:hover { background: #f8fafc; border-color: #cbd5e1; }
-        .filter-tab.active {
-            background: #1e293b;
+        .filter-tab.active, .trend-filter-btn.active {
+            background: #2563eb;
             color: white;
-            border-color: #1e293b;
+            border-color: #2563eb;
         }
+        .trend-filter-btn:hover { background: #eff6ff; border-color: #2563eb; color: #2563eb; }
         .stat-card {
             background: white;
             border-radius: 12px;
@@ -470,10 +471,10 @@
                         <p class="text-sm text-slate-500 mt-1">今天新收录的文献</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button onclick="showYesterdayPapers()" class="text-slate-600 hover:text-blue-600 font-medium text-sm px-3 py-1.5 bg-slate-100 hover:bg-blue-50 rounded-lg transition">
+                        <button id="btn-yesterday" onclick="showYesterdayPapers()" class="today-view-btn text-slate-600 hover:text-blue-600 font-medium text-sm px-3 py-1.5 rounded-lg transition">
                             <i class="fas fa-history mr-1"></i>查看昨天
                         </button>
-                        <button onclick="showTodayPapers()" class="text-blue-600 hover:text-blue-800 font-medium text-sm px-3 py-1.5 bg-blue-50 rounded-lg transition">
+                        <button id="btn-today" onclick="showTodayPapers()" class="today-view-btn active text-white bg-blue-600 hover:bg-blue-700 font-medium text-sm px-3 py-1.5 rounded-lg transition">
                             <i class="fas fa-calendar-day mr-1"></i>今天
                         </button>
                     </div>
@@ -559,10 +560,10 @@
 
         <div id="tab-pa" class="tab-content hidden">
             <div class="flex flex-col md:flex-row gap-4 mb-6">
-                <select id="pa-journal-filter" onchange="filterPAPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white">
+                <select id="pa-journal-filter" onchange="filterPAPapers()" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-48">
                     <option value="">全部期刊</option>
                 </select>
-                <select id="pa-time-filter" onchange="handleTimeFilterChange('pa')" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white">
+                <select id="pa-time-filter" onchange="handleTimeFilterChange('pa')" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-40">
                     <option value="">全部时间</option>
                     <option value="7">最近7天</option>
                     <option value="30">最近30天</option>
@@ -581,10 +582,10 @@
 
         <div id="tab-pp" class="tab-content hidden">
             <div class="flex flex-col md:flex-row gap-4 mb-6">
-                <select id="pp-journal-filter" onchange="filterPPPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
+                <select id="pp-journal-filter" onchange="filterPPPapers()" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-48">
                     <option value="">全部期刊</option>
                 </select>
-                <select id="pp-time-filter" onchange="handleTimeFilterChange('pp')" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
+                <select id="pp-time-filter" onchange="handleTimeFilterChange('pp')" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-40">
                     <option value="">全部时间</option>
                     <option value="7">最近7天</option>
                     <option value="30">最近30天</option>
@@ -603,10 +604,10 @@
 
         <div id="tab-pol" class="tab-content hidden">
             <div class="flex flex-col md:flex-row gap-4 mb-6">
-                <select id="pol-journal-filter" onchange="filterPOLPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-violet-500 bg-white">
+                <select id="pol-journal-filter" onchange="filterPOLPapers()" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-48">
                     <option value="">全部期刊</option>
                 </select>
-                <select id="pol-time-filter" onchange="handleTimeFilterChange('pol')" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-violet-500 bg-white">
+                <select id="pol-time-filter" onchange="handleTimeFilterChange('pol')" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-40">
                     <option value="">全部时间</option>
                     <option value="7">最近7天</option>
                     <option value="30">最近30天</option>
@@ -625,10 +626,10 @@
 
         <div id="tab-china" class="tab-content hidden">
             <div class="flex flex-col md:flex-row gap-4 mb-6">
-                <select id="china-journal-filter" onchange="filterChinaPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 bg-white">
+                <select id="china-journal-filter" onchange="filterChinaPapers()" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-48">
                     <option value="">全部期刊</option>
                 </select>
-                <select id="china-time-filter" onchange="handleTimeFilterChange('china')" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 bg-white">
+                <select id="china-time-filter" onchange="handleTimeFilterChange('china')" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-40">
                     <option value="">全部时间</option>
                     <option value="7">最近7天</option>
                     <option value="30">最近30天</option>
@@ -778,7 +779,7 @@
                 <!-- 时间范围和领域 -->
                 <div class="flex flex-wrap items-center gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
                     <div class="flex items-center gap-2">
-                        <span class="text-sm text-slate-600 w-16">发表时间：</span>
+                        <span class="text-sm text-slate-600 whitespace-nowrap">发表时间：</span>
                         <input type="date" id="search-date-start" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 w-36">
                         <span class="text-slate-400">至</span>
                         <input type="date" id="search-date-end" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 w-36">
@@ -1203,6 +1204,7 @@
             const today = new Date().toISOString().split('T')[0];
             renderPapersByDate(today, '今天');
             currentTodayView = 'today';
+            updateTodayViewButtons();
         }
         
         function showYesterdayPapers() {
@@ -1211,6 +1213,24 @@
             const yesterdayStr = yesterday.toISOString().split('T')[0];
             renderPapersByDate(yesterdayStr, '昨天');
             currentTodayView = 'yesterday';
+            updateTodayViewButtons();
+        }
+        
+        function updateTodayViewButtons() {
+            const todayBtn = document.getElementById('btn-today');
+            const yesterdayBtn = document.getElementById('btn-yesterday');
+            
+            if (currentTodayView === 'today') {
+                todayBtn.classList.add('active', 'text-white', 'bg-blue-600');
+                todayBtn.classList.remove('text-slate-600', 'text-blue-600');
+                yesterdayBtn.classList.remove('active', 'text-white', 'bg-blue-600');
+                yesterdayBtn.classList.add('text-slate-600');
+            } else {
+                yesterdayBtn.classList.add('active', 'text-white', 'bg-blue-600');
+                yesterdayBtn.classList.remove('text-slate-600');
+                todayBtn.classList.remove('active', 'text-white', 'bg-blue-600');
+                todayBtn.classList.add('text-blue-600');
+            }
         }
         
         function showTodayPapers() {
@@ -1288,24 +1308,54 @@
         function createCompactPaperCard(paper) {
             const paperId = paper.openalex_id || '';
             const showNewTag = isRecentPaper(paper.published_date);
+            const abstractId = 'compact-abstract-' + paperId;
+            const hasAbstract = paper.abstract && paper.abstract.length > 0;
+            const isLongAbstract = hasAbstract && paper.abstract.length > 80;
             
-            let html = '<div class="bg-white rounded-lg p-3 hover:shadow-md transition cursor-pointer" onclick="showPaperDetail(\'' + paperId + '\')">';
+            let html = '<div class="bg-white rounded-lg p-3 hover:shadow-md transition">';
             html += '<div class="flex items-start justify-between gap-3">';
             html += '<div class="flex-1 min-w-0">';
-            html += '<h4 class="text-sm font-medium text-slate-800 truncate hover:text-blue-600">' + escapeHtml(paper.title || '无标题') + '</h4>';
+            html += '<h4 class="text-sm font-medium text-slate-800 truncate hover:text-blue-600 cursor-pointer" onclick="showPaperDetail(\'' + paperId + '\')">' + escapeHtml(paper.title || '无标题') + '</h4>';
             html += '<div class="flex items-center gap-2 mt-1 text-xs text-slate-500">';
             html += '<span>' + escapeHtml(paper.journal_name || '未知期刊') + '</span>';
             if (showNewTag) {
                 html += '<span class="new-tag text-[8px] px-1.5 py-0.5">NEW</span>';
             }
             html += '</div>';
+            
+            // 添加摘要展示
+            if (hasAbstract) {
+                const abstractClass = isLongAbstract ? 'compact-abstract text-xs text-slate-600 mt-2 line-clamp-2 cursor-pointer' : 'compact-abstract text-xs text-slate-600 mt-2';
+                const clickAttr = isLongAbstract ? 'onclick="toggleCompactAbstract(\'' + abstractId + '\', this)"' : '';
+                html += '<p id="' + abstractId + '" class="' + abstractClass + '" ' + clickAttr + '>' + escapeHtml(paper.abstract) + '</p>';
+                if (isLongAbstract) {
+                    html += '<span class="text-xs text-blue-500 cursor-pointer hover:text-blue-700 mt-1 inline-block" onclick="toggleCompactAbstract(\'' + abstractId + '\', this)">展开更多 <i class="fas fa-chevron-down"></i></span>';
+                }
+            }
+            
             html += '</div>';
-            html += '<button onclick="event.stopPropagation(); toggleSavePaper(\'' + paperId + '\', this)" class="bookmark-btn flex-shrink-0 ' + (paperFolders[paperId] ? 'saved' : '') + '">';
+            html += '<button onclick="toggleSavePaper(\'' + paperId + '\', this)" class="bookmark-btn flex-shrink-0 ' + (paperFolders[paperId] ? 'saved' : '') + '">';
             html += '<i class="fas fa-bookmark"></i>';
             html += '</button>';
             html += '</div></div>';
             
             return html;
+        }
+        
+        // 紧凑版摘要展开/收起
+        function toggleCompactAbstract(abstractId, triggerEl) {
+            event.stopPropagation();
+            const el = document.getElementById(abstractId);
+            if (!el) return;
+            
+            const isExpanded = el.classList.contains('line-clamp-2');
+            if (isExpanded) {
+                el.classList.remove('line-clamp-2');
+                triggerEl.innerHTML = '收起 <i class="fas fa-chevron-up"></i>';
+            } else {
+                el.classList.add('line-clamp-2');
+                triggerEl.innerHTML = '展开更多 <i class="fas fa-chevron-down"></i>';
+            }
         }
         
         function refreshTodayPapers() {
@@ -1828,7 +1878,11 @@
             
             html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>';
             // 搜索结果显示时保留HTML标签（高亮），其他情况转义
-            html += isSearchResult ? (paper.abstract || '暂无摘要') : escapeHtml(paper.abstract || '暂无摘要');
+            if (paper.abstract) {
+                html += isSearchResult ? paper.abstract : escapeHtml(paper.abstract);
+            } else {
+                html += '<span class="text-slate-400 italic" title="OpenAlex API暂未收录该文献摘要，请点击标题访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></span>';
+            }
             html += '</p>';
             
             if (hasLongAbstract) {
@@ -2160,12 +2214,18 @@
             html += '<p class="text-sm text-slate-600 mb-2">' + formatAuthors(paper.authors) + '</p>';
             
             // 添加摘要（可点击展开）
-            const abstractId = 'fav-abstract-' + escapeHtml(paperId);
+            const abstractId = 'fav-abstract-' + paperId;
             const hasLongAbstract = paper.abstract && paper.abstract.length > 100;
             const abstractClass = hasLongAbstract ? 'abstract-text text-sm abstract-collapsed cursor-pointer' : 'abstract-text text-sm';
             const abstractClickAttr = hasLongAbstract ? 'onclick="toggleAbstract(\'' + abstractId + '\')"' : '';
             
-            html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>' + escapeHtml(paper.abstract || '暂无摘要') + '</p>';
+            html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>';
+            if (paper.abstract) {
+                html += escapeHtml(paper.abstract);
+            } else {
+                html += '<span class="text-slate-400 italic" title="OpenAlex API暂未收录该文献摘要，请点击标题访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></span>';
+            }
+            html += '</p>';
             
             if (hasLongAbstract) {
                 html += '<div class="expand-btn" onclick="toggleAbstract(\'' + abstractId + '\')"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>';
@@ -2401,10 +2461,50 @@
             updateFavCount();
         }
 
+        function toggleSavePaper(paperId, btnElement) {
+            event.stopPropagation();
+            
+            // 如果已经在收藏中，则取消收藏
+            if (paperFolders[paperId]) {
+                delete paperFolders[paperId];
+                savePaperFolders();
+                renderFolders();
+                updateFavCount();
+                if (!document.getElementById('tab-favorites').classList.contains('hidden')) renderFavorites();
+                refreshPaperCard(paperId);
+                
+                // 显示提示
+                showToast('已取消收藏');
+                return;
+            }
+            
+            // 如果没有文件夹，自动创建默认收藏夹
+            if (folders.length <= 1) {
+                const defaultFolder = { id: 'default', name: '默认收藏夹' };
+                folders.push(defaultFolder);
+                saveFolders();
+                renderFolders();
+            }
+            
+            // 显示文件夹选择弹窗
+            showAddToFolderModal(paperId);
+        }
+        
         function showAddToFolderModal(paperId) {
             currentPaperId = paperId;
             const container = document.getElementById('add-folder-list');
-            container.innerHTML = folders.filter(f => f.id !== 'all').map(folder => {
+            const userFolders = folders.filter(f => f.id !== 'all');
+            
+            if (userFolders.length === 0) {
+                // 没有文件夹时，自动添加到默认收藏夹
+                const defaultFolder = { id: 'default', name: '默认收藏夹' };
+                folders.push(defaultFolder);
+                saveFolders();
+                renderFolders();
+                userFolders.push(defaultFolder);
+            }
+            
+            container.innerHTML = userFolders.map(folder => {
                 const isInFolder = paperFolders[paperId] === folder.id;
                 return `
                     <div class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 cursor-pointer" onclick="addPaperToFolder('${paperId}', '${folder.id}')">
@@ -2415,7 +2515,7 @@
                         ${isInFolder ? '<i class="fas fa-check text-blue-500"></i>' : ''}
                     </div>
                 `;
-            }).join('') || '<p class="text-center text-slate-400 py-4">暂无文件夹，请先创建</p>';
+            }).join('');
             document.getElementById('add-folder-modal').classList.add('active');
         }
 
@@ -2587,6 +2687,19 @@
 
         function savePaperFolders() {
             localStorage.setItem('research-atlas-paper-folders', JSON.stringify(paperFolders));
+        }
+        
+        // Toast提示
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-4 right-4 bg-slate-800 text-white px-4 py-2 rounded-lg shadow-lg z-50 animate-fade-in';
+            toast.innerHTML = '<i class="fas fa-check-circle mr-2 text-green-400"></i>' + message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
         }
 
         function toggleCheckbox(label) {
@@ -2849,26 +2962,47 @@
         
         // 导出搜索结果
         function exportSearchResults() {
-            if (!searchResults || searchResults.length === 0) return;
+            const results = paginationState.search.filteredPapers;
+            if (!results || results.length === 0) {
+                alert('没有可导出的搜索结果');
+                return;
+            }
             
-            let csv = '标题,作者,期刊,发表日期,领域,关键词,摘要\n';
-            searchResults.forEach(paper => {
+            // 构建CSV内容，使用UTF-8 BOM确保Excel正确识别中文
+            let csv = '\uFEFF标题,作者,期刊,发表日期,领域,关键词,摘要\n';
+            
+            results.forEach(paper => {
+                // 清理数据中的特殊字符
+                const cleanText = (text) => {
+                    if (!text) return '';
+                    return text.replace(/"/g, '""').replace(/[\r\n]+/g, ' ');
+                };
+                
                 const authors = paper.authors ? paper.authors.join('; ') : '';
                 const keywords = paper.keywords ? paper.keywords.join('; ') : '';
-                csv += '"' + (paper.title || '').replace(/"/g, '""') + '",';
-                csv += '"' + authors.replace(/"/g, '""') + '",';
-                csv += '"' + (paper.journal_name || '').replace(/"/g, '""') + '",';
+                
+                csv += '"' + cleanText(paper.title) + '",';
+                csv += '"' + cleanText(authors) + '",';
+                csv += '"' + cleanText(paper.journal_name) + '",';
                 csv += (paper.published_date || '') + ',';
                 csv += (paper.category || '') + ',';
-                csv += '"' + keywords.replace(/"/g, '""') + '",';
-                csv += '"' + (paper.abstract || '').replace(/"/g, '""') + '"\n';
+                csv += '"' + cleanText(keywords) + '",';
+                csv += '"' + cleanText(paper.abstract) + '"\n';
             });
             
+            // 创建并下载文件
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
+            link.href = url;
             link.download = '检索结果_' + new Date().toISOString().split('T')[0] + '.csv';
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            // 显示成功提示
+            showToast('导出成功！共 ' + results.length + ' 条记录');
         }
 
         function highlightKeyword(text, keyword) {
@@ -2900,7 +3034,9 @@
                     </div>
                     <div class="mb-4">
                         <h3 class="font-semibold text-slate-800 mb-2">摘要</h3>
-                        <p class="text-slate-600 leading-relaxed">${paper.abstract || '暂无摘要'}</p>
+                        <p class="text-slate-600 leading-relaxed">
+                            ${paper.abstract ? paper.abstract.replace(/</g, '&lt;').replace(/>/g, '&gt;') : '<span class="text-slate-400 italic" title="OpenAlex API暂未收录该文献摘要，请点击标题访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></span>'}
+                        </p>
                     </div>
                     ${paper.keywords && paper.keywords.length > 0 ? `
                         <div class="mb-4">
