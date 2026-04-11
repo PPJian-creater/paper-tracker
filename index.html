@@ -1,3 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Atlas - 学术文献追踪系统</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            min-height: 100vh;
+        }
+        :root {
+            --pa-color: #1e3a5f;
+            --pp-color: #065f46;
+            --pol-color: #7c3aed;
+            --china-color: #b45309;
+            --accent-gold: #d97706;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 3px solid var(--accent-gold);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        .nav-item {
+            position: relative;
+            padding: 0.75rem 1.25rem;
+            color: #94a3b8;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+        }
+        .nav-item:hover { color: #fff; background: rgba(255,255,255,0.1); }
+        .nav-item.active { color: #fff; background: rgba(217, 119, 6, 0.2); }
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: var(--accent-gold);
+            border-radius: 2px;
+        }
+        .paper-card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .paper-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            transition: width 0.3s ease;
+        }
+        .paper-card.pa::before { background: var(--pa-color); }
+        .paper-card.pp::before { background: var(--pp-color); }
+        .paper-card.pol::before { background: var(--pol-color); }
+        .paper-card.china::before { background: var(--china-color); }
+        .paper-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-color: #cbd5e1;
+        }
+        .paper-card:hover::before { width: 6px; }
+        .category-tag {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .tag-pa { background: #dbeafe; color: var(--pa-color); }
+        .tag-pp { background: #d1fae5; color: var(--pp-color); }
+        .tag-pol { background: #ede9fe; color: var(--pol-color); }
+        .tag-china { background: #fef3c7; color: var(--china-color); }
+        .journal-tag {
+            font-size: 12px;
+            color: #64748b;
+            background: #f8fafc;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+        .bookmark-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #94a3b8;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+        }
+        .bookmark-btn:hover {
+            background: #dbeafe;
+            color: #2563eb;
+            border-color: #3b82f6;
+        }
+        .bookmark-btn.saved {
+            background: #dbeafe;
+            color: #2563eb;
+            border-color: #3b82f6;
+        }
+        .paper-card.dragging {
+            opacity: 0.7;
+            transform: scale(0.98);
+            cursor: grabbing;
+        }
+        .folder-sidebar {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 16px;
+        }
+        .folder-item {
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+        .folder-item:hover { background: #f1f5f9; }
+        .folder-item.active {
+            background: #dbeafe;
+            color: #1e40af;
+            font-weight: 500;
+        }
+        .folder-item.drag-over {
+            background: #dbeafe;
+            border: 2px dashed #3b82f6;
+        }
+        .search-container {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s ease;
+        }
+        .checkbox-item:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        .checkbox-item.checked {
+            background: #dbeafe;
+            border-color: #3b82f6;
+            color: #1e40af;
+        }
+        .journal-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .journal-table th {
+            background: #f8fafc;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .journal-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+        }
+        .journal-table tr:hover { background: #f8fafc; }
+        .filter-tab {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #64748b;
+        }
+        .filter-tab:hover { background: #f8fafc; border-color: #cbd5e1; }
+        .filter-tab.active {
+            background: #1e293b;
+            color: white;
+            border-color: #1e293b;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+        .abstract-text {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.6;
+            color: #64748b;
+        }
+        .abstract-text.expanded { -webkit-line-clamp: unset; }
+        .expand-btn {
+            color: #3b82f6;
+            font-size: 13px;
+            cursor: pointer;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+        #themeRiverChart { width: 100%; height: 400px; }
+        .loading {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body>
+    <nav class="navbar sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                        <i class="fas fa-atlas"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-white tracking-tight">Research Atlas</h1>
+                        <p class="text-xs text-slate-400">文献追踪系统</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center gap-1">
+                    <button onclick="switchTab('discover')" class="nav-item active" data-tab="discover">
+                        <i class="fas fa-compass mr-2"></i>发现
+                    </button>
+                    <button onclick="switchTab('pa')" class="nav-item" data-tab="pa">
+                        <i class="fas fa-landmark mr-2"></i>公共行政
+                    </button>
+                    <button onclick="switchTab('pp')" class="nav-item" data-tab="pp">
+                        <i class="fas fa-file-contract mr-2"></i>公共政策
+                    </button>
+                    <button onclick="switchTab('pol')" class="nav-item" data-tab="pol">
+                        <i class="fas fa-balance-scale mr-2"></i>政治学
+                    </button>
+                    <button onclick="switchTab('china')" class="nav-item" data-tab="china">
+                        <i class="fas fa-dragon mr-2"></i>中国研究
+                    </button>
+                    <button onclick="switchTab('journals')" class="nav-item" data-tab="journals">
+                        <i class="fas fa-book mr-2"></i>期刊导航
+                    </button>
+                    <button onclick="switchTab('favorites')" class="nav-item" data-tab="favorites">
+                        <i class="fas fa-folder-open mr-2"></i>收藏
+                        <span id="nav-fav-count" class="ml-1 bg-amber-500 text-white text-xs px-1.5 py-0.5 rounded-full hidden">0</span>
+                    </button>
+                    <button onclick="switchTab('search')" class="nav-item" data-tab="search">
+                        <i class="fas fa-search mr-2"></i>搜索
+                    </button>
+                </div>
+                <div class="text-sm text-slate-400">
+                    收录 <span id="total-count" class="font-semibold text-amber-400">0</span> 篇文献
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div id="loading-state" class="text-center py-20">
+            <div class="loading mb-4"></div>
+            <p class="text-slate-500">正在加载数据...</p>
+        </div>
+
+        <div id="error-state" class="hidden text-center py-20">
+            <div class="text-red-500 text-5xl mb-4">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <p class="text-slate-600 mb-4">数据加载失败</p>
+            <button onclick="loadData()" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                <i class="fas fa-redo mr-2"></i>重新加载
+            </button>
+        </div>
+
+        <div id="tab-discover" class="tab-content">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="stat-card cursor-pointer" onclick="switchTab('pa')">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-slate-500">公共行政</span>
+                        <span class="category-tag tag-pa">PA</span>
+                    </div>
+                    <div class="text-2xl font-bold text-slate-800" id="stat-pa">0</div>
+                    <div class="text-xs text-slate-400 mt-1">20本期刊</div>
+                </div>
+                <div class="stat-card cursor-pointer" onclick="switchTab('pp')">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-slate-500">公共政策</span>
+                        <span class="category-tag tag-pp">PP</span>
+                    </div>
+                    <div class="text-2xl font-bold text-slate-800" id="stat-pp">0</div>
+                    <div class="text-xs text-slate-400 mt-1">23本期刊</div>
+                </div>
+                <div class="stat-card cursor-pointer" onclick="switchTab('pol')">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-slate-500">政治学</span>
+                        <span class="category-tag tag-pol">POL</span>
+                    </div>
+                    <div class="text-2xl font-bold text-slate-800" id="stat-pol">0</div>
+                    <div class="text-xs text-slate-400 mt-1">36本期刊</div>
+                </div>
+                <div class="stat-card cursor-pointer" onclick="switchTab('china')">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-slate-500">中国研究</span>
+                        <span class="category-tag tag-china">CHINA</span>
+                    </div>
+                    <div class="text-2xl font-bold text-slate-800" id="stat-china">0</div>
+                    <div class="text-xs text-slate-400 mt-1">7本期刊</div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">
+                            <i class="fas fa-water text-blue-500 mr-2"></i>研究主题演变
+                        </h2>
+                        <p class="text-sm text-slate-500 mt-1">各领域关键词热度时序变化</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="setThemeRiverCategory('all')" class="filter-tab active" data-category="all">全部</button>
+                        <button onclick="setThemeRiverCategory('pa')" class="filter-tab" data-category="pa">PA</button>
+                        <button onclick="setThemeRiverCategory('pp')" class="filter-tab" data-category="pp">PP</button>
+                        <button onclick="setThemeRiverCategory('pol')" class="filter-tab" data-category="pol">POL</button>
+                        <button onclick="setThemeRiverCategory('china')" class="filter-tab" data-category="china">CHINA</button>
+                    </div>
+                </div>
+                <div id="themeRiverChart"></div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+                <h2 class="text-xl font-bold text-slate-800 mb-4">
+                    <i class="fas fa-chart-line text-blue-500 mr-2"></i>近30天发文趋势
+                </h2>
+                <div class="h-64">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-slate-800">
+                        <i class="fas fa-dice text-amber-500 mr-2"></i>精选推荐
+                    </h2>
+                    <button onclick="refreshRandomPapers()" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-sync-alt mr-1"></i>换一批
+                    </button>
+                </div>
+                <div id="random-papers" class="space-y-4"></div>
+            </div>
+        </div>
+
+        <div id="tab-pa" class="tab-content hidden">
+            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <select id="pa-journal-filter" onchange="filterPAPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white">
+                    <option value="">全部期刊</option>
+                </select>
+                <select id="pa-time-filter" onchange="filterPAPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white">
+                    <option value="">全部时间</option>
+                    <option value="7">最近7天</option>
+                    <option value="30">最近30天</option>
+                    <option value="90">最近90天</option>
+                    <option value="365">最近1年</option>
+                </select>
+            </div>
+            <div id="pa-papers-list" class="space-y-4"></div>
+        </div>
+
+        <div id="tab-pp" class="tab-content hidden">
+            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <select id="pp-journal-filter" onchange="filterPPPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
+                    <option value="">全部期刊</option>
+                </select>
+                <select id="pp-time-filter" onchange="filterPPPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
+                    <option value="">全部时间</option>
+                    <option value="7">最近7天</option>
+                    <option value="30">最近30天</option>
+                    <option value="90">最近90天</option>
+                    <option value="365">最近1年</option>
+                </select>
+            </div>
+            <div id="pp-papers-list" class="space-y-4"></div>
+        </div>
+
+        <div id="tab-pol" class="tab-content hidden">
+            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <select id="pol-journal-filter" onchange="filterPOLPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-violet-500 bg-white">
+                    <option value="">全部期刊</option>
+                </select>
+                <select id="pol-time-filter" onchange="filterPOLPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-violet-500 bg-white">
+                    <option value="">全部时间</option>
+                    <option value="7">最近7天</option>
+                    <option value="30">最近30天</option>
+                    <option value="90">最近90天</option>
+                    <option value="365">最近1年</option>
+                </select>
+            </div>
+            <div id="pol-papers-list" class="space-y-4"></div>
+        </div>
+
+        <div id="tab-china" class="tab-content hidden">
+            <div class="flex flex-col md:flex-row gap-4 mb-6">
+                <select id="china-journal-filter" onchange="filterChinaPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 bg-white">
+                    <option value="">全部期刊</option>
+                </select>
+                <select id="china-time-filter" onchange="filterChinaPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 bg-white">
+                    <option value="">全部时间</option>
+                    <option value="7">最近7天</option>
+                    <option value="30">最近30天</option>
+                    <option value="90">最近90天</option>
+                    <option value="365">最近1年</option>
+                </select>
+            </div>
+            <div id="china-papers-list" class="space-y-4"></div>
+        </div>
+
+        <div id="tab-journals" class="tab-content hidden">
+            <div class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-8 text-white mb-6">
+                <h2 class="text-3xl font-bold mb-2">
+                    <i class="fas fa-book-open mr-3 text-amber-400"></i>期刊导航
+                </h2>
+                <p class="text-slate-300">收录86本SSCI顶级期刊，点击期刊名称访问官网</p>
+            </div>
+            
+            <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex gap-2 flex-wrap">
+                        <button onclick="filterJournals('all')" class="filter-tab active" data-journal-filter="all">全部</button>
+                        <button onclick="filterJournals('pa')" class="filter-tab" data-journal-filter="pa">公共行政</button>
+                        <button onclick="filterJournals('pp')" class="filter-tab" data-journal-filter="pp">公共政策</button>
+                        <button onclick="filterJournals('pol')" class="filter-tab" data-journal-filter="pol">政治学</button>
+                        <button onclick="filterJournals('china')" class="filter-tab" data-journal-filter="china">中国研究</button>
+                    </div>
+                    <div class="flex-1">
+                        <input type="text" id="journal-search" placeholder="搜索期刊名称..." 
+                               class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                               oninput="searchJournals(this.value)">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+                <table class="journal-table">
+                    <thead>
+                        <tr>
+                            <th class="w-24">领域</th>
+                            <th>期刊名称</th>
+                            <th class="w-32 text-center">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="journals-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tab-favorites" class="tab-content hidden">
+            <div class="flex gap-6">
+                <div class="w-72 flex-shrink-0">
+                    <div class="folder-sidebar">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-semibold text-slate-800">
+                                <i class="fas fa-folder text-amber-500 mr-2"></i>收藏夹
+                            </h3>
+                            <button onclick="showCreateFolderModal()" class="text-blue-600 hover:text-blue-800 w-8 h-8 rounded-lg hover:bg-blue-50 flex items-center justify-center">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        <div id="folder-list" class="space-y-1">
+                            <div class="folder-item active" onclick="selectFolder('all')" ondragover="allowDrop(event)" ondrop="dropOnFolder(event, 'all')">
+                                <i class="fas fa-folder-open text-slate-400"></i>
+                                <span class="flex-1">全部收藏</span>
+                                <span id="folder-count-all" class="text-xs bg-slate-200 px-2 py-0.5 rounded-full">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex-1">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 id="current-folder-name" class="text-xl font-bold text-slate-800">全部收藏</h2>
+                        <div class="text-sm text-slate-500">
+                            共 <span id="current-folder-count">0</span> 篇文献
+                        </div>
+                    </div>
+                    <div id="favorites-list" class="space-y-4">
+                        <div class="text-center py-12 text-slate-400">
+                            <i class="fas fa-folder-open text-4xl mb-3"></i>
+                            <p>暂无收藏文献</p>
+                            <p class="text-sm mt-2">点击文献卡片上的书签图标添加到收藏</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-search" class="tab-content hidden">
+            <div class="search-container p-6 mb-6">
+                <div class="flex gap-4 mb-4">
+                    <div class="flex-1 relative">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" id="search-input" placeholder="输入关键词搜索..." 
+                               class="w-full pl-12 pr-4 py-3 bg-slate-50 rounded-lg border border-slate-200 focus:bg-white transition outline-none focus:ring-2 focus:ring-blue-500"
+                               onkeypress="if(event.key==='Enter')doSearch()">
+                    </div>
+                    <button onclick="doSearch()" class="px-8 py-3 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition font-medium">
+                        <i class="fas fa-search mr-2"></i>搜索
+                    </button>
+                </div>
+                
+                <div class="mb-4">
+                    <p class="text-sm text-slate-500 mb-2">搜索范围（可多选）：</p>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item checked" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="title" checked onchange="updateSearchFields()">
+                            <i class="fas fa-heading"></i>
+                            <span>标题</span>
+                        </label>
+                        <label class="checkbox-item checked" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="abstract" checked onchange="updateSearchFields()">
+                            <i class="fas fa-align-left"></i>
+                            <span>摘要</span>
+                        </label>
+                        <label class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="author" onchange="updateSearchFields()">
+                            <i class="fas fa-user"></i>
+                            <span>作者</span>
+                        </label>
+                        <label class="checkbox-item" onclick="toggleCheckbox(this)">
+                            <input type="checkbox" value="keyword" onchange="updateSearchFields()">
+                            <i class="fas fa-tags"></i>
+                            <span>关键词</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="flex flex-wrap gap-3">
+                    <select id="search-category" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white">
+                        <option value="">全部领域</option>
+                        <option value="PA">公共行政</option>
+                        <option value="PP">公共政策</option>
+                        <option value="POL">政治学</option>
+                        <option value="CHINA">中国研究</option>
+                    </select>
+                    <select id="search-time" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white">
+                        <option value="">全部时间</option>
+                        <option value="7">最近7天</option>
+                        <option value="30">最近30天</option>
+                        <option value="90">最近90天</option>
+                        <option value="365">最近1年</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div id="search-results-info" class="mb-4 text-sm text-slate-500"></div>
+            <div id="search-results" class="space-y-4"></div>
+        </div>
+    </main>
+
+    <div id="create-folder-modal" class="modal" onclick="if(event.target.id === 'create-folder-modal') closeModal('create-folder-modal')">
+        <div class="modal-content" style="width: 400px;" onclick="event.stopPropagation()">
+            <h3 class="text-lg font-bold mb-4">新建文件夹</h3>
+            <input type="text" id="new-folder-name" placeholder="输入文件夹名称" 
+                   class="w-full px-4 py-2 border border-slate-300 rounded-lg mb-4 outline-none focus:ring-2 focus:ring-blue-500">
+            <div class="flex justify-end gap-2">
+                <button onclick="closeModal('create-folder-modal')" class="px-4 py-2 text-slate-600 hover:text-slate-800">取消</button>
+                <button onclick="createFolder()" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">创建</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="add-folder-modal" class="modal" onclick="if(event.target.id === 'add-folder-modal') closeModal('add-folder-modal')">
+        <div class="modal-content" style="width: 400px;" onclick="event.stopPropagation()">
+            <h3 class="text-lg font-bold mb-4">选择收藏文件夹</h3>
+            <div id="add-folder-list" class="space-y-2 mb-4 max-h-64 overflow-y-auto"></div>
+            <div class="flex justify-end gap-2">
+                <button onclick="closeModal('add-folder-modal')" class="px-4 py-2 text-slate-600 hover:text-slate-800">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="paper-detail-modal" class="modal" onclick="if(event.target.id === 'paper-detail-modal') closeModal('paper-detail-modal')">
+        <div class="modal-content" style="max-width: 800px;" onclick="event.stopPropagation()">
+            <div id="paper-detail-content"></div>
+        </div>
+    </div>
+
+    <script>
+
         // ==================== 数据存储 ====================
         let allPapers = [];
         let allJournals = [];
@@ -5,15 +673,22 @@
         let folders = JSON.parse(localStorage.getItem('research-atlas-folders') || '[{"id": "all", "name": "全部收藏"}]');
         let paperFolders = JSON.parse(localStorage.getItem('research-atlas-paper-folders') || '{}');
         let currentFolder = 'all';
-        let currentSearchKeyword = '';
         let currentPaperId = null;
         let draggedPaperId = null;
         let themeRiverChart = null;
         let currentThemeCategory = 'all';
+        let searchFields = ['title', 'abstract'];
+        let trendChart = null;
 
-        // ==================== 期刊官网链接配置（已验证） ====================
+        // ==================== 期刊配置 ====================
+        const journalCategories = {
+            pa: ["Public Administration Review", "Public Administration", "Governance", "Journal of Public Administration Research and Theory", "Public Management Review", "The American Review of Public Administration", "International Public Management Journal", "Administration & Society", "Public Administration and Development", "International Review of Administrative Sciences", "Australian Journal of Public Administration", "Public Money & Management", "Public Performance & Management Review", "Administrative Theory & Praxis", "Regulation & Governance", "Government Information Quarterly", "International Journal of Public Administration", "Journal of Chinese Governance", "Public Administration Quarterly", "Chinese Public Administration Review"],
+            pp: ["Policy Sciences", "Journal of Public Policy", "Policy Studies Journal", "Journal of Policy Analysis and Management", "Review of Policy Research", "Policy & Politics", "Policy Studies", "Social Policy & Administration", "Critical Policy Studies", "Journal of European Public Policy", "Policy and Society", "European Policy Analysis", "Journal of Comparative Policy Analysis", "Public Policy and Administration", "Policy & Internet", "Journal of Asian Public Policy", "Politics & Policy", "Policy Design and Practice", "Behavioural Public Policy", "Research Policy", "Science and Public Policy", "Journal of Social Policy"],
+            pol: ["American Journal of Political Science", "American Political Science Review", "Annual Review of Political Science", "British Journal of Political Science", "Comparative Political Studies", "Comparative Politics", "Democratization", "Electoral Studies", "European Journal of Political Research", "European Political Science Review", "European Union Politics", "International Organization", "International Security", "International Studies Quarterly", "Journal of Conflict Resolution", "Journal of Democracy", "Journal of Theoretical Politics", "Legislative Studies Quarterly", "PS: Political Science & Politics", "Party Politics", "Perspectives on Politics", "Philosophy & Public Affairs", "Political Analysis", "Political Behavior", "Political Geography", "Political Psychology", "Political Research Quarterly", "Political Science Research and Methods", "Political Theory", "Politics & Gender", "Public Choice", "Public Opinion Quarterly", "Research & Politics", "Scandinavian Political Studies", "The Journal of Politics", "West European Politics"],
+            china: ["China Information", "China Perspectives", "Journal of Chinese Political Science", "Journal of Contemporary China", "Modern China", "The China Journal", "The China Quarterly"]
+        };
+
         const journalUrls = {
-            // PA期刊 - 公共行政
             "Public Administration Review": "https://onlinelibrary.wiley.com/journal/15406210",
             "Public Administration": "https://onlinelibrary.wiley.com/journal/14672929",
             "Governance": "https://onlinelibrary.wiley.com/journal/14680491",
@@ -34,8 +709,6 @@
             "Journal of Chinese Governance": "https://www.tandfonline.com/toc/rgoV20/current",
             "Public Administration Quarterly": "https://www.spaef.com/",
             "Chinese Public Administration Review": "https://www.tandfonline.com/toc/rpad20/current",
-            
-            // PP期刊 - 公共政策
             "Policy Sciences": "https://link.springer.com/journal/11077",
             "Journal of Public Policy": "https://www.cambridge.org/core/journals/journal-of-public-policy",
             "Policy Studies Journal": "https://onlinelibrary.wiley.com/journal/15410072",
@@ -58,8 +731,6 @@
             "Research Policy": "https://www.sciencedirect.com/journal/research-policy",
             "Science and Public Policy": "https://academic.oup.com/spp",
             "Journal of Social Policy": "https://www.cambridge.org/core/journals/journal-of-social-policy",
-            
-            // POL期刊 - 政治学
             "American Journal of Political Science": "https://onlinelibrary.wiley.com/journal/15405907",
             "American Political Science Review": "https://www.cambridge.org/core/journals/american-political-science-review",
             "Annual Review of Political Science": "https://www.annualreviews.org/journal/polisci",
@@ -96,8 +767,6 @@
             "Scandinavian Political Studies": "https://onlinelibrary.wiley.com/journal/14679477",
             "The Journal of Politics": "https://www.journals.uchicago.edu/toc/jop/current",
             "West European Politics": "https://www.tandfonline.com/toc/fwep20/current",
-            
-            // CHINA期刊 - 中国研究
             "China Information": "https://journals.sagepub.com/home/cin",
             "China Perspectives": "https://journals.openedition.org/chinaperspectives/",
             "Journal of Chinese Political Science": "https://link.springer.com/journal/11366",
@@ -110,332 +779,541 @@
         // ==================== 初始化 ====================
         document.addEventListener('DOMContentLoaded', function() {
             loadData();
-            updateFavCount();
         });
 
         // ==================== 数据加载 ====================
         async function loadData() {
             try {
-                const response = await fetch('data/data.json');
-                if (!response.ok) throw new Error('Failed to load');
-                const data = await response.json();
+                document.getElementById('loading-state').classList.remove('hidden');
+                document.getElementById('error-state').classList.add('hidden');
                 
-                allPapers = filterValidPapers(data.papers || []);
+                const paths = ['data/data.json', './data/data.json', '../data/data.json'];
+                let data = null;
                 
-                const journalCounts = {};
-                allPapers.forEach(p => {
-                    if (!journalCounts[p.journal_name]) {
-                        journalCounts[p.journal_name] = { count: 0, category: p.category };
-                    }
-                    journalCounts[p.journal_name].count++;
+                for (const path of paths) {
+                    try {
+                        const response = await fetch(path);
+                        if (response.ok) {
+                            data = await response.json();
+                            break;
+                        }
+                    } catch (e) { continue; }
+                }
+                
+                if (!data) throw new Error('无法加载数据文件');
+                
+                allPapers = data.papers || [];
+                allJournals = [...new Set(allPapers.map(p => p.journal_name))].filter(Boolean).sort();
+                
+                allPapers.forEach(paper => {
+                    if (!paper.category) paper.category = inferCategory(paper.journal_name);
                 });
                 
-                allJournals = Object.entries(journalCounts).map(([name, info]) => ({
-                    name, 
-                    category: info.category, 
-                    count: info.count
-                }));
+                updateStats(data.stats);
+                initCharts(data.stats);
+                renderAll();
                 
                 document.getElementById('loading-state').classList.add('hidden');
-                document.getElementById('tab-discover').classList.remove('hidden');
-                
-                updateStats(data.stats);
-                populateJournalFilters();
-                renderJournalsTable();
-                renderFolders();
-                initThemeRiverChart();
-                renderTrendChart(data.stats?.trend || []);
-                refreshRandomPapers();
-                filterPAPapers();
-                filterPPPapers();
-                filterPOLPapers();
-                filterCHINAPapers();
             } catch (error) {
-                console.error('Error:', error);
+                console.error('加载数据失败:', error);
                 document.getElementById('loading-state').classList.add('hidden');
                 document.getElementById('error-state').classList.remove('hidden');
             }
         }
 
-        function filterValidPapers(papers) {
-            return papers.filter(p => {
-                if (!p.title || p.title.trim() === '') return false;
-                const titleLower = p.title.toLowerCase();
-                if (titleLower.includes('issue information')) return false;
-                if (titleLower.includes('isbn')) return false;
-                if (titleLower.includes('book review')) return false;
-                if (titleLower.includes('editorial')) return false;
-                if (titleLower.includes('erratum')) return false;
-                if (titleLower.includes('corrigendum')) return false;
-                return true;
-            });
+        function inferCategory(journalName) {
+            if (!journalName) return 'PA';
+            const name = journalName.toLowerCase();
+            if (journalCategories.pa.some(j => j.toLowerCase() === name)) return 'PA';
+            if (journalCategories.pp.some(j => j.toLowerCase() === name)) return 'PP';
+            if (journalCategories.pol.some(j => j.toLowerCase() === name)) return 'POL';
+            if (journalCategories.china.some(j => j.toLowerCase() === name)) return 'CHINA';
+            return 'PA';
         }
 
-        // ==================== 统计更新 ====================
         function updateStats(stats) {
-            document.getElementById('stat-total').textContent = allPapers.length;
-            document.getElementById('stat-journals').textContent = allJournals.length;
-            document.getElementById('stat-pa').textContent = allPapers.filter(p => p.category === 'PA').length;
-            document.getElementById('stat-pp').textContent = allPapers.filter(p => p.category === 'PP').length;
-            document.getElementById('stat-pol').textContent = allPapers.filter(p => p.category === 'POL').length;
-            document.getElementById('stat-china').textContent = allPapers.filter(p => p.category === 'CHINA').length;
-            document.getElementById('stat-today').textContent = stats?.today || 0;
-            document.getElementById('total-count').textContent = allPapers.length;
+            if (stats) {
+                document.getElementById('total-count').textContent = stats.total || allPapers.length;
+                document.getElementById('stat-pa').textContent = stats.pa_count || allPapers.filter(p => p.category === 'PA').length;
+                document.getElementById('stat-pp').textContent = stats.pp_count || allPapers.filter(p => p.category === 'PP').length;
+                document.getElementById('stat-pol').textContent = stats.pol_count || allPapers.filter(p => p.category === 'POL').length;
+                document.getElementById('stat-china').textContent = stats.china_count || allPapers.filter(p => p.category === 'CHINA').length;
+            } else {
+                document.getElementById('total-count').textContent = allPapers.length;
+                document.getElementById('stat-pa').textContent = allPapers.filter(p => p.category === 'PA').length;
+                document.getElementById('stat-pp').textContent = allPapers.filter(p => p.category === 'PP').length;
+                document.getElementById('stat-pol').textContent = allPapers.filter(p => p.category === 'POL').length;
+                document.getElementById('stat-china').textContent = allPapers.filter(p => p.category === 'CHINA').length;
+            }
         }
 
-        // ==================== 期刊筛选器填充 ====================
-        function populateJournalFilters() {
-            const categories = ['pa', 'pp', 'pol', 'china'];
-            categories.forEach(cat => {
-                const select = document.getElementById(`${cat}-journal-filter`);
-                const journals = allJournals.filter(j => j.category === cat.toUpperCase());
-                select.innerHTML = '<option value="">全部期刊</option>' +
-                    journals.map(j => `<option value="${j.name}">${j.name} (${j.count}篇)</option>`).join('');
+        function initCharts(stats) {
+            const ctx = document.getElementById('trendChart');
+            if (ctx && stats && stats.trend) {
+                if (trendChart) trendChart.destroy();
+                trendChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: stats.trend.map(t => t.date.slice(5)),
+                        datasets: [{
+                            label: '发文数量',
+                            data: stats.trend.map(t => t.count),
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 2,
+                            fill: true,
+                            tension: 0.4,
+                            pointRadius: 3,
+                            pointBackgroundColor: '#3b82f6'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                    }
+                });
+            }
+            initThemeRiverChart();
+        }
+
+        function initThemeRiverChart() {
+            const chartDom = document.getElementById('themeRiverChart');
+            if (!chartDom) return;
+            if (themeRiverChart) themeRiverChart.dispose();
+            themeRiverChart = echarts.init(chartDom);
+            updateThemeRiverChart();
+        }
+
+        function updateThemeRiverChart() {
+            if (!themeRiverChart) return;
+            let papers = allPapers;
+            if (currentThemeCategory !== 'all') {
+                papers = allPapers.filter(p => p.category === currentThemeCategory.toUpperCase());
+            }
+            
+            const keywordData = {};
+            papers.forEach(paper => {
+                const date = paper.published_date ? paper.published_date.slice(0, 7) : '';
+                if (!date) return;
+                const keywords = paper.keywords || [];
+                keywords.forEach(keyword => {
+                    if (!keywordData[keyword]) keywordData[keyword] = {};
+                    if (!keywordData[keyword][date]) keywordData[keyword][date] = 0;
+                    keywordData[keyword][date]++;
+                });
             });
+            
+            const topKeywords = Object.entries(keywordData)
+                .map(([kw, dates]) => ({ keyword: kw, total: Object.values(dates).reduce((a, b) => a + b, 0) }))
+                .sort((a, b) => b.total - a.total)
+                .slice(0, 15)
+                .map(k => k.keyword);
+            
+            const riverData = [];
+            topKeywords.forEach(keyword => {
+                Object.entries(keywordData[keyword] || {}).forEach(([date, count]) => {
+                    riverData.push([date, count, keyword]);
+                });
+            });
+            
+            const option = {
+                tooltip: { trigger: 'axis', axisPointer: { type: 'line' } },
+                singleAxis: {
+                    top: 50, bottom: 50, axisTick: {}, axisLabel: {}, type: 'time',
+                    axisPointer: { animation: true, label: { show: true } },
+                    splitLine: { show: true, lineStyle: { type: 'dashed', opacity: 0.2 } }
+                },
+                series: [{
+                    type: 'themeRiver',
+                    emphasis: { itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0, 0, 0, 0.5)' } },
+                    data: riverData,
+                    label: { show: true, fontSize: 11 }
+                }]
+            };
+            themeRiverChart.setOption(option);
         }
 
-        // ==================== 标签切换 ====================
+        function setThemeRiverCategory(category) {
+            currentThemeCategory = category;
+            document.querySelectorAll('#tab-discover .filter-tab').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === category) btn.classList.add('active');
+            });
+            updateThemeRiverChart();
+        }
+
+        function renderAll() {
+            populateJournalFilters();
+            renderJournalsTable();
+            renderFolders();
+            refreshRandomPapers();
+            updateFavCount();
+        }
+
+        function populateJournalFilters() {
+            const paSelect = document.getElementById('pa-journal-filter');
+            const ppSelect = document.getElementById('pp-journal-filter');
+            const polSelect = document.getElementById('pol-journal-filter');
+            const chinaSelect = document.getElementById('china-journal-filter');
+            
+            const paJournals = allJournals.filter(j => journalCategories.pa.includes(j));
+            const ppJournals = allJournals.filter(j => journalCategories.pp.includes(j));
+            const polJournals = allJournals.filter(j => journalCategories.pol.includes(j));
+            const chinaJournals = allJournals.filter(j => journalCategories.china.includes(j));
+            
+            populateSelect(paSelect, paJournals);
+            populateSelect(ppSelect, ppJournals);
+            populateSelect(polSelect, polJournals);
+            populateSelect(chinaSelect, chinaJournals);
+            
+            filterPAPapers();
+            filterPPPapers();
+            filterPOLPapers();
+            filterChinaPapers();
+        }
+
+        function populateSelect(select, journals) {
+            const currentValue = select.value;
+            select.innerHTML = '<option value="">全部期刊</option>';
+            journals.forEach(journal => {
+                const option = document.createElement('option');
+                option.value = journal;
+                option.textContent = journal;
+                select.appendChild(option);
+            });
+            select.value = currentValue;
+        }
+
         function switchTab(tabName) {
-            currentSearchKeyword = '';
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.tab === tabName) item.classList.add('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
             document.getElementById(`tab-${tabName}`).classList.remove('hidden');
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            document.querySelector(`[data-tab="${tabName}"]`)?.classList.add('active');
-            
             if (tabName === 'favorites') renderFavorites();
-            if (tabName === 'pa') filterPAPapers();
-            if (tabName === 'pp') filterPPPapers();
-            if (tabName === 'pol') filterPOLPapers();
-            if (tabName === 'china') filterCHINAPapers();
         }
 
-        // ==================== 文献卡片渲染 ====================
-        function renderPaperCard(paper, options = {}) {
-            const isSaved = favorites.includes(paper.openalex_id);
-            const folderId = paperFolders[paper.openalex_id];
-            const folderName = folderId ? folders.find(f => f.id === folderId)?.name : null;
-            
-            const authors = (paper.authors || []).slice(0, 3).join(', ') + 
-                          ((paper.authors || []).length > 3 ? ' 等' : '');
-            
-            const keywords = (paper.keywords || []).slice(0, 5).map(k => 
-                `<span class="keyword-tag">${highlightText(k)}</span>`
-            ).join('');
-            
-            const abstract = paper.abstract || '暂无摘要';
-            const isLongAbstract = abstract.length > 150;
-            const categoryClass = paper.category.toLowerCase();
+        function filterPAPapers() {
+            const journal = document.getElementById('pa-journal-filter').value;
+            const days = document.getElementById('pa-time-filter').value;
+            renderPaperList('pa-papers-list', filterPapers('PA', journal, days));
+        }
+
+        function filterPPPapers() {
+            const journal = document.getElementById('pp-journal-filter').value;
+            const days = document.getElementById('pp-time-filter').value;
+            renderPaperList('pp-papers-list', filterPapers('PP', journal, days));
+        }
+
+        function filterPOLPapers() {
+            const journal = document.getElementById('pol-journal-filter').value;
+            const days = document.getElementById('pol-time-filter').value;
+            renderPaperList('pol-papers-list', filterPapers('POL', journal, days));
+        }
+
+        function filterChinaPapers() {
+            const journal = document.getElementById('china-journal-filter').value;
+            const days = document.getElementById('china-time-filter').value;
+            renderPaperList('china-papers-list', filterPapers('CHINA', journal, days));
+        }
+
+        function filterPapers(category, journal, days) {
+            let filtered = allPapers.filter(p => p.category === category);
+            if (journal) filtered = filtered.filter(p => p.journal_name === journal);
+            if (days) {
+                const cutoff = new Date();
+                cutoff.setDate(cutoff.getDate() - parseInt(days));
+                filtered = filtered.filter(p => p.published_date && new Date(p.published_date) >= cutoff);
+            }
+            return filtered.sort((a, b) => new Date(b.published_date) - new Date(a.published_date));
+        }
+
+        function renderPaperList(containerId, papers) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            if (papers.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-slate-400"><i class="fas fa-inbox text-4xl mb-3"></i><p>暂无符合条件的文献</p></div>`;
+                return;
+            }
+            container.innerHTML = papers.map(paper => createPaperCard(paper)).join('');
+        }
+
+        function createPaperCard(paper) {
+            const categoryClass = paper.category ? paper.category.toLowerCase() : 'pa';
+            const categoryTag = getCategoryTag(paper.category);
+            const isSaved = paperFolders[paper.openalex_id];
+            const bookmarkClass = isSaved ? 'saved' : '';
             
             return `
-                <div class="paper-card ${categoryClass} draggable" 
-                     data-paper-id="${paper.openalex_id}"
-                     draggable="true"
-                     ondragstart="handleDragStart(event, '${paper.openalex_id}')"
-                     ondragend="handleDragEnd(event)">
-                    <div class="p-6">
-                        <!-- 头部：标签和日期 -->
-                        <div class="flex items-center gap-3 mb-3">
-                            <span class="category-badge ${categoryClass}">
-                                <i class="fas fa-circle text-[8px]"></i>
-                                ${paper.category}
-                            </span>
-                            <span class="journal-badge">
-                                <i class="fas fa-book-open mr-1 text-xs"></i>
-                                ${paper.journal_name}
-                            </span>
-                            <span class="text-sm text-slate-400 ml-auto">
-                                <i class="far fa-calendar-alt mr-1"></i>
-                                ${paper.published_date}
-                            </span>
+                <div class="paper-card ${categoryClass} p-5" draggable="true" ondragstart="dragStart(event, '${paper.openalex_id}')" ondragend="dragEnd(event)">
+                    <div class="flex justify-between items-start gap-4">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2 mb-2">
+                                ${categoryTag}
+                                <span class="journal-tag">${paper.journal_name || '未知期刊'}</span>
+                                <span class="text-xs text-slate-400">${paper.published_date || ''}</span>
+                            </div>
+                            <h3 class="text-lg font-semibold text-slate-800 mb-2 leading-tight cursor-pointer hover:text-blue-600 transition" onclick="showPaperDetail('${paper.openalex_id}')">
+                                ${paper.title || '无标题'}
+                            </h3>
+                            <p class="text-sm text-slate-600 mb-2">
+                                <i class="fas fa-users mr-1 text-slate-400"></i>
+                                ${paper.authors ? paper.authors.slice(0, 5).join(', ') : '未知作者'}${paper.authors && paper.authors.length > 5 ? ' 等' : ''}
+                            </p>
+                            <p class="abstract-text text-sm" id="abstract-${paper.openalex_id}">${paper.abstract || '暂无摘要'}</p>
+                            ${paper.abstract && paper.abstract.length > 100 ? `<div class="expand-btn" onclick="toggleAbstract('${paper.openalex_id}')"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>` : ''}
+                            ${paper.keywords && paper.keywords.length > 0 ? `<div class="flex flex-wrap gap-1 mt-3">${paper.keywords.slice(0, 5).map(kw => `<span class="text-xs px-2 py-1 bg-slate-100 text-slate-600 rounded">${kw}</span>`).join('')}</div>` : ''}
                         </div>
-                        
-                        <!-- 标题 -->
-                        <h3 class="text-lg font-bold text-slate-800 mb-2 cursor-pointer hover:text-blue-600 transition leading-snug"
-                            onclick="showPaperDetail('${paper.openalex_id}')">
-                            ${highlightText(paper.title)}
-                        </h3>
-                        
-                        <!-- 作者 -->
-                        <div class="text-sm text-slate-600 mb-3">
-                            <i class="fas fa-user-edit mr-1 text-slate-400"></i>
-                            ${authors || '未知作者'}
-                        </div>
-                        
-                        <!-- 摘要 -->
-                        <div class="abstract-text mb-3" id="abstract-${paper.openalex_id}">
-                            ${highlightText(abstract)}
-                        </div>
-                        ${isLongAbstract ? `
-                            <button onclick="toggleAbstract('${paper.openalex_id}')" 
-                                    class="text-xs text-blue-600 hover:text-blue-800 mb-3">
-                                <span id="abstract-toggle-${paper.openalex_id}">展开更多</span>
-                                <i class="fas fa-chevron-down ml-1"></i>
+                        <div class="flex flex-col gap-2">
+                            <button class="bookmark-btn ${bookmarkClass}" onclick="showAddToFolderModal('${paper.openalex_id}')" title="${isSaved ? '已收藏' : '添加到收藏'}">
+                                <i class="fas fa-bookmark"></i>
                             </button>
-                        ` : ''}
-                        
-                        <!-- 关键词 -->
-                        <div class="flex flex-wrap gap-1 mb-4">${keywords}</div>
-                        
-                        <!-- 底部操作栏 -->
-                        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-                            <div class="flex items-center gap-3">
-                                ${paper.url ? `
-                                    <a href="${paper.url}" target="_blank" 
-                                       class="text-sm text-blue-600 hover:text-blue-800 flex items-center gap-1">
-                                        <i class="fas fa-external-link-alt"></i>
-                                        查看原文
-                                    </a>
-                                ` : ''}
-                            </div>
-                            <div class="flex items-center gap-2">
-                                ${folderName ? `
-                                    <span class="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">
-                                        <i class="fas fa-folder mr-1 text-yellow-500"></i>
-                                        ${folderName}
-                                    </span>
-                                ` : ''}
-                                <button onclick="showAddToFolderModal('${paper.openalex_id}')" 
-                                        class="bookmark-btn ${isSaved ? 'saved' : ''}"
-                                        title="${isSaved ? '已收藏，点击管理' : '添加到收藏夹'}">
-                                    <i class="${isSaved ? 'fas' : 'far'} fa-bookmark"></i>
-                                </button>
-                            </div>
+                            ${paper.url ? `<a href="${paper.url}" target="_blank" class="bookmark-btn" title="查看原文"><i class="fas fa-external-link-alt"></i></a>` : ''}
                         </div>
                     </div>
                 </div>
             `;
         }
 
-        // ==================== 拖拽功能 ====================
-        function handleDragStart(event, paperId) {
-            draggedPaperId = paperId;
-            event.target.classList.add('dragging');
-            event.dataTransfer.effectAllowed = 'move';
-            event.dataTransfer.setData('text/plain', paperId);
+        function getCategoryTag(category) {
+            const tags = {
+                'PA': '<span class="category-tag tag-pa">PA</span>',
+                'PP': '<span class="category-tag tag-pp">PP</span>',
+                'POL': '<span class="category-tag tag-pol">POL</span>',
+                'CHINA': '<span class="category-tag tag-china">CHINA</span>'
+            };
+            return tags[category] || tags['PA'];
         }
 
-        function handleDragEnd(event) {
-            event.target.classList.remove('dragging');
-            document.querySelectorAll('.folder-item').forEach(el => {
-                el.classList.remove('drag-over');
+        function toggleAbstract(paperId) {
+            const abstractEl = document.getElementById(`abstract-${paperId}`);
+            const btn = abstractEl.nextElementSibling;
+            if (abstractEl.classList.contains('expanded')) {
+                abstractEl.classList.remove('expanded');
+                btn.innerHTML = '<i class="fas fa-chevron-down mr-1"></i>展开更多';
+            } else {
+                abstractEl.classList.add('expanded');
+                btn.innerHTML = '<i class="fas fa-chevron-up mr-1"></i>收起';
+            }
+        }
+
+        function refreshRandomPapers() {
+            const container = document.getElementById('random-papers');
+            if (!container || allPapers.length === 0) return;
+            const shuffled = [...allPapers].sort(() => 0.5 - Math.random());
+            container.innerHTML = shuffled.slice(0, 5).map(paper => createPaperCard(paper)).join('');
+        }
+
+        let currentJournalFilter = 'all';
+
+        function renderJournalsTable() {
+            const tbody = document.getElementById('journals-table-body');
+            if (!tbody) return;
+            let html = '';
+            const categories = [
+                { key: 'pa', name: '公共行政', class: 'tag-pa' },
+                { key: 'pp', name: '公共政策', class: 'tag-pp' },
+                { key: 'pol', name: '政治学', class: 'tag-pol' },
+                { key: 'china', name: '中国研究', class: 'tag-china' }
+            ];
+            
+            categories.forEach(cat => {
+                if (currentJournalFilter !== 'all' && currentJournalFilter !== cat.key) return;
+                journalCategories[cat.key].forEach(journal => {
+                    const url = journalUrls[journal] || '#';
+                    html += `
+                        <tr data-journal="${journal.toLowerCase()}" data-category="${cat.key}">
+                            <td><span class="category-tag ${cat.class}">${cat.key.toUpperCase()}</span></td>
+                            <td class="font-medium text-slate-800">${journal}</td>
+                            <td class="text-center">
+                                <a href="${url}" target="_blank" class="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition text-sm">
+                                    <i class="fas fa-external-link-alt text-xs"></i> 访问官网
+                                </a>
+                            </td>
+                        </tr>
+                    `;
+                });
+            });
+            tbody.innerHTML = html || '<tr><td colspan="3" class="text-center py-8 text-slate-400">暂无数据</td></tr>';
+        }
+
+        function filterJournals(category) {
+            currentJournalFilter = category;
+            document.querySelectorAll('[data-journal-filter]').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.journalFilter === category) btn.classList.add('active');
+            });
+            renderJournalsTable();
+        }
+
+        function searchJournals(query) {
+            const rows = document.querySelectorAll('#journals-table-body tr');
+            const lowerQuery = query.toLowerCase();
+            rows.forEach(row => {
+                const journal = row.dataset.journal;
+                row.style.display = (journal && journal.includes(lowerQuery)) ? '' : 'none';
             });
         }
 
-        function handleDragOver(event) {
-            event.preventDefault();
-            event.dataTransfer.dropEffect = 'move';
+        function dragStart(event, paperId) {
+            draggedPaperId = paperId;
+            event.target.classList.add('dragging');
+            event.dataTransfer.effectAllowed = 'move';
         }
 
-        function handleDragEnter(event, folderId) {
+        function dragEnd(event) {
+            event.target.classList.remove('dragging');
+            draggedPaperId = null;
+        }
+
+        function allowDrop(event) {
             event.preventDefault();
             event.currentTarget.classList.add('drag-over');
         }
 
-        function handleDragLeave(event) {
-            event.currentTarget.classList.remove('drag-over');
-        }
-
-        function handleDrop(event, folderId) {
+        function dropOnFolder(event, folderId) {
             event.preventDefault();
             event.currentTarget.classList.remove('drag-over');
-            if (draggedPaperId) {
-                addToFolder(draggedPaperId, folderId === 'all' ? null : folderId);
-                draggedPaperId = null;
-            }
+            if (draggedPaperId) addPaperToFolder(draggedPaperId, folderId);
         }
 
-        // ==================== 摘要展开/收起 ====================
-        function toggleAbstract(paperId) {
-            const abstractEl = document.getElementById(`abstract-${paperId}`);
-            const toggleEl = document.getElementById(`abstract-toggle-${paperId}`);
+        function renderFolders() {
+            const container = document.getElementById('folder-list');
+            if (!container) return;
+            const allFolder = container.querySelector('[onclick="selectFolder('all')"]');
+            container.innerHTML = '';
+            container.appendChild(allFolder);
+            document.getElementById('folder-count-all').textContent = Object.keys(paperFolders).length;
             
-            if (abstractEl.classList.contains('expanded')) {
-                abstractEl.classList.remove('expanded');
-                toggleEl.textContent = '展开更多';
-                toggleEl.parentElement.querySelector('i').classList.remove('fa-chevron-up');
-                toggleEl.parentElement.querySelector('i').classList.add('fa-chevron-down');
+            folders.filter(f => f.id !== 'all').forEach(folder => {
+                const count = Object.values(paperFolders).filter(fId => fId === folder.id).length;
+                const div = document.createElement('div');
+                div.className = `folder-item ${currentFolder === folder.id ? 'active' : ''}`;
+                div.onclick = () => selectFolder(folder.id);
+                div.ondragover = (e) => allowDrop(e);
+                div.ondrop = (e) => dropOnFolder(e, folder.id);
+                div.innerHTML = `
+                    <i class="fas fa-folder${currentFolder === folder.id ? '-open' : ''} text-slate-400"></i>
+                    <span class="flex-1 truncate">${folder.name}</span>
+                    <span class="text-xs bg-slate-200 px-2 py-0.5 rounded-full">${count}</span>
+                    <button onclick="deleteFolder('${folder.id}', event)" class="text-slate-400 hover:text-red-500 ml-2">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function selectFolder(folderId) {
+            currentFolder = folderId;
+            renderFolders();
+            renderFavorites();
+            const folder = folders.find(f => f.id === folderId);
+            document.getElementById('current-folder-name').textContent = folder ? folder.name : '全部收藏';
+        }
+
+        function renderFavorites() {
+            const container = document.getElementById('favorites-list');
+            if (!container) return;
+            let papers = [];
+            if (currentFolder === 'all') {
+                papers = allPapers.filter(p => paperFolders[p.openalex_id]);
             } else {
-                abstractEl.classList.add('expanded');
-                toggleEl.textContent = '收起';
-                toggleEl.parentElement.querySelector('i').classList.remove('fa-chevron-down');
-                toggleEl.parentElement.querySelector('i').classList.add('fa-chevron-up');
+                papers = allPapers.filter(p => paperFolders[p.openalex_id] === currentFolder);
             }
-        }
-
-        // ==================== 高亮文本 ====================
-        function highlightText(text) {
-            if (!currentSearchKeyword || !text) return text;
-            const regex = new RegExp(`(${currentSearchKeyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-            return text.replace(regex, '<span class="highlight">$1</span>');
-        }
-
-        // ==================== 收藏功能 ====================
-        function showAddToFolderModal(paperId) {
-            currentPaperId = paperId;
-            const folderList = document.getElementById('add-folder-list');
-            const customFolders = folders.filter(f => f.id !== 'all');
-            const currentFolderId = paperFolders[paperId];
+            document.getElementById('current-folder-count').textContent = papers.length;
             
-            let html = `
-                <div class="p-3 border-2 rounded-lg cursor-pointer transition ${!currentFolderId ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-blue-300'}"
-                     onclick="addToFolder('${paperId}', null)">
-                    <div class="flex items-center gap-3">
-                        <i class="fas fa-inbox text-slate-400 text-lg"></i>
-                        <span class="flex-1 font-medium">全部收藏</span>
-                        ${!currentFolderId ? '<i class="fas fa-check text-blue-600"></i>' : ''}
-                    </div>
-                </div>
-            `;
-            
-            customFolders.forEach(folder => {
-                const isInFolder = currentFolderId === folder.id;
-                html += `
-                    <div class="p-3 border-2 rounded-lg cursor-pointer transition ${isInFolder ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-blue-300'}"
-                         onclick="addToFolder('${paperId}', '${folder.id}')">
-                        <div class="flex items-center gap-3">
-                            <i class="fas fa-folder text-yellow-500 text-lg"></i>
-                            <span class="flex-1 font-medium">${folder.name}</span>
-                            ${isInFolder ? '<i class="fas fa-check text-blue-600"></i>' : ''}
-                        </div>
+            if (papers.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-slate-400">
+                        <i class="fas fa-folder-open text-4xl mb-3"></i>
+                        <p>暂无收藏文献</p>
+                        <p class="text-sm mt-2">拖拽文献到收藏夹或点击书签图标添加</p>
                     </div>
                 `;
-            });
-            
-            folderList.innerHTML = html;
-            document.getElementById('add-to-folder-modal').classList.add('active');
+                return;
+            }
+            container.innerHTML = papers.map(paper => createPaperCard(paper)).join('');
         }
 
-        function addToFolder(paperId, folderId) {
-            if (folderId) {
-                paperFolders[paperId] = folderId;
-            } else {
-                delete paperFolders[paperId];
-            }
-            
-            if (!favorites.includes(paperId)) {
-                favorites.push(paperId);
-            }
-            
-            localStorage.setItem('research-atlas-favorites', JSON.stringify(favorites));
-            localStorage.setItem('research-atlas-paper-folders', JSON.stringify(paperFolders));
-            
-            updateFavCount();
-            closeModal('add-to-folder-modal');
+        function showCreateFolderModal() {
+            document.getElementById('new-folder-name').value = '';
+            document.getElementById('create-folder-modal').classList.add('active');
+        }
+
+        function createFolder() {
+            const name = document.getElementById('new-folder-name').value.trim();
+            if (!name) { alert('请输入文件夹名称'); return; }
+            const id = 'folder_' + Date.now();
+            folders.push({ id, name });
+            saveFolders();
             renderFolders();
-            
-            const activeTab = document.querySelector('.nav-item.active')?.dataset.tab;
-            if (activeTab === 'favorites') renderFavorites();
-            else if (activeTab === 'pa') filterPAPapers();
-            else if (activeTab === 'pp') filterPPPapers();
-            else if (activeTab === 'pol') filterPOLPapers();
-            else if (activeTab === 'china') filterCHINAPapers();
-            else if (activeTab === 'search') doSearch();
-            else if (activeTab === 'discover') refreshRandomPapers();
+            closeModal('create-folder-modal');
+        }
+
+        function deleteFolder(folderId, event) {
+            event.stopPropagation();
+            if (!confirm('确定要删除这个文件夹吗？文件夹内的文献将被移出收藏。')) return;
+            Object.keys(paperFolders).forEach(paperId => {
+                if (paperFolders[paperId] === folderId) delete paperFolders[paperId];
+            });
+            folders = folders.filter(f => f.id !== folderId);
+            if (currentFolder === folderId) currentFolder = 'all';
+            saveFolders();
+            savePaperFolders();
+            renderFolders();
+            renderFavorites();
+            updateFavCount();
+        }
+
+        function showAddToFolderModal(paperId) {
+            currentPaperId = paperId;
+            const container = document.getElementById('add-folder-list');
+            container.innerHTML = folders.filter(f => f.id !== 'all').map(folder => {
+                const isInFolder = paperFolders[paperId] === folder.id;
+                return `
+                    <div class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 cursor-pointer" onclick="addPaperToFolder('${paperId}', '${folder.id}')">
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-folder${isInFolder ? '-open text-blue-500' : ' text-slate-400'}"></i>
+                            <span>${folder.name}</span>
+                        </div>
+                        ${isInFolder ? '<i class="fas fa-check text-blue-500"></i>' : ''}
+                    </div>
+                `;
+            }).join('') || '<p class="text-center text-slate-400 py-4">暂无文件夹，请先创建</p>';
+            document.getElementById('add-folder-modal').classList.add('active');
+        }
+
+        function addPaperToFolder(paperId, folderId) {
+            paperFolders[paperId] = folderId;
+            savePaperFolders();
+            renderFolders();
+            updateFavCount();
+            if (!document.getElementById('tab-favorites').classList.contains('hidden')) renderFavorites();
+            refreshPaperCard(paperId);
+            closeModal('add-folder-modal');
+        }
+
+        function refreshPaperCard(paperId) {
+            ['pa-papers-list', 'pp-papers-list', 'pol-papers-list', 'china-papers-list', 'random-papers', 'search-results'].forEach(id => {
+                const container = document.getElementById(id);
+                if (container) {
+                    const btn = container.querySelector(`[onclick="showAddToFolderModal('${paperId}')"]`);
+                    if (btn) {
+                        const isSaved = paperFolders[paperId];
+                        btn.classList.toggle('saved', isSaved);
+                        btn.title = isSaved ? '已收藏' : '添加到收藏';
+                    }
+                }
+            });
         }
 
         function updateFavCount() {
-            const count = favorites.length;
-            const badge = document.getElementById('fav-badge');
+            const count = Object.keys(paperFolders).length;
+            const badge = document.getElementById('nav-fav-count');
             if (count > 0) {
                 badge.textContent = count;
                 badge.classList.remove('hidden');
@@ -444,554 +1322,129 @@
             }
         }
 
-        // ==================== 文件夹管理 ====================
-        function renderFolders() {
-            const folderList = document.getElementById('folder-list');
-            const customFolders = folders.filter(f => f.id !== 'all');
-            
-            const folderCounts = {};
-            Object.entries(paperFolders).forEach(([paperId, folderId]) => {
-                if (favorites.includes(paperId)) {
-                    folderCounts[folderId] = (folderCounts[folderId] || 0) + 1;
-                }
-            });
-            
-            let html = `
-                <div class="folder-item ${currentFolder === 'all' ? 'active' : ''}"
-                     onclick="selectFolder('all')"
-                     ondragover="handleDragOver(event)"
-                     ondragenter="handleDragEnter(event, 'all')"
-                     ondragleave="handleDragLeave(event)"
-                     ondrop="handleDrop(event, 'all')">
-                    <i class="fas fa-inbox text-slate-400"></i>
-                    <span class="flex-1">全部收藏</span>
-                    <span class="text-xs bg-slate-200 px-2 py-0.5 rounded-full">${favorites.length}</span>
-                </div>
-            `;
-            
-            customFolders.forEach(folder => {
-                const count = folderCounts[folder.id] || 0;
-                html += `
-                    <div class="folder-item ${currentFolder === folder.id ? 'active' : ''} group"
-                         onclick="selectFolder('${folder.id}')"
-                         ondragover="handleDragOver(event)"
-                         ondragenter="handleDragEnter(event, '${folder.id}')"
-                         ondragleave="handleDragLeave(event)"
-                         ondrop="handleDrop(event, '${folder.id}')">
-                        <i class="fas fa-folder text-yellow-500"></i>
-                        <span class="flex-1">${folder.name}</span>
-                        <span class="text-xs bg-slate-200 px-2 py-0.5 rounded-full">${count}</span>
-                        <button onclick="event.stopPropagation(); deleteFolder('${folder.id}')" 
-                                class="opacity-0 group-hover:opacity-100 text-red-500 hover:text-red-700 ml-2">
-                            <i class="fas fa-trash-alt text-xs"></i>
-                        </button>
-                    </div>
-                `;
-            });
-            
-            folderList.innerHTML = html;
-        }
-
-        function selectFolder(folderId) {
-            currentFolder = folderId;
-            renderFolders();
-            renderFavorites();
-        }
-
-        function showCreateFolderModal() {
-            document.getElementById('create-folder-modal').classList.add('active');
-            document.getElementById('new-folder-name').value = '';
-            document.getElementById('new-folder-name').focus();
-        }
-
-        function createFolder() {
-            const name = document.getElementById('new-folder-name').value.trim();
-            if (!name) return;
-            
-            folders.push({ id: 'folder_' + Date.now(), name: name });
+        function saveFolders() {
             localStorage.setItem('research-atlas-folders', JSON.stringify(folders));
-            
-            closeModal('create-folder-modal');
-            renderFolders();
         }
 
-        function deleteFolder(folderId) {
-            if (!confirm('确定要删除此文件夹吗？其中的文献将移至"全部收藏"。')) return;
-            
-            folders = folders.filter(f => f.id !== folderId);
-            Object.keys(paperFolders).forEach(paperId => {
-                if (paperFolders[paperId] === folderId) {
-                    delete paperFolders[paperId];
-                }
-            });
-            
-            localStorage.setItem('research-atlas-folders', JSON.stringify(folders));
+        function savePaperFolders() {
             localStorage.setItem('research-atlas-paper-folders', JSON.stringify(paperFolders));
-            
-            if (currentFolder === folderId) currentFolder = 'all';
-            renderFolders();
-            renderFavorites();
         }
 
-        function renderFavorites() {
-            const folderName = folders.find(f => f.id === currentFolder)?.name || '全部收藏';
-            document.getElementById('current-folder-name').textContent = folderName;
-            
-            let favPapers;
-            if (currentFolder === 'all') {
-                favPapers = allPapers.filter(p => favorites.includes(p.openalex_id));
-            } else {
-                favPapers = allPapers.filter(p => 
-                    favorites.includes(p.openalex_id) && paperFolders[p.openalex_id] === currentFolder
-                );
-            }
-            
-            document.getElementById('folder-paper-count').textContent = favPapers.length + ' 篇文献';
-            document.getElementById('favorites-list').innerHTML = 
-                favPapers.map(p => renderPaperCard(p)).join('') || 
-                '<div class="text-center py-12 text-slate-400"><i class="far fa-folder-open text-4xl mb-3"></i><p>暂无收藏文献</p></div>';
-        }
-
-        // ==================== 文献筛选 ====================
-        function filterPAPapers() {
-            filterCategoryPapers('PA', 'pa');
-        }
-
-        function filterPPPapers() {
-            filterCategoryPapers('PP', 'pp');
-        }
-
-        function filterPOLPapers() {
-            filterCategoryPapers('POL', 'pol');
-        }
-
-        function filterCHINAPapers() {
-            filterCategoryPapers('CHINA', 'china');
-        }
-
-        function filterCategoryPapers(category, prefix) {
-            const journal = document.getElementById(`${prefix}-journal-filter`).value;
-            const timeRange = document.getElementById(`${prefix}-time-filter`).value;
-            
-            let filtered = allPapers.filter(p => p.category === category);
-            
-            if (journal) filtered = filtered.filter(p => p.journal_name === journal);
-            
-            if (timeRange) {
-                const days = parseInt(timeRange);
-                const cutoff = new Date();
-                cutoff.setDate(cutoff.getDate() - days);
-                filtered = filtered.filter(p => new Date(p.published_date) >= cutoff);
-            }
-            
-            document.getElementById(`${prefix}-papers-list`).innerHTML = 
-                filtered.map(p => renderPaperCard(p)).join('') || 
-                '<div class="text-center py-12 text-slate-400"><p>暂无文献</p></div>';
-        }
-
-        // ==================== 期刊导航 ====================
-        let currentJournalFilter = 'all';
-        let currentJournalSearch = '';
-
-        function renderJournalsTable() {
-            const tbody = document.getElementById('journals-table-body');
-            let filtered = allJournals;
-            
-            if (currentJournalFilter !== 'all') {
-                filtered = filtered.filter(j => j.category === currentJournalFilter.toUpperCase());
-            }
-            
-            if (currentJournalSearch) {
-                filtered = filtered.filter(j => 
-                    j.name.toLowerCase().includes(currentJournalSearch.toLowerCase())
-                );
-            }
-            
-            tbody.innerHTML = filtered.map(j => {
-                const categoryColors = {
-                    'PA': 'bg-indigo-100 text-indigo-700',
-                    'PP': 'bg-emerald-100 text-emerald-700',
-                    'POL': 'bg-red-100 text-red-700',
-                    'CHINA': 'bg-amber-100 text-amber-700'
-                };
-                const url = journalUrls[j.name];
-                
-                return `
-                    <tr>
-                        <td>
-                            <span class="inline-flex items-center px-2.5 py-1 rounded text-xs font-semibold ${categoryColors[j.category]}">
-                                ${j.category}
-                            </span>
-                        </td>
-                        <td class="font-medium text-slate-800">${j.name}</td>
-                        <td class="text-slate-600">${j.count} 篇</td>
-                        <td>
-                            ${url ? `
-                                <a href="${url}" target="_blank" 
-                                   class="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition text-sm">
-                                    <i class="fas fa-external-link-alt text-xs"></i>
-                                    访问官网
-                                </a>
-                            ` : '<span class="text-slate-400 text-sm">暂无链接</span>'}
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function filterJournals(category) {
-            currentJournalFilter = category;
-            document.querySelectorAll('.filter-tab').forEach(el => el.classList.remove('active'));
-            document.querySelector(`.filter-tab[data-filter="${category}"]`)?.classList.add('active');
-            renderJournalsTable();
-        }
-
-        function searchJournals(keyword) {
-            currentJournalSearch = keyword;
-            renderJournalsTable();
-        }
-
-        // ==================== 搜索功能 ====================
-        function toggleSearchField(element, field) {
-            const checkbox = element.querySelector('input');
+        function toggleCheckbox(label) {
+            const checkbox = label.querySelector('input[type="checkbox"]');
             checkbox.checked = !checkbox.checked;
-            element.classList.toggle('selected', checkbox.checked);
+            label.classList.toggle('checked', checkbox.checked);
+            updateSearchFields();
+        }
+
+        function updateSearchFields() {
+            const checkboxes = document.querySelectorAll('#tab-search input[type="checkbox"]');
+            searchFields = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
         }
 
         function doSearch() {
-            const keyword = document.getElementById('search-input').value.toLowerCase().trim();
+            const keyword = document.getElementById('search-input').value.trim().toLowerCase();
             const category = document.getElementById('search-category').value;
-            const timeRange = document.getElementById('search-time').value;
+            const days = document.getElementById('search-time').value;
             
-            const selectedFields = Array.from(document.querySelectorAll('#search-fields input:checked'))
-                .map(cb => cb.value);
+            if (!keyword) { alert('请输入搜索关键词'); return; }
+            if (searchFields.length === 0) { alert('请至少选择一个搜索范围'); return; }
             
-            if (selectedFields.length === 0) {
-                alert('请至少选择一个搜索范围');
+            let results = allPapers.filter(paper => {
+                let match = false;
+                if (searchFields.includes('title') && paper.title) match = match || paper.title.toLowerCase().includes(keyword);
+                if (searchFields.includes('abstract') && paper.abstract) match = match || paper.abstract.toLowerCase().includes(keyword);
+                if (searchFields.includes('author') && paper.authors) match = match || paper.authors.some(a => a.toLowerCase().includes(keyword));
+                if (searchFields.includes('keyword') && paper.keywords) match = match || paper.keywords.some(k => k.toLowerCase().includes(keyword));
+                if (!match) return false;
+                if (category && paper.category !== category) return false;
+                if (days && paper.published_date) {
+                    const cutoff = new Date();
+                    cutoff.setDate(cutoff.getDate() - parseInt(days));
+                    if (new Date(paper.published_date) < cutoff) return false;
+                }
+                return true;
+            });
+            
+            document.getElementById('search-results-info').textContent = `找到 ${results.length} 篇相关文献（关键词："${keyword}"）`;
+            renderSearchResults(results, keyword);
+        }
+
+        function renderSearchResults(papers, keyword) {
+            const container = document.getElementById('search-results');
+            if (papers.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-slate-400"><i class="fas fa-search text-4xl mb-3"></i><p>未找到相关文献</p></div>`;
                 return;
             }
-            
-            currentSearchKeyword = keyword;
-            
-            let results = allPapers.filter(p => {
-                if (category && p.category !== category) return false;
-                
-                if (timeRange) {
-                    const days = parseInt(timeRange);
-                    const cutoff = new Date();
-                    cutoff.setDate(cutoff.getDate() - days);
-                    if (new Date(p.published_date) < cutoff) return false;
-                }
-                
-                if (!keyword) return true;
-                
-                return selectedFields.some(field => {
-                    switch(field) {
-                        case 'title': return (p.title || '').toLowerCase().includes(keyword);
-                        case 'abstract': return (p.abstract || '').toLowerCase().includes(keyword);
-                        case 'author': return (p.authors || []).some(a => a.toLowerCase().includes(keyword));
-                        case 'keyword': return (p.keywords || []).some(k => k.toLowerCase().includes(keyword));
-                        default: return false;
-                    }
-                });
-            });
-            
-            document.getElementById('search-results').innerHTML = `
-                <div class="mb-4 text-slate-600">
-                    找到 <span class="font-bold text-slate-800">${results.length}</span> 条结果
-                    ${keyword ? `，关键词："<span class="font-medium">${keyword}</span>"` : ''}
-                </div>
-                ${results.map(p => renderPaperCard(p)).join('') || '<div class="text-center py-12 text-slate-400"><p>未找到相关文献</p></div>'}
-            `;
+            container.innerHTML = papers.map(paper => {
+                const highlightedPaper = {
+                    ...paper,
+                    title: highlightKeyword(paper.title, keyword),
+                    abstract: highlightKeyword(paper.abstract, keyword)
+                };
+                return createPaperCard(highlightedPaper);
+            }).join('');
         }
 
-        // ==================== 主题河流图 ====================
-        function initThemeRiverChart() {
-            const chartDom = document.getElementById('themeRiverChart');
-            themeRiverChart = echarts.init(chartDom);
-            updateThemeRiverChart('all');
-            
-            window.addEventListener('resize', () => {
-                themeRiverChart.resize();
-            });
+        function highlightKeyword(text, keyword) {
+            if (!text || !keyword) return text;
+            const regex = new RegExp(`(${keyword})`, 'gi');
+            return text.replace(regex, '<mark class="bg-yellow-200 px-1 rounded">$1</mark>');
         }
 
-        function switchThemeRiver(category) {
-            currentThemeCategory = category;
-            
-            // 更新按钮样式
-            document.querySelectorAll('.theme-river-tab').forEach(btn => {
-                const isActive = btn.dataset.category === category;
-                btn.className = isActive 
-                    ? 'theme-river-tab px-4 py-2 text-sm rounded-lg bg-slate-800 text-white'
-                    : 'theme-river-tab px-4 py-2 text-sm rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200';
-            });
-            
-            updateThemeRiverChart(category);
-        }
-
-        function updateThemeRiverChart(category) {
-            // 过滤数据
-            let filteredPapers = allPapers;
-            if (category !== 'all') {
-                filteredPapers = allPapers.filter(p => p.category === category.toUpperCase());
-            }
-            
-            // 提取关键词并按月份统计
-            const keywordByMonth = {};
-            const keywordCounts = {};
-            
-            filteredPapers.forEach(p => {
-                const month = p.published_date?.substring(0, 7); // YYYY-MM
-                if (!month) return;
-                
-                (p.keywords || []).forEach(keyword => {
-                    if (!keywordByMonth[month]) keywordByMonth[month] = {};
-                    if (!keywordByMonth[month][keyword]) keywordByMonth[month][keyword] = 0;
-                    keywordByMonth[month][keyword]++;
-                    
-                    keywordCounts[keyword] = (keywordCounts[keyword] || 0) + 1;
-                });
-            });
-            
-            // 获取Top15关键词
-            const topKeywords = Object.entries(keywordCounts)
-                .sort((a, b) => b[1] - a[1])
-                .slice(0, 15)
-                .map(([k]) => k);
-            
-            // 构建ThemeRiver数据
-            const data = [];
-            Object.entries(keywordByMonth).forEach(([month, keywords]) => {
-                topKeywords.forEach(keyword => {
-                    const count = keywords[keyword] || 0;
-                    if (count > 0) {
-                        data.push([month, count, keyword]);
-                    }
-                });
-            });
-            
-            // 颜色配置
-            const colors = [
-                '#4f46e5', '#059669', '#dc2626', '#d97706', '#0891b2',
-                '#7c3aed', '#db2777', '#ea580c', '#65a30d', '#0d9488',
-                '#2563eb', '#9333ea', '#e11d48', '#f59e0b', '#84cc16'
-            ];
-            
-            const option = {
-                tooltip: {
-                    trigger: 'axis',
-                    axisPointer: { type: 'line', lineStyle: { color: 'rgba(0,0,0,0.2)', width: 1, type: 'solid' } },
-                    formatter: function(params) {
-                        if (!params.length) return '';
-                        const date = params[0].data[0];
-                        let html = `<div class="font-bold mb-2">${date}</div>`;
-                        params.forEach(p => {
-                            html += `<div class="flex items-center gap-2">
-                                <span style="display:inline-block;width:10px;height:10px;background:${p.color};border-radius:50%;"></span>
-                                <span>${p.data[2]}: ${p.data[1]}篇</span>
-                            </div>`;
-                        });
-                        return html;
-                    }
-                },
-                legend: {
-                    data: topKeywords,
-                    bottom: 0,
-                    type: 'scroll',
-                    textStyle: { fontSize: 11 }
-                },
-                singleAxis: {
-                    top: 20,
-                    bottom: 60,
-                    axisTick: {},
-                    axisLabel: {},
-                    type: 'time',
-                    axisPointer: {
-                        animation: true,
-                        label: { show: true }
-                    },
-                    splitLine: { show: true, lineStyle: { type: 'dashed', opacity: 0.2 } }
-                },
-                series: [{
-                    type: 'themeRiver',
-                    emphasis: { itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0,0,0,0.2)' } },
-                    data: data,
-                    color: colors,
-                    label: { show: false }
-                }]
-            };
-            
-            themeRiverChart.setOption(option, true);
-        }
-
-        // ==================== 趋势图 ====================
-        function renderTrendChart(trendData) {
-            const ctx = document.getElementById('trendChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: trendData.map(d => d.date.slice(5)),
-                    datasets: [{
-                        label: '发文数量',
-                        data: trendData.map(d => d.count),
-                        borderColor: '#3b82f6',
-                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                        borderWidth: 2,
-                        tension: 0.4,
-                        fill: true,
-                        pointRadius: 3,
-                        pointBackgroundColor: '#3b82f6'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: { 
-                            beginAtZero: true,
-                            grid: { color: 'rgba(0,0,0,0.05)' }
-                        },
-                        x: { 
-                            grid: { display: false }
-                        }
-                    }
-                }
-            });
-        }
-
-        // ==================== 随机推荐 ====================
-        function refreshRandomPapers() {
-            const shuffled = [...allPapers].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 3);
-            
-            document.getElementById('random-papers').innerHTML = selected.map(p => `
-                <div class="bg-white/10 backdrop-blur rounded-xl p-5 cursor-pointer hover:bg-white/20 transition"
-                     onclick="showPaperDetail('${p.openalex_id}')">
-                    <div class="flex items-start justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="text-xs bg-white/20 px-2 py-0.5 rounded">${p.category}</span>
-                                <span class="text-xs opacity-70">${p.journal_name}</span>
-                            </div>
-                            <h4 class="font-semibold mb-2 line-clamp-2">${p.title}</h4>
-                            <p class="text-sm opacity-70 line-clamp-1">${(p.authors || []).slice(0, 3).join(', ')}</p>
-                        </div>
-                        <i class="fas fa-chevron-right opacity-50"></i>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // ==================== 今日更新 ====================
-        function showTodayPapers() {
-            const today = new Date().toISOString().split('T')[0];
-            const todayPapers = allPapers.filter(p => p.published_date === today);
-            
-            switchTab('search');
-            document.getElementById('search-input').value = '';
-            
-            if (todayPapers.length === 0) {
-                const threeDaysAgo = new Date();
-                threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-                const recentPapers = allPapers.filter(p => new Date(p.published_date) >= threeDaysAgo);
-                document.getElementById('search-time').value = '3';
-                document.getElementById('search-results').innerHTML = `
-                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                        <p class="text-blue-700">今日暂无新论文，显示最近3天的 ${recentPapers.length} 篇文献</p>
-                    </div>
-                    ${recentPapers.map(p => renderPaperCard(p)).join('')}
-                `;
-            } else {
-                document.getElementById('search-time').value = '';
-                document.getElementById('search-results').innerHTML = `
-                    <div class="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
-                        <p class="text-green-700 font-semibold">今日更新 ${todayPapers.length} 篇文献</p>
-                    </div>
-                    ${todayPapers.map(p => renderPaperCard(p)).join('')}
-                `;
-            }
-        }
-
-        // ==================== 文献详情 ====================
         function showPaperDetail(paperId) {
             const paper = allPapers.find(p => p.openalex_id === paperId);
             if (!paper) return;
-            
-            currentPaperId = paperId;
-            const isSaved = favorites.includes(paperId);
-            const folderId = paperFolders[paperId];
-            const folderName = folderId ? folders.find(f => f.id === folderId)?.name : null;
-            
-            document.getElementById('paper-detail-content').innerHTML = `
-                <div class="relative">
-                    <div class="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-start z-10">
-                        <div class="flex-1 pr-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="category-badge ${paper.category.toLowerCase()}">
-                                    ${paper.category}
-                                </span>
-                                <span class="journal-badge">${paper.journal_name}</span>
-                                <span class="text-sm text-slate-400">${paper.published_date}</span>
-                            </div>
-                            <h2 class="text-xl font-bold text-slate-800">${paper.title}</h2>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <button onclick="showAddToFolderModal('${paperId}')" 
-                                    class="bookmark-btn ${isSaved ? 'saved' : ''}">
-                                <i class="${isSaved ? 'fas' : 'far'} fa-bookmark"></i>
-                            </button>
-                            <button onclick="closeModal('paper-detail-modal')" class="p-2 text-slate-400 hover:text-slate-600">
-                                <i class="fas fa-times text-xl"></i>
-                            </button>
-                        </div>
+            const content = document.getElementById('paper-detail-content');
+            content.innerHTML = `
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        ${getCategoryTag(paper.category)}
+                        <button onclick="closeModal('paper-detail-modal')" class="text-slate-400 hover:text-slate-600">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
                     </div>
-                    <div class="p-6">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-4">${paper.title}</h2>
+                    <div class="flex items-center gap-4 mb-4 text-sm text-slate-600">
+                        <span><i class="fas fa-book mr-1"></i> ${paper.journal_name || '未知期刊'}</span>
+                        <span><i class="fas fa-calendar mr-1"></i> ${paper.published_date || '未知日期'}</span>
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="font-semibold text-slate-800 mb-2">作者</h3>
+                        <p class="text-slate-600">${paper.authors ? paper.authors.join(', ') : '未知作者'}</p>
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="font-semibold text-slate-800 mb-2">摘要</h3>
+                        <p class="text-slate-600 leading-relaxed">${paper.abstract || '暂无摘要'}</p>
+                    </div>
+                    ${paper.keywords && paper.keywords.length > 0 ? `
                         <div class="mb-4">
-                            <h4 class="text-sm font-semibold text-slate-700 mb-2">作者</h4>
-                            <p class="text-slate-600">${(paper.authors || []).join(', ') || '未知作者'}</p>
-                        </div>
-                        <div class="mb-4">
-                            <h4 class="text-sm font-semibold text-slate-700 mb-2">摘要</h4>
-                            <p class="text-slate-600 leading-relaxed">${paper.abstract || '暂无摘要'}</p>
-                        </div>
-                        ${(paper.keywords || []).length > 0 ? `
-                            <div class="mb-4">
-                                <h4 class="text-sm font-semibold text-slate-700 mb-2">关键词</h4>
-                                <div class="flex flex-wrap gap-1">
-                                    ${paper.keywords.map(k => `<span class="keyword-tag">${k}</span>`).join('')}
-                                </div>
+                            <h3 class="font-semibold text-slate-800 mb-2">关键词</h3>
+                            <div class="flex flex-wrap gap-2">
+                                ${paper.keywords.map(kw => `<span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-full text-sm">${kw}</span>`).join('')}
                             </div>
-                        ` : ''}
-                        ${paper.url ? `
-                            <div class="mt-6">
-                                <a href="${paper.url}" target="_blank" 
-                                   class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-                                    查看原文
-                                    <i class="fas fa-external-link-alt ml-2"></i>
-                                </a>
-                            </div>
-                        ` : ''}
+                        </div>
+                    ` : ''}
+                    <div class="flex gap-3 mt-6">
+                        ${paper.url ? `<a href="${paper.url}" target="_blank" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"><i class="fas fa-external-link-alt mr-2"></i>查看原文</a>` : ''}
+                        <button onclick="showAddToFolderModal('${paper.openalex_id}')" class="px-6 py-2 border border-slate-300 rounded-lg hover:bg-slate-50 transition">
+                            <i class="fas fa-bookmark mr-2"></i>添加到收藏
+                        </button>
                     </div>
                 </div>
             `;
-            
             document.getElementById('paper-detail-modal').classList.add('active');
         }
 
-        // ==================== 模态框控制 ====================
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
         }
 
-        function closeModalOnBackdrop(event) {
-            if (event.target.classList.contains('modal-overlay')) {
-                event.target.classList.remove('active');
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(modal => modal.classList.remove('active'));
             }
-        }
+        });
     </script>
 </body>
 </html>
