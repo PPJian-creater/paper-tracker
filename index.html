@@ -88,6 +88,27 @@
             border-color: #cbd5e1;
         }
         .paper-card:hover::before { width: 6px; }
+        
+        /* 分页导航样式 */
+        .pagination-nav {
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .pagination-nav button {
+            transition: all 0.2s ease;
+        }
+        .pagination-nav button:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+        }
+        .pagination-nav button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
         .category-tag {
             font-size: 11px;
             font-weight: 700;
@@ -691,6 +712,16 @@
         let currentThemeCategory = 'all';
         let searchFields = ['title', 'abstract'];
         let trendChart = null;
+        
+        // ==================== 分页配置 ====================
+        const PAPERS_PER_PAGE = 20;
+        let paginationState = {
+            pa: { currentPage: 1, totalPages: 1, filteredPapers: [] },
+            pp: { currentPage: 1, totalPages: 1, filteredPapers: [] },
+            pol: { currentPage: 1, totalPages: 1, filteredPapers: [] },
+            china: { currentPage: 1, totalPages: 1, filteredPapers: [] },
+            search: { currentPage: 1, totalPages: 1, filteredPapers: [] }
+        };
 
         // ==================== 期刊配置 ====================
         const journalCategories = {
@@ -1049,25 +1080,41 @@
         function filterPAPapers() {
             const journal = document.getElementById('pa-journal-filter').value;
             const days = document.getElementById('pa-time-filter').value;
-            renderPaperList('pa-papers-list', filterPapers('PA', journal, days));
+            const filtered = filterPapers('PA', journal, days);
+            paginationState.pa.filteredPapers = filtered;
+            paginationState.pa.currentPage = 1;
+            paginationState.pa.totalPages = Math.ceil(filtered.length / PAPERS_PER_PAGE);
+            renderPaperListWithPagination('pa-papers-list', filtered, 'pa');
         }
 
         function filterPPPapers() {
             const journal = document.getElementById('pp-journal-filter').value;
             const days = document.getElementById('pp-time-filter').value;
-            renderPaperList('pp-papers-list', filterPapers('PP', journal, days));
+            const filtered = filterPapers('PP', journal, days);
+            paginationState.pp.filteredPapers = filtered;
+            paginationState.pp.currentPage = 1;
+            paginationState.pp.totalPages = Math.ceil(filtered.length / PAPERS_PER_PAGE);
+            renderPaperListWithPagination('pp-papers-list', filtered, 'pp');
         }
 
         function filterPOLPapers() {
             const journal = document.getElementById('pol-journal-filter').value;
             const days = document.getElementById('pol-time-filter').value;
-            renderPaperList('pol-papers-list', filterPapers('POL', journal, days));
+            const filtered = filterPapers('POL', journal, days);
+            paginationState.pol.filteredPapers = filtered;
+            paginationState.pol.currentPage = 1;
+            paginationState.pol.totalPages = Math.ceil(filtered.length / PAPERS_PER_PAGE);
+            renderPaperListWithPagination('pol-papers-list', filtered, 'pol');
         }
 
         function filterChinaPapers() {
             const journal = document.getElementById('china-journal-filter').value;
             const days = document.getElementById('china-time-filter').value;
-            renderPaperList('china-papers-list', filterPapers('CHINA', journal, days));
+            const filtered = filterPapers('CHINA', journal, days);
+            paginationState.china.filteredPapers = filtered;
+            paginationState.china.currentPage = 1;
+            paginationState.china.totalPages = Math.ceil(filtered.length / PAPERS_PER_PAGE);
+            renderPaperListWithPagination('china-papers-list', filtered, 'china');
         }
 
         function filterPapers(category, journal, days) {
@@ -1089,6 +1136,115 @@
                 return;
             }
             container.innerHTML = papers.map(paper => createPaperCard(paper)).join('');
+        }
+        
+        // ==================== 分页渲染函数 ====================
+        function renderPaperListWithPagination(containerId, papers, category) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            const state = paginationState[category];
+            const start = (state.currentPage - 1) * PAPERS_PER_PAGE;
+            const end = start + PAPERS_PER_PAGE;
+            const pagePapers = papers.slice(start, end);
+            
+            if (papers.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-slate-400"><i class="fas fa-inbox text-4xl mb-3"></i><p>暂无符合条件的文献</p></div>`;
+                return;
+            }
+            
+            let html = pagePapers.map(paper => createPaperCard(paper)).join('');
+            
+            // 添加分页导航
+            if (state.totalPages > 1) {
+                html += createPaginationNav(category, state.currentPage, state.totalPages, papers.length);
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        function createPaginationNav(category, currentPage, totalPages, totalItems) {
+            let html = `
+                <div class="pagination-nav mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white rounded-lg p-4 shadow-sm border border-slate-200">
+                    <div class="text-sm text-slate-600">
+                        共 <span class="font-semibold text-blue-600">${totalItems}</span> 篇文献，
+                        第 <span class="font-semibold text-blue-600">${currentPage}</span> / ${totalPages} 页
+                    </div>
+                    <div class="flex items-center gap-2">
+            `;
+            
+            // 上一页按钮
+            if (currentPage > 1) {
+                html += `<button onclick="goToPage('${category}', ${currentPage - 1})" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition flex items-center gap-1"><i class="fas fa-chevron-left text-xs"></i> 上一页</button>`;
+            } else {
+                html += `<button disabled class="px-4 py-2 bg-slate-50 text-slate-400 rounded-lg cursor-not-allowed flex items-center gap-1"><i class="fas fa-chevron-left text-xs"></i> 上一页</button>`;
+            }
+            
+            // 页码按钮
+            const maxButtons = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+            
+            if (endPage - startPage < maxButtons - 1) {
+                startPage = Math.max(1, endPage - maxButtons + 1);
+            }
+            
+            if (startPage > 1) {
+                html += `<button onclick="goToPage('${category}', 1)" class="w-10 h-10 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">1</button>`;
+                if (startPage > 2) html += `<span class="px-2 text-slate-400">...</span>`;
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                if (i === currentPage) {
+                    html += `<button class="w-10 h-10 rounded-lg bg-blue-600 text-white font-semibold shadow-md">${i}</button>`;
+                } else {
+                    html += `<button onclick="goToPage('${category}', ${i})" class="w-10 h-10 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">${i}</button>`;
+                }
+            }
+            
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) html += `<span class="px-2 text-slate-400">...</span>`;
+                html += `<button onclick="goToPage('${category}', ${totalPages})" class="w-10 h-10 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">${totalPages}</button>`;
+            }
+            
+            // 下一页按钮
+            if (currentPage < totalPages) {
+                html += `<button onclick="goToPage('${category}', ${currentPage + 1})" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition flex items-center gap-1">下一页 <i class="fas fa-chevron-right text-xs"></i></button>`;
+            } else {
+                html += `<button disabled class="px-4 py-2 bg-slate-50 text-slate-400 rounded-lg cursor-not-allowed flex items-center gap-1">下一页 <i class="fas fa-chevron-right text-xs"></i></button>`;
+            }
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            return html;
+        }
+        
+        function goToPage(category, page) {
+            const state = paginationState[category];
+            if (page < 1 || page > state.totalPages) return;
+            
+            state.currentPage = page;
+            
+            // 滚动到列表顶部
+            const containerMap = {
+                'pa': 'pa-papers-list',
+                'pp': 'pp-papers-list',
+                'pol': 'pol-papers-list',
+                'china': 'china-papers-list',
+                'search': 'search-results'
+            };
+            
+            const containerId = containerMap[category];
+            if (containerId) {
+                renderPaperListWithPagination(containerId, state.filteredPapers, category);
+                const container = document.getElementById(containerId);
+                if (container) {
+                    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }
         }
 
         function createPaperCard(paper) {
@@ -1265,6 +1421,9 @@
             document.getElementById('current-folder-name').textContent = folder ? folder.name : '全部收藏';
         }
 
+        // ==================== 收藏分页状态 ====================
+        let favoritesPagination = { currentPage: 1, totalPages: 1, papers: [] };
+        
         function renderFavorites() {
             const container = document.getElementById('favorites-list');
             if (!container) return;
@@ -1276,6 +1435,11 @@
             }
             document.getElementById('current-folder-count').textContent = papers.length;
             
+            // 收藏分页
+            favoritesPagination.papers = papers;
+            favoritesPagination.currentPage = 1;
+            favoritesPagination.totalPages = Math.ceil(papers.length / PAPERS_PER_PAGE);
+            
             if (papers.length === 0) {
                 container.innerHTML = `
                     <div class="text-center py-12 text-slate-400">
@@ -1286,7 +1450,96 @@
                 `;
                 return;
             }
-            container.innerHTML = papers.map(paper => createPaperCard(paper)).join('');
+            
+            renderFavoritesWithPagination();
+        }
+        
+        function renderFavoritesWithPagination() {
+            const container = document.getElementById('favorites-list');
+            const papers = favoritesPagination.papers;
+            const state = favoritesPagination;
+            
+            const start = (state.currentPage - 1) * PAPERS_PER_PAGE;
+            const end = start + PAPERS_PER_PAGE;
+            const pagePapers = papers.slice(start, end);
+            
+            let html = pagePapers.map(paper => createPaperCard(paper)).join('');
+            
+            // 添加分页导航
+            if (state.totalPages > 1) {
+                html += createFavoritesPaginationNav();
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        function createFavoritesPaginationNav() {
+            const state = favoritesPagination;
+            const totalItems = state.papers.length;
+            
+            let html = `
+                <div class="pagination-nav mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white rounded-lg p-4 shadow-sm border border-slate-200">
+                    <div class="text-sm text-slate-600">
+                        共 <span class="font-semibold text-blue-600">${totalItems}</span> 篇收藏，
+                        第 <span class="font-semibold text-blue-600">${state.currentPage}</span> / ${state.totalPages} 页
+                    </div>
+                    <div class="flex items-center gap-2">
+            `;
+            
+            // 上一页按钮
+            if (state.currentPage > 1) {
+                html += `<button onclick="goToFavoritesPage(${state.currentPage - 1})" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition flex items-center gap-1"><i class="fas fa-chevron-left text-xs"></i> 上一页</button>`;
+            } else {
+                html += `<button disabled class="px-4 py-2 bg-slate-50 text-slate-400 rounded-lg cursor-not-allowed flex items-center gap-1"><i class="fas fa-chevron-left text-xs"></i> 上一页</button>`;
+            }
+            
+            // 页码按钮
+            const maxButtons = 5;
+            let startPage = Math.max(1, state.currentPage - Math.floor(maxButtons / 2));
+            let endPage = Math.min(state.totalPages, startPage + maxButtons - 1);
+            
+            if (endPage - startPage < maxButtons - 1) {
+                startPage = Math.max(1, endPage - maxButtons + 1);
+            }
+            
+            if (startPage > 1) {
+                html += `<button onclick="goToFavoritesPage(1)" class="w-10 h-10 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">1</button>`;
+                if (startPage > 2) html += `<span class="px-2 text-slate-400">...</span>`;
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                if (i === state.currentPage) {
+                    html += `<button class="w-10 h-10 rounded-lg bg-blue-600 text-white font-semibold shadow-md">${i}</button>`;
+                } else {
+                    html += `<button onclick="goToFavoritesPage(${i})" class="w-10 h-10 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">${i}</button>`;
+                }
+            }
+            
+            if (endPage < state.totalPages) {
+                if (endPage < state.totalPages - 1) html += `<span class="px-2 text-slate-400">...</span>`;
+                html += `<button onclick="goToFavoritesPage(${state.totalPages})" class="w-10 h-10 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 transition">${state.totalPages}</button>`;
+            }
+            
+            // 下一页按钮
+            if (state.currentPage < state.totalPages) {
+                html += `<button onclick="goToFavoritesPage(${state.currentPage + 1})" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition flex items-center gap-1">下一页 <i class="fas fa-chevron-right text-xs"></i></button>`;
+            } else {
+                html += `<button disabled class="px-4 py-2 bg-slate-50 text-slate-400 rounded-lg cursor-not-allowed flex items-center gap-1">下一页 <i class="fas fa-chevron-right text-xs"></i></button>`;
+            }
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            return html;
+        }
+        
+        function goToFavoritesPage(page) {
+            if (page < 1 || page > favoritesPagination.totalPages) return;
+            favoritesPagination.currentPage = page;
+            renderFavoritesWithPagination();
+            document.getElementById('favorites-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         function showCreateFolderModal() {
@@ -1417,6 +1670,11 @@
             });
             
             document.getElementById('search-results-info').textContent = `找到 ${results.length} 篇相关文献（关键词："${keyword}"）`;
+            
+            // 搜索分页
+            paginationState.search.filteredPapers = results;
+            paginationState.search.currentPage = 1;
+            paginationState.search.totalPages = Math.ceil(results.length / PAPERS_PER_PAGE);
             renderSearchResults(results, keyword);
         }
 
@@ -1426,7 +1684,13 @@
                 container.innerHTML = `<div class="text-center py-12 text-slate-400"><i class="fas fa-search text-4xl mb-3"></i><p>未找到相关文献</p></div>`;
                 return;
             }
-            container.innerHTML = papers.map(paper => {
+            
+            const state = paginationState.search;
+            const start = (state.currentPage - 1) * PAPERS_PER_PAGE;
+            const end = start + PAPERS_PER_PAGE;
+            const pagePapers = papers.slice(start, end);
+            
+            let html = pagePapers.map(paper => {
                 const highlightedPaper = {
                     ...paper,
                     title: highlightKeyword(paper.title, keyword),
@@ -1434,6 +1698,13 @@
                 };
                 return createPaperCard(highlightedPaper);
             }).join('');
+            
+            // 添加分页导航
+            if (state.totalPages > 1) {
+                html += createPaginationNav('search', state.currentPage, state.totalPages, papers.length);
+            }
+            
+            container.innerHTML = html;
         }
 
         function highlightKeyword(text, keyword) {
