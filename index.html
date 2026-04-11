@@ -115,8 +115,26 @@
             padding: 4px 10px;
             border-radius: 20px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
+        
+        .new-tag {
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
         .tag-pa { background: #dbeafe; color: #1e40af; }
         .tag-pp { background: #e0f2fe; color: #0369a1; }
         .tag-pol { background: #e0e7ff; color: #4f46e5; }
@@ -239,7 +257,7 @@
             font-size: 14px;
         }
         .journal-table tr:hover { background: #f8fafc; }
-        .filter-tab {
+        .filter-tab, .trend-filter-btn {
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 14px;
@@ -357,7 +375,6 @@
                     </button>
                     <button onclick="switchTab('favorites')" class="nav-item" data-tab="favorites">
                         <i class="fas fa-folder-open"></i>收藏
-                        <span id="nav-fav-count" class="ml-1.5 bg-blue-400 text-white text-xs px-1.5 py-0.5 rounded-full hidden">0</span>
                     </button>
                     <button onclick="switchTab('search')" class="nav-item" data-tab="search">
                         <i class="fas fa-search"></i>搜索
@@ -442,8 +459,8 @@
                 </div>
             </div>
 
-            <!-- 今日更新 -->
-            <div id="today-papers-section" class="bg-white rounded-xl border border-slate-200 p-6 mb-8 hidden">
+            <!-- 今日更新 - 按模块分类展示 -->
+            <div id="today-papers-section" class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
                 <div class="flex justify-between items-center mb-4">
                     <div>
                         <h2 class="text-xl font-bold text-slate-800">
@@ -452,11 +469,25 @@
                         </h2>
                         <p class="text-sm text-slate-500 mt-1">今天新收录的文献</p>
                     </div>
-                    <button onclick="refreshTodayPapers()" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
-                        <i class="fas fa-sync-alt mr-1"></i>刷新
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button onclick="showYesterdayPapers()" class="text-slate-600 hover:text-blue-600 font-medium text-sm px-3 py-1.5 bg-slate-100 hover:bg-blue-50 rounded-lg transition">
+                            <i class="fas fa-history mr-1"></i>查看昨天
+                        </button>
+                        <button onclick="showTodayPapers()" class="text-blue-600 hover:text-blue-800 font-medium text-sm px-3 py-1.5 bg-blue-50 rounded-lg transition">
+                            <i class="fas fa-calendar-day mr-1"></i>今天
+                        </button>
+                    </div>
                 </div>
-                <div id="today-papers-list" class="space-y-4"></div>
+                
+                <!-- 按模块分类展示 -->
+                <div id="today-papers-by-category" class="space-y-6">
+                    <!-- 动态生成各模块的今日更新 -->
+                </div>
+                
+                <div id="today-papers-empty" class="text-center py-8 text-slate-400 hidden">
+                    <i class="fas fa-inbox text-4xl mb-3"></i>
+                    <p>今日暂无新文献</p>
+                </div>
             </div>
 
             <!-- 热门研究主题 -->
@@ -494,10 +525,20 @@
                 </div>
             </div>
 
+            <!-- 发文趋势图 - 支持分模块展示 -->
             <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
-                <h2 class="text-xl font-bold text-slate-800 mb-4">
-                    <i class="fas fa-chart-line text-blue-500 mr-2"></i>近30天发文趋势
-                </h2>
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                    <h2 class="text-xl font-bold text-slate-800">
+                        <i class="fas fa-chart-line text-blue-500 mr-2"></i>近30天发文趋势
+                    </h2>
+                    <div class="flex gap-2 flex-wrap">
+                        <button onclick="setTrendCategory('all')" class="trend-filter-btn active" data-trend-category="all">全部</button>
+                        <button onclick="setTrendCategory('pa')" class="trend-filter-btn" data-trend-category="pa">PA</button>
+                        <button onclick="setTrendCategory('pp')" class="trend-filter-btn" data-trend-category="pp">PP</button>
+                        <button onclick="setTrendCategory('pol')" class="trend-filter-btn" data-trend-category="pol">POL</button>
+                        <button onclick="setTrendCategory('china')" class="trend-filter-btn" data-trend-category="china">CHINA</button>
+                    </div>
+                </div>
                 <div class="h-64">
                     <canvas id="trendChart"></canvas>
                 </div>
@@ -1156,63 +1197,204 @@
             renderTodayPapers();
         }
         
+        let currentTodayView = 'today'; // 'today' or 'yesterday'
+        
         function renderTodayPapers() {
             const today = new Date().toISOString().split('T')[0];
-            const todayPapers = allPapers.filter(p => p.published_date === today);
-            const section = document.getElementById('today-papers-section');
-            const list = document.getElementById('today-papers-list');
+            renderPapersByDate(today, '今天');
+            currentTodayView = 'today';
+        }
+        
+        function showYesterdayPapers() {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayStr = yesterday.toISOString().split('T')[0];
+            renderPapersByDate(yesterdayStr, '昨天');
+            currentTodayView = 'yesterday';
+        }
+        
+        function showTodayPapers() {
+            renderTodayPapers();
+        }
+        
+        function renderPapersByDate(dateStr, label) {
+            const papers = allPapers.filter(p => p.published_date === dateStr);
+            const container = document.getElementById('today-papers-by-category');
             const badge = document.getElementById('today-count-badge');
+            const emptyDiv = document.getElementById('today-papers-empty');
             
-            if (todayPapers.length === 0) {
-                section.classList.add('hidden');
+            badge.textContent = papers.length;
+            
+            if (papers.length === 0) {
+                container.innerHTML = '';
+                emptyDiv.classList.remove('hidden');
+                emptyDiv.innerHTML = '<i class="fas fa-inbox text-4xl mb-3"></i><p>' + label + '暂无新文献</p>';
                 return;
             }
             
-            section.classList.remove('hidden');
-            badge.textContent = todayPapers.length;
+            emptyDiv.classList.add('hidden');
             
-            // 只显示前10篇
-            const displayPapers = todayPapers.slice(0, 10);
-            list.innerHTML = displayPapers.map(paper => createPaperCard(paper)).join('');
+            // 按模块分组
+            const categories = [
+                { key: 'PA', name: '公共行政', icon: 'fa-landmark', color: 'blue' },
+                { key: 'PP', name: '公共政策', icon: 'fa-file-contract', color: 'emerald' },
+                { key: 'POL', name: '政治学', icon: 'fa-balance-scale', color: 'violet' },
+                { key: 'CHINA', name: '中国研究', icon: 'fa-dragon', color: 'rose' }
+            ];
             
-            if (todayPapers.length > 10) {
-                list.innerHTML += '<div class="text-center py-4 text-slate-500 text-sm">还有 ' + (todayPapers.length - 10) + ' 篇文献...</div>';
+            let html = '';
+            let totalCount = 0;
+            
+            categories.forEach(cat => {
+                const catPapers = papers.filter(p => p.category === cat.key);
+                if (catPapers.length === 0) return;
+                
+                totalCount += catPapers.length;
+                const colorClasses = {
+                    blue: 'bg-blue-50 border-blue-200',
+                    emerald: 'bg-emerald-50 border-emerald-200',
+                    violet: 'bg-violet-50 border-violet-200',
+                    rose: 'bg-rose-50 border-rose-200'
+                };
+                
+                html += '<div class="' + colorClasses[cat.color] + ' rounded-lg border p-4">';
+                html += '<div class="flex items-center justify-between mb-3">';
+                html += '<div class="flex items-center gap-2">';
+                html += '<i class="fas ' + cat.icon + ' text-' + cat.color + '-600"></i>';
+                html += '<h3 class="font-semibold text-slate-800">' + cat.name + '</h3>';
+                html += '<span class="px-2 py-0.5 bg-white rounded-full text-xs text-slate-600">' + catPapers.length + ' 篇</span>';
+                html += '</div>';
+                html += '<button onclick="switchTab(\'' + cat.key.toLowerCase() + '\')" class="text-xs text-' + cat.color + '-600 hover:text-' + cat.color + '-800">查看更多 <i class="fas fa-arrow-right"></i></button>';
+                html += '</div>';
+                html += '<div class="space-y-3">';
+                
+                // 只显示前3篇
+                catPapers.slice(0, 3).forEach(paper => {
+                    html += createCompactPaperCard(paper);
+                });
+                
+                if (catPapers.length > 3) {
+                    html += '<div class="text-center py-2 text-slate-500 text-sm">还有 ' + (catPapers.length - 3) + ' 篇...</div>';
+                }
+                
+                html += '</div></div>';
+            });
+            
+            container.innerHTML = html;
+            badge.textContent = totalCount;
+        }
+        
+        // 紧凑版文献卡片（用于今日更新展示）
+        function createCompactPaperCard(paper) {
+            const paperId = paper.openalex_id || '';
+            const showNewTag = isRecentPaper(paper.published_date);
+            
+            let html = '<div class="bg-white rounded-lg p-3 hover:shadow-md transition cursor-pointer" onclick="showPaperDetail(\'' + paperId + '\')">';
+            html += '<div class="flex items-start justify-between gap-3">';
+            html += '<div class="flex-1 min-w-0">';
+            html += '<h4 class="text-sm font-medium text-slate-800 truncate hover:text-blue-600">' + escapeHtml(paper.title || '无标题') + '</h4>';
+            html += '<div class="flex items-center gap-2 mt-1 text-xs text-slate-500">';
+            html += '<span>' + escapeHtml(paper.journal_name || '未知期刊') + '</span>';
+            if (showNewTag) {
+                html += '<span class="new-tag text-[8px] px-1.5 py-0.5">NEW</span>';
             }
+            html += '</div>';
+            html += '</div>';
+            html += '<button onclick="event.stopPropagation(); toggleSavePaper(\'' + paperId + '\', this)" class="bookmark-btn flex-shrink-0 ' + (paperFolders[paperId] ? 'saved' : '') + '">';
+            html += '<i class="fas fa-bookmark"></i>';
+            html += '</button>';
+            html += '</div></div>';
+            
+            return html;
         }
         
         function refreshTodayPapers() {
-            renderTodayPapers();
+            if (currentTodayView === 'yesterday') {
+                showYesterdayPapers();
+            } else {
+                renderTodayPapers();
+            }
         }
 
+        let currentTrendCategory = 'all';
+        
         function initCharts(stats) {
-            const ctx = document.getElementById('trendChart');
-            if (ctx && stats && stats.trend) {
-                if (trendChart) trendChart.destroy();
-                trendChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: stats.trend.map(t => t.date.slice(5)),
-                        datasets: [{
-                            label: '发文数量',
-                            data: stats.trend.map(t => t.count),
-                            borderColor: '#3b82f6',
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                            borderWidth: 2,
-                            fill: true,
-                            tension: 0.4,
-                            pointRadius: 3,
-                            pointBackgroundColor: '#3b82f6'
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: { legend: { display: false } },
-                        scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-                    }
-                });
-            }
+            renderTrendChart(currentTrendCategory);
             initThemeRiverChart();
+        }
+        
+        function renderTrendChart(category) {
+            const ctx = document.getElementById('trendChart');
+            if (!ctx) return;
+            
+            // 生成最近30天的日期
+            const dates = [];
+            const today = new Date();
+            for (let i = 29; i >= 0; i--) {
+                const d = new Date(today);
+                d.setDate(d.getDate() - i);
+                dates.push(d.toISOString().split('T')[0]);
+            }
+            
+            // 根据分类筛选数据
+            let papers = allPapers;
+            if (category !== 'all') {
+                papers = allPapers.filter(p => p.category === category.toUpperCase());
+            }
+            
+            // 统计每天的发文数量
+            const counts = dates.map(date => {
+                return papers.filter(p => p.published_date === date).length;
+            });
+            
+            // 根据分类设置颜色
+            const colors = {
+                all: { border: '#3b82f6', bg: 'rgba(59, 130, 246, 0.1)' },
+                pa: { border: '#1e3a5f', bg: 'rgba(30, 58, 95, 0.1)' },
+                pp: { border: '#065f46', bg: 'rgba(6, 95, 70, 0.1)' },
+                pol: { border: '#5b21b6', bg: 'rgba(91, 33, 182, 0.1)' },
+                china: { border: '#9f1239', bg: 'rgba(159, 18, 57, 0.1)' }
+            };
+            const color = colors[category] || colors.all;
+            
+            if (trendChart) trendChart.destroy();
+            trendChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates.map(d => d.slice(5)),
+                    datasets: [{
+                        label: '发文数量',
+                        data: counts,
+                        borderColor: color.border,
+                        backgroundColor: color.bg,
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.4,
+                        pointRadius: 3,
+                        pointBackgroundColor: color.border
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                }
+            });
+        }
+        
+        function setTrendCategory(category) {
+            currentTrendCategory = category;
+            
+            // 更新按钮状态
+            document.querySelectorAll('.trend-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.trendCategory === category) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            renderTrendChart(category);
         }
         
         function initThemeRiverChart() {
@@ -1596,6 +1778,16 @@
             }
         }
 
+        // 检查文献是否是最近3天内发表的
+        function isRecentPaper(publishedDate) {
+            if (!publishedDate) return false;
+            const paperDate = new Date(publishedDate);
+            const today = new Date();
+            const threeDaysAgo = new Date(today);
+            threeDaysAgo.setDate(today.getDate() - 3);
+            return paperDate >= threeDaysAgo;
+        }
+
         function createPaperCard(paper, options = {}) {
             const categoryClass = paper.category ? paper.category.toLowerCase() : 'pa';
             const categoryTag = getCategoryTag(paper.category);
@@ -1606,6 +1798,9 @@
             // 判断是否是搜索结果显示（包含HTML高亮标签）
             const isSearchResult = options.isSearchResult || false;
             
+            // 判断是否显示 NEW 标签
+            const showNewTag = isRecentPaper(paper.published_date);
+            
             // 使用数据属性存储ID，避免在HTML属性中使用复杂表达式
             let html = '<div class="paper-card ' + categoryClass + ' p-5" draggable="true" data-paper-id="' + escapeHtml(paperId) + '" ondragstart="dragStart(event)" ondragend="dragEnd(event)">';
             html += '<div class="flex justify-between items-start gap-4">';
@@ -1614,6 +1809,9 @@
             html += categoryTag;
             html += '<span class="journal-tag">' + escapeHtml(paper.journal_name || '未知期刊') + '</span>';
             html += '<span class="text-xs text-slate-400">' + escapeHtml(paper.published_date || '') + '</span>';
+            if (showNewTag) {
+                html += '<span class="new-tag">NEW</span>';
+            }
             html += '</div>';
             html += '<h3 class="text-lg font-semibold text-slate-800 mb-2 leading-tight cursor-pointer hover:text-blue-600 transition" onclick="showPaperDetailById(this)">';
             // 搜索结果显示时保留HTML标签（高亮），其他情况转义
@@ -2379,14 +2577,8 @@
         }
 
         function updateFavCount() {
-            const count = Object.keys(paperFolders).length;
-            const badge = document.getElementById('nav-fav-count');
-            if (count > 0) {
-                badge.textContent = count;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
+            // 导航栏不再显示收藏数量，仅保留函数兼容性
+            // 收藏提示通过页面内的Toast或视觉反馈展示
         }
 
         function saveFolders() {
