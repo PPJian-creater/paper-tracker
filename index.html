@@ -734,13 +734,23 @@
                     </button>
                 </div>
                 
-                <!-- 时间范围 -->
+                <!-- 时间范围和领域 -->
                 <div class="flex flex-wrap items-center gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
-                    <span class="text-sm text-slate-600">发表时间：</span>
                     <div class="flex items-center gap-2">
-                        <input type="date" id="search-date-start" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
+                        <span class="text-sm text-slate-600 w-16">发表时间：</span>
+                        <input type="date" id="search-date-start" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 w-36">
                         <span class="text-slate-400">至</span>
-                        <input type="date" id="search-date-end" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500">
+                        <input type="date" id="search-date-end" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 w-36">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm text-slate-600">文献领域：</span>
+                        <select id="search-category" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 bg-white w-32">
+                            <option value="">全部领域</option>
+                            <option value="PA">公共行政</option>
+                            <option value="PP">公共政策</option>
+                            <option value="POL">政治学</option>
+                            <option value="CHINA">中国研究</option>
+                        </select>
                     </div>
                     <div class="flex gap-2 ml-4">
                         <button onclick="setDateRange(7)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100">近7天</button>
@@ -749,22 +759,13 @@
                     </div>
                 </div>
                 
-                <!-- 领域筛选 -->
-                <div class="flex items-center gap-4 mb-4">
-                    <span class="text-sm text-slate-600">文献领域：</span>
-                    <select id="search-category-advanced" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 bg-white">
-                        <option value="">全部领域</option>
-                        <option value="PA">公共行政 (PA)</option>
-                        <option value="PP">公共政策 (PP)</option>
-                        <option value="POL">政治学 (POL)</option>
-                        <option value="CHINA">中国研究 (CHINA)</option>
-                    </select>
-                </div>
-                
                 <!-- 搜索按钮 -->
-                <div class="flex justify-center">
-                    <button onclick="doAdvancedSearch()" class="px-12 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-lg shadow-lg shadow-blue-200">
+                <div class="flex justify-center gap-4">
+                    <button onclick="performAdvancedSearch()" class="px-12 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-lg shadow-lg shadow-blue-200">
                         <i class="fas fa-search mr-2"></i>检索
+                    </button>
+                    <button onclick="resetAdvancedSearch()" class="px-6 py-3 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition font-medium">
+                        <i class="fas fa-undo mr-2"></i>重置
                     </button>
                 </div>
             </div>
@@ -1660,6 +1661,8 @@
         // 辅助函数：HTML转义
         function escapeHtml(text) {
             if (!text) return '';
+            // 清理 XML/HTML 标签（如 <scp>, <i>, <b> 等）
+            text = text.replace(/<[^>]+>/g, '');
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
@@ -2283,7 +2286,67 @@
                 /call for papers/i,
                 /announcement/i,
                 /note from the editor/i,
-                /publisher'?s note/i
+                /publisher'?s note/i,
+                /Oxford University Press/i,
+                /Cambridge University Press/i,
+                /Routledge/i,
+                /Palgrave Macmillan/i,
+                /Springer/i,
+                /Wiley/i,
+                /Sage Publications/i,
+                /Taylor & Francis/i,
+                /Edward Elgar/i,
+                /Brookings Institution Press/i,
+                /Harvard University Press/i,
+                /Yale University Press/i,
+                /Princeton University Press/i,
+                /Stanford University Press/i,
+                /MIT Press/i,
+                /University of Chicago Press/i,
+                /Columbia University Press/i,
+                /Cornell University Press/i,
+                /Duke University Press/i,
+                /Johns Hopkins University Press/i,
+                /University of California Press/i,
+                /\d+p$/i,  // 以数字+p结尾，如 561p
+                /^\d+p\s+/i,  // 开头是数字+p，如 "561p Introduction"
+                /\d+\s*pages?/i,  // 如 561 pages
+                /\d+\s*pp/i,  // 如 561 pp
+                /hardcover/i,
+                /paperback/i,
+                /e-?book/i,
+                /ISBN/i,
+                /\bpublisher\b/i,
+                /\bpress\b/i,
+                /book review/i,
+                /review essay/i,
+                /review article/i,
+                /introduction to/i,
+                /preface/i,
+                /foreword/i,
+                /afterword/i,
+                /bibliography/i,
+                /references/i,
+                /appendix/i,
+                /glossary/i,
+                /index$/i,
+                /chapter/i,
+                /volume editor/i,
+                /edited by/i,
+                /translated by/i,
+                /forthcoming/i,
+                /in press/i,
+                /manuscript/i,
+                /draft/i,
+                /working paper/i,
+                /discussion paper/i,
+                /technical report/i,
+                /research report/i,
+                /annual report/i,
+                /conference proceedings/i,
+                /symposium/i,
+                /roundtable/i,
+                /panel discussion/i
             ];
             
             let filteredCount = 0;
@@ -2344,6 +2407,158 @@
         function updateSearchFields() {
             const checkboxes = document.querySelectorAll('#tab-search input[type="checkbox"]');
             searchFields = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+        }
+
+        // 高级搜索条件管理
+        let searchConditionCount = 1;
+        
+        function addSearchCondition() {
+            if (searchConditionCount >= 5) {
+                alert('最多只能添加5个检索条件');
+                return;
+            }
+            
+            const container = document.getElementById('advanced-search-conditions');
+            const row = document.createElement('div');
+            row.className = 'search-condition-row flex items-center gap-3';
+            row.dataset.row = searchConditionCount;
+            
+            row.innerHTML = '<select class="condition-field px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-sm w-28">' +
+                '<option value="title">标题</option>' +
+                '<option value="author">作者</option>' +
+                '<option value="keyword">关键词</option>' +
+                '<option value="abstract">摘要</option>' +
+                '<option value="journal">期刊</option>' +
+                '</select>' +
+                '<input type="text" class="condition-value flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" placeholder="请输入检索词...">' +
+                '<button onclick="removeSearchCondition(' + searchConditionCount + ')" class="text-slate-400 hover:text-red-500 transition px-2">' +
+                '<i class="fas fa-times"></i>' +
+                '</button>';
+            
+            container.appendChild(row);
+            searchConditionCount++;
+            
+            // 添加回车键监听
+            const input = row.querySelector('.condition-value');
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performAdvancedSearch();
+                }
+            });
+        }
+        
+        function removeSearchCondition(rowIndex) {
+            const row = document.querySelector('.search-condition-row[data-row="' + rowIndex + '"]');
+            if (row) {
+                row.remove();
+                searchConditionCount--;
+            }
+        }
+        
+        function resetAdvancedSearch() {
+            // 重置所有条件输入框
+            document.querySelectorAll('.condition-value').forEach(input => {
+                input.value = '';
+            });
+            
+            // 重置日期
+            document.getElementById('search-date-start').value = '';
+            document.getElementById('search-date-end').value = '';
+            
+            // 重置领域
+            document.getElementById('search-category').value = '';
+            
+            // 重置逻辑关系为AND
+            document.querySelector('input[name="search-logic"][value="and"]').checked = true;
+            
+            // 清除搜索结果
+            document.getElementById('search-results').innerHTML = '';
+            document.getElementById('search-results-info').querySelector('span').textContent = '';
+            document.getElementById('advanced-search-pagination').innerHTML = '';
+        }
+        
+        function performAdvancedSearch() {
+            const conditions = [];
+            const rows = document.querySelectorAll('.search-condition-row');
+            
+            rows.forEach(row => {
+                const field = row.querySelector('.condition-field').value;
+                const value = row.querySelector('.condition-value').value.trim();
+                if (value) {
+                    conditions.push({ field, value });
+                }
+            });
+            
+            if (conditions.length === 0) {
+                alert('请至少输入一个检索条件');
+                return;
+            }
+            
+            const logic = document.querySelector('input[name="search-logic"]:checked').value;
+            const startDate = document.getElementById('search-date-start').value;
+            const endDate = document.getElementById('search-date-end').value;
+            const category = document.getElementById('search-category').value;
+            
+            let results = allPapers.filter(paper => {
+                // 检查是否满足所有条件
+                let conditionResults = conditions.map(condition => {
+                    const value = condition.value.toLowerCase();
+                    switch (condition.field) {
+                        case 'title':
+                            return paper.title && paper.title.toLowerCase().includes(value);
+                        case 'author':
+                            return paper.authors && paper.authors.some(a => a.toLowerCase().includes(value));
+                        case 'keyword':
+                            return paper.keywords && paper.keywords.some(k => k.toLowerCase().includes(value));
+                        case 'abstract':
+                            return paper.abstract && paper.abstract.toLowerCase().includes(value);
+                        case 'journal':
+                            return paper.journal_name && paper.journal_name.toLowerCase().includes(value);
+                        default:
+                            return false;
+                    }
+                });
+                
+                // 根据逻辑关系判断
+                let match = logic === 'and' 
+                    ? conditionResults.every(r => r) 
+                    : conditionResults.some(r => r);
+                
+                if (!match) return false;
+                
+                // 时间范围筛选
+                if (startDate || endDate) {
+                    if (!paper.published_date) return false;
+                    const paperDate = new Date(paper.published_date);
+                    if (startDate && paperDate < new Date(startDate)) return false;
+                    if (endDate && paperDate > new Date(endDate + 'T23:59:59')) return false;
+                }
+                
+                // 领域筛选
+                if (category && paper.category !== category) return false;
+                
+                return true;
+            });
+            
+            // 高亮结果
+            results = results.map(paper => {
+                let highlighted = { ...paper };
+                conditions.forEach(condition => {
+                    if (condition.field === 'title') {
+                        highlighted.title = highlightKeyword(highlighted.title, condition.value);
+                    } else if (condition.field === 'abstract') {
+                        highlighted.abstract = highlightKeyword(highlighted.abstract, condition.value);
+                    }
+                });
+                return highlighted;
+            });
+            
+            // 显示结果
+            paginationState.search.filteredPapers = results;
+            paginationState.search.currentPage = 1;
+            paginationState.search.totalPages = Math.ceil(results.length / PAPERS_PER_PAGE);
+            
+            renderSearchResults(results, null, conditions, logic);
         }
 
         function doSearch() {
