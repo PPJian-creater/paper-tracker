@@ -376,6 +376,26 @@
             <p class="text-slate-500">正在加载数据...</p>
         </div>
 
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden text-center py-20">
+            <div class="text-blue-300 text-6xl mb-6">
+                <i class="fas fa-inbox"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-slate-700 mb-2">暂无文献数据</h3>
+            <p class="text-slate-500 mb-6 max-w-md mx-auto">
+                数据库中还没有文献，请先运行爬虫抓取数据，或者检查数据文件路径是否正确。
+            </p>
+            <div class="flex justify-center gap-4">
+                <button onclick="loadData()" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                    <i class="fas fa-sync-alt mr-2"></i>重新加载
+                </button>
+                <a href="#" onclick="showCrawlGuide(); return false;" class="px-6 py-2 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition">
+                    <i class="fas fa-book mr-2"></i>查看抓取指南
+                </a>
+            </div>
+        </div>
+
+        <!-- Error State -->
         <div id="error-state" class="hidden text-center py-20">
             <div class="text-red-500 text-5xl mb-4">
                 <i class="fas fa-exclamation-circle"></i>
@@ -824,16 +844,75 @@
             loadData();
         });
 
+        // ==================== 数据抓取指南 ====================
+        function showCrawlGuide() {
+            const guideHtml = `
+                <div class="bg-white rounded-xl shadow-lg p-8 max-w-2xl mx-auto text-left">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-3">
+                        <i class="fas fa-robot text-blue-600"></i>
+                        如何获取文献数据
+                    </h3>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <h4 class="font-semibold text-blue-800 mb-2">方法1：本地运行爬虫（推荐）</h4>
+                            <ol class="text-sm text-blue-700 space-y-2 ml-4">
+                                <li>1. 确保已安装 Python 3.8+</li>
+                                <li>2. 进入项目目录：<code class="bg-blue-100 px-2 py-1 rounded">cd github-pages</code></li>
+                                <li>3. 运行爬虫：<code class="bg-blue-100 px-2 py-1 rounded">python scripts/crawler.py --days 30</code></li>
+                                <li>4. 导出数据：<code class="bg-blue-100 px-2 py-1 rounded">python scripts/export.py</code></li>
+                                <li>5. 将生成的 data/data.json 上传到 GitHub</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <h4 class="font-semibold text-green-800 mb-2">方法2：使用 GitHub Actions（自动）</h4>
+                            <ol class="text-sm text-green-700 space-y-2 ml-4">
+                                <li>1. 在 GitHub 仓库设置 Actions 工作流</li>
+                                <li>2. 配置 EMAIL 密钥（用于 OpenAlex API）</li>
+                                <li>3. 手动触发 workflow 或等待定时任务</li>
+                                <li>4. 数据会自动更新到 data/data.json</li>
+                            </ol>
+                        </div>
+                        
+                        <div class="bg-amber-50 rounded-lg p-4">
+                            <h4 class="font-semibold text-amber-800 mb-2">当前状态</h4>
+                            <p class="text-sm text-amber-700">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                数据文件路径：<code class="bg-amber-100 px-2 py-1 rounded">data/data.json</code><br>
+                                如果文件不存在或为空，网页将无法显示文献。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 text-center">
+                        <button onclick="closeModal('paper-detail-modal')" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            我知道了
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('paper-detail-content').innerHTML = guideHtml;
+            document.getElementById('paper-detail-modal').classList.add('active');
+        }
+
+        // ==================== 数据加载 ====================
         // ==================== 数据加载 ====================
         async function loadData() {
+            const loadingEl = document.getElementById('loading-state');
+            const errorEl = document.getElementById('error-state');
+            const emptyEl = document.getElementById('empty-state');
+            
             try {
-                document.getElementById('loading-state').classList.remove('hidden');
-                document.getElementById('error-state').classList.add('hidden');
+                loadingEl.classList.remove('hidden');
+                errorEl.classList.add('hidden');
+                emptyEl.classList.add('hidden');
                 
                 // 尝试从sessionStorage读取缓存数据
                 const cachedData = sessionStorage.getItem('research-atlas-data');
                 const cachedTime = sessionStorage.getItem('research-atlas-data-time');
-                const cacheValid = cachedData && cachedTime && (Date.now() - parseInt(cachedTime)) < 300000; // 5分钟缓存
+                const cacheValid = cachedData && cachedTime && (Date.now() - parseInt(cachedTime)) < 300000;
                 
                 let data = null;
                 
@@ -841,56 +920,108 @@
                 if (cacheValid) {
                     try {
                         data = JSON.parse(cachedData);
-                        processLoadedData(data);
-                        document.getElementById('loading-state').classList.add('hidden');
-                        // 后台刷新数据
-                        fetchFreshData();
-                        return;
+                        if (data && data.papers && data.papers.length > 0) {
+                            processLoadedData(data);
+                            loadingEl.classList.add('hidden');
+                            // 后台刷新数据
+                            fetchFreshData().then(freshData => {
+                                if (freshData && freshData.papers && freshData.papers.length > 0) {
+                                    processLoadedData(freshData);
+                                    sessionStorage.setItem('research-atlas-data', JSON.stringify(freshData));
+                                    sessionStorage.setItem('research-atlas-data-time', Date.now().toString());
+                                }
+                            });
+                            return;
+                        }
                     } catch (e) { console.log('缓存数据解析失败'); }
                 }
                 
                 // 从服务器加载数据
                 data = await fetchFreshData();
-                if (data) {
-                    processLoadedData(data);
-                    // 缓存数据
-                    try {
-                        sessionStorage.setItem('research-atlas-data', JSON.stringify(data));
-                        sessionStorage.setItem('research-atlas-data-time', Date.now().toString());
-                    } catch (e) { console.log('数据缓存失败'); }
+                
+                if (!data) {
+                    throw new Error('无法加载数据文件');
                 }
                 
-                document.getElementById('loading-state').classList.add('hidden');
+                if (!data.papers || data.papers.length === 0) {
+                    loadingEl.classList.add('hidden');
+                    emptyEl.classList.remove('hidden');
+                    return;
+                }
+                
+                processLoadedData(data);
+                
+                // 缓存数据
+                try {
+                    sessionStorage.setItem('research-atlas-data', JSON.stringify(data));
+                    sessionStorage.setItem('research-atlas-data-time', Date.now().toString());
+                } catch (e) { console.log('数据缓存失败'); }
+                
+                loadingEl.classList.add('hidden');
             } catch (error) {
                 console.error('加载数据失败:', error);
-                document.getElementById('loading-state').classList.add('hidden');
-                document.getElementById('error-state').classList.remove('hidden');
+                loadingEl.classList.add('hidden');
+                errorEl.classList.remove('hidden');
             }
         }
         
         async function fetchFreshData() {
-            const paths = ['data/data.json', './data/data.json', '../data/data.json'];
+            // GitHub Pages 路径处理
+            const basePath = window.location.pathname.includes('/github-pages/') 
+                ? window.location.pathname.split('/github-pages/')[0] + '/github-pages/'
+                : window.location.pathname.endsWith('/') 
+                    ? window.location.pathname 
+                    : window.location.pathname + '/';
+            
+            const paths = [
+                'data/data.json',
+                './data/data.json',
+                '../data/data.json',
+                basePath + 'data/data.json',
+                window.location.origin + basePath + 'data/data.json'
+            ];
+            
+            console.log('尝试加载数据，路径列表:', paths);
             
             for (const path of paths) {
                 try {
+                    console.log('尝试路径:', path);
                     const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30秒超时
+                    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10秒超时
                     
-                    const response = await fetch(path, { signal: controller.signal });
+                    const response = await fetch(path, { 
+                        signal: controller.signal,
+                        headers: { 'Accept': 'application/json' }
+                    });
                     clearTimeout(timeoutId);
                     
+                    console.log('路径', path, '响应状态:', response.status);
+                    
                     if (response.ok) {
-                        return await response.json();
+                        const data = await response.json();
+                        console.log('成功加载数据，文献数量:', data.papers?.length || 0);
+                        return data;
                     }
-                } catch (e) { continue; }
+                } catch (e) { 
+                    console.log('路径', path, '失败:', e.message);
+                    continue; 
+                }
             }
             return null;
         }
         
         function processLoadedData(data) {
-            if (!data) throw new Error('无法加载数据文件');
-            
-            allPapers = data.papers || [];
+                if (!data) {
+                    showLoadError('无法连接到数据文件', '请检查 data/data.json 是否存在，或查看浏览器控制台(F12)获取详细错误信息。');
+                    throw new Error('无法加载数据文件');
+                }
+                
+                if (!data.papers || data.papers.length === 0) {
+                    showEmptyState();
+                    return;
+                }
+                
+                allPapers = data.papers;
             allJournals = [...new Set(allPapers.map(p => p.journal_name))].filter(Boolean).sort();
             
             allPapers.forEach(paper => {
@@ -1252,36 +1383,87 @@
             const categoryTag = getCategoryTag(paper.category);
             const isSaved = paperFolders[paper.openalex_id];
             const bookmarkClass = isSaved ? 'saved' : '';
+            const paperId = paper.openalex_id || '';
             
-            return `
-                <div class="paper-card ${categoryClass} p-5" draggable="true" ondragstart="dragStart(event, '${paper.openalex_id}')" ondragend="dragEnd(event)">
-                    <div class="flex justify-between items-start gap-4">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2 mb-2">
-                                ${categoryTag}
-                                <span class="journal-tag">${paper.journal_name || '未知期刊'}</span>
-                                <span class="text-xs text-slate-400">${paper.published_date || ''}</span>
-                            </div>
-                            <h3 class="text-lg font-semibold text-slate-800 mb-2 leading-tight cursor-pointer hover:text-blue-600 transition" onclick="showPaperDetail('${paper.openalex_id}')">
-                                ${paper.title || '无标题'}
-                            </h3>
-                            <p class="text-sm text-slate-600 mb-2">
-                                <i class="fas fa-users mr-1 text-slate-400"></i>
-                                ${paper.authors ? paper.authors.slice(0, 5).join(', ') : '未知作者'}${paper.authors && paper.authors.length > 5 ? ' 等' : ''}
-                            </p>
-                            <p class="abstract-text text-sm" id="abstract-${paper.openalex_id}">${paper.abstract || '暂无摘要'}</p>
-                            ${paper.abstract && paper.abstract.length > 100 ? `<div class="expand-btn" onclick="toggleAbstract('${paper.openalex_id}')"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>` : ''}
-                            ${paper.keywords && paper.keywords.length > 0 ? `<div class="flex flex-wrap gap-1 mt-3">${paper.keywords.slice(0, 5).map(kw => `<span class="text-xs px-2 py-1 bg-slate-100 text-slate-600 rounded">${kw}</span>`).join('')}</div>` : ''}
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <button class="bookmark-btn ${bookmarkClass}" onclick="showAddToFolderModal('${paper.openalex_id}')" title="${isSaved ? '已收藏' : '添加到收藏'}">
-                                <i class="fas fa-bookmark"></i>
-                            </button>
-                            ${paper.url ? `<a href="${paper.url}" target="_blank" class="bookmark-btn" title="查看原文"><i class="fas fa-external-link-alt"></i></a>` : ''}
-                        </div>
-                    </div>
-                </div>
-            `;
+            // 使用数据属性存储ID，避免在HTML属性中使用复杂表达式
+            let html = '<div class="paper-card ' + categoryClass + ' p-5" draggable="true" data-paper-id="' + escapeHtml(paperId) + '" ondragstart="dragStart(event)" ondragend="dragEnd(event)">';
+            html += '<div class="flex justify-between items-start gap-4">';
+            html += '<div class="flex-1">';
+            html += '<div class="flex items-center gap-2 mb-2">';
+            html += categoryTag;
+            html += '<span class="journal-tag">' + escapeHtml(paper.journal_name || '未知期刊') + '</span>';
+            html += '<span class="text-xs text-slate-400">' + escapeHtml(paper.published_date || '') + '</span>';
+            html += '</div>';
+            html += '<h3 class="text-lg font-semibold text-slate-800 mb-2 leading-tight cursor-pointer hover:text-blue-600 transition" onclick="showPaperDetailById(this)">';
+            html += escapeHtml(paper.title || '无标题');
+            html += '</h3>';
+            html += '<p class="text-sm text-slate-600 mb-2">';
+            html += '<i class="fas fa-users mr-1 text-slate-400"></i>';
+            html += formatAuthors(paper.authors);
+            html += '</p>';
+            html += '<p class="abstract-text text-sm" id="abstract-' + escapeHtml(paperId) + '">' + escapeHtml(paper.abstract || '暂无摘要') + '</p>';
+            
+            if (paper.abstract && paper.abstract.length > 100) {
+                html += '<div class="expand-btn" onclick="toggleAbstractById(this)"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>';
+            }
+            
+            if (paper.keywords && paper.keywords.length > 0) {
+                html += formatKeywords(paper.keywords);
+            }
+            
+            html += '</div>';
+            html += '<div class="flex flex-col gap-2">';
+            html += '<button class="bookmark-btn ' + bookmarkClass + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '" title="' + (isSaved ? '已收藏' : '添加到收藏') + '">';
+            html += '<i class="fas fa-bookmark"></i>';
+            html += '</button>';
+            
+            if (paper.url) {
+                html += '<a href="' + escapeHtml(paper.url) + '" target="_blank" class="bookmark-btn" title="查看原文"><i class="fas fa-external-link-alt"></i></a>';
+            }
+            
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+            
+            return html;
+        }
+        
+        // 辅助函数：HTML转义
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // 通过元素获取paper ID并显示详情
+        function showPaperDetailById(element) {
+            const card = element.closest('.paper-card');
+            const paperId = card.dataset.paperId;
+            showPaperDetail(paperId);
+        }
+        
+        // 通过按钮获取paper ID
+        function showAddToFolderModalByBtn(button) {
+            const paperId = button.dataset.paperId;
+            showAddToFolderModal(paperId);
+        }
+        
+        // 通过元素切换摘要
+        function toggleAbstractById(element) {
+            const paperId = element.closest('.paper-card').dataset.paperId;
+            toggleAbstract(paperId);
+        }
+        
+        // 修改拖拽函数
+        function dragStart(event) {
+            const paperId = event.target.dataset.paperId;
+            draggedPaperId = paperId;
+            event.target.classList.add('dragging');
+        }
+        
+        function dragEnd(event) {
+            event.target.classList.remove('dragging');
         }
 
         function getCategoryTag(category) {
@@ -1292,6 +1474,24 @@
                 'CHINA': '<span class="category-tag tag-china">CHINA</span>'
             };
             return tags[category] || tags['PA'];
+        }
+        
+        function formatAuthors(authors) {
+            if (!authors || authors.length === 0) return '未知作者';
+            let result = authors.slice(0, 5).join(', ');
+            if (authors.length > 5) result += ' 等';
+            return result;
+        }
+        
+        function formatKeywords(keywords) {
+            if (!keywords || keywords.length === 0) return '';
+            const kws = keywords.slice(0, 5);
+            let html = '<div class="flex flex-wrap gap-1 mt-3">';
+            for (let i = 0; i < kws.length; i++) {
+                html += '<span class="text-xs px-2 py-1 bg-slate-100 text-slate-600 rounded">' + kws[i] + '</span>';
+            }
+            html += '</div>';
+            return html;
         }
 
         function toggleAbstract(paperId) {
@@ -1389,7 +1589,7 @@
         function renderFolders() {
             const container = document.getElementById('folder-list');
             if (!container) return;
-            const allFolder = container.querySelector('[onclick="selectFolder('all')"]');
+            const allFolder = container.querySelector('[onclick="selectFolder(\'all\')"]');
             container.innerHTML = '';
             container.appendChild(allFolder);
             document.getElementById('folder-count-all').textContent = Object.keys(paperFolders).length;
