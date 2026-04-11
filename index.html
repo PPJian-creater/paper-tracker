@@ -442,23 +442,56 @@
                 </div>
             </div>
 
+            <!-- 今日更新 -->
+            <div id="today-papers-section" class="bg-white rounded-xl border border-slate-200 p-6 mb-8 hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">
+                            <i class="fas fa-bolt text-amber-500 mr-2"></i>今日更新
+                            <span id="today-count-badge" class="ml-2 px-2 py-0.5 bg-amber-100 text-amber-700 text-sm rounded-full">0</span>
+                        </h2>
+                        <p class="text-sm text-slate-500 mt-1">今天新收录的文献</p>
+                    </div>
+                    <button onclick="refreshTodayPapers()" class="text-blue-600 hover:text-blue-800 font-medium text-sm">
+                        <i class="fas fa-sync-alt mr-1"></i>刷新
+                    </button>
+                </div>
+                <div id="today-papers-list" class="space-y-4"></div>
+            </div>
+
+            <!-- 热门研究主题 -->
             <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
                 <div class="flex justify-between items-center mb-6">
                     <div>
                         <h2 class="text-xl font-bold text-slate-800">
-                            <i class="fas fa-water text-blue-500 mr-2"></i>研究主题演变
+                            <i class="fas fa-fire text-orange-500 mr-2"></i>热门研究主题
                         </h2>
-                        <p class="text-sm text-slate-500 mt-1">各领域关键词热度时序变化</p>
+                        <p class="text-sm text-slate-500 mt-1">各领域高频关键词统计</p>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="setThemeRiverCategory('all')" class="filter-tab active" data-category="all">全部</button>
-                        <button onclick="setThemeRiverCategory('pa')" class="filter-tab" data-category="pa">PA</button>
-                        <button onclick="setThemeRiverCategory('pp')" class="filter-tab" data-category="pp">PP</button>
-                        <button onclick="setThemeRiverCategory('pol')" class="filter-tab" data-category="pol">POL</button>
-                        <button onclick="setThemeRiverCategory('china')" class="filter-tab" data-category="china">CHINA</button>
+                        <button onclick="setThemeCategory('all')" class="filter-tab active" data-theme-category="all">全部</button>
+                        <button onclick="setThemeCategory('pa')" class="filter-tab" data-theme-category="pa">PA</button>
+                        <button onclick="setThemeCategory('pp')" class="filter-tab" data-theme-category="pp">PP</button>
+                        <button onclick="setThemeCategory('pol')" class="filter-tab" data-theme-category="pol">POL</button>
+                        <button onclick="setThemeCategory('china')" class="filter-tab" data-theme-category="china">CHINA</button>
                     </div>
                 </div>
-                <div id="themeRiverChart"></div>
+                <div id="keywords-table-container" class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-200">
+                                <th class="text-left py-3 px-4 font-semibold text-slate-700">排名</th>
+                                <th class="text-left py-3 px-4 font-semibold text-slate-700">关键词</th>
+                                <th class="text-left py-3 px-4 font-semibold text-slate-700">出现次数</th>
+                                <th class="text-left py-3 px-4 font-semibold text-slate-700">相关文献数</th>
+                                <th class="text-left py-3 px-4 font-semibold text-slate-700">趋势</th>
+                            </tr>
+                        </thead>
+                        <tbody id="keywords-table-body">
+                            <!-- 动态生成 -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
@@ -488,13 +521,19 @@
                 <select id="pa-journal-filter" onchange="filterPAPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white">
                     <option value="">全部期刊</option>
                 </select>
-                <select id="pa-time-filter" onchange="filterPAPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white">
+                <select id="pa-time-filter" onchange="handleTimeFilterChange('pa')" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white">
                     <option value="">全部时间</option>
                     <option value="7">最近7天</option>
                     <option value="30">最近30天</option>
                     <option value="90">最近90天</option>
                     <option value="365">最近1年</option>
+                    <option value="custom">自定义范围</option>
                 </select>
+                <div id="pa-custom-date" class="hidden flex items-center gap-2">
+                    <input type="date" id="pa-date-start" class="px-3 py-2 border border-slate-300 rounded-lg text-sm" onchange="filterPAPapers()">
+                    <span class="text-slate-500">至</span>
+                    <input type="date" id="pa-date-end" class="px-3 py-2 border border-slate-300 rounded-lg text-sm" onchange="filterPAPapers()">
+                </div>
             </div>
             <div id="pa-papers-list" class="space-y-4"></div>
         </div>
@@ -504,13 +543,19 @@
                 <select id="pp-journal-filter" onchange="filterPPPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
                     <option value="">全部期刊</option>
                 </select>
-                <select id="pp-time-filter" onchange="filterPPPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
+                <select id="pp-time-filter" onchange="handleTimeFilterChange('pp')" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 bg-white">
                     <option value="">全部时间</option>
                     <option value="7">最近7天</option>
                     <option value="30">最近30天</option>
                     <option value="90">最近90天</option>
                     <option value="365">最近1年</option>
+                    <option value="custom">自定义范围</option>
                 </select>
+                <div id="pp-custom-date" class="hidden flex items-center gap-2">
+                    <input type="date" id="pp-date-start" class="px-3 py-2 border border-slate-300 rounded-lg text-sm" onchange="filterPPPapers()">
+                    <span class="text-slate-500">至</span>
+                    <input type="date" id="pp-date-end" class="px-3 py-2 border border-slate-300 rounded-lg text-sm" onchange="filterPPPapers()">
+                </div>
             </div>
             <div id="pp-papers-list" class="space-y-4"></div>
         </div>
@@ -520,13 +565,19 @@
                 <select id="pol-journal-filter" onchange="filterPOLPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-violet-500 bg-white">
                     <option value="">全部期刊</option>
                 </select>
-                <select id="pol-time-filter" onchange="filterPOLPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-violet-500 bg-white">
+                <select id="pol-time-filter" onchange="handleTimeFilterChange('pol')" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-violet-500 bg-white">
                     <option value="">全部时间</option>
                     <option value="7">最近7天</option>
                     <option value="30">最近30天</option>
                     <option value="90">最近90天</option>
                     <option value="365">最近1年</option>
+                    <option value="custom">自定义范围</option>
                 </select>
+                <div id="pol-custom-date" class="hidden flex items-center gap-2">
+                    <input type="date" id="pol-date-start" class="px-3 py-2 border border-slate-300 rounded-lg text-sm" onchange="filterPOLPapers()">
+                    <span class="text-slate-500">至</span>
+                    <input type="date" id="pol-date-end" class="px-3 py-2 border border-slate-300 rounded-lg text-sm" onchange="filterPOLPapers()">
+                </div>
             </div>
             <div id="pol-papers-list" class="space-y-4"></div>
         </div>
@@ -536,25 +587,24 @@
                 <select id="china-journal-filter" onchange="filterChinaPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 bg-white">
                     <option value="">全部期刊</option>
                 </select>
-                <select id="china-time-filter" onchange="filterChinaPapers()" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 bg-white">
+                <select id="china-time-filter" onchange="handleTimeFilterChange('china')" class="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-amber-500 bg-white">
                     <option value="">全部时间</option>
                     <option value="7">最近7天</option>
                     <option value="30">最近30天</option>
                     <option value="90">最近90天</option>
                     <option value="365">最近1年</option>
+                    <option value="custom">自定义范围</option>
                 </select>
+                <div id="china-custom-date" class="hidden flex items-center gap-2">
+                    <input type="date" id="china-date-start" class="px-3 py-2 border border-slate-300 rounded-lg text-sm" onchange="filterChinaPapers()">
+                    <span class="text-slate-500">至</span>
+                    <input type="date" id="china-date-end" class="px-3 py-2 border border-slate-300 rounded-lg text-sm" onchange="filterChinaPapers()">
+                </div>
             </div>
             <div id="china-papers-list" class="space-y-4"></div>
         </div>
 
         <div id="tab-journals" class="tab-content hidden">
-            <div class="bg-gradient-to-r from-slate-800 to-slate-900 rounded-2xl p-8 text-white mb-6">
-                <h2 class="text-3xl font-bold mb-2">
-                    <i class="fas fa-book-open mr-3 text-amber-400"></i>期刊导航
-                </h2>
-                <p class="text-slate-300">收录86本SSCI顶级期刊，点击期刊名称访问官网</p>
-            </div>
-            
             <div class="bg-white rounded-xl border border-slate-200 p-4 mb-6">
                 <div class="flex flex-col md:flex-row gap-4">
                     <div class="flex gap-2 flex-wrap">
@@ -610,9 +660,21 @@
                 
                 <div class="flex-1">
                     <div class="flex justify-between items-center mb-4">
-                        <h2 id="current-folder-name" class="text-xl font-bold text-slate-800">全部收藏</h2>
-                        <div class="text-sm text-slate-500">
-                            共 <span id="current-folder-count">0</span> 篇文献
+                        <div>
+                            <h2 id="current-folder-name" class="text-xl font-bold text-slate-800">全部收藏</h2>
+                            <div class="text-sm text-slate-500">
+                                共 <span id="current-folder-count">0</span> 篇文献
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <label class="flex items-center gap-2 px-3 py-2 bg-slate-100 rounded-lg cursor-pointer hover:bg-slate-200 transition">
+                                <input type="checkbox" id="select-all-favorites" onchange="toggleSelectAllFavorites()" class="w-4 h-4 text-blue-600 rounded">
+                                <span class="text-sm text-slate-700">全选</span>
+                            </label>
+                            <button onclick="deleteSelectedFavorites()" id="batch-delete-btn" class="hidden px-3 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition text-sm font-medium">
+                                <i class="fas fa-trash-alt mr-1"></i>
+                                删除 (<span id="selected-count">0</span>)
+                            </button>
                         </div>
                     </div>
                     <div id="favorites-list" class="space-y-4">
@@ -1021,7 +1083,8 @@
                     return;
                 }
                 
-                allPapers = data.papers;
+                // 过滤无效文献（书评、刊期信息等）
+                allPapers = filterInvalidPapers(data.papers);
             allJournals = [...new Set(allPapers.map(p => p.journal_name))].filter(Boolean).sort();
             
             allPapers.forEach(paper => {
@@ -1057,6 +1120,37 @@
                 document.getElementById('stat-pol').textContent = allPapers.filter(p => p.category === 'POL').length;
                 document.getElementById('stat-china').textContent = allPapers.filter(p => p.category === 'CHINA').length;
             }
+            
+            // 更新今日更新
+            renderTodayPapers();
+        }
+        
+        function renderTodayPapers() {
+            const today = new Date().toISOString().split('T')[0];
+            const todayPapers = allPapers.filter(p => p.published_date === today);
+            const section = document.getElementById('today-papers-section');
+            const list = document.getElementById('today-papers-list');
+            const badge = document.getElementById('today-count-badge');
+            
+            if (todayPapers.length === 0) {
+                section.classList.add('hidden');
+                return;
+            }
+            
+            section.classList.remove('hidden');
+            badge.textContent = todayPapers.length;
+            
+            // 只显示前10篇
+            const displayPapers = todayPapers.slice(0, 10);
+            list.innerHTML = displayPapers.map(paper => createPaperCard(paper)).join('');
+            
+            if (todayPapers.length > 10) {
+                list.innerHTML += '<div class="text-center py-4 text-slate-500 text-sm">还有 ' + (todayPapers.length - 10) + ' 篇文献...</div>';
+            }
+        }
+        
+        function refreshTodayPapers() {
+            renderTodayPapers();
         }
 
         function initCharts(stats) {
@@ -1089,71 +1183,95 @@
             }
             initThemeRiverChart();
         }
-
+        
         function initThemeRiverChart() {
-            const chartDom = document.getElementById('themeRiverChart');
-            if (!chartDom) return;
-            if (themeRiverChart) themeRiverChart.dispose();
-            themeRiverChart = echarts.init(chartDom);
-            updateThemeRiverChart();
+            // 不再初始化河流图，改为渲染关键词表格
+            renderKeywordsTable();
         }
-
-        function updateThemeRiverChart() {
-            if (!themeRiverChart) return;
+        
+        function renderKeywordsTable() {
+            const tbody = document.getElementById('keywords-table-body');
+            if (!tbody) return;
+            
             let papers = allPapers;
             if (currentThemeCategory !== 'all') {
                 papers = allPapers.filter(p => p.category === currentThemeCategory.toUpperCase());
             }
             
-            const keywordData = {};
+            // 统计关键词
+            const keywordStats = {};
             papers.forEach(paper => {
-                const date = paper.published_date ? paper.published_date.slice(0, 7) : '';
-                if (!date) return;
                 const keywords = paper.keywords || [];
                 keywords.forEach(keyword => {
-                    if (!keywordData[keyword]) keywordData[keyword] = {};
-                    if (!keywordData[keyword][date]) keywordData[keyword][date] = 0;
-                    keywordData[keyword][date]++;
+                    if (!keywordStats[keyword]) {
+                        keywordStats[keyword] = { count: 0, papers: new Set() };
+                    }
+                    keywordStats[keyword].count++;
+                    keywordStats[keyword].papers.add(paper.openalex_id);
                 });
             });
             
-            const topKeywords = Object.entries(keywordData)
-                .map(([kw, dates]) => ({ keyword: kw, total: Object.values(dates).reduce((a, b) => a + b, 0) }))
-                .sort((a, b) => b.total - a.total)
-                .slice(0, 15)
-                .map(k => k.keyword);
+            // 排序并取前20
+            const sortedKeywords = Object.entries(keywordStats)
+                .map(([keyword, stats]) => ({
+                    keyword,
+                    count: stats.count,
+                    paperCount: stats.papers.size
+                }))
+                .sort((a, b) => b.count - a.count)
+                .slice(0, 20);
             
-            const riverData = [];
-            topKeywords.forEach(keyword => {
-                Object.entries(keywordData[keyword] || {}).forEach(([date, count]) => {
-                    riverData.push([date, count, keyword]);
-                });
+            if (sortedKeywords.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-8 text-slate-400">暂无关键词数据</td></tr>';
+                return;
+            }
+            
+            // 渲染表格
+            tbody.innerHTML = sortedKeywords.map((item, index) => {
+                const rank = index + 1;
+                let rankClass = '';
+                let rankIcon = '';
+                if (rank === 1) { rankClass = 'text-amber-600 font-bold'; rankIcon = '<i class="fas fa-crown text-amber-500 mr-1"></i>'; }
+                else if (rank === 2) { rankClass = 'text-slate-600 font-bold'; rankIcon = '<i class="fas fa-medal text-slate-400 mr-1"></i>'; }
+                else if (rank === 3) { rankClass = 'text-orange-700 font-bold'; rankIcon = '<i class="fas fa-medal text-orange-600 mr-1"></i>'; }
+                
+                // 计算趋势（模拟：根据排名判断）
+                const trend = rank <= 5 ? '<span class="text-green-500"><i class="fas fa-arrow-up mr-1"></i>热门</span>' : 
+                               rank <= 10 ? '<span class="text-blue-500"><i class="fas fa-minus mr-1"></i>稳定</span>' :
+                               '<span class="text-slate-400"><i class="fas fa-arrow-down mr-1"></i>一般</span>';
+                
+                return '<tr class="border-b border-slate-100 hover:bg-slate-50 transition">' +
+                    '<td class="py-3 px-4 ' + rankClass + '">' + rankIcon + rank + '</td>' +
+                    '<td class="py-3 px-4 font-medium text-slate-800">' + escapeHtml(item.keyword) + '</td>' +
+                    '<td class="py-3 px-4"><span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs font-semibold">' + item.count + '</span></td>' +
+                    '<td class="py-3 px-4 text-slate-600">' + item.paperCount + ' 篇</td>' +
+                    '<td class="py-3 px-4">' + trend + '</td>' +
+                    '</tr>';
+            }).join('');
+        }
+        
+        function setThemeCategory(category) {
+            currentThemeCategory = category;
+            
+            // 更新按钮状态
+            document.querySelectorAll('[data-theme-category]').forEach(btn => {
+                if (btn.dataset.themeCategory === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
             });
             
-            const option = {
-                tooltip: { trigger: 'axis', axisPointer: { type: 'line' } },
-                singleAxis: {
-                    top: 50, bottom: 50, axisTick: {}, axisLabel: {}, type: 'time',
-                    axisPointer: { animation: true, label: { show: true } },
-                    splitLine: { show: true, lineStyle: { type: 'dashed', opacity: 0.2 } }
-                },
-                series: [{
-                    type: 'themeRiver',
-                    emphasis: { itemStyle: { shadowBlur: 10, shadowColor: 'rgba(0, 0, 0, 0.5)' } },
-                    data: riverData,
-                    label: { show: true, fontSize: 11 }
-                }]
-            };
-            themeRiverChart.setOption(option);
+            renderKeywordsTable();
+        }
+
+        function updateThemeRiverChart() {
+            // 兼容旧代码调用
+            renderKeywordsTable();
         }
 
         function setThemeRiverCategory(category) {
-            currentThemeCategory = category;
-            document.querySelectorAll('#tab-discover .filter-tab').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.dataset.category === category) btn.classList.add('active');
-            });
-            updateThemeRiverChart();
+            setThemeCategory(category);
         }
 
         function renderAll() {
@@ -1206,12 +1324,27 @@
             document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
             document.getElementById(`tab-${tabName}`).classList.remove('hidden');
             if (tabName === 'favorites') renderFavorites();
+            
+            // 刷新所有收藏图标状态
+            refreshAllBookmarkIcons();
+        }
+        
+        function refreshAllBookmarkIcons() {
+            // 更新所有论文卡片上的收藏图标状态
+            Object.keys(paperFolders).forEach(paperId => {
+                refreshPaperCard(paperId);
+            });
         }
 
         function filterPAPapers() {
             const journal = document.getElementById('pa-journal-filter').value;
-            const days = document.getElementById('pa-time-filter').value;
-            const filtered = filterPapers('PA', journal, days);
+            const timeValue = document.getElementById('pa-time-filter').value;
+            let startDate = null, endDate = null;
+            if (timeValue === 'custom') {
+                startDate = document.getElementById('pa-date-start').value;
+                endDate = document.getElementById('pa-date-end').value;
+            }
+            const filtered = filterPapers('PA', journal, timeValue, startDate, endDate);
             paginationState.pa.filteredPapers = filtered;
             paginationState.pa.currentPage = 1;
             paginationState.pa.totalPages = Math.ceil(filtered.length / PAPERS_PER_PAGE);
@@ -1220,8 +1353,13 @@
 
         function filterPPPapers() {
             const journal = document.getElementById('pp-journal-filter').value;
-            const days = document.getElementById('pp-time-filter').value;
-            const filtered = filterPapers('PP', journal, days);
+            const timeValue = document.getElementById('pp-time-filter').value;
+            let startDate = null, endDate = null;
+            if (timeValue === 'custom') {
+                startDate = document.getElementById('pp-date-start').value;
+                endDate = document.getElementById('pp-date-end').value;
+            }
+            const filtered = filterPapers('PP', journal, timeValue, startDate, endDate);
             paginationState.pp.filteredPapers = filtered;
             paginationState.pp.currentPage = 1;
             paginationState.pp.totalPages = Math.ceil(filtered.length / PAPERS_PER_PAGE);
@@ -1230,8 +1368,13 @@
 
         function filterPOLPapers() {
             const journal = document.getElementById('pol-journal-filter').value;
-            const days = document.getElementById('pol-time-filter').value;
-            const filtered = filterPapers('POL', journal, days);
+            const timeValue = document.getElementById('pol-time-filter').value;
+            let startDate = null, endDate = null;
+            if (timeValue === 'custom') {
+                startDate = document.getElementById('pol-date-start').value;
+                endDate = document.getElementById('pol-date-end').value;
+            }
+            const filtered = filterPapers('POL', journal, timeValue, startDate, endDate);
             paginationState.pol.filteredPapers = filtered;
             paginationState.pol.currentPage = 1;
             paginationState.pol.totalPages = Math.ceil(filtered.length / PAPERS_PER_PAGE);
@@ -1240,22 +1383,66 @@
 
         function filterChinaPapers() {
             const journal = document.getElementById('china-journal-filter').value;
-            const days = document.getElementById('china-time-filter').value;
-            const filtered = filterPapers('CHINA', journal, days);
+            const timeValue = document.getElementById('china-time-filter').value;
+            let startDate = null, endDate = null;
+            if (timeValue === 'custom') {
+                startDate = document.getElementById('china-date-start').value;
+                endDate = document.getElementById('china-date-end').value;
+            }
+            const filtered = filterPapers('CHINA', journal, timeValue, startDate, endDate);
             paginationState.china.filteredPapers = filtered;
             paginationState.china.currentPage = 1;
             paginationState.china.totalPages = Math.ceil(filtered.length / PAPERS_PER_PAGE);
             renderPaperListWithPagination('china-papers-list', filtered, 'china');
         }
 
-        function filterPapers(category, journal, days) {
+        function handleTimeFilterChange(category) {
+            const select = document.getElementById(category + '-time-filter');
+            const customDateDiv = document.getElementById(category + '-custom-date');
+            
+            if (select.value === 'custom') {
+                customDateDiv.classList.remove('hidden');
+                // 设置默认日期范围（最近30天）
+                const end = new Date();
+                const start = new Date();
+                start.setDate(start.getDate() - 30);
+                document.getElementById(category + '-date-end').value = end.toISOString().split('T')[0];
+                document.getElementById(category + '-date-start').value = start.toISOString().split('T')[0];
+            } else {
+                customDateDiv.classList.add('hidden');
+            }
+            
+            // 调用对应的筛选函数
+            const filterFunc = {
+                'pa': filterPAPapers,
+                'pp': filterPPPapers,
+                'pol': filterPOLPapers,
+                'china': filterChinaPapers
+            }[category];
+            if (filterFunc) filterFunc();
+        }
+        
+        function filterPapers(category, journal, timeValue, startDate, endDate) {
             let filtered = allPapers.filter(p => p.category === category);
             if (journal) filtered = filtered.filter(p => p.journal_name === journal);
-            if (days) {
+            
+            if (timeValue && timeValue !== 'custom') {
+                // 预设时间范围
                 const cutoff = new Date();
-                cutoff.setDate(cutoff.getDate() - parseInt(days));
+                cutoff.setDate(cutoff.getDate() - parseInt(timeValue));
                 filtered = filtered.filter(p => p.published_date && new Date(p.published_date) >= cutoff);
+            } else if (timeValue === 'custom' && startDate && endDate) {
+                // 自定义时间范围
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                end.setHours(23, 59, 59, 999); // 包含结束日期全天
+                filtered = filtered.filter(p => {
+                    if (!p.published_date) return false;
+                    const pubDate = new Date(p.published_date);
+                    return pubDate >= start && pubDate <= end;
+                });
             }
+            
             return filtered.sort((a, b) => new Date(b.published_date) - new Date(a.published_date));
         }
 
@@ -1401,10 +1588,15 @@
             html += '<i class="fas fa-users mr-1 text-slate-400"></i>';
             html += formatAuthors(paper.authors);
             html += '</p>';
-            html += '<p class="abstract-text text-sm" id="abstract-' + escapeHtml(paperId) + '">' + escapeHtml(paper.abstract || '暂无摘要') + '</p>';
+            const abstractId = 'abstract-' + escapeHtml(paperId);
+            const hasLongAbstract = paper.abstract && paper.abstract.length > 100;
+            const abstractClass = hasLongAbstract ? 'abstract-text text-sm abstract-collapsed cursor-pointer' : 'abstract-text text-sm';
+            const abstractClickAttr = hasLongAbstract ? 'onclick="toggleAbstract(\'' + abstractId + '\')"' : '';
             
-            if (paper.abstract && paper.abstract.length > 100) {
-                html += '<div class="expand-btn" onclick="toggleAbstractById(this)"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>';
+            html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>' + escapeHtml(paper.abstract || '暂无摘要') + '</p>';
+            
+            if (hasLongAbstract) {
+                html += '<div class="expand-btn" onclick="toggleAbstract(\'' + abstractId + '\')"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>';
             }
             
             if (paper.keywords && paper.keywords.length > 0) {
@@ -1494,15 +1686,26 @@
             return html;
         }
 
-        function toggleAbstract(paperId) {
-            const abstractEl = document.getElementById(`abstract-${paperId}`);
-            const btn = abstractEl.nextElementSibling;
-            if (abstractEl.classList.contains('expanded')) {
+        function toggleAbstract(abstractId) {
+            const abstractEl = document.getElementById('abstract-' + abstractId);
+            if (!abstractEl) return;
+            
+            const card = abstractEl.closest('.paper-card');
+            const btn = card ? card.querySelector('.expand-btn') : null;
+            const isExpanded = abstractEl.classList.contains('expanded');
+            
+            if (isExpanded) {
                 abstractEl.classList.remove('expanded');
-                btn.innerHTML = '<i class="fas fa-chevron-down mr-1"></i>展开更多';
+                abstractEl.classList.add('abstract-collapsed');
+                if (btn) {
+                    btn.innerHTML = '<i class="fas fa-chevron-down mr-1"></i>展开更多';
+                }
             } else {
                 abstractEl.classList.add('expanded');
-                btn.innerHTML = '<i class="fas fa-chevron-up mr-1"></i>收起';
+                abstractEl.classList.remove('abstract-collapsed');
+                if (btn) {
+                    btn.innerHTML = '<i class="fas fa-chevron-up mr-1"></i>收起';
+                }
             }
         }
 
@@ -1654,6 +1857,9 @@
             renderFavoritesWithPagination();
         }
         
+        // 选中的收藏文献
+        let selectedFavorites = new Set();
+        
         function renderFavoritesWithPagination() {
             const container = document.getElementById('favorites-list');
             const papers = favoritesPagination.papers;
@@ -1663,7 +1869,10 @@
             const end = start + PAPERS_PER_PAGE;
             const pagePapers = papers.slice(start, end);
             
-            let html = pagePapers.map(paper => createPaperCard(paper)).join('');
+            let html = '';
+            pagePapers.forEach(paper => {
+                html += createFavoritePaperCard(paper);
+            });
             
             // 添加分页导航
             if (state.totalPages > 1) {
@@ -1671,6 +1880,183 @@
             }
             
             container.innerHTML = html;
+            
+            // 恢复复选框状态
+            selectedFavorites.forEach(id => {
+                const checkbox = container.querySelector('input[data-paper-id="' + id + '"]');
+                if (checkbox) checkbox.checked = true;
+            });
+            
+            updateBatchDeleteButton();
+        }
+        
+        function createFavoritePaperCard(paper) {
+            const categoryClass = paper.category ? paper.category.toLowerCase() : 'pa';
+            const categoryTag = getCategoryTag(paper.category);
+            const isSelected = selectedFavorites.has(paper.openalex_id);
+            const paperId = paper.openalex_id || '';
+            const folderId = paperFolders[paperId];
+            const folderName = getFolderNameById(folderId);
+            
+            let html = '<div class="paper-card ' + categoryClass + ' p-4 flex gap-4" data-paper-id="' + escapeHtml(paperId) + '">';
+            
+            // 左侧复选框
+            html += '<div class="flex items-start pt-1">';
+            html += '<input type="checkbox" class="w-5 h-5 text-blue-600 rounded cursor-pointer" data-paper-id="' + escapeHtml(paperId) + '" ' + (isSelected ? 'checked' : '') + ' onchange="toggleFavoriteSelection(\'' + escapeHtml(paperId) + '\')">';
+            html += '</div>';
+            
+            // 中间内容区
+            html += '<div class="flex-1">';
+            html += '<div class="flex items-center gap-2 mb-2">';
+            html += categoryTag;
+            html += '<span class="journal-tag">' + escapeHtml(paper.journal_name || '未知期刊') + '</span>';
+            html += '<span class="text-xs text-slate-400">' + escapeHtml(paper.published_date || '') + '</span>';
+            html += '<span class="text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded">' + escapeHtml(folderName) + '</span>';
+            html += '</div>';
+            html += '<h3 class="text-base font-semibold text-slate-800 mb-1 cursor-pointer hover:text-blue-600 transition" onclick="showPaperDetailById(this)">' + escapeHtml(paper.title || '无标题') + '</h3>';
+            html += '<p class="text-sm text-slate-600 mb-2">' + formatAuthors(paper.authors) + '</p>';
+            
+            // 添加摘要（可点击展开）
+            const abstractId = 'fav-abstract-' + escapeHtml(paperId);
+            const hasLongAbstract = paper.abstract && paper.abstract.length > 100;
+            const abstractClass = hasLongAbstract ? 'abstract-text text-sm abstract-collapsed cursor-pointer' : 'abstract-text text-sm';
+            const abstractClickAttr = hasLongAbstract ? 'onclick="toggleAbstract(\'' + abstractId + '\')"' : '';
+            
+            html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>' + escapeHtml(paper.abstract || '暂无摘要') + '</p>';
+            
+            if (hasLongAbstract) {
+                html += '<div class="expand-btn" onclick="toggleAbstract(\'' + abstractId + '\')"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>';
+            }
+            
+            html += '</div>';
+            
+            // 右侧删除按钮
+            html += '<div class="flex flex-col gap-2">';
+            html += '<button class="w-8 h-8 flex items-center justify-center text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition" onclick="removeFromFavorites(\'' + escapeHtml(paperId) + '\')" title="从收藏夹移除">';
+            html += '<i class="fas fa-trash-alt"></i>';
+            html += '</button>';
+            html += '<button class="w-8 h-8 flex items-center justify-center text-blue-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition" onclick="showMoveToFolderModal(\'' + escapeHtml(paperId) + '\')" title="移动到文件夹">';
+            html += '<i class="fas fa-folder-open"></i>';
+            html += '</button>';
+            html += '</div>';
+            
+            html += '</div>';
+            return html;
+        }
+        
+        function toggleFavoriteSelection(paperId) {
+            if (selectedFavorites.has(paperId)) {
+                selectedFavorites.delete(paperId);
+            } else {
+                selectedFavorites.add(paperId);
+            }
+            updateBatchDeleteButton();
+            updateSelectAllCheckbox();
+        }
+        
+        function toggleSelectAllFavorites() {
+            const checkbox = document.getElementById('select-all-favorites');
+            const isChecked = checkbox.checked;
+            const papers = favoritesPagination.papers;
+            
+            if (isChecked) {
+                papers.forEach(p => selectedFavorites.add(p.openalex_id));
+            } else {
+                papers.forEach(p => selectedFavorites.delete(p.openalex_id));
+            }
+            
+            // 更新所有复选框状态
+            const container = document.getElementById('favorites-list');
+            container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = isChecked;
+            });
+            
+            updateBatchDeleteButton();
+        }
+        
+        function updateSelectAllCheckbox() {
+            const papers = favoritesPagination.papers;
+            const allSelected = papers.length > 0 && papers.every(p => selectedFavorites.has(p.openalex_id));
+            document.getElementById('select-all-favorites').checked = allSelected;
+        }
+        
+        function updateBatchDeleteButton() {
+            const btn = document.getElementById('batch-delete-btn');
+            const count = selectedFavorites.size;
+            document.getElementById('selected-count').textContent = count;
+            
+            if (count > 0) {
+                btn.classList.remove('hidden');
+            } else {
+                btn.classList.add('hidden');
+            }
+        }
+        
+        function removeFromFavorites(paperId) {
+            if (!confirm('确定要从收藏夹中移除这篇文献吗？')) return;
+            
+            delete paperFolders[paperId];
+            savePaperFolders();
+            selectedFavorites.delete(paperId);
+            renderFolders();
+            renderFavorites();
+            updateFavCount();
+            
+            // 更新其他模块中的收藏按钮状态
+            refreshPaperCard(paperId);
+        }
+        
+        function deleteSelectedFavorites() {
+            const count = selectedFavorites.size;
+            if (count === 0) return;
+            
+            if (!confirm('确定要删除选中的 ' + count + ' 篇文献吗？')) return;
+            
+            selectedFavorites.forEach(paperId => {
+                delete paperFolders[paperId];
+            });
+            
+            selectedFavorites.clear();
+            savePaperFolders();
+            renderFolders();
+            renderFavorites();
+            updateFavCount();
+            
+            // 更新所有被删除文献的按钮状态
+            renderAll();
+        }
+        
+        function showMoveToFolderModal(paperId) {
+            currentPaperId = paperId;
+            const container = document.getElementById('add-folder-list');
+            if (!container) return;
+            
+            const currentFolderId = paperFolders[paperId];
+            
+            container.innerHTML = folders.filter(f => f.id !== 'all').map(folder => `
+                <div class="p-3 rounded-lg cursor-pointer transition ${currentFolderId === folder.id ? 'bg-blue-50 border border-blue-200' : 'hover:bg-slate-50 border border-transparent'}" onclick="moveToFolder('${folder.id}')">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-folder${currentFolderId === folder.id ? '' : '-open'} text-blue-500"></i>
+                            <span class="font-medium">${folder.name}</span>
+                        </div>
+                        ${currentFolderId === folder.id ? '<i class="fas fa-check text-blue-600"></i>' : ''}
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('add-folder-modal').classList.add('active');
+        }
+        
+        function moveToFolder(folderId) {
+            if (currentPaperId) {
+                paperFolders[currentPaperId] = folderId;
+                savePaperFolders();
+                renderFolders();
+                renderFavorites();
+                refreshPaperCard(currentPaperId);
+            }
+            closeModal('add-folder-modal');
         }
         
         function createFavoritesPaginationNav() {
@@ -1801,17 +2187,90 @@
         }
 
         function refreshPaperCard(paperId) {
-            ['pa-papers-list', 'pp-papers-list', 'pol-papers-list', 'china-papers-list', 'random-papers', 'search-results'].forEach(id => {
+            // 更新所有列表中的收藏按钮状态
+            ['pa-papers-list', 'pp-papers-list', 'pol-papers-list', 'china-papers-list', 'random-papers', 'search-results', 'favorites-list'].forEach(id => {
                 const container = document.getElementById(id);
                 if (container) {
-                    const btn = container.querySelector(`[onclick="showAddToFolderModal('${paperId}')"]`);
-                    if (btn) {
+                    // 通过data-paper-id查找按钮
+                    const btns = container.querySelectorAll('.bookmark-btn[data-paper-id="' + paperId + '"]');
+                    btns.forEach(btn => {
                         const isSaved = paperFolders[paperId];
-                        btn.classList.toggle('saved', isSaved);
-                        btn.title = isSaved ? '已收藏' : '添加到收藏';
-                    }
+                        if (isSaved) {
+                            btn.classList.add('saved');
+                            btn.title = '已收藏到: ' + getFolderNameById(isSaved);
+                        } else {
+                            btn.classList.remove('saved');
+                            btn.title = '添加到收藏';
+                        }
+                    });
                 }
             });
+        }
+        
+        function getFolderNameById(folderId) {
+            const folder = folders.find(f => f.id === folderId);
+            return folder ? folder.name : '收藏夹';
+        }
+        
+        // 过滤无效文献
+        function filterInvalidPapers(papers) {
+            const invalidPatterns = [
+                /issue information/i,
+                /\bisbn\b/i,
+                /book review/i,
+                /\beditorial\b/i,
+                /erratum/i,
+                /corrigendum/i,
+                /front matter/i,
+                /back matter/i,
+                /table of contents/i,
+                /\bintroduction\b/i,
+                /\bpreface\b/i,
+                /\bforeword\b/i,
+                /acknowledgments?/i,
+                /about this issue/i,
+                /volume \d+ issue \d+/i,
+                /issue \d+ \d{4}/i,
+                /contents? to volume/i,
+                /contributors? to/i,
+                /list of contributors/i,
+                /index to volume/i,
+                /author index/i,
+                /subject index/i,
+                /keywords? index/i,
+                /call for papers/i,
+                /announcement/i,
+                /note from the editor/i,
+                /publisher'?s note/i
+            ];
+            
+            let filteredCount = 0;
+            const filtered = papers.filter(paper => {
+                if (!paper.title) return false;
+                const title = paper.title.trim();
+                
+                // 检查是否匹配无效模式
+                for (const pattern of invalidPatterns) {
+                    if (pattern.test(title)) {
+                        filteredCount++;
+                        return false;
+                    }
+                }
+                
+                // 标题太短也可能是无效的
+                if (title.length < 5) {
+                    filteredCount++;
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            if (filteredCount > 0) {
+                console.log('过滤了 ' + filteredCount + ' 篇无效文献');
+            }
+            
+            return filtered;
         }
 
         function updateFavCount() {
