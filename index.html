@@ -17,37 +17,49 @@
             min-height: 100vh;
         }
         :root {
-            --pa-color: #1e3a5f;
-            --pp-color: #065f46;
-            --pol-color: #7c3aed;
-            --china-color: #b45309;
-            --accent-gold: #d97706;
+            --pa-color: #1e40af;
+            --pp-color: #0369a1;
+            --pol-color: #4f46e5;
+            --china-color: #0891b2;
+            --accent-blue: #3b82f6;
         }
         .navbar {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border-bottom: 3px solid var(--accent-gold);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 50%, #172554 100%);
+            border-bottom: 3px solid #3b82f6;
+            box-shadow: 0 4px 20px rgba(30, 64, 175, 0.25);
         }
         .nav-item {
             position: relative;
-            padding: 0.75rem 1.25rem;
-            color: #94a3b8;
+            padding: 0.5rem 1rem;
+            color: #bfdbfe;
             font-weight: 500;
+            font-size: 15px;
             transition: all 0.3s ease;
             border-radius: 8px;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
-        .nav-item:hover { color: #fff; background: rgba(255,255,255,0.1); }
-        .nav-item.active { color: #fff; background: rgba(217, 119, 6, 0.2); }
+        .nav-item:hover { 
+            color: #fff; 
+            background: rgba(59, 130, 246, 0.25);
+        }
+        .nav-item.active { 
+            color: #fff; 
+            background: rgba(59, 130, 246, 0.35);
+        }
         .nav-item.active::after {
             content: '';
             position: absolute;
             bottom: -3px;
             left: 50%;
             transform: translateX(-50%);
-            width: 60%;
+            width: 50%;
             height: 3px;
-            background: var(--accent-gold);
+            background: #60a5fa;
             border-radius: 2px;
+            box-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
         }
         .paper-card {
             background: white;
@@ -84,10 +96,10 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        .tag-pa { background: #dbeafe; color: var(--pa-color); }
-        .tag-pp { background: #d1fae5; color: var(--pp-color); }
-        .tag-pol { background: #ede9fe; color: var(--pol-color); }
-        .tag-china { background: #fef3c7; color: var(--china-color); }
+        .tag-pa { background: #dbeafe; color: #1e40af; }
+        .tag-pp { background: #e0f2fe; color: #0369a1; }
+        .tag-pol { background: #e0e7ff; color: #4f46e5; }
+        .tag-china { background: #cffafe; color: #0891b2; }
         .journal-tag {
             font-size: 12px;
             color: #64748b;
@@ -293,9 +305,9 @@
 <body>
     <nav class="navbar sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-lg">
+            <div class="flex justify-between items-center h-18 py-3">
+                <div class="flex items-center gap-4">
+                    <div class="w-11 h-11 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-blue-500/30">
                         <i class="fas fa-atlas"></i>
                     </div>
                     <div>
@@ -303,35 +315,35 @@
                         <p class="text-xs text-slate-400">文献追踪系统</p>
                     </div>
                 </div>
-                <div class="hidden md:flex items-center gap-1">
+                <div class="hidden md:flex items-center gap-2">
                     <button onclick="switchTab('discover')" class="nav-item active" data-tab="discover">
-                        <i class="fas fa-compass mr-2"></i>发现
+                        <i class="fas fa-compass"></i>发现
                     </button>
                     <button onclick="switchTab('pa')" class="nav-item" data-tab="pa">
-                        <i class="fas fa-landmark mr-2"></i>公共行政
+                        <i class="fas fa-landmark"></i>公共行政
                     </button>
                     <button onclick="switchTab('pp')" class="nav-item" data-tab="pp">
-                        <i class="fas fa-file-contract mr-2"></i>公共政策
+                        <i class="fas fa-file-contract"></i>公共政策
                     </button>
                     <button onclick="switchTab('pol')" class="nav-item" data-tab="pol">
-                        <i class="fas fa-balance-scale mr-2"></i>政治学
+                        <i class="fas fa-balance-scale"></i>政治学
                     </button>
                     <button onclick="switchTab('china')" class="nav-item" data-tab="china">
-                        <i class="fas fa-dragon mr-2"></i>中国研究
+                        <i class="fas fa-dragon"></i>中国研究
                     </button>
                     <button onclick="switchTab('journals')" class="nav-item" data-tab="journals">
-                        <i class="fas fa-book mr-2"></i>期刊导航
+                        <i class="fas fa-book"></i>期刊导航
                     </button>
                     <button onclick="switchTab('favorites')" class="nav-item" data-tab="favorites">
-                        <i class="fas fa-folder-open mr-2"></i>收藏
-                        <span id="nav-fav-count" class="ml-1 bg-amber-500 text-white text-xs px-1.5 py-0.5 rounded-full hidden">0</span>
+                        <i class="fas fa-folder-open"></i>收藏
+                        <span id="nav-fav-count" class="ml-1.5 bg-blue-400 text-white text-xs px-1.5 py-0.5 rounded-full hidden">0</span>
                     </button>
                     <button onclick="switchTab('search')" class="nav-item" data-tab="search">
-                        <i class="fas fa-search mr-2"></i>搜索
+                        <i class="fas fa-search"></i>搜索
                     </button>
                 </div>
-                <div class="text-sm text-slate-400">
-                    收录 <span id="total-count" class="font-semibold text-amber-400">0</span> 篇文献
+                <div class="text-sm text-blue-200">
+                    收录 <span id="total-count" class="font-semibold text-white">0</span> 篇文献
                 </div>
             </div>
         </div>
@@ -787,31 +799,35 @@
                 document.getElementById('loading-state').classList.remove('hidden');
                 document.getElementById('error-state').classList.add('hidden');
                 
-                const paths = ['data/data.json', './data/data.json', '../data/data.json'];
+                // 尝试从sessionStorage读取缓存数据
+                const cachedData = sessionStorage.getItem('research-atlas-data');
+                const cachedTime = sessionStorage.getItem('research-atlas-data-time');
+                const cacheValid = cachedData && cachedTime && (Date.now() - parseInt(cachedTime)) < 300000; // 5分钟缓存
+                
                 let data = null;
                 
-                for (const path of paths) {
+                // 如果有有效缓存，先显示缓存数据
+                if (cacheValid) {
                     try {
-                        const response = await fetch(path);
-                        if (response.ok) {
-                            data = await response.json();
-                            break;
-                        }
-                    } catch (e) { continue; }
+                        data = JSON.parse(cachedData);
+                        processLoadedData(data);
+                        document.getElementById('loading-state').classList.add('hidden');
+                        // 后台刷新数据
+                        fetchFreshData();
+                        return;
+                    } catch (e) { console.log('缓存数据解析失败'); }
                 }
                 
-                if (!data) throw new Error('无法加载数据文件');
-                
-                allPapers = data.papers || [];
-                allJournals = [...new Set(allPapers.map(p => p.journal_name))].filter(Boolean).sort();
-                
-                allPapers.forEach(paper => {
-                    if (!paper.category) paper.category = inferCategory(paper.journal_name);
-                });
-                
-                updateStats(data.stats);
-                initCharts(data.stats);
-                renderAll();
+                // 从服务器加载数据
+                data = await fetchFreshData();
+                if (data) {
+                    processLoadedData(data);
+                    // 缓存数据
+                    try {
+                        sessionStorage.setItem('research-atlas-data', JSON.stringify(data));
+                        sessionStorage.setItem('research-atlas-data-time', Date.now().toString());
+                    } catch (e) { console.log('数据缓存失败'); }
+                }
                 
                 document.getElementById('loading-state').classList.add('hidden');
             } catch (error) {
@@ -819,6 +835,40 @@
                 document.getElementById('loading-state').classList.add('hidden');
                 document.getElementById('error-state').classList.remove('hidden');
             }
+        }
+        
+        async function fetchFreshData() {
+            const paths = ['data/data.json', './data/data.json', '../data/data.json'];
+            
+            for (const path of paths) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30秒超时
+                    
+                    const response = await fetch(path, { signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    
+                    if (response.ok) {
+                        return await response.json();
+                    }
+                } catch (e) { continue; }
+            }
+            return null;
+        }
+        
+        function processLoadedData(data) {
+            if (!data) throw new Error('无法加载数据文件');
+            
+            allPapers = data.papers || [];
+            allJournals = [...new Set(allPapers.map(p => p.journal_name))].filter(Boolean).sort();
+            
+            allPapers.forEach(paper => {
+                if (!paper.category) paper.category = inferCategory(paper.journal_name);
+            });
+            
+            updateStats(data.stats);
+            initCharts(data.stats);
+            renderAll();
         }
 
         function inferCategory(journalName) {
