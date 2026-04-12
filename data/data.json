@@ -46369,16 +46369,286 @@
         "Saul Levmore"
       ],
       "category": "POL"
+    },
+    {
+      "openalex_id": "W7153569810",
+      "title": "Is Relationship Quality a Matter? Procedural Fairness and Citizen Acceptance for Policy in Urban Renewal",
+      "abstract": "Procedural fairness has long been recognized as critical to citizen acceptance of urban renewal initiatives. However, research examining the underlying mechanisms of this relationship remains limited, hindering effective policy implementation. This study addresses this gap by investigating how relationship quality dimensions—specifically citizen satisfaction, citizen recognition, and citizen trust—mediate the link between procedural fairness and citizen acceptance. Drawing on survey data from 409 respondents across three communities in China that experienced urban renewal projects and employing structural equation modeling (SEM) and artificial neural network (ANN) analysis, our findings demonstrate that procedural fairness positively influences citizen acceptance, with citizen satisfaction and citizen recognition serving as partial mediators in this relationship, while citizen trust shows no significant mediating effect. These findings advance the literature by elucidating the distinct procedural fairness pathways through which citizens develop acceptance toward urban renewal policies, while also revealing the nuanced roles that different relational dimensions play in this process.",
+      "journal_name": "Chinese Public Administration Review",
+      "published_date": "2026-04-10",
+      "url": "https://doi.org/10.1177/15396754261428991",
+      "doi": "https://doi.org/10.1177/15396754261428991",
+      "keywords": [
+        "Structural equation modeling",
+        "Quality (philosophy)",
+        "Procedural justice",
+        "Survey data collection",
+        "China",
+        "Survey research"
+      ],
+      "authors": [
+        "Dan Wang",
+        "Bingsheng Liu",
+        "Jing Xiao",
+        "Junxiao Liu",
+        "Wenxuan Yu"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7153479323",
+      "title": "How rationale and process transparency shape perceived legitimacy in AI-assisted decisions: Experimental evidence from China and the United States",
+      "abstract": "",
+      "journal_name": "Government Information Quarterly",
+      "published_date": "2026-04-11",
+      "url": "https://doi.org/10.1016/j.giq.2026.102141",
+      "doi": "https://doi.org/10.1016/j.giq.2026.102141",
+      "keywords": [
+        "Legitimacy",
+        "Transparency (behavior)",
+        "China",
+        "Process (computing)"
+      ],
+      "authors": [
+        "Shangrui Wang",
+        "Yuanmeng Zhang",
+        "Zhenming Huang",
+        "Zheng Liang"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7153453055",
+      "title": "(Ir)replaceable Roles of Intermediaries: Administrative Burden in Thailand’s Social Welfare Scheme for Informal Workers",
+      "abstract": "",
+      "journal_name": "International Journal of Public Administration",
+      "published_date": "2026-04-11",
+      "url": "https://doi.org/10.1080/01900692.2026.2643676",
+      "doi": "https://doi.org/10.1080/01900692.2026.2643676",
+      "keywords": [
+        "Scheme (mathematics)",
+        "Welfare",
+        "Social Welfare",
+        "Social work",
+        "Social assistance",
+        "Informal sector"
+      ],
+      "authors": [
+        "Pawinee Chuayprakong",
+        "Chatthip Chaichakan",
+        "Dararat khampeng"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7153535835",
+      "title": "Measuring Strategic Information System Planning Effectiveness in the Public Sector: Integrating the Strategy-as-Practice (SAP 3P) and People–Process–Technology (PPT) Frameworks",
+      "abstract": "",
+      "journal_name": "International Journal of Public Administration",
+      "published_date": "2026-04-11",
+      "url": "https://doi.org/10.1080/01900692.2026.2651129",
+      "doi": "https://doi.org/10.1080/01900692.2026.2651129",
+      "keywords": [
+        "Information system",
+        "Strategic planning",
+        "Management information systems",
+        "Key (lock)",
+        "Information technology",
+        "Government (linguistics)"
+      ],
+      "authors": [
+        "Suhaiza Sudirman",
+        "Kamsuriah Ahmad",
+        "Zaihosnita Hood"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7153629487",
+      "title": "Pressure-driven or resource-driven: configurational pathways and evolution for the government environmental information disclosure",
+      "abstract": "",
+      "journal_name": "Journal of Chinese Governance",
+      "published_date": "2026-04-11",
+      "url": "https://doi.org/10.1080/23812346.2026.2655494",
+      "doi": "https://doi.org/10.1080/23812346.2026.2655494",
+      "keywords": [
+        "Government (linguistics)",
+        "Complete information",
+        "Information asymmetry",
+        "Information system",
+        "Context (archaeology)",
+        "Information governance"
+      ],
+      "authors": [
+        "Yifu Lin",
+        "Yuying Tan",
+        "Jia-Hui Meng",
+        "Yun Dai"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7153477058",
+      "title": "When autonomy backfires or succeeds: curvilinear effects on innovative behaviour in the public sector and the moderating role of transformational leadership",
+      "abstract": "",
+      "journal_name": "Public Management Review",
+      "published_date": "2026-04-10",
+      "url": "https://doi.org/10.1080/14719037.2026.2656334",
+      "doi": "https://doi.org/10.1080/14719037.2026.2656334",
+      "keywords": [
+        "Transformational leadership",
+        "Autonomy",
+        "Public sector",
+        "Curvilinear coordinates",
+        "New public management",
+        "Transactional leadership"
+      ],
+      "authors": [
+        "Kyuwoong Kyeong"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7153545023",
+      "title": "Social protection, labour regulation and market creation: welfare capitalism’s institutional embeddedness of platform work and services in Hong Kong",
+      "abstract": "",
+      "journal_name": "Journal of Asian Public Policy",
+      "published_date": "2026-04-11",
+      "url": "https://doi.org/10.1080/17516234.2026.2656777",
+      "doi": "https://doi.org/10.1080/17516234.2026.2656777",
+      "keywords": [
+        "Embeddedness",
+        "Welfare",
+        "Work (physics)",
+        "Social Welfare",
+        "Welfare state"
+      ],
+      "authors": [
+        "Tat Chor Au-Yeung"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7153541597",
+      "title": "The resilience of local democracy: Natural disasters and the incumbent survival effect",
+      "abstract": "",
+      "journal_name": "Electoral Studies",
+      "published_date": "2026-04-11",
+      "url": "https://doi.org/10.1016/j.electstud.2026.103076",
+      "doi": "https://doi.org/10.1016/j.electstud.2026.103076",
+      "keywords": [
+        "Resilience (materials science)",
+        "Natural disaster",
+        "Psychological resilience",
+        "Natural (archaeology)",
+        "Natural experiment"
+      ],
+      "authors": [
+        "Nima Taheri Hosseinkhani"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7153622281",
+      "title": "Introducing the COW Arms Technology Data, 1816–2023: Structure and Applications",
+      "abstract": "This article introduces a new global dataset tracking the adoption of 31 important arms technologies across all states from 1816 to 2023. Covering eight major categories – from small arms and artillery to combat helicopters and ballistic missiles – the dataset provides a comprehensive long-term view of the global evolution and diffusion of arms technology. We describe the conceptual foundations and coding procedures, as well as transformations of the final data relevant for scholars of international relations and comparative politics. We demonstrate the relevance of the data through three empirical applications: we show that arms technologies spread in ways consistent with the logic of the security dilemma; that technological superiority helps explain which states win wars, and that advanced arms help autocrats stay in power. These findings highlight the central role of arms technology in shaping both the global distribution of power and the durability of autocratic regimes.",
+      "journal_name": "Journal of Conflict Resolution",
+      "published_date": "2026-04-10",
+      "url": "https://doi.org/10.1177/00220027261440365",
+      "doi": "https://doi.org/10.1177/00220027261440365",
+      "keywords": [
+        "Autocracy",
+        "Artillery",
+        "Small arms",
+        "Arms control",
+        "Relevance (law)",
+        "International security",
+        "Ballistic missile",
+        "International relations"
+      ],
+      "authors": [
+        "Jacob Gerner Hariri",
+        "Asger Mose Wingender"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7153498161",
+      "title": "The cost of compromise: How coalition participation shapes party membership",
+      "abstract": "How does coalition participation influence party membership? We argue that parties that take part in coalition governments are likely to experience less favorable party membership developments than parties governing alone because of the compromises they have to agree on in multi-party cabinets. This should be particularly likely for parties in ideologically diverse coalition governments since parties participating in such cabinets are more likely to have to deviate from originally promised policy positions; and for junior coalition partners, as they have less influence over policy and are less able to claim credit for government achievements. We evaluate these expectations on the basis of a new dataset that covers information on (1) the number of members in all German state parties between 1990 and 2023, (2) the ideological profile of the state parties, and (3) the status of a state party as a member of a state coalition government. We find that junior coalition partners lose significantly more members than parties that govern alone. Furthermore, an increasing programmatic distance within the cabinet on economic issues is related to a decreasing number of members of the respective government parties.",
+      "journal_name": "Party Politics",
+      "published_date": "2026-04-11",
+      "url": "https://doi.org/10.1177/13540688261441234",
+      "doi": "https://doi.org/10.1177/13540688261441234",
+      "keywords": [
+        "Cabinet (room)",
+        "Multi-party system",
+        "Ideology",
+        "Government (linguistics)",
+        "State (computer science)",
+        "Coalition government"
+      ],
+      "authors": [
+        "Marc Debus",
+        "Michael Imre",
+        "Hanna Bäck"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7153504426",
+      "title": "Alphabet Soup: Randomized Ballot Order and the Representation of Marginalized Candidates",
+      "abstract": "",
+      "journal_name": "Political Behavior",
+      "published_date": "2026-04-11",
+      "url": "https://doi.org/10.1007/s11109-026-10129-8",
+      "doi": "https://doi.org/10.1007/s11109-026-10129-8",
+      "keywords": [
+        "Representation (politics)",
+        "Ballot",
+        "Order (exchange)",
+        "Alphabet",
+        "Race (biology)"
+      ],
+      "authors": [
+        "Sean Freeder",
+        "Justin De Benedictis-Kessner",
+        "Rachel Bernhard"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7153551599",
+      "title": "The Problem of Gratitude and the Conditions of Liberty in Machiavelli’s Political Thought",
+      "abstract": "Political scientists and theorists are increasingly concerned with the rise of personalist leaders in democracies. But they have neglected to study one of personalism’s crucial psychological foundations: gratitude. This paper examines the relationship between gratitude and liberty in the political thought of Niccolò Machiavelli. Machiavelli argues that human beings naturally hate ingratitude and admire gratitude, and thus republics must prevent and punish ingratitude among their citizens and leaders to prevent the formation of politically destabilizing grievances. But gratitude also endangers liberty. For the experience of gratitude depends on an ignorance of the motives of politicians, whose apparent beneficence is truly the product of necessity or prudent self-interest. Popular gratitude is therefore easily manipulated by would-be tyrants. It further undermines the foundations of freedom—the rule of law and civic equality—by encouraging excessive leniency for the present crimes of past benefactors and by fostering excessive devotion to outstanding citizens. Republics must therefore balance the need to be both grateful and ungrateful to maintain their freedom. This paper therefore demonstrates the centrality of Machiavelli’s reflections on gratitude to his republicanism and reveals how these reflections illuminate the causes of and remedies for the rise of personalism in democracies.",
+      "journal_name": "Political Research Quarterly",
+      "published_date": "2026-04-10",
+      "url": "https://doi.org/10.1177/10659129261441893",
+      "doi": "https://doi.org/10.1177/10659129261441893",
+      "keywords": [
+        "Gratitude",
+        "Politics",
+        "Ignorance",
+        "Beneficence",
+        "Happiness",
+        "Immorality",
+        "Balance (ability)",
+        "Paternalism"
+      ],
+      "authors": [
+        "Benjamin Schwabe"
+      ],
+      "category": "POL"
     }
   ],
   "stats": {
-    "total": 2121,
-    "pa_count": 517,
-    "pp_count": 484,
-    "pol_count": 965,
+    "total": 2133,
+    "pa_count": 523,
+    "pp_count": 485,
+    "pol_count": 970,
     "china_count": 155,
     "journals": 85,
-    "last_update": "2026-04-12 08:28:51",
+    "last_update": "2026-04-12 08:55:01",
     "by_journal": [
       {
         "name": "Perspectives on Politics",
@@ -46393,12 +46663,12 @@
         "count": 60
       },
       {
-        "name": "European Journal of Political Research",
+        "name": "Public Management Review",
         "count": 57
       },
       {
-        "name": "Public Management Review",
-        "count": 56
+        "name": "European Journal of Political Research",
+        "count": 57
       },
       {
         "name": "Political Geography",
@@ -46426,7 +46696,7 @@
       },
       {
         "name": "Party Politics",
-        "count": 44
+        "count": 45
       },
       {
         "name": "Journal of European Public Policy",
@@ -46450,11 +46720,11 @@
       },
       {
         "name": "International Journal of Public Administration",
-        "count": 34
+        "count": 36
       },
       {
         "name": "Political Research Quarterly",
-        "count": 33
+        "count": 34
       },
       {
         "name": "Journal of Policy Analysis and Management",
@@ -46469,6 +46739,10 @@
         "count": 31
       },
       {
+        "name": "Electoral Studies",
+        "count": 31
+      },
+      {
         "name": "The Journal of Politics",
         "count": 31
       },
@@ -46477,20 +46751,16 @@
         "count": 30
       },
       {
-        "name": "Policy Studies Journal",
+        "name": "Government Information Quarterly",
         "count": 30
       },
       {
-        "name": "Electoral Studies",
+        "name": "Policy Studies Journal",
         "count": 30
       },
       {
         "name": "Journal of democracy",
         "count": 30
-      },
-      {
-        "name": "Government Information Quarterly",
-        "count": 29
       },
       {
         "name": "Public Administration and Development",
@@ -46501,12 +46771,12 @@
         "count": 29
       },
       {
-        "name": "Politics &amp Policy",
+        "name": "Journal of Asian Public Policy",
         "count": 27
       },
       {
-        "name": "Journal of Asian Public Policy",
-        "count": 26
+        "name": "Politics &amp Policy",
+        "count": 27
       },
       {
         "name": "Review of Policy Research",
@@ -46517,16 +46787,16 @@
         "count": 26
       },
       {
+        "name": "Journal of Conflict Resolution",
+        "count": 26
+      },
+      {
         "name": "Public Administration",
         "count": 25
       },
       {
-        "name": "Journal of Conflict Resolution",
-        "count": 25
-      },
-      {
         "name": "Political Behavior",
-        "count": 24
+        "count": 25
       },
       {
         "name": "Journal of Comparative Policy Analysis Research and Practice",
@@ -46669,6 +46939,10 @@
         "count": 11
       },
       {
+        "name": "Chinese Public Administration Review",
+        "count": 10
+      },
+      {
         "name": "Public Administration Quarterly",
         "count": 10
       },
@@ -46681,7 +46955,7 @@
         "count": 10
       },
       {
-        "name": "Chinese Public Administration Review",
+        "name": "Journal of Chinese Governance",
         "count": 9
       },
       {
@@ -46695,10 +46969,6 @@
       {
         "name": "China Information",
         "count": 9
-      },
-      {
-        "name": "Journal of Chinese Governance",
-        "count": 8
       },
       {
         "name": "Behavioural Public Policy",
@@ -46832,11 +47102,11 @@
       },
       {
         "date": "2026-04-10",
-        "count": 7
+        "count": 11
       },
       {
         "date": "2026-04-11",
-        "count": 0
+        "count": 8
       },
       {
         "date": "2026-04-12",
@@ -46845,5 +47115,5 @@
     ],
     "today": 0
   },
-  "export_time": "2026-04-12T08:28:51.198548"
+  "export_time": "2026-04-12T08:55:01.543873"
 }
