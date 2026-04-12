@@ -155,6 +155,13 @@
                 padding: 6px 12px;
             }
             
+            /* 近30天发文趋势筛选按钮移动端优化 */
+            .trend-filter-btn {
+                font-size: 12px;
+                padding: 5px 10px;
+                min-width: 44px;
+            }
+            
             /* 表格横向滚动容器 */
             .table-container {
                 overflow-x: auto;
@@ -162,6 +169,25 @@
             }
             .table-container table {
                 min-width: 600px;
+            }
+            
+            /* 热门研究主题移动端优化 */
+            .keywords-table th,
+            .keywords-table td {
+                padding: 12px 8px !important;
+                font-size: 14px;
+            }
+            .keywords-table th:first-child,
+            .keywords-table td:first-child {
+                width: 60px;
+                min-width: 60px;
+            }
+            .keywords-table th:nth-child(2),
+            .keywords-table td:nth-child(2) {
+                min-width: 120px;
+            }
+            .hidden-mobile {
+                display: none !important;
             }
         }
         
@@ -740,6 +766,13 @@
         }
         
         .scroll-btn.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+        
+        /* 初始状态显示按钮 */
+        .scroll-btn.initial-visible {
             opacity: 1;
             transform: translateY(0) scale(1);
             pointer-events: auto;
@@ -1597,14 +1630,14 @@
 
             <!-- 热门研究主题 -->
             <div class="bg-white rounded-xl border border-slate-200 p-6">
-                <div class="flex justify-between items-center mb-6">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
                     <div>
                         <h2 class="text-xl font-bold text-slate-800">
                             <i class="fas fa-fire text-orange-500 mr-2"></i>热门研究主题
                         </h2>
                         <p class="text-sm text-slate-500 mt-1">各领域高频关键词统计</p>
                     </div>
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 flex-wrap">
                         <button onclick="setThemeCategory('all')" class="filter-tab active" data-theme-category="all">全部</button>
                         <button onclick="setThemeCategory('pa')" class="filter-tab" data-theme-category="pa">PA</button>
                         <button onclick="setThemeCategory('pp')" class="filter-tab" data-theme-category="pp">PP</button>
@@ -1613,14 +1646,14 @@
                     </div>
                 </div>
                 <div id="keywords-table-container" class="overflow-x-auto">
-                    <table class="w-full text-sm">
+                    <table class="w-full text-sm keywords-table">
                         <thead>
                             <tr class="border-b border-slate-200">
                                 <th class="text-left py-3 px-4 font-semibold text-slate-700">排名</th>
                                 <th class="text-left py-3 px-4 font-semibold text-slate-700">关键词</th>
                                 <th class="text-left py-3 px-4 font-semibold text-slate-700">出现次数</th>
-                                <th class="text-left py-3 px-4 font-semibold text-slate-700">相关文献数</th>
-                                <th class="text-left py-3 px-4 font-semibold text-slate-700">趋势</th>
+                                <th class="text-left py-3 px-4 font-semibold text-slate-700 hidden-mobile">相关文献数</th>
+                                <th class="text-left py-3 px-4 font-semibold text-slate-700 hidden-mobile">趋势</th>
                             </tr>
                         </thead>
                         <tbody id="keywords-table-body">
@@ -1827,48 +1860,54 @@
                 <!-- 检索条件行 -->
                 <div id="advanced-search-conditions" class="space-y-3 mb-4">
                     <!-- 第一行条件 -->
-                    <div class="search-condition-row flex items-center gap-3" data-row="0">
-                        <select class="condition-field px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-sm w-28">
+                    <div class="search-condition-row flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3" data-row="0">
+                        <select class="condition-field px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-sm w-full sm:w-28">
                             <option value="title">标题</option>
                             <option value="author">作者</option>
                             <option value="keyword">关键词</option>
                             <option value="abstract">摘要</option>
                             <option value="journal">期刊</option>
                         </select>
-                        <input type="text" class="condition-value flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" placeholder="请输入检索词..." onkeypress="if(event.key==='Enter'){event.preventDefault();performAdvancedSearch();}">
-                        <button onclick="removeSearchCondition(0)" class="text-slate-400 hover:text-red-500 transition px-2" style="display:none;">
-                            <i class="fas fa-times"></i>
-                        </button>
+                        <div class="flex gap-2 flex-1">
+                            <input type="text" class="condition-value flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" placeholder="请输入检索词..." onkeypress="if(event.key==='Enter'){event.preventDefault();performAdvancedSearch();}">
+                            <button onclick="removeSearchCondition(0)" class="text-slate-400 hover:text-red-500 transition px-2 flex-shrink-0" style="display:none;">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 
                 <!-- 逻辑关系选择 -->
-                <div class="flex items-center gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
                     <span class="text-sm text-slate-600">检索词关系：</span>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="radio" name="search-logic" value="and" checked class="text-blue-600">
-                        <span class="text-sm">并且（AND）</span>
-                    </label>
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="radio" name="search-logic" value="or" class="text-blue-600">
-                        <span class="text-sm">或者（OR）</span>
-                    </label>
-                    <button onclick="addSearchCondition()" class="ml-auto text-sm text-blue-600 hover:text-blue-700 transition">
+                    <div class="flex items-center gap-4 flex-1">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="search-logic" value="and" checked class="text-blue-600">
+                            <span class="text-sm">并且（AND）</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="search-logic" value="or" class="text-blue-600">
+                            <span class="text-sm">或者（OR）</span>
+                        </label>
+                    </div>
+                    <button onclick="addSearchCondition()" class="text-sm text-blue-600 hover:text-blue-700 transition sm:ml-auto">
                         <i class="fas fa-plus mr-1"></i>添加条件
                     </button>
                 </div>
                 
                 <!-- 时间范围和领域 -->
-                <div class="flex flex-wrap items-center gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
-                    <div class="flex items-center gap-2">
+                <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
                         <span class="text-sm text-slate-600 whitespace-nowrap">发表时间：</span>
-                        <input type="date" id="search-date-start" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 w-36">
-                        <span class="text-slate-400">至</span>
-                        <input type="date" id="search-date-end" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 w-36">
+                        <div class="flex items-center gap-2">
+                            <input type="date" id="search-date-start" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 w-full sm:w-36">
+                            <span class="text-slate-400">至</span>
+                            <input type="date" id="search-date-end" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 w-full sm:w-36">
+                        </div>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-sm text-slate-600">文献领域：</span>
-                        <select id="search-category" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 bg-white w-32">
+                    <div class="flex flex-col sm:flex-row sm:items-center gap-2">
+                        <span class="text-sm text-slate-600 whitespace-nowrap">文献领域：</span>
+                        <select id="search-category" class="px-3 py-2 border border-slate-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 bg-white w-full sm:w-32">
                             <option value="">全部领域</option>
                             <option value="PA">公共行政</option>
                             <option value="PP">公共政策</option>
@@ -1876,16 +1915,16 @@
                             <option value="CHINA">中国研究</option>
                         </select>
                     </div>
-                    <div class="flex gap-2 ml-4">
-                        <button onclick="setDateRange(7)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100">近7天</button>
-                        <button onclick="setDateRange(30)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100">近30天</button>
-                        <button onclick="setDateRange(365)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100">近1年</button>
+                    <div class="flex gap-2 sm:ml-auto">
+                        <button onclick="setDateRange(7)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100 flex-1 sm:flex-none">近7天</button>
+                        <button onclick="setDateRange(30)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100 flex-1 sm:flex-none">近30天</button>
+                        <button onclick="setDateRange(365)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100 flex-1 sm:flex-none">近1年</button>
                     </div>
                 </div>
                 
                 <!-- 搜索按钮 -->
-                <div class="flex justify-center gap-4">
-                    <button onclick="performAdvancedSearch()" class="px-12 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-lg shadow-lg shadow-blue-200">
+                <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+                    <button onclick="performAdvancedSearch()" class="px-6 sm:px-12 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium text-lg shadow-lg shadow-blue-200">
                         <i class="fas fa-search mr-2"></i>检索
                     </button>
                     <button onclick="resetAdvancedSearch()" class="px-6 py-3 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition font-medium">
@@ -3021,8 +3060,11 @@
                 .sort((a, b) => b.count - a.count)
                 .slice(0, 20);
             
+            // 检测是否为移动端
+            const isMobile = window.innerWidth <= 768;
+            
             if (sortedKeywords.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-8 text-slate-400">暂无关键词数据</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="' + (isMobile ? 3 : 5) + '" class="text-center py-8 text-slate-400">暂无关键词数据</td></tr>';
                 return;
             }
             
@@ -3040,13 +3082,23 @@
                                rank <= 10 ? '<span class="text-blue-500"><i class="fas fa-minus mr-1"></i>稳定</span>' :
                                '<span class="text-slate-400"><i class="fas fa-arrow-down mr-1"></i>一般</span>';
                 
-                return '<tr class="border-b border-slate-100 hover:bg-slate-50 transition">' +
-                    '<td class="py-3 px-4 ' + rankClass + '">' + rankIcon + rank + '</td>' +
-                    '<td class="py-3 px-4 font-medium text-slate-800">' + escapeHtml(item.keyword) + '</td>' +
-                    '<td class="py-3 px-4"><span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs font-semibold">' + item.count + '</span></td>' +
-                    '<td class="py-3 px-4 text-slate-600">' + item.paperCount + ' 篇</td>' +
-                    '<td class="py-3 px-4">' + trend + '</td>' +
-                    '</tr>';
+                if (isMobile) {
+                    // 移动端：简化显示，只显示排名、关键词、出现次数
+                    return '<tr class="border-b border-slate-100 hover:bg-slate-50 transition">' +
+                        '<td class="py-3 px-2 ' + rankClass + '">' + rankIcon + rank + '</td>' +
+                        '<td class="py-3 px-2 font-medium text-slate-800">' + escapeHtml(item.keyword) + '</td>' +
+                        '<td class="py-3 px-2"><span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs font-semibold">' + item.count + '</span></td>' +
+                        '</tr>';
+                } else {
+                    // 桌面端：完整显示
+                    return '<tr class="border-b border-slate-100 hover:bg-slate-50 transition">' +
+                        '<td class="py-3 px-4 ' + rankClass + '">' + rankIcon + rank + '</td>' +
+                        '<td class="py-3 px-4 font-medium text-slate-800">' + escapeHtml(item.keyword) + '</td>' +
+                        '<td class="py-3 px-4"><span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs font-semibold">' + item.count + '</span></td>' +
+                        '<td class="py-3 px-4 text-slate-600 hidden-mobile">' + item.paperCount + ' 篇</td>' +
+                        '<td class="py-3 px-4 hidden-mobile">' + trend + '</td>' +
+                        '</tr>';
+                }
             }).join('');
         }
         
@@ -4016,6 +4068,9 @@
             normalView.classList.remove('hidden');
             favView.classList.add('hidden');
             
+            // 检测是否为移动端
+            const isMobile = window.innerWidth <= 768;
+            
             // 设置表格为固定布局
             const table = tbody.closest('table');
             if (table) {
@@ -4023,8 +4078,27 @@
                 table.style.width = '100%';
             }
             
-            // 双列布局渲染
-            let html = '';
+            // 更新表头（移动端3列，桌面端6列）
+            const thead = table ? table.querySelector('thead tr') : null;
+            if (thead) {
+                if (isMobile) {
+                    thead.innerHTML = `
+                        <th style="width: 70px;">领域</th>
+                        <th style="width: auto;">期刊名称</th>
+                        <th style="width: 50px; text-align: center;">收藏</th>
+                    `;
+                } else {
+                    thead.innerHTML = `
+                        <th style="width: 80px;">领域</th>
+                        <th style="width: auto;">期刊名称</th>
+                        <th style="width: 60px; text-align: center;">收藏</th>
+                        <th style="width: 80px;">领域</th>
+                        <th style="width: auto;">期刊名称</th>
+                        <th style="width: 60px; text-align: center;">收藏</th>
+                    `;
+                }
+            }
+            
             const categories = [
                 { key: 'pa', name: '公共行政', class: 'tag-pa' },
                 { key: 'pp', name: '公共政策', class: 'tag-pp' },
@@ -4042,59 +4116,97 @@
                 });
             });
             
-            // 双列渲染（固定列宽：领域80px | 期刊名自适应 | 收藏60px）
-            for (let i = 0; i < allJournalsList.length; i += 2) {
-                const left = allJournalsList[i];
-                const right = allJournalsList[i + 1];
-                
-                const leftUrl = journalUrls[left.journal] || '#';
-                const leftFav = isJournalFavorited(left.journal);
-                
-                let rowHtml = `
-                    <tr title="点击访问 ${left.journal} 官网">
-                        <td onclick="window.open('${leftUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50" style="width: 80px;">
-                            <span class="category-tag ${left.category.class}">${left.category.key.toUpperCase()}</span>
-                        </td>
-                        <td onclick="window.open('${leftUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800" style="width: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            ${left.journal}
-                        </td>
-                        <td class="text-center" onclick="event.stopPropagation()" style="width: 60px;">
-                            <span class="journal-star ${leftFav ? 'favorited' : ''}" 
-                                  onclick="toggleFavoriteJournal('${left.journal}', '${left.category.key}')"
-                                  title="${leftFav ? '取消收藏' : '收藏该期刊'}">
-                                <i class="${leftFav ? 'fas' : 'far'} fa-star"></i>
-                            </span>
-                        </td>
-                `;
-                
-                if (right) {
-                    const rightUrl = journalUrls[right.journal] || '#';
-                    const rightFav = isJournalFavorited(right.journal);
-                    rowHtml += `
-                        <td onclick="window.open('${rightUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 border-l border-slate-200" title="点击访问 ${right.journal} 官网" style="width: 80px;">
-                            <span class="category-tag ${right.category.class}">${right.category.key.toUpperCase()}</span>
-                        </td>
-                        <td onclick="window.open('${rightUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800" title="点击访问 ${right.journal} 官网" style="width: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                            ${right.journal}
-                        </td>
-                        <td class="text-center" onclick="event.stopPropagation()" style="width: 60px;">
-                            <span class="journal-star ${rightFav ? 'favorited' : ''}" 
-                                  onclick="toggleFavoriteJournal('${right.journal}', '${right.category.key}')"
-                                  title="${rightFav ? '取消收藏' : '收藏该期刊'}">
-                                <i class="${rightFav ? 'fas' : 'far'} fa-star"></i>
-                            </span>
-                        </td>
+            let html = '';
+            
+            if (isMobile) {
+                // 移动端：单列渲染
+                allJournalsList.forEach(item => {
+                    const url = journalUrls[item.journal] || '#';
+                    const fav = isJournalFavorited(item.journal);
+                    html += `
+                        <tr title="点击访问 ${item.journal} 官网">
+                            <td onclick="window.open('${url}', '_blank')" class="cursor-pointer hover:bg-blue-50" style="width: 70px;">
+                                <span class="category-tag ${item.category.class}">${item.category.key.toUpperCase()}</span>
+                            </td>
+                            <td onclick="window.open('${url}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                ${item.journal}
+                            </td>
+                            <td class="text-center" onclick="event.stopPropagation()" style="width: 50px;">
+                                <span class="journal-star ${fav ? 'favorited' : ''}" 
+                                      onclick="toggleFavoriteJournal('${item.journal}', '${item.category.key}')"
+                                      title="${fav ? '取消收藏' : '收藏该期刊'}">
+                                    <i class="${fav ? 'fas' : 'far'} fa-star"></i>
+                                </span>
+                            </td>
+                        </tr>
                     `;
-                } else {
-                    rowHtml += `<td colspan="3"></td>`;
+                });
+            } else {
+                // 桌面端：双列渲染（固定列宽：领域80px | 期刊名自适应 | 收藏60px）
+                for (let i = 0; i < allJournalsList.length; i += 2) {
+                    const left = allJournalsList[i];
+                    const right = allJournalsList[i + 1];
+                    
+                    const leftUrl = journalUrls[left.journal] || '#';
+                    const leftFav = isJournalFavorited(left.journal);
+                    
+                    let rowHtml = `
+                        <tr title="点击访问 ${left.journal} 官网">
+                            <td onclick="window.open('${leftUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50" style="width: 80px;">
+                                <span class="category-tag ${left.category.class}">${left.category.key.toUpperCase()}</span>
+                            </td>
+                            <td onclick="window.open('${leftUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800" style="width: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                ${left.journal}
+                            </td>
+                            <td class="text-center" onclick="event.stopPropagation()" style="width: 60px;">
+                                <span class="journal-star ${leftFav ? 'favorited' : ''}" 
+                                      onclick="toggleFavoriteJournal('${left.journal}', '${left.category.key}')"
+                                      title="${leftFav ? '取消收藏' : '收藏该期刊'}">
+                                    <i class="${leftFav ? 'fas' : 'far'} fa-star"></i>
+                                </span>
+                            </td>
+                    `;
+                    
+                    if (right) {
+                        const rightUrl = journalUrls[right.journal] || '#';
+                        const rightFav = isJournalFavorited(right.journal);
+                        rowHtml += `
+                            <td onclick="window.open('${rightUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 border-l border-slate-200" title="点击访问 ${right.journal} 官网" style="width: 80px;">
+                                <span class="category-tag ${right.category.class}">${right.category.key.toUpperCase()}</span>
+                            </td>
+                            <td onclick="window.open('${rightUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800" title="点击访问 ${right.journal} 官网" style="width: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                ${right.journal}
+                            </td>
+                            <td class="text-center" onclick="event.stopPropagation()" style="width: 60px;">
+                                <span class="journal-star ${rightFav ? 'favorited' : ''}" 
+                                      onclick="toggleFavoriteJournal('${right.journal}', '${right.category.key}')"
+                                      title="${rightFav ? '取消收藏' : '收藏该期刊'}">
+                                    <i class="${rightFav ? 'fas' : 'far'} fa-star"></i>
+                                </span>
+                            </td>
+                        `;
+                    } else {
+                        rowHtml += `<td colspan="3"></td>`;
+                    }
+                    
+                    rowHtml += '</tr>';
+                    html += rowHtml;
                 }
-                
-                rowHtml += '</tr>';
-                html += rowHtml;
             }
             
-            tbody.innerHTML = html || '<tr><td colspan="6" class="text-center py-8 text-slate-400">暂无数据</td></tr>';
+            tbody.innerHTML = html || `<tr><td colspan="${isMobile ? 3 : 6}" class="text-center py-8 text-slate-400">暂无数据</td></tr>`;
         }
+        
+        // 监听窗口大小变化，重新渲染期刊表格
+        window.addEventListener('resize', function() {
+            if (document.getElementById('journals-module').classList.contains('active')) {
+                renderJournalsTable();
+            }
+            // 重新渲染热门研究主题表格（如果在发现模块）
+            if (document.getElementById('tab-discovery').classList.contains('active')) {
+                renderKeywordsTable();
+            }
+        });
         
         // 渲染我的收藏卡片网格（支持拖拽排序）
         function renderFavoriteJournalsInTable(tbody) {
@@ -5119,20 +5231,22 @@
             
             const container = document.getElementById('advanced-search-conditions');
             const row = document.createElement('div');
-            row.className = 'search-condition-row flex items-center gap-3';
+            row.className = 'search-condition-row flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3';
             row.dataset.row = searchConditionCount;
             
-            row.innerHTML = '<select class="condition-field px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-sm w-28">' +
+            row.innerHTML = '<select class="condition-field px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 bg-white text-sm w-full sm:w-28">' +
                 '<option value="title">标题</option>' +
                 '<option value="author">作者</option>' +
                 '<option value="keyword">关键词</option>' +
                 '<option value="abstract">摘要</option>' +
                 '<option value="journal">期刊</option>' +
                 '</select>' +
+                '<div class="flex gap-2 flex-1">' +
                 '<input type="text" class="condition-value flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" placeholder="请输入检索词...">' +
-                '<button onclick="removeSearchCondition(' + searchConditionCount + ')" class="text-slate-400 hover:text-red-500 transition px-2">' +
+                '<button onclick="removeSearchCondition(' + searchConditionCount + ')" class="text-slate-400 hover:text-red-500 transition px-2 flex-shrink-0">' +
                 '<i class="fas fa-times"></i>' +
-                '</button>';
+                '</button>' +
+                '</div>';
             
             container.appendChild(row);
             searchConditionCount++;
@@ -5559,6 +5673,29 @@
             const scrollBottomBtn = document.getElementById('scroll-bottom-btn');
             
             if (!scrollTopBtn || !scrollBottomBtn) return;
+            
+            // 初始化：页面加载时显示按钮
+            function initScrollButtons() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                
+                // 滚动超过300px显示回到顶部按钮
+                if (scrollTop > 300) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+                
+                // 距离底部超过300px显示回到底部按钮
+                if (scrollHeight - scrollTop > 300) {
+                    scrollBottomBtn.classList.add('visible');
+                } else {
+                    scrollBottomBtn.classList.remove('visible');
+                }
+            }
+            
+            // 页面加载时初始化
+            initScrollButtons();
             
             // 监听滚动事件，控制按钮显示/隐藏
             let lastScrollTop = 0;
