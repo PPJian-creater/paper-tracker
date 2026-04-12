@@ -445,6 +445,11 @@ def load_existing_papers():
 
 def save_papers(papers):
     """保存文献到文件"""
+    # 重新标准化所有文献的期刊名称（处理增量更新的旧数据）
+    for paper in papers:
+        if 'journal_name' in paper:
+            paper['journal_name'] = normalize_journal_name(paper['journal_name'])
+    
     os.makedirs('data', exist_ok=True)
     with open('data/papers.json', 'w', encoding='utf-8') as f:
         json.dump(papers, f, ensure_ascii=False, indent=2)
