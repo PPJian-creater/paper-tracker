@@ -961,44 +961,37 @@
         }
         .trend-filter-btn:hover { background: #eff6ff; border-color: #2563eb; color: #2563eb; }
         
-        /* 我的收藏按钮 - 特殊样式 */
+        /* 我的收藏按钮 - 简约线条风格 */
         .filter-tab.favorites-tab {
-            background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 50%, #fbbf24 100%);
-            color: #92400e;
-            border-color: #f59e0b;
+            background: white;
+            color: #1e40af;
+            border: 2px solid #f59e0b;
             font-weight: 600;
-            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
             position: relative;
-            overflow: hidden;
-        }
-        .filter-tab.favorites-tab::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s ease;
-        }
-        .filter-tab.favorites-tab:hover::before {
-            left: 100%;
-        }
-        .filter-tab.favorites-tab:hover {
-            background: linear-gradient(135deg, #fde68a 0%, #fbbf24 50%, #f59e0b 100%);
-            color: #78350f;
-            border-color: #d97706;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
-            transform: translateY(-1px);
-        }
-        .filter-tab.favorites-tab.active {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
-            color: white;
-            border-color: #b45309;
-            box-shadow: 0 3px 10px rgba(245, 158, 11, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
         }
         .filter-tab.favorites-tab i {
-            filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+            color: #f59e0b;
+            transition: color 0.3s ease;
+        }
+        .filter-tab.favorites-tab:hover {
+            background: #fffbeb;
+            border-color: #d97706;
+            color: #1e3a8a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.15);
+        }
+        .filter-tab.favorites-tab:hover i {
+            color: #d97706;
+        }
+        .filter-tab.favorites-tab.active {
+            background: #fffbeb;
+            border-color: #d97706;
+            color: #1e3a8a;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2), inset 0 1px 0 rgba(255,255,255,0.5);
+        }
+        .filter-tab.favorites-tab.active i {
+            color: #d97706;
         }
         .stat-card {
             background: white;
@@ -1010,6 +1003,36 @@
         .stat-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+        
+        /* 统计卡片 - 领域色彩方案 */
+        .stat-card.pa-card {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-color: #bfdbfe;
+        }
+        .stat-card.pa-card .text-2xl {
+            color: #1e40af;
+        }
+        .stat-card.pp-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-color: #bae6fd;
+        }
+        .stat-card.pp-card .text-2xl {
+            color: #0369a1;
+        }
+        .stat-card.pol-card {
+            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+            border-color: #c7d2fe;
+        }
+        .stat-card.pol-card .text-2xl {
+            color: #4f46e5;
+        }
+        .stat-card.china-card {
+            background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+            border-color: #a5f3fc;
+        }
+        .stat-card.china-card .text-2xl {
+            color: #0891b2;
         }
         .modal {
             display: none;
@@ -1184,37 +1207,37 @@
 
         <div id="tab-discover" class="tab-content">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div class="stat-card cursor-pointer" onclick="switchTab('pa')">
+                <div class="stat-card pa-card cursor-pointer" onclick="switchTab('pa')">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-sm text-slate-500">公共行政</span>
+                        <span class="text-sm text-slate-600">公共行政</span>
                         <span class="category-tag tag-pa">PA</span>
                     </div>
-                    <div class="text-2xl font-bold text-slate-800" id="stat-pa">0</div>
-                    <div class="text-xs text-slate-400 mt-1">20本期刊</div>
+                    <div class="text-2xl font-bold" id="stat-pa">0</div>
+                    <div class="text-xs text-slate-500 mt-1">20本期刊</div>
                 </div>
-                <div class="stat-card cursor-pointer" onclick="switchTab('pp')">
+                <div class="stat-card pp-card cursor-pointer" onclick="switchTab('pp')">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-sm text-slate-500">公共政策</span>
+                        <span class="text-sm text-slate-600">公共政策</span>
                         <span class="category-tag tag-pp">PP</span>
                     </div>
-                    <div class="text-2xl font-bold text-slate-800" id="stat-pp">0</div>
-                    <div class="text-xs text-slate-400 mt-1">23本期刊</div>
+                    <div class="text-2xl font-bold" id="stat-pp">0</div>
+                    <div class="text-xs text-slate-500 mt-1">23本期刊</div>
                 </div>
-                <div class="stat-card cursor-pointer" onclick="switchTab('pol')">
+                <div class="stat-card pol-card cursor-pointer" onclick="switchTab('pol')">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-sm text-slate-500">政治学</span>
+                        <span class="text-sm text-slate-600">政治学</span>
                         <span class="category-tag tag-pol">POL</span>
                     </div>
-                    <div class="text-2xl font-bold text-slate-800" id="stat-pol">0</div>
-                    <div class="text-xs text-slate-400 mt-1">36本期刊</div>
+                    <div class="text-2xl font-bold" id="stat-pol">0</div>
+                    <div class="text-xs text-slate-500 mt-1">36本期刊</div>
                 </div>
-                <div class="stat-card cursor-pointer" onclick="switchTab('china')">
+                <div class="stat-card china-card cursor-pointer" onclick="switchTab('china')">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-sm text-slate-500">中国研究</span>
+                        <span class="text-sm text-slate-600">中国研究</span>
                         <span class="category-tag tag-china">CHINA</span>
                     </div>
-                    <div class="text-2xl font-bold text-slate-800" id="stat-china">0</div>
-                    <div class="text-xs text-slate-400 mt-1">7本期刊</div>
+                    <div class="text-2xl font-bold" id="stat-china">0</div>
+                    <div class="text-xs text-slate-500 mt-1">7本期刊</div>
                 </div>
             </div>
 
@@ -1521,7 +1544,7 @@
                             <option value="abstract">摘要</option>
                             <option value="journal">期刊</option>
                         </select>
-                        <input type="text" class="condition-value flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" placeholder="请输入检索词...">
+                        <input type="text" class="condition-value flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 text-sm" placeholder="请输入检索词..." onkeypress="if(event.key==='Enter'){event.preventDefault();performAdvancedSearch();}">
                         <button onclick="removeSearchCondition(0)" class="text-slate-400 hover:text-red-500 transition px-2" style="display:none;">
                             <i class="fas fa-times"></i>
                         </button>
@@ -3088,13 +3111,13 @@
             const abstractClass = hasLongAbstract ? 'paper-abstract collapsed' : 'paper-abstract';
             const abstractClickAttr = hasLongAbstract ? 'onclick="toggleCompactAbstract(\'' + abstractId + '\')"' : '';
             
-            html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>';
             if (paper.abstract) {
+                html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>';
                 html += escapeHtml(paper.abstract);
+                html += '</p>';
             } else {
-                html += '<span class="text-slate-400 italic">暂无摘要</span>';
+                html += '<p class="paper-abstract text-slate-400 italic" title="暂未收录该文献摘要，请访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></p>';
             }
-            html += '</p>';
             
             if (hasLongAbstract) {
                 html += '<div class="text-xs text-blue-500 cursor-pointer hover:text-blue-700 mb-2" onclick="toggleCompactAbstract(\'' + abstractId + '\')"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>';
