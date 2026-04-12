@@ -418,6 +418,17 @@
             color: #059669;
         }
         
+        /* 今天/昨天切换按钮样式 */
+        .today-view-btn {
+            transition: all 0.2s ease;
+        }
+        .today-view-btn:hover:not(.active) {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        .today-view-btn.active {
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+        }
+        
         .paper-list-item .action-btn.external:hover {
             background: #ecfdf5;
             border-color: #10b981;
@@ -780,11 +791,11 @@
                         </h2>
                         <p class="text-sm text-slate-500 mt-1">今天新收录的文献</p>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <button id="btn-yesterday" onclick="showYesterdayPapers()" class="today-view-btn text-slate-600 hover:text-blue-600 font-medium text-sm px-3 py-1.5 rounded-lg transition">
-                            <i class="fas fa-history mr-1"></i>查看昨天
+                    <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-lg">
+                        <button id="btn-yesterday" onclick="showYesterdayPapers()" class="today-view-btn text-slate-600 hover:text-blue-600 font-medium text-sm px-4 py-1.5 rounded-md transition">
+                            <i class="fas fa-history mr-1"></i>昨天
                         </button>
-                        <button id="btn-today" onclick="showTodayPapers()" class="today-view-btn active text-white bg-blue-600 hover:bg-blue-700 font-medium text-sm px-3 py-1.5 rounded-lg transition">
+                        <button id="btn-today" onclick="showTodayPapers()" class="today-view-btn active text-white bg-blue-600 font-medium text-sm px-4 py-1.5 rounded-md transition shadow-sm">
                             <i class="fas fa-calendar-day mr-1"></i>今天
                         </button>
                     </div>
@@ -1813,15 +1824,19 @@
             const yesterdayBtn = document.getElementById('btn-yesterday');
             
             if (currentTodayView === 'today') {
+                // 今天按钮激活状态
                 todayBtn.classList.add('active', 'text-white', 'bg-blue-600');
-                todayBtn.classList.remove('text-slate-600', 'text-blue-600');
+                todayBtn.classList.remove('text-slate-600', 'hover:text-blue-600', 'hover:bg-transparent');
+                // 昨天按钮非激活状态
                 yesterdayBtn.classList.remove('active', 'text-white', 'bg-blue-600');
-                yesterdayBtn.classList.add('text-slate-600');
+                yesterdayBtn.classList.add('text-slate-600', 'hover:text-blue-600');
             } else {
+                // 昨天按钮激活状态
                 yesterdayBtn.classList.add('active', 'text-white', 'bg-blue-600');
-                yesterdayBtn.classList.remove('text-slate-600');
+                yesterdayBtn.classList.remove('text-slate-600', 'hover:text-blue-600', 'hover:bg-transparent');
+                // 今天按钮非激活状态
                 todayBtn.classList.remove('active', 'text-white', 'bg-blue-600');
-                todayBtn.classList.add('text-blue-600');
+                todayBtn.classList.add('text-slate-600', 'hover:text-blue-600');
             }
         }
         
@@ -1846,85 +1861,124 @@
             
             emptyDiv.classList.add('hidden');
             
-            // 按模块分组
+            // 按模块分组展示（PA/PP/POL/CHINA），每组内使用紧凑列表
             const categories = [
-                { key: 'PA', name: '公共行政', icon: 'fa-landmark', color: 'blue' },
-                { key: 'PP', name: '公共政策', icon: 'fa-file-contract', color: 'emerald' },
-                { key: 'POL', name: '政治学', icon: 'fa-balance-scale', color: 'violet' },
-                { key: 'CHINA', name: '中国研究', icon: 'fa-dragon', color: 'rose' }
+                { key: 'PA', name: '公共行政', color: 'blue' },
+                { key: 'PP', name: '公共政策', color: 'cyan' },
+                { key: 'POL', name: '政治学', color: 'indigo' },
+                { key: 'CHINA', name: '中国研究', color: 'teal' }
             ];
             
             let html = '';
-            let totalCount = 0;
             
             categories.forEach(cat => {
                 const catPapers = papers.filter(p => p.category === cat.key);
-                if (catPapers.length === 0) return;
-                
-                totalCount += catPapers.length;
-                const colorClasses = {
-                    blue: 'bg-blue-50 border-blue-200',
-                    emerald: 'bg-emerald-50 border-emerald-200',
-                    violet: 'bg-violet-50 border-violet-200',
-                    rose: 'bg-rose-50 border-rose-200'
-                };
-                
-                html += '<div class="' + colorClasses[cat.color] + ' rounded-lg border p-4">';
-                html += '<div class="flex items-center justify-between mb-3">';
-                html += '<div class="flex items-center gap-2">';
-                html += '<i class="fas ' + cat.icon + ' text-' + cat.color + '-600"></i>';
-                html += '<h3 class="font-semibold text-slate-800">' + cat.name + '</h3>';
-                html += '<span class="px-2 py-0.5 bg-white rounded-full text-xs text-slate-600">' + catPapers.length + ' 篇</span>';
-                html += '</div>';
-                html += '<button onclick="switchTab(\'' + cat.key.toLowerCase() + '\')" class="text-xs text-' + cat.color + '-600 hover:text-' + cat.color + '-800">查看更多 <i class="fas fa-arrow-right"></i></button>';
-                html += '</div>';
-                html += '<div class="space-y-3">';
-                
-                // 只显示前3篇
-                catPapers.slice(0, 3).forEach(paper => {
-                    html += createCompactPaperCard(paper);
-                });
-                
-                if (catPapers.length > 3) {
-                    html += '<div class="text-center py-2 text-slate-500 text-sm">还有 ' + (catPapers.length - 3) + ' 篇...</div>';
+                if (catPapers.length > 0) {
+                    html += '<div class="mb-6">';
+                    // 模块标题
+                    html += '<div class="flex items-center gap-2 mb-3">';
+                    html += '<span class="category-tag tag-' + cat.key.toLowerCase() + '">' + cat.key + '</span>';
+                    html += '<h4 class="text-lg font-semibold text-slate-700">' + cat.name + '</h4>';
+                    html += '<span class="text-sm text-slate-400">(' + catPapers.length + '篇)</span>';
+                    html += '</div>';
+                    // 紧凑列表容器
+                    html += '<div class="paper-list-container">';
+                    catPapers.forEach(paper => {
+                        html += createTodayPaperItem(paper);
+                    });
+                    html += '</div>';
+                    html += '</div>';
                 }
-                
-                html += '</div></div>';
             });
             
+            // 如果没有分类的文献（兼容旧数据）
+            const uncategorized = papers.filter(p => !p.category || !['PA', 'PP', 'POL', 'CHINA'].includes(p.category));
+            if (uncategorized.length > 0) {
+                html += '<div class="mb-6">';
+                html += '<div class="flex items-center gap-2 mb-3">';
+                html += '<h4 class="text-lg font-semibold text-slate-700">其他</h4>';
+                html += '<span class="text-sm text-slate-400">(' + uncategorized.length + '篇)</span>';
+                html += '</div>';
+                html += '<div class="paper-list-container">';
+                uncategorized.forEach(paper => {
+                    html += createTodayPaperItem(paper);
+                });
+                html += '</div>';
+                html += '</div>';
+            }
+            
             container.innerHTML = html;
-            badge.textContent = totalCount;
+            badge.textContent = papers.length;
         }
         
-        // 紧凑版文献卡片（用于今日更新展示）
-        function createCompactPaperCard(paper) {
+        // 今日更新紧凑列表项（与其他模块统一风格）
+        function createTodayPaperItem(paper) {
+            const categoryClass = paper.category ? paper.category.toLowerCase() : 'pa';
             const paperId = paper.openalex_id || '';
+            const isSaved = paperFolders[paperId];
             const showNewTag = isRecentPaper(paper.published_date);
-            const abstractId = 'compact-abstract-' + paperId;
-            const hasAbstract = paper.abstract && paper.abstract.length > 0;
-            const isLongAbstract = hasAbstract && paper.abstract.length > 80;
             
-            let html = '<div class="bg-white rounded-lg p-3 hover:shadow-md transition">';
-            html += '<div class="flex items-start justify-between gap-3">';
-            html += '<div class="flex-1 min-w-0">';
-            html += '<h4 class="text-sm font-medium text-slate-800 truncate hover:text-blue-600 cursor-pointer" onclick="showPaperDetail(\'' + paperId + '\')">' + escapeHtml(paper.title || '无标题') + '</h4>';
-            html += '<div class="flex items-center gap-2 mt-1 text-xs text-slate-500">';
-            html += '<span>' + escapeHtml(paper.journal_name || '未知期刊') + '</span>';
+            let html = '<div class="paper-list-item ' + categoryClass + '" data-paper-id="' + escapeHtml(paperId) + '">';
+            html += '<div>';
+            
+            // 第一行：标题（加粗，可点击）
+            html += '<h3 class="paper-title" onclick="showPaperDetailById(this)">' + escapeHtml(paper.title || '无标题') + '</h3>';
+            
+            // 第二行：作者 + 期刊 + 日期 + 领域标签 + NEW标签（合并一行）
+            html += '<div class="paper-line-info">';
+            html += '<span class="author-name">' + formatAuthors(paper.authors) + '</span>';
+            html += '<span class="separator">·</span>';
+            html += '<span class="journal-name">' + escapeHtml(paper.journal_name || '未知期刊') + '</span>';
+            html += '<span class="separator">·</span>';
+            html += '<span class="date-info">' + escapeHtml(paper.published_date || '') + '</span>';
             if (showNewTag) {
-                html += '<span class="new-tag text-[8px] px-1.5 py-0.5">NEW</span>';
+                html += '<span class="new-tag">NEW</span>';
             }
+            html += '<span class="separator">·</span>';
+            html += '<span class="category-tag tag-' + (paper.category ? paper.category.toLowerCase() : 'pa') + '">' + (paper.category || 'PA') + '</span>';
             html += '</div>';
             
-            // 添加摘要展示
-            if (hasAbstract) {
-                const abstractClass = isLongAbstract ? 'compact-abstract text-xs text-slate-600 mt-2 line-clamp-2' : 'compact-abstract text-xs text-slate-600 mt-2';
-                html += '<p id="' + abstractId + '" class="' + abstractClass + '">' + escapeHtml(paper.abstract) + '</p>';
-                if (isLongAbstract) {
-                    html += '<span class="text-xs text-blue-500 cursor-pointer hover:text-blue-700 mt-1 inline-block" onclick="toggleCompactAbstractWithTrigger(\'' + abstractId + '\', this)">展开更多 <i class="fas fa-chevron-down"></i></span>';
+            // 摘要（可展开）
+            const abstractId = 'today-abstract-' + paperId.replace(/[^a-zA-Z0-9]/g, '');
+            const hasLongAbstract = paper.abstract && paper.abstract.length > 100;
+            
+            html += '<div class="paper-abstract-container">';
+            if (paper.abstract) {
+                const abstractClass = hasLongAbstract ? 'paper-abstract collapsed' : 'paper-abstract';
+                const abstractClickAttr = hasLongAbstract ? 'onclick="toggleCompactAbstract(\'' + abstractId + '\')"' : '';
+                html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>';
+                html += escapeHtml(paper.abstract);
+                html += '</p>';
+                if (hasLongAbstract) {
+                    html += '<div class="text-xs text-blue-500 cursor-pointer hover:text-blue-700 mt-1" onclick="toggleCompactAbstract(\'' + abstractId + '\')"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>';
                 }
+            } else {
+                html += '<p class="paper-abstract text-slate-400 italic" title="暂未收录该文献摘要，请访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></p>';
             }
+            html += '</div>';
+            
+            // 操作按钮
+            html += '<div class="paper-actions">';
+            html += '<button class="action-btn bookmark-btn bookmark ' + (isSaved ? 'saved' : '') + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '">';
+            html += '<i class="' + (isSaved ? 'fas' : 'far') + ' fa-bookmark"></i>';
+            html += '<span>' + (isSaved ? '已收藏' : '收藏') + '</span>';
+            html += '</button>';
+            
+            if (paper.url) {
+                html += '<a href="' + escapeHtml(paper.url) + '" target="_blank" class="action-btn external">';
+                html += '<i class="fas fa-external-link-alt"></i>';
+                html += '<span>查看原文</span>';
+                html += '</a>';
+            }
+            html += '</div>';
             
             html += '</div>';
+            html += '</div>';
+            return html;
+        }
+        
+        // 删除旧版的紧凑卡片函数（已废弃）
+        // function createCompactPaperCard(paper) { ... }
             html += '<button onclick="toggleSavePaper(\'' + paperId + '\', this)" data-paper-id="' + paperId + '" class="bookmark-btn flex-shrink-0 ' + (paperFolders[paperId] ? 'saved' : '') + '" title="' + (paperFolders[paperId] ? '已收藏' : '添加到收藏') + '">';
             html += '<i class="fas fa-bookmark"></i>';
             html += '</button>';
@@ -2519,6 +2573,9 @@
             const paperId = paper.openalex_id || '';
             const isSaved = paperFolders[paperId];
             
+            // 判断是否显示 NEW 标签
+            const showNewTag = isRecentPaper(paper.published_date);
+            
             let html = '<div class="paper-list-item ' + categoryClass + '" data-paper-id="' + escapeHtml(paperId) + '">';
             html += '<div>';
             
@@ -2532,6 +2589,9 @@
             html += '<span class="journal-name">' + escapeHtml(paper.journal_name || '未知期刊') + '</span>';
             html += '<span class="separator">·</span>';
             html += '<span class="date-info">' + escapeHtml(paper.published_date || '') + '</span>';
+            if (showNewTag) {
+                html += '<span class="new-tag">NEW</span>';
+            }
             html += '</div>';
             
             // 摘要（可点击展开）
@@ -2554,7 +2614,7 @@
             
             // 操作按钮（放在下方）
             html += '<div class="paper-actions">';
-            html += '<button class="action-btn bookmark ' + (isSaved ? 'saved' : '') + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '">';
+            html += '<button class="action-btn bookmark-btn bookmark ' + (isSaved ? 'saved' : '') + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '">';
             html += '<i class="' + (isSaved ? 'fas' : 'far') + ' fa-bookmark"></i>';
             html += '<span>' + (isSaved ? '已收藏' : '收藏') + '</span>';
             html += '</button>';
@@ -2709,48 +2769,55 @@
             container.innerHTML = shuffled.slice(0, 3).map((paper, index) => createFeaturedPaperCard(paper, index)).join('');
         }
         
-        // 精选推荐卡片（发现模块使用）
+        // 精选推荐紧凑列表项（与PA/PP/POL/CHINA模块统一风格）
         function createFeaturedPaperCard(paper, index) {
+            const categoryClass = paper.category ? paper.category.toLowerCase() : 'pa';
             const paperId = paper.openalex_id || '';
             const isSaved = paperFolders[paperId];
+            const showNewTag = isRecentPaper(paper.published_date);
             
-            let html = '<div class="featured-paper-card" data-paper-id="' + escapeHtml(paperId) + '">';
-            html += '<span class="featured-badge"><i class="fas fa-star mr-1"></i>精选</span>';
+            let html = '<div class="paper-list-item ' + categoryClass + '" data-paper-id="' + escapeHtml(paperId) + '">';
+            html += '<div>';
             
-            // 标题
+            // 第一行：标题（加粗，可点击）
             html += '<h3 class="paper-title" onclick="showPaperDetailById(this)">' + escapeHtml(paper.title || '无标题') + '</h3>';
             
-            // 元信息：期刊、日期和领域标签
-            html += '<div class="paper-meta">';
-            html += '<span class="paper-journal"><i class="fas fa-book-open mr-1"></i>' + escapeHtml(paper.journal_name || '未知期刊') + '</span>';
-            html += '<span class="text-xs text-slate-400"><i class="far fa-calendar mr-1"></i>' + escapeHtml(paper.published_date || '') + '</span>';
+            // 第二行：作者 + 期刊 + 日期 + 领域标签 + NEW标签（合并一行）
+            html += '<div class="paper-line-info">';
+            html += '<span class="author-name">' + formatAuthors(paper.authors) + '</span>';
+            html += '<span class="separator">·</span>';
+            html += '<span class="journal-name">' + escapeHtml(paper.journal_name || '未知期刊') + '</span>';
+            html += '<span class="separator">·</span>';
+            html += '<span class="date-info">' + escapeHtml(paper.published_date || '') + '</span>';
+            if (showNewTag) {
+                html += '<span class="new-tag">NEW</span>';
+            }
+            html += '<span class="separator">·</span>';
             html += '<span class="category-tag tag-' + (paper.category ? paper.category.toLowerCase() : 'pa') + '">' + (paper.category || 'PA') + '</span>';
             html += '</div>';
             
-            // 作者（绿色）
-            html += '<p class="paper-authors"><i class="fas fa-users mr-2 text-slate-400"></i>' + formatAuthors(paper.authors) + '</p>';
-            
-            // 摘要（可点击展开）
+            // 摘要（可展开）
             const abstractId = 'featured-abstract-' + paperId.replace(/[^a-zA-Z0-9]/g, '');
-            const hasLongAbstract = paper.abstract && paper.abstract.length > 120;
-            const abstractClass = hasLongAbstract ? 'paper-abstract collapsed' : 'paper-abstract';
-            const abstractClickAttr = hasLongAbstract ? 'onclick="toggleFeaturedAbstract(\'' + abstractId + '\')"' : '';
+            const hasLongAbstract = paper.abstract && paper.abstract.length > 100;
             
-            html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>';
+            html += '<div class="paper-abstract-container">';
             if (paper.abstract) {
+                const abstractClass = hasLongAbstract ? 'paper-abstract collapsed' : 'paper-abstract';
+                const abstractClickAttr = hasLongAbstract ? 'onclick="toggleCompactAbstract(\'' + abstractId + '\')"' : '';
+                html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>';
                 html += escapeHtml(paper.abstract);
+                html += '</p>';
+                if (hasLongAbstract) {
+                    html += '<div class="text-xs text-blue-500 cursor-pointer hover:text-blue-700 mt-1" onclick="toggleCompactAbstract(\'' + abstractId + '\')"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>';
+                }
             } else {
-                html += '<span class="text-slate-400 italic">暂无摘要</span>';
+                html += '<p class="paper-abstract text-slate-400 italic" title="暂未收录该文献摘要，请访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></p>';
             }
-            html += '</p>';
-            
-            if (hasLongAbstract) {
-                html += '<div class="text-xs text-blue-500 cursor-pointer hover:text-blue-700 mt-2" onclick="toggleFeaturedAbstract(\'' + abstractId + '\')"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>';
-            }
+            html += '</div>';
             
             // 操作按钮
             html += '<div class="paper-actions">';
-            html += '<button class="action-btn bookmark ' + (isSaved ? 'saved' : '') + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '">';
+            html += '<button class="action-btn bookmark-btn bookmark ' + (isSaved ? 'saved' : '') + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '">';
             html += '<i class="' + (isSaved ? 'fas' : 'far') + ' fa-bookmark"></i>';
             html += '<span>' + (isSaved ? '已收藏' : '收藏') + '</span>';
             html += '</button>';
@@ -2763,6 +2830,7 @@
             }
             html += '</div>';
             
+            html += '</div>';
             html += '</div>';
             return html;
         }
@@ -2804,13 +2872,16 @@
                 journalCategories[cat.key].forEach(journal => {
                     const url = journalUrls[journal] || '#';
                     html += `
-                        <tr data-journal="${journal.toLowerCase()}" data-category="${cat.key}">
+                        <tr data-journal="${journal.toLowerCase()}" data-category="${cat.key}" 
+                            onclick="window.open('${url}', '_blank')" 
+                            class="cursor-pointer hover:bg-blue-50 transition-colors"
+                            title="点击访问 ${journal} 官网">
                             <td><span class="category-tag ${cat.class}">${cat.key.toUpperCase()}</span></td>
                             <td class="font-medium text-slate-800">${journal}</td>
                             <td class="text-center">
-                                <a href="${url}" target="_blank" class="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition text-sm">
+                                <span class="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-sm pointer-events-none">
                                     <i class="fas fa-external-link-alt text-xs"></i> 访问官网
-                                </a>
+                                </span>
                             </td>
                         </tr>
                     `;
@@ -3060,6 +3131,9 @@
             const folderId = paperFolders[paperId];
             const folderName = getFolderNameById(folderId);
             
+            // 判断是否显示 NEW 标签
+            const showNewTag = isRecentPaper(paper.published_date);
+            
             let html = '<div class="paper-list-item ' + categoryClass + '" data-paper-id="' + escapeHtml(paperId) + '">';
             
             // 左侧复选框
@@ -3079,17 +3153,26 @@
             html += '<span class="journal-name">' + escapeHtml(paper.journal_name || '未知期刊') + '</span>';
             html += '<span class="separator">·</span>';
             html += '<span class="date-info">' + escapeHtml(paper.published_date || '') + '</span>';
+            if (showNewTag) {
+                html += '<span class="new-tag">NEW</span>';
+            }
             html += '<span class="separator">·</span>';
             html += '<span class="text-xs px-2 py-0.5 bg-blue-50 text-blue-600 rounded">' + escapeHtml(folderName) + '</span>';
             html += '</div>';
             
-            // 第四行：摘要（可展开）
+            // 第四行：摘要（默认收起，点击展开）
             const abstractId = 'fav-abstract-' + paperId;
+            const hasLongAbstract = paper.abstract && paper.abstract.length > 100;
             html += '<div class="paper-abstract-container">';
             if (paper.abstract) {
-                html += '<p class="paper-abstract" id="' + abstractId + '" onclick="toggleCompactAbstract(\'' + abstractId + '\')">';
+                const abstractClass = hasLongAbstract ? 'paper-abstract collapsed' : 'paper-abstract';
+                const abstractClickAttr = hasLongAbstract ? 'onclick="toggleCompactAbstract(\'' + abstractId + '\')"' : '';
+                html += '<p class="' + abstractClass + '" id="' + abstractId + '" ' + abstractClickAttr + '>';
                 html += escapeHtml(paper.abstract);
                 html += '</p>';
+                if (hasLongAbstract) {
+                    html += '<div class="text-xs text-blue-500 cursor-pointer hover:text-blue-700 mt-1" onclick="toggleCompactAbstract(\'' + abstractId + '\')"><i class="fas fa-chevron-down mr-1"></i>展开更多</div>';
+                }
             } else {
                 html += '<p class="paper-abstract text-slate-400 italic" title="暂未收录该文献摘要，请访问期刊官网查看">暂无摘要 <i class="fas fa-info-circle text-slate-300"></i></p>';
             }
