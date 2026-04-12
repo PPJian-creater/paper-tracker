@@ -46828,102 +46828,481 @@
   ],
   "stats": {
     "total": 2141,
-    "today": 0,
-    "yesterday": 0,
-    "categories": {
-      "PA": 523,
-      "PP": 491,
-      "POL": 972,
-      "CHINA": 155
-    },
-    "journals": {
-      "Public Money & Management": 46,
-      "Journal of Comparative Policy Analysis": 23,
-      "Journal of European Public Policy": 40,
-      "Journal of Public Policy": 16,
-      "Social Policy & Administration": 31,
-      "Administration & Society": 12,
-      "Administrative Theory & Praxis": 21,
-      "Australian Journal of Public Administration": 7,
-      "Chinese Public Administration Review": 10,
-      "Governance": 30,
-      "Government Information Quarterly": 30,
-      "International Journal of Public Administration": 36,
-      "International Public Management Journal": 19,
-      "International Review of Administrative Sciences": 21,
-      "Journal of Chinese Governance": 9,
-      "Journal of Public Administration Research and Theory": 15,
-      "Public Administration": 25,
-      "Public Administration Quarterly": 10,
-      "Public Administration Review": 60,
-      "Public Administration and Development": 29,
-      "Public Management Review": 57,
-      "Public Performance & Management Review": 29,
-      "Regulation & Governance": 47,
-      "The American Review of Public Administration": 10,
-      "Behavioural Public Policy": 8,
-      "Critical Policy Studies": 19,
-      "Journal of Asian Public Policy": 27,
-      "Journal of Social Policy": 15,
-      "Policy & Internet": 19,
-      "Policy & Politics": 12,
-      "Policy Design and Practice": 19,
-      "Policy Sciences": 11,
-      "Policy Studies": 17,
-      "Policy Studies Journal": 30,
-      "Policy and Society": 10,
-      "Politics & Policy": 29,
-      "Public Policy and Administration": 9,
-      "Research Policy": 69,
-      "Review of Policy Research": 26,
-      "Science and Public Policy": 12,
-      "European Policy Analysis": 13,
-      "Journal of Policy Analysis and Management": 32,
-      "American Journal of Political Science": 31,
-      "American Political Science Review": 26,
-      "Annual Review of Political Science": 17,
-      "British Journal of Political Science": 20,
-      "Comparative Political Studies": 21,
-      "Comparative Politics": 8,
-      "Democratization": 46,
-      "Electoral Studies": 31,
-      "European Journal of Political Research": 57,
-      "European Political Science Review": 18,
-      "European Union Politics": 11,
-      "International Organization": 13,
-      "International Security": 6,
-      "International Studies Quarterly": 18,
-      "Journal of Conflict Resolution": 26,
-      "Journal of democracy": 30,
-      "Journal of Theoretical Politics": 5,
-      "Legislative Studies Quarterly": 17,
-      "PS: Political Science & Politics": 49,
-      "Party Politics": 45,
-      "Perspectives on Politics": 97,
-      "Philosophy & Public Affairs": 15,
-      "Political Analysis": 14,
-      "Political Behavior": 25,
-      "Political Geography": 52,
-      "Political Psychology": 38,
-      "Political Research Quarterly": 34,
-      "Political Science Research and Methods": 38,
-      "Political Theory": 22,
-      "Politics & Gender": 9,
-      "Public Choice": 40,
-      "Public Opinion Quarterly": 17,
-      "Research & Politics": 19,
-      "Scandinavian Political Studies": 11,
-      "The Journal of Politics": 31,
-      "West European Politics": 15,
-      "China Information": 9,
-      "China Perspectives": 14,
-      "Journal of Chinese Political Science": 13,
-      "Journal of Contemporary China": 22,
-      "Modern China": 12,
-      "The China Journal": 47,
-      "The China Quarterly": 38,
-      "Journal of Policy Studies": 4
-    },
-    "export_time": "2026-04-13T07:01:07.454994"
-  }
+    "pa_count": 523,
+    "pp_count": 491,
+    "pol_count": 972,
+    "china_count": 155,
+    "journals": 86,
+    "last_update": "2026-04-12 23:09:52",
+    "by_journal": [
+      {
+        "name": "Perspectives on Politics",
+        "count": 97
+      },
+      {
+        "name": "Research Policy",
+        "count": 69
+      },
+      {
+        "name": "Public Administration Review",
+        "count": 60
+      },
+      {
+        "name": "Public Management Review",
+        "count": 57
+      },
+      {
+        "name": "European Journal of Political Research",
+        "count": 57
+      },
+      {
+        "name": "Political Geography",
+        "count": 52
+      },
+      {
+        "name": "PS: Political Science & Politics",
+        "count": 49
+      },
+      {
+        "name": "Regulation & Governance",
+        "count": 47
+      },
+      {
+        "name": "The China Journal",
+        "count": 47
+      },
+      {
+        "name": "Public Money & Management",
+        "count": 46
+      },
+      {
+        "name": "Democratization",
+        "count": 46
+      },
+      {
+        "name": "Party Politics",
+        "count": 45
+      },
+      {
+        "name": "Journal of European Public Policy",
+        "count": 40
+      },
+      {
+        "name": "Public Choice",
+        "count": 40
+      },
+      {
+        "name": "Political Psychology",
+        "count": 38
+      },
+      {
+        "name": "Political Science Research and Methods",
+        "count": 38
+      },
+      {
+        "name": "The China Quarterly",
+        "count": 38
+      },
+      {
+        "name": "International Journal of Public Administration",
+        "count": 36
+      },
+      {
+        "name": "Political Research Quarterly",
+        "count": 34
+      },
+      {
+        "name": "Journal of Policy Analysis and Management",
+        "count": 32
+      },
+      {
+        "name": "Social Policy & Administration",
+        "count": 31
+      },
+      {
+        "name": "American Journal of Political Science",
+        "count": 31
+      },
+      {
+        "name": "Electoral Studies",
+        "count": 31
+      },
+      {
+        "name": "The Journal of Politics",
+        "count": 31
+      },
+      {
+        "name": "Governance",
+        "count": 30
+      },
+      {
+        "name": "Government Information Quarterly",
+        "count": 30
+      },
+      {
+        "name": "Policy Studies Journal",
+        "count": 30
+      },
+      {
+        "name": "Journal of democracy",
+        "count": 30
+      },
+      {
+        "name": "Public Administration and Development",
+        "count": 29
+      },
+      {
+        "name": "Public Performance & Management Review",
+        "count": 29
+      },
+      {
+        "name": "Politics & Policy",
+        "count": 29
+      },
+      {
+        "name": "Journal of Asian Public Policy",
+        "count": 27
+      },
+      {
+        "name": "Review of Policy Research",
+        "count": 26
+      },
+      {
+        "name": "American Political Science Review",
+        "count": 26
+      },
+      {
+        "name": "Journal of Conflict Resolution",
+        "count": 26
+      },
+      {
+        "name": "Public Administration",
+        "count": 25
+      },
+      {
+        "name": "Political Behavior",
+        "count": 25
+      },
+      {
+        "name": "Journal of Comparative Policy Analysis",
+        "count": 23
+      },
+      {
+        "name": "Political Theory",
+        "count": 22
+      },
+      {
+        "name": "Journal of Contemporary China",
+        "count": 22
+      },
+      {
+        "name": "Administrative Theory & Praxis",
+        "count": 21
+      },
+      {
+        "name": "International Review of Administrative Sciences",
+        "count": 21
+      },
+      {
+        "name": "Comparative Political Studies",
+        "count": 21
+      },
+      {
+        "name": "British Journal of Political Science",
+        "count": 20
+      },
+      {
+        "name": "International Public Management Journal",
+        "count": 19
+      },
+      {
+        "name": "Critical Policy Studies",
+        "count": 19
+      },
+      {
+        "name": "Policy & Internet",
+        "count": 19
+      },
+      {
+        "name": "Policy Design and Practice",
+        "count": 19
+      },
+      {
+        "name": "Research & Politics",
+        "count": 19
+      },
+      {
+        "name": "European Political Science Review",
+        "count": 18
+      },
+      {
+        "name": "International Studies Quarterly",
+        "count": 18
+      },
+      {
+        "name": "Policy Studies",
+        "count": 17
+      },
+      {
+        "name": "Annual Review of Political Science",
+        "count": 17
+      },
+      {
+        "name": "Legislative Studies Quarterly",
+        "count": 17
+      },
+      {
+        "name": "Public Opinion Quarterly",
+        "count": 17
+      },
+      {
+        "name": "Journal of Public Policy",
+        "count": 16
+      },
+      {
+        "name": "Journal of Public Administration Research and Theory",
+        "count": 15
+      },
+      {
+        "name": "Journal of Social Policy",
+        "count": 15
+      },
+      {
+        "name": "Philosophy & Public Affairs",
+        "count": 15
+      },
+      {
+        "name": "West European Politics",
+        "count": 15
+      },
+      {
+        "name": "Political Analysis",
+        "count": 14
+      },
+      {
+        "name": "China Perspectives",
+        "count": 14
+      },
+      {
+        "name": "European Policy Analysis",
+        "count": 13
+      },
+      {
+        "name": "International Organization",
+        "count": 13
+      },
+      {
+        "name": "Journal of Chinese Political Science",
+        "count": 13
+      },
+      {
+        "name": "Administration & Society",
+        "count": 12
+      },
+      {
+        "name": "Policy & Politics",
+        "count": 12
+      },
+      {
+        "name": "Science and Public Policy",
+        "count": 12
+      },
+      {
+        "name": "Modern China",
+        "count": 12
+      },
+      {
+        "name": "Policy Sciences",
+        "count": 11
+      },
+      {
+        "name": "European Union Politics",
+        "count": 11
+      },
+      {
+        "name": "Scandinavian Political Studies",
+        "count": 11
+      },
+      {
+        "name": "Chinese Public Administration Review",
+        "count": 10
+      },
+      {
+        "name": "Public Administration Quarterly",
+        "count": 10
+      },
+      {
+        "name": "The American Review of Public Administration",
+        "count": 10
+      },
+      {
+        "name": "Policy and Society",
+        "count": 10
+      },
+      {
+        "name": "Journal of Chinese Governance",
+        "count": 9
+      },
+      {
+        "name": "Public Policy and Administration",
+        "count": 9
+      },
+      {
+        "name": "Politics & Gender",
+        "count": 9
+      },
+      {
+        "name": "China Information",
+        "count": 9
+      },
+      {
+        "name": "Behavioural Public Policy",
+        "count": 8
+      },
+      {
+        "name": "Comparative Politics",
+        "count": 8
+      },
+      {
+        "name": "Australian Journal of Public Administration",
+        "count": 7
+      },
+      {
+        "name": "International Security",
+        "count": 6
+      },
+      {
+        "name": "Journal of Theoretical Politics",
+        "count": 5
+      },
+      {
+        "name": "Journal of Policy Studies",
+        "count": 4
+      }
+    ],
+    "trend": [
+      {
+        "date": "2026-03-14",
+        "count": 4
+      },
+      {
+        "date": "2026-03-15",
+        "count": 6
+      },
+      {
+        "date": "2026-03-16",
+        "count": 20
+      },
+      {
+        "date": "2026-03-17",
+        "count": 15
+      },
+      {
+        "date": "2026-03-18",
+        "count": 12
+      },
+      {
+        "date": "2026-03-19",
+        "count": 42
+      },
+      {
+        "date": "2026-03-20",
+        "count": 15
+      },
+      {
+        "date": "2026-03-21",
+        "count": 8
+      },
+      {
+        "date": "2026-03-22",
+        "count": 4
+      },
+      {
+        "date": "2026-03-23",
+        "count": 25
+      },
+      {
+        "date": "2026-03-24",
+        "count": 22
+      },
+      {
+        "date": "2026-03-25",
+        "count": 16
+      },
+      {
+        "date": "2026-03-26",
+        "count": 30
+      },
+      {
+        "date": "2026-03-27",
+        "count": 19
+      },
+      {
+        "date": "2026-03-28",
+        "count": 7
+      },
+      {
+        "date": "2026-03-29",
+        "count": 7
+      },
+      {
+        "date": "2026-03-30",
+        "count": 37
+      },
+      {
+        "date": "2026-03-31",
+        "count": 19
+      },
+      {
+        "date": "2026-04-01",
+        "count": 36
+      },
+      {
+        "date": "2026-04-02",
+        "count": 15
+      },
+      {
+        "date": "2026-04-03",
+        "count": 6
+      },
+      {
+        "date": "2026-04-04",
+        "count": 3
+      },
+      {
+        "date": "2026-04-05",
+        "count": 8
+      },
+      {
+        "date": "2026-04-06",
+        "count": 31
+      },
+      {
+        "date": "2026-04-07",
+        "count": 26
+      },
+      {
+        "date": "2026-04-08",
+        "count": 25
+      },
+      {
+        "date": "2026-04-09",
+        "count": 17
+      },
+      {
+        "date": "2026-04-10",
+        "count": 11
+      },
+      {
+        "date": "2026-04-11",
+        "count": 8
+      },
+      {
+        "date": "2026-04-12",
+        "count": 0
+      }
+    ],
+    "today": 0
+  },
+  "export_time": "2026-04-12T23:09:52.717673"
 }
