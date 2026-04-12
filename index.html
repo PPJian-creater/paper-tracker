@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Atlas - 学术文献追踪系统</title>
+    <title>Literature Tracking - 学术文献追踪系统</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
@@ -61,6 +61,136 @@
             background: #60a5fa;
             border-radius: 2px;
             box-shadow: 0 0 8px rgba(96, 165, 250, 0.6);
+        }
+        
+        /* ==================== 移动端响应式样式 ==================== */
+        /* 汉堡菜单按钮 */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        .mobile-menu-btn:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* 移动端导航菜单 */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            padding: 16px;
+            z-index: 999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .mobile-nav.active {
+            display: block;
+        }
+        .mobile-nav .nav-item {
+            display: flex;
+            padding: 12px 16px;
+            margin-bottom: 4px;
+            border-radius: 8px;
+        }
+        .mobile-nav .nav-item.active::after {
+            display: none;
+        }
+        
+        /* 响应式布局调整 */
+        @media (max-width: 768px) {
+            /* 隐藏桌面导航，显示汉堡菜单 */
+            .desktop-nav {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            /* 统计卡片改为2列 */
+            .stat-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            
+            /* 期刊导航双列表格改为单列 */
+            .journal-table tbody tr {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .journal-table tbody tr td {
+                flex: 1;
+                min-width: 80px;
+            }
+            
+            /* 文献列表全宽显示 */
+            .paper-list-item {
+                margin-left: -16px;
+                margin-right: -16px;
+                border-radius: 0;
+                border-left: none;
+                border-right: none;
+            }
+            
+            /* 增大触摸区域 */
+            .bookmark-btn, .action-btn, .btn-compact {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            /* 筛选按钮换行 */
+            .filter-tabs {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .filter-tab {
+                font-size: 13px;
+                padding: 6px 12px;
+            }
+            
+            /* 表格横向滚动容器 */
+            .table-container {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .table-container table {
+                min-width: 600px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* 超小屏幕：统计卡片单列 */
+            .stat-grid {
+                grid-template-columns: 1fr !important;
+            }
+            
+            /* 标题字体缩小 */
+            .paper-title {
+                font-size: 15px;
+            }
+            
+            /* 摘要最多显示2行 */
+            .paper-abstract {
+                -webkit-line-clamp: 2;
+            }
+            
+            /* 操作按钮垂直排列 */
+            .paper-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .paper-actions button,
+            .paper-actions a {
+                width: 100%;
+                justify-content: center;
+            }
         }
         .paper-card {
             background: white;
@@ -509,6 +639,136 @@
         }
         .today-view-btn.active {
             box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
+        }
+        
+        /* ==================== 最新更新分类折叠样式 ==================== */
+        .category-summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            background: #f8fafc;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .category-summary:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        
+        .category-summary-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .category-expand-icon {
+            font-size: 12px;
+            color: #64748b;
+            transition: transform 0.3s ease;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .category-summary.expanded .category-expand-icon {
+            transform: rotate(90deg);
+        }
+        
+        .category-name {
+            font-weight: 600;
+            color: #334155;
+            font-size: 15px;
+        }
+        
+        .category-count {
+            background: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #64748b;
+            border: 1px solid #e2e8f0;
+            font-weight: 500;
+        }
+        
+        .category-papers {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+        
+        .category-papers.expanded {
+            max-height: 2000px;
+            opacity: 1;
+            padding-top: 12px;
+        }
+        
+        /* ==================== 回到顶部/底部悬浮按钮 ==================== */
+        .scroll-buttons-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 999;
+        }
+        
+        .scroll-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(30, 64, 175, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+            pointer-events: none;
+        }
+        
+        .scroll-btn.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+        
+        .scroll-btn:hover {
+            background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+            box-shadow: 0 6px 20px rgba(30, 64, 175, 0.5);
+            transform: translateY(-3px) scale(1.05);
+        }
+        
+        .scroll-btn:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 0 3px 10px rgba(30, 64, 175, 0.4);
+        }
+        
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .scroll-buttons-container {
+                bottom: 20px;
+                right: 20px;
+                gap: 10px;
+            }
+            
+            .scroll-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 16px;
+            }
         }
         
         /* ==================== 期刊导航收藏功能样式 ==================== */
@@ -1099,7 +1359,7 @@
                     <i class="fas fa-lock text-2xl text-blue-600"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-slate-800 mb-2">访问验证</h2>
-                <p class="text-slate-500">请输入 PIN 码以访问 Research Atlas</p>
+                <p class="text-slate-500">请输入 PIN 码以访问 Literature Tracking</p>
             </div>
             <div class="space-y-4">
                 <input type="password" id="pin-input" placeholder="输入 PIN 码" 
@@ -1121,15 +1381,15 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- 左侧：Logo -->
-                <div class="flex items-center gap-3">
-                    <div class="w-9 h-9 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-blue-500/30">
-                        <i class="fas fa-atlas text-sm"></i>
+                <div class="flex items-center gap-3 flex-shrink-0">
+                    <div class="w-9 h-9 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center text-white font-bold shadow-lg shadow-blue-500/30 flex-shrink-0">
+                        <i class="fas fa-book-open text-sm"></i>
                     </div>
-                    <h1 class="text-lg font-bold text-white tracking-tight">Research Atlas</h1>
+                    <h1 class="text-base font-bold text-white tracking-tight whitespace-nowrap">Literature Tracking</h1>
                 </div>
                 
-                <!-- 中间：导航菜单 -->
-                <div class="hidden md:flex items-center gap-1">
+                <!-- 中间：桌面导航菜单 -->
+                <div class="desktop-nav hidden md:flex items-center gap-1">
                     <button onclick="switchTab('discover')" class="nav-item active" data-tab="discover">
                         <i class="fas fa-compass"></i>发现
                     </button>
@@ -1156,11 +1416,14 @@
                     </button>
                 </div>
                 
-                <!-- 右侧：用户信息和统计 -->
+                <!-- 右侧：汉堡菜单 + 统计 -->
                 <div class="flex items-center gap-4">
                     <span class="text-xs text-blue-300 hidden lg:inline">
                         <span id="total-count">0</span> 篇
                     </span>
+                    <button class="mobile-menu-btn md:hidden" onclick="toggleMobileNav()" aria-label="菜单">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <div id="user-info" class="hidden">
                         <!-- 用户信息将在这里显示 -->
                     </div>
@@ -1168,6 +1431,34 @@
             </div>
         </div>
     </nav>
+    
+    <!-- 移动端导航菜单 -->
+    <div id="mobile-nav" class="mobile-nav">
+        <button onclick="switchTab('discover'); toggleMobileNav();" class="nav-item" data-tab="discover">
+            <i class="fas fa-compass w-6"></i>发现
+        </button>
+        <button onclick="switchTab('pa'); toggleMobileNav();" class="nav-item" data-tab="pa">
+            <i class="fas fa-landmark w-6"></i>公共行政
+        </button>
+        <button onclick="switchTab('pp'); toggleMobileNav();" class="nav-item" data-tab="pp">
+            <i class="fas fa-file-contract w-6"></i>公共政策
+        </button>
+        <button onclick="switchTab('pol'); toggleMobileNav();" class="nav-item" data-tab="pol">
+            <i class="fas fa-balance-scale w-6"></i>政治学
+        </button>
+        <button onclick="switchTab('china'); toggleMobileNav();" class="nav-item" data-tab="china">
+            <i class="fas fa-dragon w-6"></i>中国研究
+        </button>
+        <button onclick="switchTab('journals'); toggleMobileNav();" class="nav-item" data-tab="journals">
+            <i class="fas fa-book w-6"></i>期刊导航
+        </button>
+        <button onclick="switchTab('favorites'); toggleMobileNav();" class="nav-item" data-tab="favorites">
+            <i class="fas fa-folder-open w-6"></i>收藏
+        </button>
+        <button onclick="switchTab('search'); toggleMobileNav();" class="nav-item" data-tab="search">
+            <i class="fas fa-search w-6"></i>搜索
+        </button>
+    </div>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div id="loading-state" class="text-center py-20">
@@ -1206,7 +1497,7 @@
         </div>
 
         <div id="tab-discover" class="tab-content">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="stat-grid grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 <div class="stat-card pa-card cursor-pointer" onclick="switchTab('pa')">
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-sm text-slate-600">公共行政</span>
@@ -1241,34 +1532,34 @@
                 </div>
             </div>
 
-            <!-- 今日更新 - 按模块分类展示 -->
+            <!-- 最新更新 - 按模块分类展示 -->
             <div id="today-papers-section" class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
                 <div class="flex justify-between items-center mb-4">
                     <div>
-                        <h2 class="text-xl font-bold text-slate-800">
-                            <i class="fas fa-bolt text-amber-500 mr-2"></i>今日更新
+                        <h2 class="text-xl font-bold text-slate-800" title="展示数据库中最新收录的文献日期（考虑数据爬取延迟）">
+                            <i class="fas fa-bolt text-amber-500 mr-2"></i>最新更新
                             <span id="today-count-badge" class="ml-2 px-2 py-0.5 bg-amber-100 text-amber-700 text-sm rounded-full">0</span>
                         </h2>
-                        <p class="text-sm text-slate-500 mt-1">今天新收录的文献</p>
+                        <p class="text-sm text-slate-500 mt-1">最新收录的文献（数据更新至 <span id="latest-date-display" class="font-medium text-amber-600">-</span>）</p>
                     </div>
                     <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-lg">
-                        <button id="btn-yesterday" onclick="showYesterdayPapers()" class="today-view-btn text-slate-600 hover:text-blue-600 font-medium text-sm px-4 py-1.5 rounded-md transition">
-                            <i class="fas fa-history mr-1"></i>昨天
+                        <button id="btn-yesterday" onclick="showYesterdayPapers()" class="today-view-btn text-slate-600 hover:text-blue-600 font-medium text-sm px-4 py-1.5 rounded-md transition" title="查看前一天的数据">
+                            <i class="fas fa-history mr-1"></i>前一天
                         </button>
-                        <button id="btn-today" onclick="showTodayPapers()" class="today-view-btn active text-white bg-blue-600 font-medium text-sm px-4 py-1.5 rounded-md transition shadow-sm">
-                            <i class="fas fa-calendar-day mr-1"></i>今天
+                        <button id="btn-today" onclick="showTodayPapers()" class="today-view-btn active text-white bg-blue-600 font-medium text-sm px-4 py-1.5 rounded-md transition shadow-sm" title="查看最新数据">
+                            <i class="fas fa-calendar-day mr-1"></i><span id="latest-btn-text">最新</span>
                         </button>
                     </div>
                 </div>
                 
-                <!-- 按模块分类展示 -->
-                <div id="today-papers-by-category" class="space-y-6">
-                    <!-- 动态生成各模块的今日更新 -->
+                <!-- 按模块分类概览 -->
+                <div id="today-papers-by-category" class="space-y-2">
+                    <!-- 动态生成各模块的概览行和可展开内容 -->
                 </div>
                 
                 <div id="today-papers-empty" class="text-center py-8 text-slate-400 hidden">
                     <i class="fas fa-inbox text-4xl mb-3"></i>
-                    <p>今日暂无新文献</p>
+                    <p>暂无新文献</p>
                 </div>
             </div>
 
@@ -1342,7 +1633,7 @@
 
         <div id="tab-pa" class="tab-content hidden">
             <div class="flex flex-col md:flex-row gap-4 mb-6">
-                <select id="pa-journal-filter" onchange="filterPAPapers()" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-48">
+                <select id="pa-journal-filter" onchange="filterPAPapers()" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-64">
                     <option value="">全部期刊</option>
                 </select>
                 <select id="pa-time-filter" onchange="handleTimeFilterChange('pa')" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-40">
@@ -1364,7 +1655,7 @@
 
         <div id="tab-pp" class="tab-content hidden">
             <div class="flex flex-col md:flex-row gap-4 mb-6">
-                <select id="pp-journal-filter" onchange="filterPPPapers()" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-48">
+                <select id="pp-journal-filter" onchange="filterPPPapers()" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-64">
                     <option value="">全部期刊</option>
                 </select>
                 <select id="pp-time-filter" onchange="handleTimeFilterChange('pp')" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-40">
@@ -1386,7 +1677,7 @@
 
         <div id="tab-pol" class="tab-content hidden">
             <div class="flex flex-col md:flex-row gap-4 mb-6">
-                <select id="pol-journal-filter" onchange="filterPOLPapers()" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-48">
+                <select id="pol-journal-filter" onchange="filterPOLPapers()" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-64">
                     <option value="">全部期刊</option>
                 </select>
                 <select id="pol-time-filter" onchange="handleTimeFilterChange('pol')" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-40">
@@ -1408,7 +1699,7 @@
 
         <div id="tab-china" class="tab-content hidden">
             <div class="flex flex-col md:flex-row gap-4 mb-6">
-                <select id="china-journal-filter" onchange="filterChinaPapers()" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-48">
+                <select id="china-journal-filter" onchange="filterChinaPapers()" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-64">
                     <option value="">全部期刊</option>
                 </select>
                 <select id="china-time-filter" onchange="handleTimeFilterChange('china')" class="px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-sm w-40">
@@ -1451,7 +1742,7 @@
             </div>
             
             <!-- 普通筛选：双列表格 -->
-            <div id="journals-normal-view" class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+            <div id="journals-normal-view" class="table-container bg-white rounded-xl border border-slate-200 overflow-hidden">
                 <table class="journal-table" style="table-layout: fixed; width: 100%;">
                     <thead>
                         <tr>
@@ -2306,40 +2597,86 @@
             renderTodayPapers();
         }
         
-        let currentTodayView = 'today'; // 'today' or 'yesterday'
+        let currentTodayView = 'today'; // 'today' (最新) or 'yesterday' (次新)
+        let latestDataDate = null; // 存储最新数据日期
+        
+        // 获取数据库中最新的文献日期
+        function getLatestPaperDate() {
+            if (!allPapers || allPapers.length === 0) return null;
+            
+            // 提取所有日期并排序（降序）
+            const dates = allPapers
+                .filter(p => p.published_date)
+                .map(p => p.published_date)
+                .sort((a, b) => new Date(b) - new Date(a));
+            
+            return dates.length > 0 ? dates[0] : null;
+        }
+        
+        // 获取次新日期（最新日期的前一天）
+        function getPreviousDate(dateStr) {
+            const date = new Date(dateStr);
+            date.setDate(date.getDate() - 1);
+            return date.toISOString().split('T')[0];
+        }
         
         function renderTodayPapers() {
-            const today = new Date().toISOString().split('T')[0];
-            renderPapersByDate(today, '今天');
+            latestDataDate = getLatestPaperDate();
+            
+            if (!latestDataDate) {
+                // 没有数据时的处理
+                renderPapersByDate(null, '最新');
+                return;
+            }
+            
+            // 更新显示的日期
+            updateLatestDateDisplay(latestDataDate);
+            
+            // 渲染最新日期的文献
+            renderPapersByDate(latestDataDate, '最新');
             currentTodayView = 'today';
             updateTodayViewButtons();
         }
         
         function showYesterdayPapers() {
-            const yesterday = new Date();
-            yesterday.setDate(yesterday.getDate() - 1);
-            const yesterdayStr = yesterday.toISOString().split('T')[0];
-            renderPapersByDate(yesterdayStr, '昨天');
+            if (!latestDataDate) {
+                latestDataDate = getLatestPaperDate();
+            }
+            
+            if (!latestDataDate) return;
+            
+            const previousDate = getPreviousDate(latestDataDate);
+            renderPapersByDate(previousDate, '前一天');
             currentTodayView = 'yesterday';
             updateTodayViewButtons();
+        }
+        
+        function updateLatestDateDisplay(dateStr) {
+            const displayEl = document.getElementById('latest-date-display');
+            const btnTextEl = document.getElementById('latest-btn-text');
+            
+            if (displayEl) displayEl.textContent = dateStr || '-';
+            if (btnTextEl) btnTextEl.textContent = dateStr ? dateStr.substring(5) : '最新'; // 显示 MM-DD
         }
         
         function updateTodayViewButtons() {
             const todayBtn = document.getElementById('btn-today');
             const yesterdayBtn = document.getElementById('btn-yesterday');
             
+            if (!todayBtn || !yesterdayBtn) return;
+            
             if (currentTodayView === 'today') {
-                // 今天按钮激活状态
+                // 最新按钮激活状态
                 todayBtn.classList.add('active', 'text-white', 'bg-blue-600');
-                todayBtn.classList.remove('text-slate-600', 'hover:text-blue-600', 'hover:bg-transparent');
-                // 昨天按钮非激活状态
+                todayBtn.classList.remove('text-slate-600', 'hover:text-blue-600');
+                // 前一天按钮非激活状态
                 yesterdayBtn.classList.remove('active', 'text-white', 'bg-blue-600');
                 yesterdayBtn.classList.add('text-slate-600', 'hover:text-blue-600');
             } else {
-                // 昨天按钮激活状态
+                // 前一天按钮激活状态
                 yesterdayBtn.classList.add('active', 'text-white', 'bg-blue-600');
-                yesterdayBtn.classList.remove('text-slate-600', 'hover:text-blue-600', 'hover:bg-transparent');
-                // 今天按钮非激活状态
+                yesterdayBtn.classList.remove('text-slate-600', 'hover:text-blue-600');
+                // 最新按钮非激活状态
                 todayBtn.classList.remove('active', 'text-white', 'bg-blue-600');
                 todayBtn.classList.add('text-slate-600', 'hover:text-blue-600');
             }
@@ -2349,24 +2686,40 @@
             renderTodayPapers();
         }
         
+        // 存储当前展开的分类状态
+        let expandedCategories = new Set();
+        
         function renderPapersByDate(dateStr, label) {
-            const papers = allPapers.filter(p => p.published_date === dateStr);
             const container = document.getElementById('today-papers-by-category');
             const badge = document.getElementById('today-count-badge');
             const emptyDiv = document.getElementById('today-papers-empty');
+            
+            // 切换日期时重置展开状态
+            expandedCategories.clear();
+            
+            // 如果没有日期，显示无数据
+            if (!dateStr) {
+                container.innerHTML = '';
+                emptyDiv.classList.remove('hidden');
+                emptyDiv.innerHTML = '<i class="fas fa-inbox text-4xl mb-3"></i><p>暂无数据</p>';
+                badge.textContent = '0';
+                return;
+            }
+            
+            const papers = allPapers.filter(p => p.published_date === dateStr);
             
             badge.textContent = papers.length;
             
             if (papers.length === 0) {
                 container.innerHTML = '';
                 emptyDiv.classList.remove('hidden');
-                emptyDiv.innerHTML = '<i class="fas fa-inbox text-4xl mb-3"></i><p>' + label + '暂无新文献</p>';
+                emptyDiv.innerHTML = '<i class="fas fa-inbox text-4xl mb-3"></i><p>' + label + '（' + dateStr + '）暂无新文献</p>';
                 return;
             }
             
             emptyDiv.classList.add('hidden');
             
-            // 按模块分组展示（PA/PP/POL/CHINA），每组内使用紧凑列表
+            // 按模块分组展示（PA/PP/POL/CHINA），概览形式
             const categories = [
                 { key: 'PA', name: '公共行政', color: 'blue' },
                 { key: 'PP', name: '公共政策', color: 'cyan' },
@@ -2379,18 +2732,24 @@
             categories.forEach(cat => {
                 const catPapers = papers.filter(p => p.category === cat.key);
                 if (catPapers.length > 0) {
-                    html += '<div class="mb-6">';
-                    // 模块标题
-                    html += '<div class="flex items-center gap-2 mb-3">';
+                    const categoryId = 'today-cat-' + cat.key + '-' + dateStr;
+                    html += '<div class="category-item" data-category="' + cat.key + '">';
+                    // 分类概览行（可点击展开）
+                    html += '<div class="category-summary" onclick="toggleCategoryExpand(\'' + cat.key + '\', \'' + dateStr + '\')">';
+                    html += '<div class="category-summary-left">';
+                    html += '<div class="category-expand-icon"><i class="fas fa-chevron-right"></i></div>';
                     html += '<span class="category-tag tag-' + cat.key.toLowerCase() + '">' + cat.key + '</span>';
-                    html += '<h4 class="text-lg font-semibold text-slate-700">' + cat.name + '</h4>';
-                    html += '<span class="text-sm text-slate-400">(' + catPapers.length + '篇)</span>';
+                    html += '<span class="category-name">' + cat.name + '</span>';
                     html += '</div>';
-                    // 紧凑列表容器
+                    html += '<span class="category-count">' + catPapers.length + ' 篇</span>';
+                    html += '</div>';
+                    // 可展开的文献列表
+                    html += '<div class="category-papers" id="' + categoryId + '">';
                     html += '<div class="paper-list-container">';
                     catPapers.forEach(paper => {
                         html += createTodayPaperItem(paper);
                     });
+                    html += '</div>';
                     html += '</div>';
                     html += '</div>';
                 }
@@ -2399,21 +2758,47 @@
             // 如果没有分类的文献（兼容旧数据）
             const uncategorized = papers.filter(p => !p.category || !['PA', 'PP', 'POL', 'CHINA'].includes(p.category));
             if (uncategorized.length > 0) {
-                html += '<div class="mb-6">';
-                html += '<div class="flex items-center gap-2 mb-3">';
-                html += '<h4 class="text-lg font-semibold text-slate-700">其他</h4>';
-                html += '<span class="text-sm text-slate-400">(' + uncategorized.length + '篇)</span>';
+                const categoryId = 'today-cat-OTHER-' + dateStr;
+                html += '<div class="category-item" data-category="OTHER">';
+                html += '<div class="category-summary" onclick="toggleCategoryExpand(\'OTHER\', \'' + dateStr + '\')">';
+                html += '<div class="category-summary-left">';
+                html += '<div class="category-expand-icon"><i class="fas fa-chevron-right"></i></div>';
+                html += '<span class="category-tag" style="background:#f1f5f9;color:#64748b;">其他</span>';
+                html += '<span class="category-name">其他</span>';
                 html += '</div>';
+                html += '<span class="category-count">' + uncategorized.length + ' 篇</span>';
+                html += '</div>';
+                html += '<div class="category-papers" id="' + categoryId + '">';
                 html += '<div class="paper-list-container">';
                 uncategorized.forEach(paper => {
                     html += createTodayPaperItem(paper);
                 });
                 html += '</div>';
                 html += '</div>';
+                html += '</div>';
             }
             
             container.innerHTML = html;
             badge.textContent = papers.length;
+        }
+        
+        // 切换分类展开/折叠
+        function toggleCategoryExpand(category, dateStr) {
+            const categoryId = 'today-cat-' + category + '-' + dateStr;
+            const papersDiv = document.getElementById(categoryId);
+            const summaryDiv = papersDiv.previousElementSibling;
+            
+            if (papersDiv.classList.contains('expanded')) {
+                // 折叠
+                papersDiv.classList.remove('expanded');
+                summaryDiv.classList.remove('expanded');
+                expandedCategories.delete(category);
+            } else {
+                // 展开
+                papersDiv.classList.add('expanded');
+                summaryDiv.classList.add('expanded');
+                expandedCategories.add(category);
+            }
         }
         
         // 今日更新紧凑列表项（与其他模块统一风格）
@@ -2732,6 +3117,11 @@
             select.value = currentValue;
         }
 
+        function toggleMobileNav() {
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileNav.classList.toggle('active');
+        }
+        
         function switchTab(tabName) {
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
@@ -5162,6 +5552,63 @@
                 document.querySelectorAll('.modal.active').forEach(modal => modal.classList.remove('active'));
             }
         });
+        
+        // 滚动到顶部/底部按钮功能
+        (function() {
+            const scrollTopBtn = document.getElementById('scroll-top-btn');
+            const scrollBottomBtn = document.getElementById('scroll-bottom-btn');
+            
+            if (!scrollTopBtn || !scrollBottomBtn) return;
+            
+            // 监听滚动事件，控制按钮显示/隐藏
+            let lastScrollTop = 0;
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                
+                // 滚动超过300px显示回到顶部按钮
+                if (scrollTop > 300) {
+                    scrollTopBtn.classList.add('visible');
+                } else {
+                    scrollTopBtn.classList.remove('visible');
+                }
+                
+                // 距离底部超过300px显示回到底部按钮
+                if (scrollHeight - scrollTop > 300) {
+                    scrollBottomBtn.classList.add('visible');
+                } else {
+                    scrollBottomBtn.classList.remove('visible');
+                }
+                
+                lastScrollTop = scrollTop;
+            }, { passive: true });
+            
+            // 点击回到顶部
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 点击回到底部
+            scrollBottomBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: document.documentElement.scrollHeight,
+                    behavior: 'smooth'
+                });
+            });
+        })();
     </script>
+    
+    <!-- 回到顶部/底部悬浮按钮 -->
+    <div class="scroll-buttons-container">
+        <button id="scroll-top-btn" class="scroll-btn scroll-top" title="回到顶部">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button id="scroll-bottom-btn" class="scroll-btn scroll-bottom" title="回到底部">
+            <i class="fas fa-arrow-down"></i>
+        </button>
+    </div>
 </body>
 </html>
