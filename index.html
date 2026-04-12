@@ -1454,12 +1454,32 @@
                 currentUserPIN = pin;
                 // 保存到 localStorage 实现长期记住
                 localStorage.setItem('research-atlas-saved-pin', pin);
+                // 先隐藏覆盖层，确保用户能进入页面
                 document.getElementById('pin-overlay').style.display = 'none';
                 initUserData();
                 updateUserInfo();
-                // 重新加载数据（使用新的 PIN 对应的用户数据）
-                loadData();
                 showToast('验证成功，欢迎访问！');
+                
+                // 异步加载数据（不阻塞页面显示）
+                setTimeout(() => {
+                    loadData().catch(err => {
+                        console.error('数据加载失败:', err);
+                        // 本地环境没有数据文件时，显示友好的提示
+                        const loadingEl = document.getElementById('loading-state');
+                        const errorEl = document.getElementById('error-state');
+                        if (loadingEl) loadingEl.classList.add('hidden');
+                        if (errorEl) {
+                            errorEl.innerHTML = `
+                                <div class="text-center py-12">
+                                    <i class="fas fa-info-circle text-4xl text-slate-300 mb-3"></i>
+                                    <p class="text-slate-500">暂无文献数据</p>
+                                    <p class="text-sm text-slate-400 mt-2">本地开发环境需要运行爬虫生成数据</p>
+                                </div>
+                            `;
+                            errorEl.classList.remove('hidden');
+                        }
+                    });
+                }, 100);
             } else {
                 error.classList.remove('hidden');
                 input.value = '';
@@ -1524,7 +1544,12 @@
                     console.log('准备加载数据...');
                     setTimeout(function() {
                         console.log('调用 loadData...');
-                        loadData();
+                        loadData().catch(err => {
+                            console.error('loadData 失败:', err);
+                            // 即使数据加载失败也不影响用户使用
+                            const loadingEl = document.getElementById('loading-state');
+                            if (loadingEl) loadingEl.classList.add('hidden');
+                        });
                     }, 100);
                 } catch (e) {
                     console.error('初始化失败:', e);
@@ -1775,8 +1800,9 @@
             const errorEl = document.getElementById('error-state');
             const emptyEl = document.getElementById('empty-state');
             
+            // 如果找不到DOM元素，直接返回（可能在非发现页面）
             if (!loadingEl || !errorEl || !emptyEl) {
-                console.error('找不到必要的 DOM 元素');
+                console.log('找不到必要的 DOM 元素，可能不在发现页面');
                 return;
             }
             
@@ -2170,16 +2196,6 @@
             
             html += '</div>';
             html += '</div>';
-            return html;
-        }
-        
-        // 删除旧版的紧凑卡片函数（已废弃）
-        // function createCompactPaperCard(paper) { ... }
-            html += '<button onclick="toggleSavePaper(\'' + paperId + '\', this)" data-paper-id="' + paperId + '" class="bookmark-btn flex-shrink-0 ' + (paperFolders[paperId] ? 'saved' : '') + '" title="' + (paperFolders[paperId] ? '已收藏' : '添加到收藏') + '">';
-            html += '<i class="fas fa-bookmark"></i>';
-            html += '</button>';
-            html += '</div></div>';
-            
             return html;
         }
         
@@ -2750,7 +2766,7 @@
             
             // 第五行：操作按钮
             html += '<div class="paper-actions">';
-            html += '<button class="btn-compact ' + bookmarkClass + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '" title="' + (isSaved ? '已收藏' : '添加到收藏') + '">';
+            html += '<button class="btn-compact bookmark-btn ' + bookmarkClass + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '" title="' + (isSaved ? '已收藏' : '添加到收藏') + '">';
             html += '<i class="fas fa-bookmark"></i> ' + (isSaved ? '已收藏' : '收藏');
             html += '</button>';
             if (paper.url) {
@@ -2811,7 +2827,7 @@
             
             // 操作按钮（放在下方）
             html += '<div class="paper-actions">';
-            html += '<button class="action-btn bookmark-btn bookmark ' + (isSaved ? 'saved' : '') + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '">';
+            html += '<button class="action-btn bookmark-btn ' + (isSaved ? 'saved' : '') + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '">';
             html += '<i class="' + (isSaved ? 'fas' : 'far') + ' fa-bookmark"></i>';
             html += '<span>' + (isSaved ? '已收藏' : '收藏') + '</span>';
             html += '</button>';
