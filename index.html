@@ -4078,14 +4078,13 @@
                 table.style.width = '100%';
             }
             
-            // 更新表头（移动端3列，桌面端6列）
+            // 更新表头（移动端2列：期刊名称+收藏，桌面端6列）
             const thead = table ? table.querySelector('thead tr') : null;
             if (thead) {
                 if (isMobile) {
                     thead.innerHTML = `
-                        <th style="width: 70px;">领域</th>
                         <th style="width: auto;">期刊名称</th>
-                        <th style="width: 50px; text-align: center;">收藏</th>
+                        <th style="width: 60px; text-align: center;">收藏</th>
                     `;
                 } else {
                     thead.innerHTML = `
@@ -4119,19 +4118,16 @@
             let html = '';
             
             if (isMobile) {
-                // 移动端：单列渲染
+                // 移动端：单列渲染，只显示期刊名称和收藏两列
                 allJournalsList.forEach(item => {
                     const url = journalUrls[item.journal] || '#';
                     const fav = isJournalFavorited(item.journal);
                     html += `
-                        <tr title="点击访问 ${item.journal} 官网">
-                            <td onclick="window.open('${url}', '_blank')" class="cursor-pointer hover:bg-blue-50" style="width: 70px;">
-                                <span class="category-tag ${item.category.class}">${item.category.key.toUpperCase()}</span>
-                            </td>
-                            <td onclick="window.open('${url}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                        <tr>
+                            <td onclick="window.open('${url}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="点击访问 ${item.journal} 官网">
                                 ${item.journal}
                             </td>
-                            <td class="text-center" onclick="event.stopPropagation()" style="width: 50px;">
+                            <td class="text-center" style="width: 60px;">
                                 <span class="journal-star ${fav ? 'favorited' : ''}" 
                                       onclick="toggleFavoriteJournal('${item.journal}', '${item.category.key}')"
                                       title="${fav ? '取消收藏' : '收藏该期刊'}">
@@ -4194,7 +4190,7 @@
                 }
             }
             
-            tbody.innerHTML = html || `<tr><td colspan="${isMobile ? 3 : 6}" class="text-center py-8 text-slate-400">暂无数据</td></tr>`;
+            tbody.innerHTML = html || `<tr><td colspan="${isMobile ? 2 : 6}" class="text-center py-8 text-slate-400">暂无数据</td></tr>`;
         }
         
         // 监听窗口大小变化，重新渲染期刊表格
