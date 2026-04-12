@@ -1429,15 +1429,15 @@
             
             <!-- 普通筛选：双列表格 -->
             <div id="journals-normal-view" class="bg-white rounded-xl border border-slate-200 overflow-hidden">
-                <table class="journal-table">
+                <table class="journal-table" style="table-layout: fixed; width: 100%;">
                     <thead>
                         <tr>
-                            <th class="w-24">领域</th>
-                            <th>期刊名称</th>
-                            <th class="w-20 text-center">收藏</th>
-                            <th class="w-24">领域</th>
-                            <th>期刊名称</th>
-                            <th class="w-20 text-center">收藏</th>
+                            <th style="width: 80px;">领域</th>
+                            <th style="width: auto;">期刊名称</th>
+                            <th style="width: 60px; text-align: center;">收藏</th>
+                            <th style="width: 80px;">领域</th>
+                            <th style="width: auto;">期刊名称</th>
+                            <th style="width: 60px; text-align: center;">收藏</th>
                         </tr>
                     </thead>
                     <tbody id="journals-table-body"></tbody>
@@ -1508,9 +1508,6 @@
                     <h2 class="text-lg font-semibold text-slate-800">
                         <i class="fas fa-search-plus mr-2 text-blue-600"></i>高级检索
                     </h2>
-                    <button onclick="resetAdvancedSearch()" class="text-sm text-slate-500 hover:text-blue-600 transition">
-                        <i class="fas fa-redo mr-1"></i>重置条件
-                    </button>
                 </div>
                 
                 <!-- 检索条件行 -->
@@ -2726,8 +2723,23 @@
         }
         
         function refreshAllBookmarkIcons() {
-            // 更新所有论文卡片上的收藏图标状态
-            Object.keys(paperFolders).forEach(paperId => {
+            // 获取所有容器中的论文卡片
+            const containers = ['pa-papers-list', 'pp-papers-list', 'pol-papers-list', 'china-papers-list', 'random-papers', 'search-results', 'favorites-list', 'today-papers-by-category'];
+            const allPaperIds = new Set();
+            
+            // 收集所有显示的论文ID
+            containers.forEach(id => {
+                const container = document.getElementById(id);
+                if (container) {
+                    const btns = container.querySelectorAll('.bookmark-btn[data-paper-id]');
+                    btns.forEach(btn => {
+                        allPaperIds.add(btn.dataset.paperId);
+                    });
+                }
+            });
+            
+            // 更新所有论文卡片的收藏状态
+            allPaperIds.forEach(paperId => {
                 refreshPaperCard(paperId);
             });
         }
@@ -3591,6 +3603,13 @@
             normalView.classList.remove('hidden');
             favView.classList.add('hidden');
             
+            // 设置表格为固定布局
+            const table = tbody.closest('table');
+            if (table) {
+                table.style.tableLayout = 'fixed';
+                table.style.width = '100%';
+            }
+            
             // 双列布局渲染
             let html = '';
             const categories = [
@@ -3610,7 +3629,7 @@
                 });
             });
             
-            // 双列渲染
+            // 双列渲染（固定列宽：领域80px | 期刊名自适应 | 收藏60px）
             for (let i = 0; i < allJournalsList.length; i += 2) {
                 const left = allJournalsList[i];
                 const right = allJournalsList[i + 1];
@@ -3619,14 +3638,14 @@
                 const leftFav = isJournalFavorited(left.journal);
                 
                 let rowHtml = `
-                    <tr>
-                        <td onclick="window.open('${leftUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50">
+                    <tr title="点击访问 ${left.journal} 官网">
+                        <td onclick="window.open('${leftUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50" style="width: 80px;">
                             <span class="category-tag ${left.category.class}">${left.category.key.toUpperCase()}</span>
                         </td>
-                        <td onclick="window.open('${leftUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800">
+                        <td onclick="window.open('${leftUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800" style="width: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                             ${left.journal}
                         </td>
-                        <td class="text-center" onclick="event.stopPropagation()">
+                        <td class="text-center" onclick="event.stopPropagation()" style="width: 60px;">
                             <span class="journal-star ${leftFav ? 'favorited' : ''}" 
                                   onclick="toggleFavoriteJournal('${left.journal}', '${left.category.key}')"
                                   title="${leftFav ? '取消收藏' : '收藏该期刊'}">
@@ -3639,13 +3658,13 @@
                     const rightUrl = journalUrls[right.journal] || '#';
                     const rightFav = isJournalFavorited(right.journal);
                     rowHtml += `
-                        <td onclick="window.open('${rightUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 border-l border-slate-200">
+                        <td onclick="window.open('${rightUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 border-l border-slate-200" title="点击访问 ${right.journal} 官网" style="width: 80px;">
                             <span class="category-tag ${right.category.class}">${right.category.key.toUpperCase()}</span>
                         </td>
-                        <td onclick="window.open('${rightUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800">
+                        <td onclick="window.open('${rightUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800" title="点击访问 ${right.journal} 官网" style="width: auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                             ${right.journal}
                         </td>
-                        <td class="text-center" onclick="event.stopPropagation()">
+                        <td class="text-center" onclick="event.stopPropagation()" style="width: 60px;">
                             <span class="journal-star ${rightFav ? 'favorited' : ''}" 
                                   onclick="toggleFavoriteJournal('${right.journal}', '${right.category.key}')"
                                   title="${rightFav ? '取消收藏' : '收藏该期刊'}">
@@ -3819,25 +3838,28 @@
                 });
             });
             
-            // 渲染搜索结果（单列布局）
+            // 渲染搜索结果（单列布局，固定列宽）
             if (matchedJournals.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="3" class="text-center py-8 text-slate-400"><i class="fas fa-search text-3xl mb-3 text-slate-300"></i><br>未找到匹配的期刊<br><span class="text-sm mt-2 block">请尝试其他关键词</span></td></tr>';
                 return;
             }
+            
+            // 设置表格为固定布局
+            tbody.closest('table').style.tableLayout = 'fixed';
             
             let html = '';
             matchedJournals.forEach(item => {
                 const url = journalUrls[item.journal] || '#';
                 const isFavorited = isJournalFavorited(item.journal);
                 html += `
-                    <tr data-journal="${item.journal.toLowerCase()}" data-category="${item.category.key}">
-                        <td class="w-24">
+                    <tr data-journal="${item.journal.toLowerCase()}" data-category="${item.category.key}" title="点击访问 ${item.journal} 官网">
+                        <td style="width: 80px;">
                             <span class="category-tag ${item.category.class}">${item.category.key.toUpperCase()}</span>
                         </td>
-                        <td class="font-medium text-slate-800">
-                            <a href="${url}" target="_blank" class="hover:text-blue-600 transition-colors">${item.journal}</a>
+                        <td style="width: auto;">
+                            <a href="${url}" target="_blank" class="hover:text-blue-600 transition-colors font-medium text-slate-800">${item.journal}</a>
                         </td>
-                        <td class="w-24 text-center">
+                        <td style="width: 60px; text-align: center;">
                             <span class="journal-star ${isFavorited ? 'favorited' : ''}" 
                                   onclick="toggleFavoriteJournal('${item.journal}', '${item.category.key}')"
                                   title="${isFavorited ? '取消收藏' : '收藏该期刊'}">
@@ -4269,6 +4291,10 @@
             renderFolders();
             renderFavorites();
             updateFavCount();
+            
+            // 重置批量删除按钮和全选框状态
+            updateBatchDeleteButton();
+            updateSelectAllCheckbox();
             
             // 更新所有被删除文献的按钮状态
             renderAll();
@@ -4702,6 +4728,7 @@
             const input = row.querySelector('.condition-value');
             input.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
+                    e.preventDefault();
                     performAdvancedSearch();
                 }
             });
