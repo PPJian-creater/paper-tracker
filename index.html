@@ -429,6 +429,159 @@
             box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3);
         }
         
+        /* ==================== 期刊导航收藏功能样式 ==================== */
+        .favorite-journals-section {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+        
+        .favorite-journals-header {
+            padding: 16px 20px;
+            background: linear-gradient(135deg, #fef9c3 0%, #fef3c7 100%);
+            border-bottom: 2px solid #f59e0b;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .favorite-journals-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #92400e;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .favorite-journals-count {
+            font-size: 13px;
+            color: #a16207;
+            background: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        
+        .favorite-journals-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .favorite-journals-table th {
+            background: #fefce8;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #854d0e;
+            font-size: 13px;
+            border-bottom: 1px solid #fde68a;
+        }
+        
+        .favorite-journals-table td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+        }
+        
+        .favorite-journals-table tr {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        
+        .favorite-journals-table tr:hover {
+            background: #fefce8;
+        }
+        
+        .favorite-journals-table tr.dragging {
+            opacity: 0.5;
+            background: #fef3c7;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .favorite-journals-table tr.drag-over {
+            border-top: 2px dashed #f59e0b;
+        }
+        
+        /* 拖拽手柄 */
+        .drag-handle {
+            color: #cbd5e1;
+            cursor: grab;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .drag-handle:hover {
+            color: #64748b;
+            background: #f1f5f9;
+        }
+        
+        .drag-handle:active {
+            cursor: grabbing;
+            color: #475569;
+        }
+        
+        /* 收藏星标 */
+        .journal-star {
+            color: #d1d5db;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s ease;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        
+        .journal-star:hover {
+            color: #fbbf24;
+            background: #fef3c7;
+        }
+        
+        .journal-star.favorited {
+            color: #f59e0b;
+        }
+        
+        .journal-star.favorited:hover {
+            color: #dc2626;
+            background: #fee2e2;
+        }
+        
+        /* 移除收藏按钮 */
+        .remove-favorite {
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .remove-favorite:hover {
+            color: #dc2626;
+            background: #fee2e2;
+        }
+        
+        /* 空状态提示 */
+        .favorite-journals-empty {
+            padding: 40px 20px;
+            text-align: center;
+            color: #9ca3af;
+        }
+        
+        .favorite-journals-empty i {
+            font-size: 48px;
+            color: #fcd34d;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+        
+        .favorite-journals-empty p {
+            font-size: 14px;
+            margin: 0;
+        }
+        
         .paper-list-item .action-btn.external:hover {
             background: #ecfdf5;
             border-color: #10b981;
@@ -563,6 +716,46 @@
             border-color: #2563eb;
         }
         .trend-filter-btn:hover { background: #eff6ff; border-color: #2563eb; color: #2563eb; }
+        
+        /* 我的收藏按钮 - 特殊样式 */
+        .filter-tab.favorites-tab {
+            background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 50%, #fbbf24 100%);
+            color: #92400e;
+            border-color: #f59e0b;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        .filter-tab.favorites-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+        .filter-tab.favorites-tab:hover::before {
+            left: 100%;
+        }
+        .filter-tab.favorites-tab:hover {
+            background: linear-gradient(135deg, #fde68a 0%, #fbbf24 50%, #f59e0b 100%);
+            color: #78350f;
+            border-color: #d97706;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+            transform: translateY(-1px);
+        }
+        .filter-tab.favorites-tab.active {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+            color: white;
+            border-color: #b45309;
+            box-shadow: 0 3px 10px rgba(245, 158, 11, 0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+        .filter-tab.favorites-tab i {
+            filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+        }
         .stat-card {
             background: white;
             border-radius: 12px;
@@ -977,6 +1170,9 @@
                         <button onclick="filterJournals('pol')" class="filter-tab" data-journal-filter="pol">政治学</button>
                         <button onclick="filterJournals('china')" class="filter-tab" data-journal-filter="china">中国研究</button>
                         <button onclick="filterJournals('cn')" class="filter-tab" data-journal-filter="cn">国内期刊</button>
+                        <button onclick="filterJournals('favorites')" class="filter-tab favorites-tab" data-journal-filter="favorites">
+                            <i class="fas fa-star mr-1"></i>我的收藏
+                        </button>
                     </div>
                     <div class="flex-1">
                         <input type="text" id="journal-search" placeholder="搜索期刊名称..." 
@@ -992,7 +1188,7 @@
                         <tr>
                             <th class="w-24">领域</th>
                             <th>期刊名称</th>
-                            <th class="w-32 text-center">操作</th>
+                            <th class="w-32 text-center">收藏</th>
                         </tr>
                     </thead>
                     <tbody id="journals-table-body"></tbody>
@@ -2196,6 +2392,7 @@
 
         function renderAll() {
             populateJournalFilters();
+            loadFavoriteJournals(); // 加载收藏的期刊
             renderJournalsTable();
             renderFolders();
             refreshRandomPapers();
@@ -2854,10 +3051,213 @@
         }
 
         let currentJournalFilter = 'all';
+        let favoriteJournals = [];
+        let draggedItem = null;
+        
+        // 获取收藏期刊存储键
+        function getFavoriteJournalsKey() {
+            return currentUserPIN ? `research-atlas-${currentUserPIN}-favorite-journals` : 'research-atlas-anonymous-favorite-journals';
+        }
+        
+        // 加载收藏的期刊
+        function loadFavoriteJournals() {
+            try {
+                const key = getFavoriteJournalsKey();
+                const data = localStorage.getItem(key);
+                favoriteJournals = data ? JSON.parse(data) : [];
+            } catch (e) {
+                console.error('加载收藏期刊失败:', e);
+                favoriteJournals = [];
+            }
+        }
+        
+        // 保存收藏的期刊
+        function saveFavoriteJournals() {
+            try {
+                const key = getFavoriteJournalsKey();
+                localStorage.setItem(key, JSON.stringify(favoriteJournals));
+            } catch (e) {
+                console.error('保存收藏期刊失败:', e);
+            }
+        }
+        
+        // 切换期刊收藏状态
+        function toggleFavoriteJournal(journalName, category) {
+            event.stopPropagation();
+            const index = favoriteJournals.findIndex(j => j.name === journalName);
+            
+            if (index >= 0) {
+                // 取消收藏
+                favoriteJournals.splice(index, 1);
+                showToast(`已取消收藏: ${journalName}`);
+            } else {
+                // 添加收藏
+                favoriteJournals.push({ name: journalName, category: category });
+                showToast(`已收藏: ${journalName}`);
+            }
+            
+            saveFavoriteJournals();
+            renderFavoriteJournalsTable();
+            renderJournalsTable(); // 更新星标状态
+            updateFavoriteJournalsCount();
+        }
+        
+        // 从收藏中移除
+        function removeFavoriteJournal(journalName) {
+            event.stopPropagation();
+            const index = favoriteJournals.findIndex(j => j.name === journalName);
+            if (index >= 0) {
+                favoriteJournals.splice(index, 1);
+                saveFavoriteJournals();
+                renderFavoriteJournalsTable();
+                renderJournalsTable(); // 更新星标状态
+                updateFavoriteJournalsCount();
+                showToast(`已取消收藏: ${journalName}`);
+            }
+        }
+        
+        // 更新收藏数量显示
+        function updateFavoriteJournalsCount() {
+            const countEl = document.getElementById('favorite-journals-count');
+            if (countEl) {
+                countEl.textContent = favoriteJournals.length + '个';
+            }
+        }
+        
+        // 判断期刊是否已收藏
+        function isJournalFavorited(journalName) {
+            return favoriteJournals.some(j => j.name === journalName);
+        }
+        
+        // 渲染收藏期刊表格
+        function renderFavoriteJournalsTable() {
+            const tbody = document.getElementById('favorite-journals-tbody');
+            if (!tbody) return;
+            
+            if (favoriteJournals.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="favorite-journals-empty">
+                            <i class="far fa-star"></i>
+                            <p>点击下方期刊右侧的 <i class="far fa-star"></i> 收藏您关注的期刊</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            const categoryClasses = {
+                'pa': 'tag-pa',
+                'pp': 'tag-pp',
+                'pol': 'tag-pol',
+                'china': 'tag-china',
+                'cn': 'tag-cn'
+            };
+            
+            let html = '';
+            favoriteJournals.forEach((journal, index) => {
+                const url = journalUrls[journal.name] || '#';
+                const catClass = categoryClasses[journal.category] || 'tag-pa';
+                
+                html += `
+                    <tr data-journal="${journal.name.toLowerCase()}" 
+                        data-index="${index}"
+                        draggable="true"
+                        ondragstart="handleDragStart(event)"
+                        ondragover="handleDragOver(event)"
+                        ondrop="handleDrop(event)"
+                        ondragend="handleDragEnd(event)"
+                        onclick="window.open('${url}', '_blank')"
+                        class="cursor-pointer"
+                        title="点击访问 ${journal.name} 官网">
+                        <td class="text-center">
+                            <span class="drag-handle" onclick="event.stopPropagation()">
+                                <i class="fas fa-grip-vertical"></i>
+                            </span>
+                        </td>
+                        <td><span class="category-tag ${catClass}">${journal.category.toUpperCase()}</span></td>
+                        <td class="font-medium text-slate-800">${journal.name}</td>
+                        <td class="text-center">
+                            <span class="remove-favorite" onclick="removeFavoriteJournal('${journal.name}')" title="取消收藏">
+                                <i class="fas fa-times"></i>
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        // 拖拽排序功能
+        function handleDragStart(e) {
+            draggedItem = e.target.closest('tr');
+            e.target.closest('tr').classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+        }
+        
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            
+            const row = e.target.closest('tr');
+            if (row && row !== draggedItem) {
+                row.classList.add('drag-over');
+            }
+        }
+        
+        function handleDragEnd(e) {
+            e.target.closest('tr').classList.remove('dragging');
+            document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            const row = e.target.closest('tr');
+            
+            if (row && draggedItem && row !== draggedItem) {
+                const fromIndex = parseInt(draggedItem.dataset.index);
+                const toIndex = parseInt(row.dataset.index);
+                
+                // 交换数组中的位置
+                const item = favoriteJournals.splice(fromIndex, 1)[0];
+                favoriteJournals.splice(toIndex, 0, item);
+                
+                saveFavoriteJournals();
+                renderFavoriteJournalsTable();
+                showToast('排序已保存');
+            }
+            
+            document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+        }
+        
+        // 收起/展开收藏区域
+        function toggleFavoriteSection() {
+            const content = document.getElementById('favorite-journals-content');
+            const icon = document.getElementById('favorite-section-toggle-icon');
+            const text = document.getElementById('favorite-section-toggle-text');
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                icon.className = 'fas fa-chevron-up';
+                text.textContent = '收起';
+            } else {
+                content.style.display = 'none';
+                icon.className = 'fas fa-chevron-down';
+                text.textContent = '展开';
+            }
+        }
 
         function renderJournalsTable() {
             const tbody = document.getElementById('journals-table-body');
             if (!tbody) return;
+            
+            // 如果是"我的收藏"筛选
+            if (currentJournalFilter === 'favorites') {
+                renderFavoriteJournalsInTable(tbody);
+                return;
+            }
+            
             let html = '';
             const categories = [
                 { key: 'pa', name: '公共行政', class: 'tag-pa' },
@@ -2871,6 +3271,7 @@
                 if (currentJournalFilter !== 'all' && currentJournalFilter !== cat.key) return;
                 journalCategories[cat.key].forEach(journal => {
                     const url = journalUrls[journal] || '#';
+                    const isFavorited = isJournalFavorited(journal);
                     html += `
                         <tr data-journal="${journal.toLowerCase()}" data-category="${cat.key}" 
                             onclick="window.open('${url}', '_blank')" 
@@ -2878,9 +3279,11 @@
                             title="点击访问 ${journal} 官网">
                             <td><span class="category-tag ${cat.class}">${cat.key.toUpperCase()}</span></td>
                             <td class="font-medium text-slate-800">${journal}</td>
-                            <td class="text-center">
-                                <span class="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-600 rounded-lg text-sm pointer-events-none">
-                                    <i class="fas fa-external-link-alt text-xs"></i> 访问官网
+                            <td class="text-center" onclick="event.stopPropagation()">
+                                <span class="journal-star ${isFavorited ? 'favorited' : ''}" 
+                                      onclick="toggleFavoriteJournal('${journal}', '${cat.key}')"
+                                      title="${isFavorited ? '取消收藏' : '收藏该期刊'}">
+                                    <i class="${isFavorited ? 'fas' : 'far'} fa-star"></i>
                                 </span>
                             </td>
                         </tr>
@@ -2889,12 +3292,57 @@
             });
             tbody.innerHTML = html || '<tr><td colspan="3" class="text-center py-8 text-slate-400">暂无数据</td></tr>';
         }
+        
+        // 在表格中渲染收藏的期刊（支持拖拽排序）
+        function renderFavoriteJournalsInTable(tbody) {
+            if (favoriteJournals.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center py-8 text-slate-400"><i class="fas fa-star text-3xl mb-3 text-slate-300"></i><br>暂无收藏期刊<br><span class="text-sm mt-2 block">点击其他筛选中的期刊右侧星标进行收藏</span></td></tr>';
+                return;
+            }
+            
+            let html = '';
+            favoriteJournals.forEach((fj, index) => {
+                const url = journalUrls[fj.name] || '#';
+                const catClass = `tag-${fj.category}`;
+                html += `
+                    <tr data-journal="${fj.name.toLowerCase()}" data-category="${fj.category}" 
+                        data-index="${index}"
+                        draggable="true"
+                        ondragstart="handleFavDragStart(event, ${index})"
+                        ondragover="handleFavDragOver(event)"
+                        ondrop="handleFavDrop(event, ${index})"
+                        ondragend="handleFavDragEnd(event)"
+                        onclick="if(!event.target.closest('.remove-btn')) window.open('${url}', '_blank')" 
+                        class="cursor-pointer hover:bg-blue-50 transition-colors fav-drag-item"
+                        title="拖拽调整顺序，点击访问 ${fj.name} 官网">
+                        <td>
+                            <span class="drag-handle" title="拖拽排序">
+                                <i class="fas fa-grip-vertical"></i>
+                            </span>
+                            <span class="sort-number">${index + 1}</span>
+                        </td>
+                        <td><span class="category-tag ${catClass}">${fj.category.toUpperCase()}</span></td>
+                        <td class="font-medium text-slate-800">${fj.name}</td>
+                        <td class="text-center">
+                            <span class="remove-btn" 
+                                  onclick="removeFavoriteJournal('${fj.name.replace(/'/g, "\\'")}')"
+                                  title="从收藏中移除">
+                                <i class="fas fa-times"></i>
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
 
         function filterJournals(category) {
             currentJournalFilter = category;
             document.querySelectorAll('[data-journal-filter]').forEach(btn => {
                 btn.classList.remove('active');
-                if (btn.dataset.journalFilter === category) btn.classList.add('active');
+                if (btn.dataset.journalFilter === category) {
+                    btn.classList.add('active');
+                }
             });
             renderJournalsTable();
         }
