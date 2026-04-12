@@ -46639,16 +46639,201 @@
         "Benjamin Schwabe"
       ],
       "category": "POL"
+    },
+    {
+      "openalex_id": "W7148706515",
+      "title": "Jewish and Arab nonprofits in Israel: a comparison of the state of the sector",
+      "abstract": "The ongoing war in Israel has created widespread devastation among many communities in Gaza, the West Bank, and Israeli-controlled territory. Nonprofit organizations serve an important role in sustaining and strengthening communities. When the conflict is over, strong nonprofits will be actively involved in the recovery. This study draws from national non-profit data in Israel (translated into English) and is supplemented with field research on non-profit ethnic identity to create an original dataset of nonprofit capacity. The study seeks to investigate whether nonprofit capacity differs by ethnic background. The results indicate meaningful differences between Jewish and Arab nonprofits, likely leading to uneven redevelopment. Jewish and Arab nonprofits are analyzed with regard to staffing, funding and other indicators of capacity. Policy recommendations are provided to better equip Arab nonprofits for increased capacity.",
+      "journal_name": "Journal of Policy Studies",
+      "published_date": "2026-03-01",
+      "url": "https://doi.org/10.52372/jps.250330",
+      "doi": "https://doi.org/10.52372/jps.250330",
+      "keywords": [
+        "Judaism",
+        "Ethnic group",
+        "State (computer science)",
+        "Jewish state",
+        "Identity (music)",
+        "Field research",
+        "Accountability"
+      ],
+      "authors": [
+        "Trent Engbers"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7148903079",
+      "title": "Ethnic and religious policy drivers of sustainable development in Vietnam’s Mekong Delta",
+      "abstract": "Ethnic and religious policies play a crucial role in promoting social inclusion, political stability, and sustainable development in multi-ethnic regions. In the Mekong Delta, Vietnam, increasing pressures from climate change and economic restructuring have created new challenges for the effectiveness of ethnic and religious governance. Existing studies often consider these issues individually, lacking an integrated policy framework. This study uses a quantitative research design, collecting survey data from 420 households in three representative provinces of the Mekong Delta (An Giang, Can Tho, and Vinh Long). Based on public policy analysis, sustainable development theory, and a structural-agent perspective, a structural equation model (SEM) was used to examine the impact of six factors—natural and economic conditions, socio-economic characteristics, religious and community institutions, local policy institutions, community participation, and digital transformation—on the effectiveness of ethnic and religious policies. The results show that community participation has a positive impact on policy effectiveness, followed by the capacity of local policy institutions and the role of religious and community institutions. Natural and economic conditions and socio-economic factors have a significant impact, especially in areas heavily affected by climate risks and livelihoods. Digital transformation demonstrates significant strategic potential in improving policy accessibility and transparency in governance. This study contributes theoretically by integrating policy analysis and structural-agent methodology into research on ethnic and religious governance; methodologically by applying SEM to a multidimensional policy framework in the Vietnamese context; and practically by providing evidence-based policy implications for enhancing inclusive governance, community engagement, and adaptation for sustainable development in the Mekong Delta.",
+      "journal_name": "Journal of Policy Studies",
+      "published_date": "2026-03-01",
+      "url": "https://doi.org/10.52372/jps.250313",
+      "doi": "https://doi.org/10.52372/jps.250313",
+      "keywords": [
+        "Ethnic group",
+        "Sustainable development",
+        "Restructuring",
+        "Transparency (behavior)",
+        "Public policy",
+        "Mekong delta",
+        "Vietnamese",
+        "Corporate governance"
+      ],
+      "authors": [
+        "Nguyen Chi Hai"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7148742409",
+      "title": "Governing artificial intelligence risks for effective public administration: the case of Kuwait",
+      "abstract": "Governance of Artificial Intelligence (AI) is increasingly discussed within public administration, yet risk centred conceptualisations remain more developed than empirical evidence in contexts where digital infrastructure is still lagging. This research examines residents’ perceptions of AI related risks in Kuwait across the four domains of economic, organisational, social and technical, and considers what these patterns imply for governance priorities in public administration. A nationally representative survey of 679 respondents identifies heightened social risks, particularly related to job security and freedom of expression, alongside moderate economic and organisational risks and variable technical risks. Regression analysis indicates that males perceive lower economic but higher social risks, and that respondents aged 41+ perceive lower economic and technical risks. Education has only a marginal effect on social risk perception. The findings underscore the need for stronger, risk informed governance attention, as residents’ evaluations signal where trust pressures and safeguarding expectations are likely to concentrate as digital public services expand. The research concludes by calling for a stakeholder-led governance mission to ensure that innovation is balanced against social welfare in Kuwait.",
+      "journal_name": "Journal of Policy Studies",
+      "published_date": "2026-03-01",
+      "url": "https://doi.org/10.52372/jps.250358",
+      "doi": "https://doi.org/10.52372/jps.250358",
+      "keywords": [
+        "Safeguarding",
+        "Corporate governance",
+        "Risk governance",
+        "Risk perception",
+        "Welfare",
+        "Social security",
+        "Perception",
+        "Empirical research"
+      ],
+      "authors": [
+        "Shahad Altammar"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7128050155",
+      "title": "Parent-school collaboration, perceptual incongruence, and educational performance in Georgia Public Schools",
+      "abstract": "Collaboration is an interactive process that requires coordination between multiple actors. What happens to an organization’s performance when collaborating parties perceive the situation differently? Due to power asymmetries and goal diversities, participants might experience perceptual incongruence in the participation level of other stakeholders. Perceptual incongruence could affect a collaboration network’s trust-building process and problem-solving ability, ultimately harming the organization’s performance. Using the Georgia School Climate Survey (GSCS) and Georgia’s standardized exam results, this research examines the impact perceptual incongruence has on performance in the context of parent-school collaboration through panel regression. The evidence shows that a perceptual incongruence in parental involvement between parents and school employees could harm school performance. This result suggests that managing perceptual incongruence among collaborating members is vital for organizational performance.",
+      "journal_name": "Journal of Policy Studies",
+      "published_date": "2026-02-06",
+      "url": "https://doi.org/10.52372/jps.250238",
+      "doi": "https://doi.org/10.52372/jps.250238",
+      "keywords": [
+        "Perception",
+        "Affect (linguistics)",
+        "Harm",
+        "Context (archaeology)",
+        "Power (physics)",
+        "Process (computing)"
+      ],
+      "authors": [
+        "Jeeyeon Kim"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7153464357",
+      "title": "Political Determinants of Intergovernmental Fiscal Transfers: Alignment, Competition, Executive Partisanship, and Electoral Cycles in South Korea",
+      "abstract": "ABSTRACT This study examines the political determinants of intergovernmental fiscal transfers in South Korea, focusing on partisan alignment, electoral competitiveness, national executive partisanship, and election timing. Using fixed‐effects panel data from 17 regions (2013–2023), the analysis evaluates competing expectations from distributive politics and political budget cycle theories. The results provide little support for alignment‐based favoritism or swing targeting: neither partisan congruence nor electoral competitiveness consistently predicts higher transfers. Instead, electoral timing—particularly the dynamics surrounding presidential elections—emerges as the dominant factor. Local elections exhibit anticipatory increases in the preceding year. In contrast, presidential elections generate a distinctive pattern: transfers contract 1 year prior and surge sharply during the election year, a timing consistent with the political and administrative pressures surrounding presidential transitions. These findings highlight the central role of executive‐driven temporal incentives in shaping national–subnational fiscal relations and call for a more temporally grounded understanding of distributive politics. Related Articles Lee, Moonsoo. 2025. “Rich Mayors, Poor Social Services? The Impact of Mayoral Wealth on Social Spending in Korean Local Governments.” Politics &amp; Policy 53, no. 5: e70068. https://doi.org/10.1111/polp.70068 . Heo, Inhye. 2013. “The Political Economy of Policy Gridlock in South Korea: The Case of the Lee Myung‐bak Government's Green Growth Policy.” Politics &amp; Policy 41, no. 4: 509–535. https://doi.org/10.1111/polp.12029 . Hong, Sounman, Suho Ji, and Taek Kyu Kim. 2024. “Political Determinants of Government Transparency: Evidence from Open Government Data Initiatives.” Politics &amp; Policy 52, no. 3): 633–654. https://doi.org/10.1111/polp.12607 .",
+      "journal_name": "Politics & Policy",
+      "published_date": "2026-04-01",
+      "url": "https://doi.org/10.1111/polp.70132",
+      "doi": "https://doi.org/10.1111/polp.70132",
+      "keywords": [
+        "Presidential system",
+        "Gridlock",
+        "Politics",
+        "Incentive",
+        "Divided government",
+        "Presidential election",
+        "Government (linguistics)",
+        "Panel data",
+        "Business cycle"
+      ],
+      "authors": [
+        "Moonsoo Lee"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7153557435",
+      "title": "Coordinating Digital Responsibility: Public Perceptions of Content Governance in Non‐Western Contexts",
+      "abstract": "ABSTRACT The global surge of harmful online content—ranging from disinformation and hate speech to incivility and cyberbullying—has raised pressing concerns about the integrity of digital information and the health of public discourse. A research primarily focuses on democratic societies, this study examines governance perceptions in tightly regulated environments. Drawing on an online survey in China, we investigate how citizens allocate responsibility across government, platforms, and individuals. Results reveal a strong consensus on intervention and a layered attribution of responsibility shaped by psycho‐political dispositions such as paternalism, right‐wing authoritarianism, online political efficacy, and social responsibility. We introduce the “Orchestra of Digital Coordination” metaphor, conceptualizing digital governance as a coordinated, multi‐actor performance in which responsibilities are differentiated yet interdependent. The findings underscore a broader implication: sustainable digital governance hinges not only on institutional design but also on the perceptual frameworks through which citizens make governance arrangements as legitimate. Related Articles Robles, P., and D. J. Mallinson. 2023. “Catching Up With AI: Pushing Toward a Cohesive Governance Framework.” Politics &amp; Policy 51, no. 3: 355–372. https://doi.org/10.1111/polp.12529 . Veloso Meireles, A. 2024. “Digital Rights in Perspective: The Evolution of the Debate in the Internet Governance Forum.” Politics &amp; Policy 52, no. 1: 12–32. https://doi.org/10.1111/polp.12571 . Zeng, J., T. Stevens, and Y. Chen. 2017. “China's Solution to Global Cyber Governance: Unpacking the Domestic Discourse of ‘Internet Sovereignty’.” Politics &amp; Policy 45, no. 3: 432–464. https://doi.org/10.1111/polp.12202 .",
+      "journal_name": "Politics & Policy",
+      "published_date": "2026-04-01",
+      "url": "https://doi.org/10.1111/polp.70133",
+      "doi": "https://doi.org/10.1111/polp.70133",
+      "keywords": [
+        "Corporate governance",
+        "Internet governance",
+        "Disinformation",
+        "Politics",
+        "Digital media",
+        "Social media",
+        "The Internet",
+        "Accountability",
+        "Transparency (behavior)",
+        "Perception"
+      ],
+      "authors": [
+        "Tianru Guan",
+        "Yilu Yang",
+        "Xiaotong Chen"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W4417341753",
+      "title": "Review forum",
+      "abstract": "",
+      "journal_name": "Political Geography",
+      "published_date": "2025-12-15",
+      "url": "https://doi.org/10.1016/j.polgeo.2025.103464",
+      "doi": "https://doi.org/10.1016/j.polgeo.2025.103464",
+      "keywords": [],
+      "authors": [
+        "Somdeep Sen",
+        "Debbie Lisle",
+        "Naji Safadi",
+        "Lana Tatour",
+        "Rhys Machold"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7153022926",
+      "title": "Xenophobic violence in Sweden 2009–2022: Introducing the dataset",
+      "abstract": "We present a new event dataset on xenophobic violence in Sweden, covering all police-reported, hate-crime-flagged incidents involving physical violence between 2009 and 2022 (n = 2,522). The dataset provides a nationally complete and georeferenced record of violent xenophobic offences, combining programmatic extraction of structured police records with manual coding of free-text narratives under transparent inclusion criteria. It includes detailed information on offence types, bias motivations, temporal and spatial context, and characteristics of victims and perpetrators. By maintaining a uniform sampling frame across the full period, the dataset enables consistent longitudinal analysis of xenophobic violence beyond media-based or survey-driven sources. We present descriptive patterns to illustrate its analytical value, highlighting the coexistence of routine, dispersed assaults and episodic surges linked to external events. The dataset offers a transparent empirical foundation for research on hate crime, political violence, and the dynamics of intergroup conflict.",
+      "journal_name": "Research & Politics",
+      "published_date": "2026-04-01",
+      "url": "https://doi.org/10.1177/20531680261436628",
+      "doi": "https://doi.org/10.1177/20531680261436628",
+      "keywords": [
+        "Geocoding",
+        "Event data",
+        "Georeference",
+        "Coding (social sciences)",
+        "Politics",
+        "Event (particle physics)",
+        "Narrative",
+        "Matching (statistics)",
+        "Descriptive statistics"
+      ],
+      "authors": [
+        "Anton Törnberg",
+        "Måns Lundstedt",
+        "Victoria Vallström",
+        "Mattias Wahlström"
+      ],
+      "category": "POL"
     }
   ],
   "stats": {
-    "total": 2133,
+    "total": 2141,
     "pa_count": 523,
-    "pp_count": 485,
-    "pol_count": 970,
+    "pp_count": 491,
+    "pol_count": 972,
     "china_count": 155,
-    "journals": 85,
-    "last_update": "2026-04-12 13:23:35",
+    "journals": 87,
+    "last_update": "2026-04-12 14:07:29",
     "by_journal": [
       {
         "name": "Perspectives on Politics",
@@ -46672,7 +46857,7 @@
       },
       {
         "name": "Political Geography",
-        "count": 51
+        "count": 52
       },
       {
         "name": "PS Political Science & Politics",
@@ -46843,15 +47028,15 @@
         "count": 19
       },
       {
+        "name": "Research & Politics",
+        "count": 19
+      },
+      {
         "name": "European Political Science Review",
         "count": 18
       },
       {
         "name": "International Studies Quarterly",
-        "count": 18
-      },
-      {
-        "name": "Research & Politics",
         "count": 18
       },
       {
@@ -46989,6 +47174,14 @@
       {
         "name": "Journal of Theoretical Politics",
         "count": 5
+      },
+      {
+        "name": "Journal of Policy Studies",
+        "count": 4
+      },
+      {
+        "name": "Politics & Policy",
+        "count": 2
       }
     ],
     "trend": [
@@ -47066,7 +47259,7 @@
       },
       {
         "date": "2026-04-01",
-        "count": 33
+        "count": 36
       },
       {
         "date": "2026-04-02",
@@ -47115,5 +47308,5 @@
     ],
     "today": 0
   },
-  "export_time": "2026-04-12T13:23:35.378830"
+  "export_time": "2026-04-12T14:07:29.979695"
 }
