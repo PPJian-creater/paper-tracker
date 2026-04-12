@@ -407,6 +407,42 @@
             margin-top: 12px;
         }
         
+        /* 紧凑按钮样式（用于搜索结果） */
+        .paper-list-item .btn-compact {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #64748b;
+            white-space: nowrap;
+            min-width: 80px;
+            height: 36px;
+        }
+        
+        .paper-list-item .btn-compact:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+        
+        .paper-list-item .btn-compact.bookmark-btn {
+            color: #64748b;
+            background: white;
+        }
+        
+        .paper-list-item .btn-compact.bookmark-btn.saved {
+            color: #2563eb;
+            background: #dbeafe;
+            border-color: #3b82f6;
+        }
+        
         .paper-list-item .action-btn {
             display: inline-flex;
             align-items: center;
@@ -443,6 +479,15 @@
         
         .paper-list-item .action-btn.external {
             color: #059669;
+        }
+        
+        /* 收藏模块复选框样式 */
+        .fav-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #2563eb;
+            flex-shrink: 0;
         }
         
         /* 今天/昨天切换按钮样式 */
@@ -556,7 +601,156 @@
         
         .drag-handle:hover {
             color: #64748b;
-            background: #f1f5f9;
+        }
+        
+        /* ==================== 我的收藏卡片网格样式 ==================== */
+        .favorite-journal-card {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
+            border-radius: 12px;
+            border: 1px solid #60a5fa;
+            padding: 16px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+        }
+        
+        .favorite-journal-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25);
+            border-color: #3b82f6;
+        }
+        
+        .favorite-journal-card.dragging {
+            opacity: 0.6;
+            transform: scale(0.98);
+            cursor: grabbing;
+        }
+        
+        .favorite-journal-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
+        .favorite-journal-card .card-category {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        
+        .favorite-journal-card .card-drag-handle {
+            color: #3b82f6;
+            cursor: grab;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .favorite-journal-card .card-drag-handle:hover {
+            background: rgba(59, 130, 246, 0.2);
+        }
+        
+        .favorite-journal-card .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e40af;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .favorite-journal-card .card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .favorite-journal-card .card-index {
+            font-size: 12px;
+            color: #3b82f6;
+            font-weight: 600;
+            background: rgba(255,255,255,0.6);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        
+        .favorite-journal-card .card-remove-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #ef4444;
+            background: rgba(255,255,255,0.6);
+            border: none;
+            font-size: 12px;
+        }
+        
+        .favorite-journal-card .card-remove-btn:hover {
+            background: #ef4444;
+            color: white;
+        }
+        
+        .favorite-journal-card .card-confirm-delete {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(239, 68, 68, 0.95);
+            border-radius: 12px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .favorite-journal-card.confirming-delete .card-confirm-delete {
+            display: flex;
+        }
+        
+        .favorite-journal-card .confirm-btn-group {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .favorite-journal-card .confirm-btn-group button {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+        
+        .favorite-journal-card .confirm-btn-yes {
+            background: white;
+            color: #dc2626;
+        }
+        
+        .favorite-journal-card .confirm-btn-yes:hover {
+            background: #fef2f2;
+        }
+        
+        .favorite-journal-card .confirm-btn-no {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+        
+        .favorite-journal-card .confirm-btn-no:hover {
+            background: rgba(255,255,255,0.5);
         }
         
         .drag-handle:active {
@@ -1045,8 +1239,40 @@
                 </div>
             </div>
 
-            <!-- 热门研究主题 -->
+            <!-- 精彩推荐 -->
             <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-slate-800">
+                        <i class="fas fa-dice text-amber-500 mr-2"></i>精彩推荐
+                    </h2>
+                    <button onclick="refreshRandomPapers()" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-sync-alt mr-1"></i>换一批
+                    </button>
+                </div>
+                <div id="random-papers" class="grid grid-cols-1 lg:grid-cols-3 gap-6"></div>
+            </div>
+
+            <!-- 近30天发文趋势 - 支持分模块展示 -->
+            <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                    <h2 class="text-xl font-bold text-slate-800">
+                        <i class="fas fa-chart-line text-blue-500 mr-2"></i>近30天发文趋势
+                    </h2>
+                    <div class="flex gap-2 flex-wrap">
+                        <button onclick="setTrendCategory('all')" class="trend-filter-btn active" data-trend-category="all">全部</button>
+                        <button onclick="setTrendCategory('pa')" class="trend-filter-btn" data-trend-category="pa">PA</button>
+                        <button onclick="setTrendCategory('pp')" class="trend-filter-btn" data-trend-category="pp">PP</button>
+                        <button onclick="setTrendCategory('pol')" class="trend-filter-btn" data-trend-category="pol">POL</button>
+                        <button onclick="setTrendCategory('china')" class="trend-filter-btn" data-trend-category="china">CHINA</button>
+                    </div>
+                </div>
+                <div class="h-64">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- 热门研究主题 -->
+            <div class="bg-white rounded-xl border border-slate-200 p-6">
                 <div class="flex justify-between items-center mb-6">
                     <div>
                         <h2 class="text-xl font-bold text-slate-800">
@@ -1078,37 +1304,6 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-            <!-- 发文趋势图 - 支持分模块展示 -->
-            <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
-                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
-                    <h2 class="text-xl font-bold text-slate-800">
-                        <i class="fas fa-chart-line text-blue-500 mr-2"></i>近30天发文趋势
-                    </h2>
-                    <div class="flex gap-2 flex-wrap">
-                        <button onclick="setTrendCategory('all')" class="trend-filter-btn active" data-trend-category="all">全部</button>
-                        <button onclick="setTrendCategory('pa')" class="trend-filter-btn" data-trend-category="pa">PA</button>
-                        <button onclick="setTrendCategory('pp')" class="trend-filter-btn" data-trend-category="pp">PP</button>
-                        <button onclick="setTrendCategory('pol')" class="trend-filter-btn" data-trend-category="pol">POL</button>
-                        <button onclick="setTrendCategory('china')" class="trend-filter-btn" data-trend-category="china">CHINA</button>
-                    </div>
-                </div>
-                <div class="h-64">
-                    <canvas id="trendChart"></canvas>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-xl border border-slate-200 p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-slate-800">
-                        <i class="fas fa-dice text-amber-500 mr-2"></i>精选推荐
-                    </h2>
-                    <button onclick="refreshRandomPapers()" class="text-blue-600 hover:text-blue-800 font-medium">
-                        <i class="fas fa-sync-alt mr-1"></i>换一批
-                    </button>
-                </div>
-                <div id="random-papers" class="grid grid-cols-1 lg:grid-cols-3 gap-6"></div>
             </div>
         </div>
 
@@ -1222,17 +1417,28 @@
                 </div>
             </div>
             
-            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+            <!-- 普通筛选：双列表格 -->
+            <div id="journals-normal-view" class="bg-white rounded-xl border border-slate-200 overflow-hidden">
                 <table class="journal-table">
                     <thead>
                         <tr>
                             <th class="w-24">领域</th>
                             <th>期刊名称</th>
-                            <th class="w-32 text-center">收藏</th>
+                            <th class="w-20 text-center">收藏</th>
+                            <th class="w-24">领域</th>
+                            <th>期刊名称</th>
+                            <th class="w-20 text-center">收藏</th>
                         </tr>
                     </thead>
                     <tbody id="journals-table-body"></tbody>
                 </table>
+            </div>
+            
+            <!-- 我的收藏：卡片网格 -->
+            <div id="journals-favorites-view" class="hidden">
+                <div id="favorite-journals-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- 动态渲染收藏卡片 -->
+                </div>
             </div>
         </div>
 
@@ -1249,11 +1455,18 @@
                         <button onclick="showCreateFolderModal()" class="px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition flex items-center gap-1">
                             <i class="fas fa-plus"></i>新建
                         </button>
+                        <button onclick="deleteCurrentFolder()" id="delete-folder-btn" class="px-3 py-2 bg-red-100 text-red-600 text-sm rounded-lg hover:bg-red-200 transition flex items-center gap-1 hidden" title="删除当前文件夹">
+                            <i class="fas fa-trash-alt"></i>删除文件夹
+                        </button>
                     </div>
                     
                     <!-- 右侧：操作按钮 -->
                     <div class="flex items-center gap-2">
-                        <button id="batch-delete-btn" onclick="batchDeleteFavorites()" class="px-3 py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 transition opacity-50 cursor-not-allowed flex items-center gap-1" disabled>
+                        <label class="flex items-center gap-2 mr-2 cursor-pointer select-none">
+                            <input type="checkbox" id="select-all-favorites" onchange="toggleSelectAllFavorites(this.checked)" class="fav-checkbox">
+                            <span class="text-sm text-slate-600">全选</span>
+                        </label>
+                        <button id="batch-delete-btn" onclick="deleteSelectedFavorites()" class="px-3 py-2 bg-red-500 text-white text-sm rounded-lg hover:bg-red-600 transition opacity-50 cursor-not-allowed flex items-center gap-1" disabled>
                             <i class="fas fa-trash-alt"></i>
                             删除 (<span id="selected-count">0</span>)
                         </button>
@@ -3352,14 +3565,23 @@
 
         function renderJournalsTable() {
             const tbody = document.getElementById('journals-table-body');
-            if (!tbody) return;
+            const normalView = document.getElementById('journals-normal-view');
+            const favView = document.getElementById('journals-favorites-view');
             
-            // 如果是"我的收藏"筛选
+            if (!tbody || !normalView || !favView) return;
+            
+            // 切换视图显示
             if (currentJournalFilter === 'favorites') {
-                renderFavoriteJournalsInTable(tbody);
+                normalView.classList.add('hidden');
+                favView.classList.remove('hidden');
+                renderFavoriteJournalsGrid();
                 return;
             }
             
+            normalView.classList.remove('hidden');
+            favView.classList.add('hidden');
+            
+            // 双列布局渲染
             let html = '';
             const categories = [
                 { key: 'pa', name: '公共行政', class: 'tag-pa' },
@@ -3369,36 +3591,86 @@
                 { key: 'cn', name: '国内期刊', class: 'tag-cn' }
             ];
             
+            // 收集所有符合条件的期刊
+            let allJournalsList = [];
             categories.forEach(cat => {
                 if (currentJournalFilter !== 'all' && currentJournalFilter !== cat.key) return;
                 journalCategories[cat.key].forEach(journal => {
-                    const url = journalUrls[journal] || '#';
-                    const isFavorited = isJournalFavorited(journal);
-                    html += `
-                        <tr data-journal="${journal.toLowerCase()}" data-category="${cat.key}" 
-                            onclick="window.open('${url}', '_blank')" 
-                            class="cursor-pointer hover:bg-blue-50 transition-colors"
-                            title="点击访问 ${journal} 官网">
-                            <td><span class="category-tag ${cat.class}">${cat.key.toUpperCase()}</span></td>
-                            <td class="font-medium text-slate-800">${journal}</td>
-                            <td class="text-center" onclick="event.stopPropagation()">
-                                <span class="journal-star ${isFavorited ? 'favorited' : ''}" 
-                                      onclick="toggleFavoriteJournal('${journal}', '${cat.key}')"
-                                      title="${isFavorited ? '取消收藏' : '收藏该期刊'}">
-                                    <i class="${isFavorited ? 'fas' : 'far'} fa-star"></i>
-                                </span>
-                            </td>
-                        </tr>
-                    `;
+                    allJournalsList.push({ journal, category: cat });
                 });
             });
-            tbody.innerHTML = html || '<tr><td colspan="3" class="text-center py-8 text-slate-400">暂无数据</td></tr>';
+            
+            // 双列渲染
+            for (let i = 0; i < allJournalsList.length; i += 2) {
+                const left = allJournalsList[i];
+                const right = allJournalsList[i + 1];
+                
+                const leftUrl = journalUrls[left.journal] || '#';
+                const leftFav = isJournalFavorited(left.journal);
+                
+                let rowHtml = `
+                    <tr>
+                        <td onclick="window.open('${leftUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50">
+                            <span class="category-tag ${left.category.class}">${left.category.key.toUpperCase()}</span>
+                        </td>
+                        <td onclick="window.open('${leftUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800">
+                            ${left.journal}
+                        </td>
+                        <td class="text-center" onclick="event.stopPropagation()">
+                            <span class="journal-star ${leftFav ? 'favorited' : ''}" 
+                                  onclick="toggleFavoriteJournal('${left.journal}', '${left.category.key}')"
+                                  title="${leftFav ? '取消收藏' : '收藏该期刊'}">
+                                <i class="${leftFav ? 'fas' : 'far'} fa-star"></i>
+                            </span>
+                        </td>
+                `;
+                
+                if (right) {
+                    const rightUrl = journalUrls[right.journal] || '#';
+                    const rightFav = isJournalFavorited(right.journal);
+                    rowHtml += `
+                        <td onclick="window.open('${rightUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 border-l border-slate-200">
+                            <span class="category-tag ${right.category.class}">${right.category.key.toUpperCase()}</span>
+                        </td>
+                        <td onclick="window.open('${rightUrl}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800">
+                            ${right.journal}
+                        </td>
+                        <td class="text-center" onclick="event.stopPropagation()">
+                            <span class="journal-star ${rightFav ? 'favorited' : ''}" 
+                                  onclick="toggleFavoriteJournal('${right.journal}', '${right.category.key}')"
+                                  title="${rightFav ? '取消收藏' : '收藏该期刊'}">
+                                <i class="${rightFav ? 'fas' : 'far'} fa-star"></i>
+                            </span>
+                        </td>
+                    `;
+                } else {
+                    rowHtml += `<td colspan="3"></td>`;
+                }
+                
+                rowHtml += '</tr>';
+                html += rowHtml;
+            }
+            
+            tbody.innerHTML = html || '<tr><td colspan="6" class="text-center py-8 text-slate-400">暂无数据</td></tr>';
         }
         
-        // 在表格中渲染收藏的期刊（支持拖拽排序）
+        // 渲染我的收藏卡片网格（支持拖拽排序）
         function renderFavoriteJournalsInTable(tbody) {
+            // 这个方法不再使用，卡片网格直接渲染到 #favorite-journals-grid
+            renderFavoriteJournalsGrid();
+        }
+        
+        function renderFavoriteJournalsGrid() {
+            const grid = document.getElementById('favorite-journals-grid');
+            if (!grid) return;
+            
             if (favoriteJournals.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center py-8 text-slate-400"><i class="fas fa-star text-3xl mb-3 text-slate-300"></i><br>暂无收藏期刊<br><span class="text-sm mt-2 block">点击其他筛选中的期刊右侧星标进行收藏</span></td></tr>';
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-slate-400">
+                        <i class="fas fa-star text-4xl mb-4 text-slate-300"></i>
+                        <p class="text-lg">暂无收藏期刊</p>
+                        <p class="text-sm mt-2">点击其他筛选中的期刊右侧星标进行收藏</p>
+                    </div>`;
                 return;
             }
             
@@ -3407,35 +3679,89 @@
                 const url = journalUrls[fj.name] || '#';
                 const catClass = `tag-${fj.category}`;
                 html += `
-                    <tr data-journal="${fj.name.toLowerCase()}" data-category="${fj.category}" 
-                        data-index="${index}"
-                        draggable="true"
-                        ondragstart="handleFavDragStart(event, ${index})"
-                        ondragover="handleFavDragOver(event)"
-                        ondrop="handleFavDrop(event, ${index})"
-                        ondragend="handleFavDragEnd(event)"
-                        onclick="if(!event.target.closest('.remove-btn')) window.open('${url}', '_blank')" 
-                        class="cursor-pointer hover:bg-blue-50 transition-colors fav-drag-item"
-                        title="拖拽调整顺序，点击访问 ${fj.name} 官网">
-                        <td style="width: 60px;">
-                            <span class="drag-handle" title="拖拽排序">
+                    <div class="favorite-journal-card" 
+                         data-index="${index}" 
+                         data-journal="${fj.name}"
+                         draggable="true"
+                         ondragstart="handleCardDragStart(event, ${index})"
+                         ondragover="handleCardDragOver(event)"
+                         ondrop="handleCardDrop(event, ${index})"
+                         ondragend="handleCardDragEnd(event)"
+                         onclick="if(!event.target.closest('.card-remove-btn') && !event.target.closest('.card-confirm-delete')) window.open('${url}', '_blank')"
+                         title="拖拽调整顺序，点击访问 ${fj.name} 官网">
+                        <div class="card-header">
+                            <span class="card-category ${catClass}">${fj.category.toUpperCase()}</span>
+                            <span class="card-drag-handle" title="拖拽排序">
                                 <i class="fas fa-grip-vertical"></i>
                             </span>
-                            <span class="sort-number">${index + 1}</span>
-                        </td>
-                        <td style="width: 80px;"><span class="category-tag ${catClass}">${fj.category.toUpperCase()}</span></td>
-                        <td class="font-medium text-slate-800">${fj.name}</td>
-                        <td class="text-center" style="width: 60px;">
-                            <span class="remove-btn" 
-                                  onclick="removeFavoriteJournal('${fj.name.replace(/'/g, "\\'")}')"
-                                  title="从收藏中移除">
-                                <i class="fas fa-times"></i>
+                        </div>
+                        <div class="card-title">${fj.name}</div>
+                        <div class="card-actions">
+                            <span class="card-index">#${index + 1}</span>
+                            <span class="card-remove-btn" onclick="event.stopPropagation(); showDeleteConfirm(this)" title="移除收藏">
+                                <i class="fas fa-trash-alt"></i>
                             </span>
-                        </td>
-                    </tr>
+                        </div>
+                        <div class="card-confirm-delete">
+                            <i class="fas fa-exclamation-circle text-xl mb-1"></i>
+                            <span>确定移除？</span>
+                            <div class="confirm-btn-group">
+                                <button class="confirm-btn-yes" onclick="event.stopPropagation(); confirmDeleteCard('${fj.name.replace(/'/g, "\\'")}')">确定</button>
+                                <button class="confirm-btn-no" onclick="event.stopPropagation(); cancelDeleteCard(this)">取消</button>
+                            </div>
+                        </div>
+                    </div>
                 `;
             });
-            tbody.innerHTML = html;
+            grid.innerHTML = html;
+        }
+        
+        // 卡片拖拽处理
+        let cardDraggedIndex = null;
+        
+        function handleCardDragStart(e, index) {
+            cardDraggedIndex = index;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', index);
+        }
+        
+        function handleCardDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+        
+        function handleCardDrop(e, dropIndex) {
+            e.preventDefault();
+            if (cardDraggedIndex === null || cardDraggedIndex === dropIndex) return;
+            
+            // 重新排序
+            const draggedItem = favoriteJournals[cardDraggedIndex];
+            favoriteJournals.splice(cardDraggedIndex, 1);
+            favoriteJournals.splice(dropIndex, 0, draggedItem);
+            
+            saveFavoriteJournals();
+            renderFavoriteJournalsGrid();
+        }
+        
+        function handleCardDragEnd(e) {
+            e.target.classList.remove('dragging');
+            cardDraggedIndex = null;
+        }
+        
+        // 删除确认
+        function showDeleteConfirm(btn) {
+            const card = btn.closest('.favorite-journal-card');
+            card.classList.add('confirming-delete');
+        }
+        
+        function confirmDeleteCard(journalName) {
+            removeFavoriteJournal(journalName);
+        }
+        
+        function cancelDeleteCard(btn) {
+            const card = btn.closest('.favorite-journal-card');
+            card.classList.remove('confirming-delete');
         }
 
         function filterJournals(category) {
@@ -3604,6 +3930,58 @@
             currentFolder = folderId;
             renderFolders();
             renderFavorites();
+            updateDeleteFolderButton();
+        }
+        
+        function updateDeleteFolderButton() {
+            const btn = document.getElementById('delete-folder-btn');
+            if (!btn) return;
+            // 只有选择非"全部收藏"的文件夹时才显示删除按钮
+            if (currentFolder && currentFolder !== 'all') {
+                btn.classList.remove('hidden');
+            } else {
+                btn.classList.add('hidden');
+            }
+        }
+        
+        function deleteCurrentFolder() {
+            if (!currentFolder || currentFolder === 'all') return;
+            
+            const folder = folders.find(f => f.id === currentFolder);
+            const folderName = folder ? folder.name : '该文件夹';
+            
+            // 统计文件夹中的文献数量
+            const paperCount = Object.values(paperFolders).filter(fId => fId === currentFolder).length;
+            
+            let confirmMsg = `确定要删除文件夹"${folderName}"吗？`;
+            if (paperCount > 0) {
+                confirmMsg += `\n文件夹内有 ${paperCount} 篇文献，删除后这些文献将被移出收藏。`;
+            }
+            
+            if (!confirm(confirmMsg)) return;
+            
+            // 删除文件夹中所有文献的收藏
+            Object.keys(paperFolders).forEach(paperId => {
+                if (paperFolders[paperId] === currentFolder) {
+                    delete paperFolders[paperId];
+                }
+            });
+            
+            // 从文件夹列表中删除
+            folders = folders.filter(f => f.id !== currentFolder);
+            
+            // 重置当前文件夹为全部
+            currentFolder = 'all';
+            
+            // 保存并刷新
+            saveFolders();
+            savePaperFolders();
+            renderFolders();
+            renderFavorites();
+            updateDeleteFolderButton();
+            updateFavCount();
+            
+            showToast(`文件夹"${folderName}"已删除`);
         }
 
         // ==================== 收藏分页状态 ====================
@@ -3684,14 +4062,14 @@
             // 判断是否显示 NEW 标签
             const showNewTag = isRecentPaper(paper.published_date);
             
-            let html = '<div class="paper-list-item ' + categoryClass + '" data-paper-id="' + escapeHtml(paperId) + '">';
+            let html = '<div class="paper-list-item ' + categoryClass + '" data-paper-id="' + escapeHtml(paperId) + '" style="display: flex; align-items: flex-start; gap: 12px;">';
             
-            // 左侧复选框
-            html += '<div class="flex items-start">';
-            html += '<input type="checkbox" class="w-5 h-5 text-blue-600 rounded cursor-pointer" data-paper-id="' + escapeHtml(paperId) + '" ' + (isSelected ? 'checked' : '') + ' onchange="toggleFavoriteSelection(\'' + escapeHtml(paperId) + '\')">';
+            // 左侧复选框 - 使用margin-top对齐到标题行
+            html += '<div style="flex-shrink: 0; margin-top: 2px;">';
+            html += '<input type="checkbox" class="fav-checkbox" data-paper-id="' + escapeHtml(paperId) + '" ' + (isSelected ? 'checked' : '') + ' onchange="toggleFavoriteSelection(\'' + escapeHtml(paperId) + '\')">';
             html += '</div>';
             
-            html += '<div style="margin-left: 12px; flex: 1;">';
+            html += '<div style="flex: 1; min-width: 0;">';
             
             // 第一行：标题（加粗，可点击）
             html += '<h3 class="paper-title" onclick="showPaperDetailById(this)">' + escapeHtml(paper.title || '无标题') + '</h3>';
