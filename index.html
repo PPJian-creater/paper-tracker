@@ -443,6 +443,15 @@
             border-color: #3b82f6;
         }
         
+        .paper-list-item .btn-compact.external {
+            color: #059669;
+            border-color: #10b981;
+        }
+        
+        .paper-list-item .btn-compact.external:hover {
+            background: #ecfdf5;
+        }
+        
         .paper-list-item .action-btn {
             display: inline-flex;
             align-items: center;
@@ -471,10 +480,11 @@
             color: #94a3b8;
         }
         
-        .paper-list-item .action-btn.bookmark.saved {
-            background: #dbeafe;
-            border-color: #3b82f6;
-            color: #2563eb;
+        .paper-list-item .action-btn.bookmark.saved,
+        .paper-list-item .action-btn.bookmark-btn.saved {
+            background: #dbeafe !important;
+            border-color: #3b82f6 !important;
+            color: #2563eb !important;
         }
         
         .paper-list-item .action-btn.external {
@@ -3020,10 +3030,10 @@
             // 第五行：操作按钮
             html += '<div class="paper-actions">';
             html += '<button class="btn-compact bookmark-btn ' + bookmarkClass + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '" title="' + (isSaved ? '已收藏' : '添加到收藏') + '">';
-            html += '<i class="fas fa-bookmark"></i> ' + (isSaved ? '已收藏' : '收藏');
+            html += '<i class="fas fa-bookmark"></i> <span>' + (isSaved ? '已收藏' : '收藏') + '</span>';
             html += '</button>';
             if (paper.url) {
-                html += '<a href="' + escapeHtml(paper.url) + '" target="_blank" class="btn-compact" title="查看原文"><i class="fas fa-external-link-alt"></i> 查看原文</a>';
+                html += '<a href="' + escapeHtml(paper.url) + '" target="_blank" class="btn-compact external" title="查看原文"><i class="fas fa-external-link-alt"></i> 查看原文</a>';
             }
             html += '</div>';
             
@@ -3080,7 +3090,7 @@
             
             // 操作按钮（放在下方）
             html += '<div class="paper-actions">';
-            html += '<button class="action-btn bookmark-btn ' + (isSaved ? 'saved' : '') + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '">';
+            html += '<button class="action-btn bookmark-btn bookmark ' + (isSaved ? 'saved' : '') + '" onclick="showAddToFolderModalByBtn(this)" data-paper-id="' + escapeHtml(paperId) + '">';
             html += '<i class="' + (isSaved ? 'fas' : 'far') + ' fa-bookmark"></i>';
             html += '<span>' + (isSaved ? '已收藏' : '收藏') + '</span>';
             html += '</button>';
@@ -3776,12 +3786,69 @@
         }
 
         function searchJournals(query) {
-            const rows = document.querySelectorAll('#journals-table-body tr');
-            const lowerQuery = query.toLowerCase();
-            rows.forEach(row => {
-                const journal = row.dataset.journal;
-                row.style.display = (journal && journal.includes(lowerQuery)) ? '' : 'none';
+            const tbody = document.getElementById('journals-table-body');
+            const lowerQuery = query.trim().toLowerCase();
+            
+            if (!tbody) return;
+            
+            // 清空现有内容
+            tbody.innerHTML = '';
+            
+            // 如果没有搜索词，重新渲染默认双列布局
+            if (!lowerQuery) {
+                renderJournalsTable();
+                return;
+            }
+            
+            // 搜索模式：单列显示（3列：领域|期刊名|收藏）
+            const categories = [
+                { key: 'pa', name: '公共行政', class: 'tag-pa' },
+                { key: 'pp', name: '公共政策', class: 'tag-pp' },
+                { key: 'pol', name: '政治学', class: 'tag-pol' },
+                { key: 'china', name: '中国研究', class: 'tag-china' },
+                { key: 'cn', name: '国内期刊', class: 'tag-cn' }
+            ];
+            
+            // 收集匹配的期刊
+            let matchedJournals = [];
+            categories.forEach(cat => {
+                journalCategories[cat.key].forEach(journal => {
+                    if (journal.toLowerCase().includes(lowerQuery)) {
+                        matchedJournals.push({ journal, category: cat });
+                    }
+                });
             });
+            
+            // 渲染搜索结果（单列布局）
+            if (matchedJournals.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="text-center py-8 text-slate-400"><i class="fas fa-search text-3xl mb-3 text-slate-300"></i><br>未找到匹配的期刊<br><span class="text-sm mt-2 block">请尝试其他关键词</span></td></tr>';
+                return;
+            }
+            
+            let html = '';
+            matchedJournals.forEach(item => {
+                const url = journalUrls[item.journal] || '#';
+                const isFavorited = isJournalFavorited(item.journal);
+                html += `
+                    <tr data-journal="${item.journal.toLowerCase()}" data-category="${item.category.key}">
+                        <td class="w-24">
+                            <span class="category-tag ${item.category.class}">${item.category.key.toUpperCase()}</span>
+                        </td>
+                        <td class="font-medium text-slate-800">
+                            <a href="${url}" target="_blank" class="hover:text-blue-600 transition-colors">${item.journal}</a>
+                        </td>
+                        <td class="w-24 text-center">
+                            <span class="journal-star ${isFavorited ? 'favorited' : ''}" 
+                                  onclick="toggleFavoriteJournal('${item.journal}', '${item.category.key}')"
+                                  title="${isFavorited ? '取消收藏' : '收藏该期刊'}">
+                                <i class="${isFavorited ? 'fas' : 'far'} fa-star"></i>
+                            </span>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
         }
 
         function dragStart(event, paperId) {
@@ -4163,9 +4230,13 @@
             document.getElementById('selected-count').textContent = count;
             
             if (count > 0) {
-                btn.classList.remove('hidden');
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                btn.classList.add('cursor-pointer', 'hover:bg-red-600');
             } else {
-                btn.classList.add('hidden');
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                btn.classList.remove('cursor-pointer', 'hover:bg-red-600');
             }
         }
         
