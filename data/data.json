@@ -46378,7 +46378,7 @@
     "pol_count": 965,
     "china_count": 155,
     "journals": 85,
-    "last_update": "2026-04-11 17:52:32",
+    "last_update": "2026-04-12 02:42:59",
     "by_journal": [
       {
         "name": "Perspectives on Politics",
@@ -46723,10 +46723,6 @@
     ],
     "trend": [
       {
-        "date": "2026-03-13",
-        "count": 13
-      },
-      {
         "date": "2026-03-14",
         "count": 4
       },
@@ -46841,9 +46837,13 @@
       {
         "date": "2026-04-11",
         "count": 0
+      },
+      {
+        "date": "2026-04-12",
+        "count": 0
       }
     ],
     "today": 0
   },
-  "export_time": "2026-04-11T17:52:32.278716"
+  "export_time": "2026-04-12T02:42:59.939550"
 }
