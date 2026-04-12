@@ -8,6 +8,7 @@ import json
 import time
 import os
 import sys
+import html
 from datetime import datetime, timedelta
 
 # OpenAlex API配置
@@ -50,7 +51,7 @@ JOURNALS_CONFIG = {
         {"name": "Journal of Comparative Policy Analysis", "issn": "1387-6988"},
         {"name": "Journal of European Public Policy", "issn": "1350-1763"},
         {"name": "Journal of Policy Analysis and Management", "issn": "0276-8739"},
-        {"name": "Journal of Policy Studies", "issn": None},
+        {"name": "Journal of Policy Studies", "issn": "2799-9130"},
         {"name": "Journal of Public Policy", "issn": "0143-814X"},
         {"name": "Journal of Social Policy", "issn": "0047-2794"},
         {"name": "Policy & Internet", "issn": "1944-2866"},
@@ -115,6 +116,95 @@ JOURNALS_CONFIG = {
         {"name": "The China Quarterly", "issn": "0305-7410"}
     ]
 }
+
+# 期刊名称标准化映射（OpenAlex返回名称 → 配置标准名称）
+JOURNAL_NAME_MAPPING = {
+    # 公共行政 (PA)
+    "Journal of Public Administration Research and Theory": "Journal of Public Administration Research and Theory",
+    
+    # 公共政策 (PP) - 名称变体映射
+    "Journal of Comparative Policy Analysis Research and Practice": "Journal of Comparative Policy Analysis",
+    "Journal of Comparative Policy Analysis: Research and Practice": "Journal of Comparative Policy Analysis",
+    "Politics &amp; Policy": "Politics & Policy",
+    "Politics &amp Policy": "Politics & Policy",
+    "Social Policy and Administration": "Social Policy & Administration",
+    "Policy and Society": "Policy and Society",
+    "Policy &amp; Internet": "Policy & Internet",
+    "Policy &amp Internet": "Policy & Internet",
+    "Policy &amp; Politics": "Policy & Politics",
+    "Policy &amp Politics": "Policy & Politics",
+    "Journal of Policy Analysis &amp; Management": "Journal of Policy Analysis and Management",
+    "Public Policy &amp; Administration": "Public Policy and Administration",
+    
+    # 政治学 (POL) - 名称变体映射
+    "PS: Political Science &amp; Politics": "PS: Political Science & Politics",
+    "PS Political Science &amp; Politics": "PS: Political Science & Politics",
+    "PS Political Science & Politics": "PS: Political Science & Politics",
+    "Politics &amp; Gender": "Politics & Gender",
+    "Politics &amp Gender": "Politics & Gender",
+    "Journal of Theoretical Politics": "Journal of Theoretical Politics",
+    "Philosophy &amp; Public Affairs": "Philosophy & Public Affairs",
+    "Philosophy &amp Public Affairs": "Philosophy & Public Affairs",
+    "Political Science Research &amp; Methods": "Political Science Research and Methods",
+    "Political Science Research &amp Methods": "Political Science Research and Methods",
+    "American Political Science Review": "American Political Science Review",
+    "American Journal of Political Science": "American Journal of Political Science",
+    "The Journal of Politics": "The Journal of Politics",
+    "Journal of Conflict Resolution": "Journal of Conflict Resolution",
+    "Journal of Democracy": "Journal of Democracy",
+    "Comparative Political Studies": "Comparative Political Studies",
+    "Political Research Quarterly": "Political Research Quarterly",
+    "British Journal of Political Science": "British Journal of Political Science",
+    "Research &amp; Politics": "Research & Politics",
+    "Research &amp Politics": "Research & Politics",
+    "Research & Politics": "Research & Politics",
+    "Political Behavior": "Political Behavior",
+    "Electoral Studies": "Electoral Studies",
+    "European Union Politics": "European Union Politics",
+    "Party Politics": "Party Politics",
+    "Political Geography": "Political Geography",
+    "West European Politics": "West European Politics",
+    "Political Psychology": "Political Psychology",
+    "International Organization": "International Organization",
+    "International Studies Quarterly": "International Studies Quarterly",
+    "International Security": "International Security",
+    "Perspectives on Politics": "Perspectives on Politics",
+    "European Journal of Political Research": "European Journal of Political Research",
+    "Annual Review of Political Science": "Annual Review of Political Science",
+    "Political Theory": "Political Theory",
+    "Comparative Politics": "Comparative Politics",
+    "Legislative Studies Quarterly": "Legislative Studies Quarterly",
+    "Political Analysis": "Political Analysis",
+    "European Political Science Review": "European Political Science Review",
+    "Scandinavian Political Studies": "Scandinavian Political Studies",
+    "Democratization": "Democratization",
+    "Political Science Research and Methods": "Political Science Research and Methods",
+    "Public Choice": "Public Choice",
+    "Public Opinion Quarterly": "Public Opinion Quarterly",
+    
+    # 中国研究 (CHINA)
+    "Journal of Contemporary China": "Journal of Contemporary China",
+    "The China Quarterly": "The China Quarterly",
+    "The China Journal": "The China Journal",
+    "Modern China": "Modern China",
+    "China Information": "China Information",
+    "Journal of Chinese Political Science": "Journal of Chinese Political Science",
+    "China Perspectives": "China Perspectives"
+}
+
+
+def normalize_journal_name(name):
+    """标准化期刊名称"""
+    if not name:
+        return name
+    # 先尝试直接映射
+    if name in JOURNAL_NAME_MAPPING:
+        return JOURNAL_NAME_MAPPING[name]
+    # 处理 HTML 实体编码（如 &amp;）
+    decoded_name = html.unescape(name)
+    if decoded_name in JOURNAL_NAME_MAPPING:
+        return JOURNAL_NAME_MAPPING[decoded_name]
+    return name
 
 
 def search_journal_by_issn(issn):
@@ -224,6 +314,9 @@ def fetch_papers_by_journal(source_id, from_date=None, to_date=None, per_page=20
                 paper = parse_work(work)
                 if paper:
                     papers.append(paper)
+                else:
+                    skipped = work.get('display_name', '未知标题')
+                    print(f"    [过滤] 跳过非学术文章: {skipped[:60]}...")
             
             print(f"    已获取 {len(papers)} 篇文献...")
             
@@ -240,11 +333,39 @@ def fetch_papers_by_journal(source_id, from_date=None, to_date=None, per_page=20
     return papers
 
 
+# 非学术文章标题过滤关键词（不区分大小写）
+NON_ACADEMIC_TITLE_PATTERNS = [
+    'celebrating', 'anniversary', 'in memoriam', 'editorial', 'preface',
+    'introduction to the issue', 'issue information', 'cover image',
+    'table of contents', 'front matter', 'back matter', 'corrigendum',
+    'erratum', 'retraction', 'retraction note', 'withdrawn',
+    'book review', 'review essay', 'commentary', 'response to',
+    'reply to', 'letter to the editor', 'call for papers',
+    'conference report', 'meeting report', 'proceedings',
+    'about this journal', 'about the authors', 'acknowledgment',
+    'dedication', 'tribute to', 'obituary'
+]
+
+def is_non_academic_title(title):
+    """检查标题是否为非学术文章"""
+    if not title:
+        return True
+    title_lower = title.lower()
+    for pattern in NON_ACADEMIC_TITLE_PATTERNS:
+        if pattern in title_lower:
+            return True
+    return False
+
+
 def parse_work(work):
     """解析OpenAlex work对象"""
     try:
         openalex_id = work.get('id', '').replace('https://openalex.org/', '')
         title = work.get('display_name', '')
+        
+        # 过滤非学术文章
+        if is_non_academic_title(title):
+            return None
         
         # 摘要处理
         abstract_inverted = work.get('abstract_inverted_index', {})
@@ -260,7 +381,9 @@ def parse_work(work):
         # 期刊信息
         primary_loc = work.get('primary_location', {}) or {}
         source = primary_loc.get('source', {}) or {}
-        journal_name = source.get('display_name', '')
+        raw_journal_name = source.get('display_name', '')
+        # 标准化期刊名称
+        journal_name = normalize_journal_name(raw_journal_name)
         
         # URL
         url = primary_loc.get('landing_page_url', '') or work.get('id', '')
