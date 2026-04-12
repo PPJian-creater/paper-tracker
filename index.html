@@ -125,7 +125,14 @@
             padding: 2px 8px;
             border-radius: 12px;
             background: linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: baseline;
+            margin-left: 4px;
             color: white;
+            position: relative;
+            top: -1px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
@@ -255,9 +262,10 @@
             border-bottom: 2px solid #e2e8f0;
         }
         .journal-table td {
-            padding: 12px 16px;
+            padding: 10px 16px;
             border-bottom: 1px solid #f1f5f9;
             font-size: 14px;
+            vertical-align: middle;
         }
         .journal-table tr:hover { background: #f8fafc; }
         
@@ -286,6 +294,17 @@
             background-size: 100% 1px;
             background-position: bottom;
             background-repeat: no-repeat;
+        }
+        
+        /* 精选推荐统一添加底线 */
+        #random-papers .paper-list-item {
+            background-image: linear-gradient(to right, transparent 0%, #e2e8f0 15%, #e2e8f0 85%, transparent 100%);
+            background-size: 100% 1px;
+            background-position: bottom;
+            background-repeat: no-repeat;
+        }
+        #random-papers .paper-list-item:last-child {
+            background-image: linear-gradient(to right, transparent 0%, #e2e8f0 15%, #e2e8f0 85%, transparent 100%);
         }
         
         .paper-list-item .paper-title {
@@ -351,6 +370,8 @@
             padding: 2px 10px;
             border-radius: 12px;
             font-size: 13px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
         
         .paper-list-item .paper-line-info .date-info {
@@ -382,13 +403,16 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            flex-wrap: nowrap;
+            margin-top: 12px;
         }
         
         .paper-list-item .action-btn {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
+            justify-content: center;
+            gap: 4px;
+            padding: 8px 16px;
             border-radius: 6px;
             font-size: 13px;
             font-weight: 500;
@@ -397,6 +421,9 @@
             border: 1px solid #e2e8f0;
             background: white;
             color: #64748b;
+            white-space: nowrap;
+            min-width: 80px;
+            height: 36px;
         }
         
         .paper-list-item .action-btn:hover {
@@ -481,9 +508,22 @@
         }
         
         .favorite-journals-table td {
-            padding: 12px 16px;
+            padding: 8px 16px;
             border-bottom: 1px solid #f1f5f9;
             font-size: 14px;
+            vertical-align: middle;
+            white-space: nowrap;
+            height: 44px;
+        }
+        
+        .favorite-journals-table td:nth-child(3) {
+            white-space: normal;
+            min-width: 200px;
+        }
+        
+        .favorite-journals-table td:last-child {
+            text-align: center;
+            width: 60px;
         }
         
         .favorite-journals-table tr {
@@ -2995,12 +3035,18 @@
             // 第一行：标题（加粗，可点击）
             html += '<h3 class="paper-title" onclick="showPaperDetailById(this)">' + escapeHtml(paper.title || '无标题') + '</h3>';
             
-            // 第二行：作者 + 期刊 + 日期 + 领域标签 + NEW标签（合并一行）
+            // 第二行：作者
             html += '<div class="paper-line-info">';
             html += '<span class="author-name">' + formatAuthors(paper.authors) + '</span>';
-            html += '<span class="separator">·</span>';
+            html += '</div>';
+            
+            // 第三行：期刊
+            html += '<div class="paper-line-info">';
             html += '<span class="journal-name">' + escapeHtml(paper.journal_name || '未知期刊') + '</span>';
-            html += '<span class="separator">·</span>';
+            html += '</div>';
+            
+            // 第四行：日期 + NEW + 领域标签
+            html += '<div class="paper-line-info">';
             html += '<span class="date-info">' + escapeHtml(paper.published_date || '') + '</span>';
             if (showNewTag) {
                 html += '<span class="new-tag">NEW</span>';
@@ -3247,6 +3293,46 @@
             document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
         }
         
+        // 我的收藏筛选表格的拖拽处理函数
+        function handleFavDragStart(e, index) {
+            draggedItem = e.target.closest('tr');
+            e.target.closest('tr').classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', index);
+        }
+        
+        function handleFavDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            
+            const row = e.target.closest('tr');
+            if (row && row !== draggedItem) {
+                row.classList.add('drag-over');
+            }
+        }
+        
+        function handleFavDrop(e, toIndex) {
+            e.preventDefault();
+            const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+            
+            if (fromIndex !== toIndex && !isNaN(fromIndex)) {
+                // 交换数组中的位置
+                const item = favoriteJournals.splice(fromIndex, 1)[0];
+                favoriteJournals.splice(toIndex, 0, item);
+                
+                saveFavoriteJournals();
+                renderJournalsTable();
+                showToast('排序已保存');
+            }
+            
+            document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+        }
+        
+        function handleFavDragEnd(e) {
+            e.target.closest('tr').classList.remove('dragging');
+            document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+        }
+        
         // 收起/展开收藏区域
         function toggleFavoriteSection() {
             const content = document.getElementById('favorite-journals-content');
@@ -3312,7 +3398,7 @@
         // 在表格中渲染收藏的期刊（支持拖拽排序）
         function renderFavoriteJournalsInTable(tbody) {
             if (favoriteJournals.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="3" class="text-center py-8 text-slate-400"><i class="fas fa-star text-3xl mb-3 text-slate-300"></i><br>暂无收藏期刊<br><span class="text-sm mt-2 block">点击其他筛选中的期刊右侧星标进行收藏</span></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center py-8 text-slate-400"><i class="fas fa-star text-3xl mb-3 text-slate-300"></i><br>暂无收藏期刊<br><span class="text-sm mt-2 block">点击其他筛选中的期刊右侧星标进行收藏</span></td></tr>';
                 return;
             }
             
@@ -3331,15 +3417,15 @@
                         onclick="if(!event.target.closest('.remove-btn')) window.open('${url}', '_blank')" 
                         class="cursor-pointer hover:bg-blue-50 transition-colors fav-drag-item"
                         title="拖拽调整顺序，点击访问 ${fj.name} 官网">
-                        <td>
+                        <td style="width: 60px;">
                             <span class="drag-handle" title="拖拽排序">
                                 <i class="fas fa-grip-vertical"></i>
                             </span>
                             <span class="sort-number">${index + 1}</span>
                         </td>
-                        <td><span class="category-tag ${catClass}">${fj.category.toUpperCase()}</span></td>
+                        <td style="width: 80px;"><span class="category-tag ${catClass}">${fj.category.toUpperCase()}</span></td>
                         <td class="font-medium text-slate-800">${fj.name}</td>
-                        <td class="text-center">
+                        <td class="text-center" style="width: 60px;">
                             <span class="remove-btn" 
                                   onclick="removeFavoriteJournal('${fj.name.replace(/'/g, "\\'")}')"
                                   title="从收藏中移除">
