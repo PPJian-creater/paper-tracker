@@ -333,24 +333,39 @@ def fetch_papers_by_journal(source_id, from_date=None, to_date=None, per_page=20
     return papers
 
 
-# 非学术文章标题过滤关键词（不区分大小写）
+# 非学术文章标题过滤关键词（不区分大小写，包含匹配）
 NON_ACADEMIC_TITLE_PATTERNS = [
-    'celebrating', 'anniversary', 'in memoriam', 'editorial', 'preface',
+    'celebrating', 'anniversary', 'in memoriam', 'editorial:', 'preface:',
     'introduction to the issue', 'issue information', 'cover image',
     'table of contents', 'front matter', 'back matter', 'corrigendum',
     'erratum', 'retraction', 'retraction note', 'withdrawn',
-    'book review', 'review essay', 'commentary', 'response to',
-    'reply to', 'letter to the editor', 'call for papers',
+    'book review', 'review essay', 'commentary:',
+    'letter to the editor', 'call for papers',
     'conference report', 'meeting report', 'proceedings',
-    'about this journal', 'about the authors', 'acknowledgment',
-    'dedication', 'tribute to', 'obituary'
+    'about this journal', 'about the authors',
+    'dedication', 'tribute to', 'obituary',
+    'list of reviewers', 'thank you to reviewers'
+]
+
+# 非学术文章标题（精确匹配，不区分大小写）
+NON_ACADEMIC_TITLE_EXACT = [
+    'reviewers',
+    'acknowledgment',
+    'acknowledgments',
+    'preface',
+    'editorial',
+    'commentary'
 ]
 
 def is_non_academic_title(title):
     """检查标题是否为非学术文章"""
     if not title:
         return True
-    title_lower = title.lower()
+    title_lower = title.lower().strip()
+    # 精确匹配
+    if title_lower in NON_ACADEMIC_TITLE_EXACT:
+        return True
+    # 包含匹配
     for pattern in NON_ACADEMIC_TITLE_PATTERNS:
         if pattern in title_lower:
             return True
@@ -436,7 +451,9 @@ def reconstruct_abstract(inverted_index):
 
 def load_existing_papers():
     """加载已存在的文献"""
-    data_file = 'data/papers.json'
+    # 使用绝对路径，确保在任何工作目录下都能找到文件
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    data_file = os.path.join(script_dir, '..', 'data', 'papers.json')
     if os.path.exists(data_file):
         with open(data_file, 'r', encoding='utf-8') as f:
             return json.load(f)
