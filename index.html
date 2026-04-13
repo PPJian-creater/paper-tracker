@@ -1491,13 +1491,13 @@
                 
                 <!-- 右侧：汉堡菜单 + 统计 -->
                 <div class="flex items-center gap-4">
-                    <span class="text-xs text-slate-500 hidden lg:inline">
+                    <span class="text-sm text-slate-500 hidden lg:inline leading-none">
                         <span id="total-count">0</span> 篇
                     </span>
                     <button class="mobile-menu-btn md:hidden" onclick="toggleMobileNav()" aria-label="菜单">
                         <i class="fas fa-bars"></i>
                     </button>
-                    <div id="user-info" class="hidden">
+                    <div id="user-info" class="hidden flex items-center leading-none">
                         <!-- 用户信息将在这里显示 -->
                     </div>
                 </div>
@@ -1963,11 +1963,7 @@
                             <option value="CHINA">中国研究</option>
                         </select>
                     </div>
-                    <div class="flex gap-2 sm:ml-auto">
-                        <button onclick="setDateRange(7)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100 flex-1 sm:flex-none">近7天</button>
-                        <button onclick="setDateRange(30)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100 flex-1 sm:flex-none">近30天</button>
-                        <button onclick="setDateRange(365)" class="px-3 py-1 text-xs bg-white border border-slate-300 rounded hover:bg-slate-100 flex-1 sm:flex-none">近1年</button>
-                    </div>
+
                 </div>
                 
                 <!-- 搜索按钮 -->
@@ -2164,8 +2160,8 @@
                 if (userInfoEl && currentUserPIN) {
                     const username = currentUserPIN.replace(/\d+$/, '');
                     userInfoEl.innerHTML = `
-                        <span class="text-xs text-blue-200 mr-2"><i class="fas fa-user mr-1"></i>${username}</span>
-                        <button onclick="logout()" class="text-xs text-blue-300 hover:text-white underline">退出</button>
+                        <span class="text-sm text-blue-700 mr-2 leading-none"><i class="fas fa-user mr-1"></i>${username}</span>
+                        <button onclick="logout()" class="text-sm text-blue-700 hover:text-blue-900 underline leading-none">退出</button>
                     `;
                     userInfoEl.classList.remove('hidden');
                 }
