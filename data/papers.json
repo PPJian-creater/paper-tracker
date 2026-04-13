@@ -46823,5 +46823,30 @@
       "Mattias Wahlström"
     ],
     "category": "POL"
+  },
+  {
+    "openalex_id": "W7153795143",
+    "title": "Does Digital Transformation Rely on Collaborative Dynamics? A Case Study on the Italian Public Digital Strategy",
+    "abstract": "ABSTRACT While the digital transformation (DT) literature has acknowledged the relevance of collaboration, recent contributions have highlighted how governments are increasingly relying on centralization to address digitally induced change in the public sector and the adverse effects brought about by an overemphasis on collaboration. This research aims to contribute to the debate by answering the following research question: To what extent does public digital transformation rely on collaborative dynamics? To answer this question, we conduct an embedded qualitative case study based on a theoretical framework identified through the literature review on collaboration and DT in the Italian public DT strategy network. Our analysis reveals that collaboration can be particularly relevant in the context of a hybrid inter‐institutional governance model, enabling a balance between centralization and decentralization tensions within a shared performance framework. Moreover, it highlights significant implications for scholars and practitioners, identifying which factors foster network effectiveness and positive DT outcomes.",
+    "journal_name": "Public Administration",
+    "published_date": "2026-04-12",
+    "url": "https://doi.org/10.1111/padm.70062",
+    "doi": "https://doi.org/10.1111/padm.70062",
+    "keywords": [
+      "Decentralization",
+      "Relevance (law)",
+      "Digital transformation",
+      "Context (archaeology)",
+      "Corporate governance",
+      "Collaborative governance",
+      "Public sector"
+    ],
+    "authors": [
+      "Lorenzo Costumato",
+      "Andrea Bonomi Savignon",
+      "Fabiana Scalabrini",
+      "Luigina Paglieri"
+    ],
+    "category": "PA"
   }
 ]
