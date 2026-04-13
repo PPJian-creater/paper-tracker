@@ -1298,57 +1298,111 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
         
-        /* 方案1A：期刊徽章样式 */
-        .journal-badge {
-            display: inline-flex;
-            align-items: baseline;
-            gap: 2px;
-            padding: 6px 14px;
+        /* 毛玻璃拟态统计卡片 */
+        .stat-card {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 20px;
-            font-size: 16px;
-            font-weight: 700;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.3);
-            border: 1px solid rgba(255,255,255,0.5);
-        }
-        .journal-badge .badge-unit {
-            font-size: 12px;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-        .journal-badge.pa-badge {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            color: white;
-        }
-        .journal-badge.pp-badge {
-            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
-            color: white;
-        }
-        .journal-badge.pol-badge {
-            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-            color: white;
-        }
-        .journal-badge.china-badge {
-            background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
-            color: white;
+            padding: 24px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 
+                0 8px 32px rgba(31, 38, 135, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
         
-        /* 文献计数样式 */
-        .paper-count {
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 
+                0 12px 40px rgba(31, 38, 135, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+        
+        /* 领域背景色 */
+        .stat-card.pa-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(147, 197, 253, 0.25) 100%);
+        }
+        .stat-card.pp-card {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(186, 230, 253, 0.25) 100%);
+        }
+        .stat-card.pol-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(199, 210, 254, 0.25) 100%);
+        }
+        .stat-card.china-card {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(165, 243, 252, 0.25) 100%);
+        }
+        
+        /* 渐变色文字 - 文献数 */
+        .count-number {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 50%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            letter-spacing: -2px;
+        }
+        
+        /* 文献单位 */
+        .count-unit {
+            font-size: 16px;
+            color: #64748b;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+        
+        /* 圆形期刊徽章 */
+        .journal-badge {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #3b82f6;
             line-height: 1.2;
         }
-        .paper-count .count-number {
-            font-size: 28px;
-            font-weight: 800;
-            color: #1e293b;
-        }
-        .paper-count .count-unit {
-            font-size: 13px;
-            color: #64748b;
+        
+        .journal-badge .badge-unit {
+            font-size: 11px;
             font-weight: 500;
-            margin-top: 2px;
+            color: #64748b;
+        }
+        
+        /* 标题样式 */
+        .stat-card .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
         }
         
         /* 统计卡片 - 领域色彩方案 */
@@ -1585,43 +1639,47 @@
         <div id="tab-discover" class="tab-content">
             <div class="stat-grid grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                 <div class="stat-card pa-card cursor-pointer" onclick="switchTab('pa')">
-                    <div class="text-center">
-                        <div class="text-base font-semibold text-slate-700 mb-3">公共行政</div>
-                        <div class="journal-badge pa-badge">20<span class="badge-unit">本期刊</span></div>
-                        <div class="paper-count mt-3">
-                            <span class="count-number" id="stat-pa">0</span>
-                            <span class="count-unit">篇文献</span>
-                        </div>
+                    <div class="card-title">公共行政</div>
+                    <div class="paper-count">
+                        <div class="count-number" id="stat-pa">0</div>
+                        <div class="count-unit">篇文献</div>
+                    </div>
+                    <div class="journal-badge">
+                        20
+                        <span class="badge-unit">本期刊</span>
                     </div>
                 </div>
                 <div class="stat-card pp-card cursor-pointer" onclick="switchTab('pp')">
-                    <div class="text-center">
-                        <div class="text-base font-semibold text-slate-700 mb-3">公共政策</div>
-                        <div class="journal-badge pp-badge">23<span class="badge-unit">本期刊</span></div>
-                        <div class="paper-count mt-3">
-                            <span class="count-number" id="stat-pp">0</span>
-                            <span class="count-unit">篇文献</span>
-                        </div>
+                    <div class="card-title">公共政策</div>
+                    <div class="paper-count">
+                        <div class="count-number" id="stat-pp">0</div>
+                        <div class="count-unit">篇文献</div>
+                    </div>
+                    <div class="journal-badge">
+                        23
+                        <span class="badge-unit">本期刊</span>
                     </div>
                 </div>
                 <div class="stat-card pol-card cursor-pointer" onclick="switchTab('pol')">
-                    <div class="text-center">
-                        <div class="text-base font-semibold text-slate-700 mb-3">政治学</div>
-                        <div class="journal-badge pol-badge">36<span class="badge-unit">本期刊</span></div>
-                        <div class="paper-count mt-3">
-                            <span class="count-number" id="stat-pol">0</span>
-                            <span class="count-unit">篇文献</span>
-                        </div>
+                    <div class="card-title">政治学</div>
+                    <div class="paper-count">
+                        <div class="count-number" id="stat-pol">0</div>
+                        <div class="count-unit">篇文献</div>
+                    </div>
+                    <div class="journal-badge">
+                        36
+                        <span class="badge-unit">本期刊</span>
                     </div>
                 </div>
                 <div class="stat-card china-card cursor-pointer" onclick="switchTab('china')">
-                    <div class="text-center">
-                        <div class="text-base font-semibold text-slate-700 mb-3">中国研究</div>
-                        <div class="journal-badge china-badge">7<span class="badge-unit">本期刊</span></div>
-                        <div class="paper-count mt-3">
-                            <span class="count-number" id="stat-china">0</span>
-                            <span class="count-unit">篇文献</span>
-                        </div>
+                    <div class="card-title">中国研究</div>
+                    <div class="paper-count">
+                        <div class="count-number" id="stat-china">0</div>
+                        <div class="count-unit">篇文献</div>
+                    </div>
+                    <div class="journal-badge">
+                        7
+                        <span class="badge-unit">本期刊</span>
                     </div>
                 </div>
             </div>
