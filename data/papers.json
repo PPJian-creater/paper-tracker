@@ -46848,5 +46848,65 @@
       "Luigina Paglieri"
     ],
     "category": "PA"
+  },
+  {
+    "openalex_id": "W7153792779",
+    "title": "What antecedent factors shape research impact understanding? An ecological study of principal investigators",
+    "abstract": "Abstract A core role expectation of scientists in the principal investigator (PIs) role is to design and deliver research impact for the publicly funded projects that they lead. As such, PIs need to navigate different approaches to research impact as well as being responsive to various institutional, disciplinary, and stakeholder research impact expectations. While we have a growing understanding of how funders and universities enable research impact, less is known about the micro-level antecedent factors that contribute to understanding and realizing research impact from the perspective of individual PIs. Through the lens of ecological theory for conceptualization and analysis, the purpose of this paper is to examine what are the antecedent factors that shape PIs understanding of research impact. Using a qualitative approach based on interviews with medical device PIs we identified individual-level characteristics, micro-, meso-, and macro-level antecedent factors that contribute to how PIs understand research impact.",
+    "journal_name": "Science and Public Policy",
+    "published_date": "2026-03-02",
+    "url": "https://doi.org/10.1093/scipol/scag013",
+    "doi": "https://doi.org/10.1093/scipol/scag013",
+    "keywords": [
+      "Antecedent (behavioral psychology)",
+      "Conceptualization",
+      "Principal (computer security)",
+      "Perspective (graphical)",
+      "Stakeholder",
+      "Qualitative research"
+    ],
+    "authors": [
+      "Brendan Dolan",
+      "James A. Cunningham",
+      "Caroline McGregor"
+    ],
+    "category": "PP"
+  },
+  {
+    "openalex_id": "W7153722958",
+    "title": "Integrating safety and security in research: toward a unified framework for Latin American institutions",
+    "abstract": "Abstract In increasingly complex research environments, the traditional separation of safety and security no longer reflects institutional realities. A unified framework combining safety practices aimed at preventing unintentional harm with security measures addressing deliberate threats can strengthen the protection of personnel, infrastructure, data, and research outcomes. While some countries have implemented integrated approaches in sectors such as aerospace and critical infrastructure, research institutions in Latin America remain largely unprepared, particularly regarding research security. Many, however, already operate safety systems that offer a practical foundation for integration. Drawing on conceptual analysis, institutional comparisons, and real-world case studies, a scalable and cost-effective framework is proposed to improve organizational resilience and research continuity. The approach highlights policy instruments including funding incentives, national guidelines, and regional cooperation to support adoption. These findings are relevant for decision-makers seeking to align research governance with emerging safety and security challenges.",
+    "journal_name": "Science and Public Policy",
+    "published_date": "2026-03-02",
+    "url": "https://doi.org/10.1093/scipol/scag014",
+    "doi": "https://doi.org/10.1093/scipol/scag014",
+    "keywords": [
+      "Latin Americans",
+      "Conceptual framework",
+      "Resilience (materials science)",
+      "Corporate governance",
+      "Harm",
+      "National security",
+      "Foundation (evidence)",
+      "Best practice"
+    ],
+    "authors": [
+      "Luiz E Galvão Martins",
+      "Silvina E. Fioressi",
+      "Daniel E. Bacelo"
+    ],
+    "category": "PP"
+  },
+  {
+    "openalex_id": "W7153497885",
+    "title": "Editorial Board",
+    "abstract": "",
+    "journal_name": "Political Geography",
+    "published_date": "2026-04-01",
+    "url": "https://doi.org/10.1016/s0962-6298(26)00066-1",
+    "doi": "https://doi.org/10.1016/s0962-6298(26)00066-1",
+    "keywords": [],
+    "authors": [],
+    "category": "POL"
   }
 ]
