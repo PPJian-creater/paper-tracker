@@ -13,7 +13,7 @@
         * { box-sizing: border-box; }
         body { 
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #dbeafe 100%);
             min-height: 100vh;
         }
         :root {
@@ -1286,29 +1286,18 @@
         .filter-tab.favorites-tab.active i {
             color: #d97706;
         }
-        .stat-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-        }
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        }
         
-        /* 毛玻璃拟态统计卡片 - 设计A */
+        /* 毛玻璃拟态统计卡片 */
         .stat-card {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-radius: 20px;
             padding: 28px 24px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.85);
             box-shadow: 
-                0 8px 32px rgba(31, 38, 135, 0.08),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+                0 8px 32px rgba(31, 38, 135, 0.1),
+                inset 0 1px 1px rgba(255, 255, 255, 0.9);
             transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
@@ -1319,7 +1308,7 @@
             transform: translateY(-4px);
             box-shadow: 
                 0 12px 40px rgba(31, 38, 135, 0.12),
-                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+                inset 0 1px 0 rgba(255, 255, 255, 0.95);
         }
         
         /* 顶部信息行 */
@@ -1333,13 +1322,13 @@
         .card-title {
             font-size: 16px;
             font-weight: 600;
-            color: #475569;
+            color: #1e293b;
         }
         
         .journal-info {
             font-size: 13px;
-            color: #94a3b8;
-            font-weight: 500;
+            color: #64748b;
+            font-weight: 400;
         }
         
         /* 中间数字区域 */
@@ -1352,7 +1341,7 @@
             padding: 20px 0;
         }
         
-        /* 渐变色大数字 */
+        /* 渐变色大数字 - 统一蓝到青渐变 */
         .count-number {
             font-size: 56px;
             font-weight: 800;
@@ -1367,40 +1356,12 @@
         
         .count-unit {
             font-size: 15px;
-            color: #64748b;
+            color: #475569;
             font-weight: 500;
             margin-top: 6px;
         }
         
-        /* 统计卡片 - 领域色彩方案 */
-        .stat-card.pa-card {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            border-color: #bfdbfe;
-        }
-        .stat-card.pa-card .text-2xl {
-            color: #1e40af;
-        }
-        .stat-card.pp-card {
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            border-color: #bae6fd;
-        }
-        .stat-card.pp-card .text-2xl {
-            color: #0369a1;
-        }
-        .stat-card.pol-card {
-            background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
-            border-color: #c7d2fe;
-        }
-        .stat-card.pol-card .text-2xl {
-            color: #4f46e5;
-        }
-        .stat-card.china-card {
-            background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
-            border-color: #a5f3fc;
-        }
-        .stat-card.china-card .text-2xl {
-            color: #0891b2;
-        }
+        /* 所有统计卡片统一使用毛玻璃效果 - 由.stat-card基础类定义 */
         .modal {
             display: none;
             position: fixed;
@@ -1608,41 +1569,41 @@
                 <div class="stat-card pa-card cursor-pointer" onclick="switchTab('pa')">
                     <div class="card-header">
                         <span class="card-title">公共行政</span>
-                        <span class="journal-info">20本期刊</span>
+                        <span class="journal-info">20期刊</span>
                     </div>
                     <div class="card-body">
                         <div class="count-number" id="stat-pa">0</div>
-                        <div class="count-unit">篇文献</div>
+                        <div class="count-unit">篇数</div>
                     </div>
                 </div>
                 <div class="stat-card pp-card cursor-pointer" onclick="switchTab('pp')">
                     <div class="card-header">
                         <span class="card-title">公共政策</span>
-                        <span class="journal-info">23本期刊</span>
+                        <span class="journal-info">23期刊</span>
                     </div>
                     <div class="card-body">
                         <div class="count-number" id="stat-pp">0</div>
-                        <div class="count-unit">篇文献</div>
+                        <div class="count-unit">篇数</div>
                     </div>
                 </div>
                 <div class="stat-card pol-card cursor-pointer" onclick="switchTab('pol')">
                     <div class="card-header">
                         <span class="card-title">政治学</span>
-                        <span class="journal-info">36本期刊</span>
+                        <span class="journal-info">36期刊</span>
                     </div>
                     <div class="card-body">
                         <div class="count-number" id="stat-pol">0</div>
-                        <div class="count-unit">篇文献</div>
+                        <div class="count-unit">篇数</div>
                     </div>
                 </div>
                 <div class="stat-card china-card cursor-pointer" onclick="switchTab('china')">
                     <div class="card-header">
                         <span class="card-title">中国研究</span>
-                        <span class="journal-info">7本期刊</span>
+                        <span class="journal-info">7期刊</span>
                     </div>
                     <div class="card-body">
                         <div class="count-number" id="stat-china">0</div>
-                        <div class="count-unit">篇文献</div>
+                        <div class="count-unit">篇数</div>
                     </div>
                 </div>
             </div>
