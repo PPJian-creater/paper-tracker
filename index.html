@@ -4344,13 +4344,18 @@
             let html = '';
             favoriteJournals.forEach((fj, index) => {
                 const url = journalUrls[fj.name] || '#';
-                // 领域标签映射
+                // 领域标签映射（支持大小写）
                 const categoryMap = {
                     'PA': '公共行政',
+                    'pa': '公共行政',
                     'PP': '公共政策',
+                    'pp': '公共政策',
                     'POL': '政治学',
+                    'pol': '政治学',
                     'CHINA': '中国研究',
-                    'CN': '国内期刊'
+                    'china': '中国研究',
+                    'CN': '国内期刊',
+                    'cn': '国内期刊'
                 };
                 const categoryName = categoryMap[fj.category] || fj.category;
                 html += `
