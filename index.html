@@ -912,22 +912,26 @@
             color: #64748b;
         }
         
-        /* ==================== 我的收藏卡片网格样式 ==================== */
+        /* ==================== 我的收藏卡片网格样式 - 数据微图表风 ==================== */
         .favorite-journal-card {
-            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
-            border-radius: 12px;
-            border: 1px solid #60a5fa;
-            padding: 16px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px 20px 20px;
+            height: 180px;
             position: relative;
-            cursor: pointer;
+            cursor: grab;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
         
         .favorite-journal-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.25);
-            border-color: #3b82f6;
+            background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+            border-color: #bfdbfe;
+            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
         }
         
         .favorite-journal-card.dragging {
@@ -936,97 +940,160 @@
             cursor: grabbing;
         }
         
-        .favorite-journal-card .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 8px;
+        /* 背景微图表 SVG */
+        .favorite-journal-card .bg-chart {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 90px;
+            opacity: 0.35;
+            transition: all 0.3s ease;
+            pointer-events: none;
         }
         
-        .favorite-journal-card .card-category {
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
+        .favorite-journal-card:hover .bg-chart {
+            opacity: 0.55;
         }
         
+        .favorite-journal-card .bg-chart .area {
+            fill: #dbeafe;
+            transition: fill 0.3s;
+        }
+        
+        .favorite-journal-card:hover .bg-chart .area {
+            fill: #bfdbfe;
+        }
+        
+        .favorite-journal-card .bg-chart .line {
+            fill: none;
+            stroke: #60a5fa;
+            stroke-width: 1.5;
+            stroke-opacity: 0.6;
+        }
+        
+        .favorite-journal-card:hover .bg-chart .line {
+            stroke: #3b82f6;
+            stroke-opacity: 0.8;
+        }
+        
+        /* 右侧纵向对齐：拖拽手柄 - 更靠上 */
         .favorite-journal-card .card-drag-handle {
-            color: #3b82f6;
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            color: #cbd5e1;
+            font-size: 14px;
             cursor: grab;
             padding: 4px;
-            border-radius: 4px;
-            transition: all 0.2s ease;
+            z-index: 10;
+            transition: color 0.2s;
         }
         
-        .favorite-journal-card .card-drag-handle:hover {
-            background: rgba(59, 130, 246, 0.2);
+        .favorite-journal-card:hover .card-drag-handle {
+            color: #94a3b8;
         }
         
-        .favorite-journal-card .card-title {
-            font-size: 14px;
+        /* 右侧纵向对齐：删除按钮 - 右下角 */
+        .favorite-journal-card .card-remove-btn {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            color: #94a3b8;
+            font-size: 12px;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            z-index: 10;
+        }
+        
+        .favorite-journal-card:hover .card-remove-btn {
+            color: #64748b;
+            border-color: #cbd5e1;
+        }
+        
+        .favorite-journal-card .card-remove-btn:hover {
+            color: #ef4444 !important;
+            border-color: #fecaca !important;
+            background: #fef2f2 !important;
+            transform: scale(1.1);
+        }
+        
+        /* 左侧内容区 */
+        .favorite-journal-card .card-left {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding-right: 40px;
+        }
+        
+        /* 领域标签 - 统一固定大小 */
+        .favorite-journal-card .card-category {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            color: white;
+            font-size: 11px;
             font-weight: 600;
-            color: #1e40af;
-            line-height: 1.4;
+            padding: 6px 0;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
             margin-bottom: 12px;
+            width: 72px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+            text-transform: none;
+        }
+        
+        /* 期刊名 */
+        .favorite-journal-card .card-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1e293b;
+            line-height: 1.45;
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
         
-        .favorite-journal-card .card-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .favorite-journal-card:hover .card-title {
+            color: #1e40af;
         }
         
-        .favorite-journal-card .card-index {
-            font-size: 12px;
-            color: #3b82f6;
-            font-weight: 600;
-            background: rgba(255,255,255,0.6);
-            padding: 2px 8px;
-            border-radius: 10px;
-        }
-        
-        .favorite-journal-card .card-remove-btn {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: #ef4444;
-            background: rgba(255,255,255,0.6);
-            border: none;
-            font-size: 12px;
-        }
-        
-        .favorite-journal-card .card-remove-btn:hover {
-            background: #ef4444;
-            color: white;
-        }
-        
+        /* 删除确认遮罩层 */
         .favorite-journal-card .card-confirm-delete {
             display: none;
             position: absolute;
             inset: 0;
-            background: rgba(239, 68, 68, 0.95);
-            border-radius: 12px;
+            background: rgba(239, 68, 68, 0.9);
+            border-radius: 16px;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            color: white;
-            font-size: 13px;
-            font-weight: 500;
+            gap: 12px;
+            z-index: 100;
         }
         
         .favorite-journal-card.confirming-delete .card-confirm-delete {
             display: flex;
+        }
+        
+        .favorite-journal-card .card-confirm-delete span {
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
         }
         
         .favorite-journal-card .confirm-btn-group {
@@ -1035,18 +1102,18 @@
         }
         
         .favorite-journal-card .confirm-btn-group button {
-            padding: 6px 14px;
+            padding: 6px 16px;
             border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
             border: none;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
         }
         
         .favorite-journal-card .confirm-btn-yes {
             background: white;
-            color: #dc2626;
+            color: #ef4444;
         }
         
         .favorite-journal-card .confirm-btn-yes:hover {
@@ -1054,12 +1121,12 @@
         }
         
         .favorite-journal-card .confirm-btn-no {
-            background: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.2);
             color: white;
         }
         
         .favorite-journal-card .confirm-btn-no:hover {
-            background: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.3);
         }
         
         .drag-handle:active {
@@ -4277,7 +4344,15 @@
             let html = '';
             favoriteJournals.forEach((fj, index) => {
                 const url = journalUrls[fj.name] || '#';
-                const catClass = `tag-${fj.category}`;
+                // 领域标签映射
+                const categoryMap = {
+                    'PA': '公共行政',
+                    'PP': '公共政策',
+                    'POL': '政治学',
+                    'CHINA': '中国研究',
+                    'CN': '国内期刊'
+                };
+                const categoryName = categoryMap[fj.category] || fj.category;
                 html += `
                     <div class="favorite-journal-card" 
                          data-index="${index}" 
@@ -4289,24 +4364,33 @@
                          ondragend="handleCardDragEnd(event)"
                          onclick="if(!event.target.closest('.card-remove-btn') && !event.target.closest('.card-confirm-delete')) window.open('${url}', '_blank')"
                          title="拖拽调整顺序，点击访问 ${fj.name} 官网">
-                        <div class="card-header">
-                            <span class="card-category ${catClass}">${fj.category.toUpperCase()}</span>
-                            <span class="card-drag-handle" title="拖拽排序">
-                                <i class="fas fa-grip-vertical"></i>
-                            </span>
+                        <!-- 背景微图表 -->
+                        <svg class="bg-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+                            <path class="area" d="M0,40 L0,25 C15,30 25,15 35,20 C45,25 55,10 65,15 C75,20 85,8 100,5 L100,40 Z" />
+                            <polyline class="line" points="0,25 15,30 25,15 35,20 45,25 55,10 65,15 75,20 85,8 100,5" />
+                        </svg>
+                        
+                        <!-- 右侧拖拽手柄 -->
+                        <span class="card-drag-handle" title="拖拽排序">
+                            <i class="fas fa-grip-vertical"></i>
+                        </span>
+                        
+                        <!-- 右侧删除按钮 -->
+                        <span class="card-remove-btn" onclick="event.stopPropagation(); showDeleteConfirm(this)" title="移除收藏">
+                            <i class="fas fa-trash-alt"></i>
+                        </span>
+                        
+                        <!-- 左侧内容 -->
+                        <div class="card-left">
+                            <span class="card-category">${categoryName}</span>
+                            <div class="card-title">${fj.name}</div>
                         </div>
-                        <div class="card-title">${fj.name}</div>
-                        <div class="card-actions">
-                            <span class="card-index">#${index + 1}</span>
-                            <span class="card-remove-btn" onclick="event.stopPropagation(); showDeleteConfirm(this)" title="移除收藏">
-                                <i class="fas fa-trash-alt"></i>
-                            </span>
-                        </div>
+                        
+                        <!-- 删除确认遮罩 -->
                         <div class="card-confirm-delete">
-                            <i class="fas fa-exclamation-circle text-xl mb-1"></i>
-                            <span>确定移除？</span>
+                            <span>确认删除？</span>
                             <div class="confirm-btn-group">
-                                <button class="confirm-btn-yes" onclick="event.stopPropagation(); confirmDeleteCard('${fj.name.replace(/'/g, "\\'")}')">确定</button>
+                                <button class="confirm-btn-yes" onclick="event.stopPropagation(); confirmDeleteCard('${fj.name.replace(/'/g, "\\'")}')">删除</button>
                                 <button class="confirm-btn-no" onclick="event.stopPropagation(); cancelDeleteCard(this)">取消</button>
                             </div>
                         </div>
