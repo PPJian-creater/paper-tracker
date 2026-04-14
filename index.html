@@ -430,90 +430,7 @@
             vertical-align: middle;
         }
         .journal-table tr:hover { background: #f8fafc; }
-
-        /* ==================== 移动端期刊卡片样式 ==================== */
-        .journal-card-mobile {
-            background: white;
-            border-radius: 12px;
-            padding: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            transition: all 0.2s ease;
-        }
-        .journal-card-mobile:active {
-            transform: scale(0.98);
-            background: #f8fafc;
-        }
-        .journal-card-mobile .field-badge {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 700;
-            color: white;
-            flex-shrink: 0;
-            text-transform: uppercase;
-        }
-        .journal-card-mobile .journal-info {
-            flex: 1;
-            min-width: 0;
-            padding-right: 8px;
-        }
-        .journal-card-mobile .journal-name {
-            font-weight: 600;
-            color: #1e293b;
-            font-size: 15px;
-            line-height: 1.4;
-            word-break: break-word;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .journal-card-mobile .journal-name.single-line {
-            -webkit-line-clamp: 1;
-        }
-        .journal-card-mobile .journal-meta {
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 4px;
-        }
-        .journal-card-mobile .fav-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            border: none;
-            background: #f1f5f9;
-            color: #94a3b8;
-            cursor: pointer;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            transition: all 0.2s ease;
-        }
-        .journal-card-mobile .fav-btn:active {
-            transform: scale(0.95);
-        }
-        .journal-card-mobile .fav-btn.favorited {
-            background: #fef3c7;
-            color: #f59e0b;
-        }
-
-        /* 移动端卡片领域徽章背景色 */
-        .journal-card-mobile .field-badge.field-pa { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-        .journal-card-mobile .field-badge.field-pp { background: linear-gradient(135deg, #10b981, #059669); }
-        .journal-card-mobile .field-badge.field-pol { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        .journal-card-mobile .field-badge.field-china { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
-        .journal-card-mobile .field-badge.field-cn { background: linear-gradient(135deg, #64748b, #475569); }
-
+        
         /* ==================== 紧凑列表样式（用于PA/PP/POL/CHINA模块）==================== */
         .paper-list-container {
             background: white;
@@ -2044,8 +1961,8 @@
                 </div>
             </div>
             
-            <!-- 普通筛选：双列表格（桌面端） -->
-            <div id="journals-normal-view" class="table-container bg-white rounded-xl border border-slate-200 overflow-hidden hidden md:block">
+            <!-- 普通筛选：双列表格 -->
+            <div id="journals-normal-view" class="table-container bg-white rounded-xl border border-slate-200 overflow-hidden">
                 <table class="journal-table" style="table-layout: fixed; width: 100%;">
                     <thead>
                         <tr>
@@ -2059,11 +1976,6 @@
                     </thead>
                     <tbody id="journals-table-body"></tbody>
                 </table>
-            </div>
-
-            <!-- 移动端：期刊卡片列表 -->
-            <div id="journals-mobile-view" class="md:hidden space-y-3">
-                <!-- 动态渲染期刊卡片 -->
             </div>
             
             <!-- 我的收藏：卡片网格 -->
@@ -4472,88 +4384,40 @@
         function renderJournalsTable() {
             const tbody = document.getElementById('journals-table-body');
             const normalView = document.getElementById('journals-normal-view');
-            const mobileView = document.getElementById('journals-mobile-view');
             const favView = document.getElementById('journals-favorites-view');
-
-            if (!normalView || !favView) return;
-
+            
+            if (!tbody || !normalView || !favView) return;
+            
             // 切换视图显示
             if (currentJournalFilter === 'favorites') {
                 normalView.classList.add('hidden');
-                if (mobileView) mobileView.classList.add('hidden');
                 favView.classList.remove('hidden');
                 renderFavoriteJournalsGrid();
                 return;
             }
-
-            const categories = [
-                { key: 'pa', name: '公共行政', class: 'tag-pa', bgClass: 'field-pa' },
-                { key: 'pp', name: '公共政策', class: 'tag-pp', bgClass: 'field-pp' },
-                { key: 'pol', name: '政治学', class: 'tag-pol', bgClass: 'field-pol' },
-                { key: 'china', name: '中国研究', class: 'tag-china', bgClass: 'field-china' },
-                { key: 'cn', name: '国内期刊', class: 'tag-cn', bgClass: 'field-cn' }
-            ];
-
-            // 收集所有符合条件的期刊
-            let allJournalsList = [];
-            categories.forEach(cat => {
-                if (currentJournalFilter !== 'all' && currentJournalFilter !== cat.key) return;
-                journalCategories[cat.key].forEach(journal => {
-                    allJournalsList.push({ journal, category: cat });
-                });
-            });
-
+            
+            normalView.classList.remove('hidden');
+            favView.classList.add('hidden');
+            
             // 检测是否为移动端
             const isMobile = window.innerWidth <= 768;
-
-            if (isMobile && mobileView) {
-                // 移动端：显示卡片列表，隐藏表格
-                normalView.classList.add('hidden');
-                mobileView.classList.remove('hidden');
-                favView.classList.add('hidden');
-
-                // 渲染卡片
-                let html = '';
-                allJournalsList.forEach(item => {
-                    const url = journalUrls[item.journal] || '#';
-                    const fav = isJournalFavorited(item.journal);
-                    const issn = journalIssn[item.journal] || '';
-                    const categoryName = item.category.name;
-
-                    html += `
-                        <div class="journal-card-mobile" onclick="window.open('${url}', '_blank')">
-                            <div class="field-badge ${item.category.bgClass}">${item.category.key.toUpperCase()}</div>
-                            <div class="journal-info">
-                                <div class="journal-name ${item.journal.length < 30 ? 'single-line' : ''}">${item.journal}</div>
-                                <div class="journal-meta">${categoryName}${issn ? ' · ISSN: ' + issn : ''}</div>
-                            </div>
-                            <button class="fav-btn ${fav ? 'favorited' : ''}"
-                                    onclick="event.stopPropagation(); toggleFavoriteJournal('${item.journal}', '${item.category.key}')"
-                                    title="${fav ? '取消收藏' : '收藏该期刊'}">
-                                <i class="${fav ? 'fas' : 'far'} fa-star"></i>
-                            </button>
-                        </div>
+            
+            // 设置表格为固定布局
+            const table = tbody.closest('table');
+            if (table) {
+                table.style.tableLayout = 'fixed';
+                table.style.width = '100%';
+            }
+            
+            // 更新表头（移动端2列：期刊名称+收藏，桌面端6列）
+            const thead = table ? table.querySelector('thead tr') : null;
+            if (thead) {
+                if (isMobile) {
+                    thead.innerHTML = `
+                        <th style="width: auto;">期刊名称</th>
+                        <th style="width: 60px; text-align: center;">收藏</th>
                     `;
-                });
-                mobileView.innerHTML = html;
-            } else {
-                // 桌面端：显示双列表格，隐藏卡片
-                normalView.classList.remove('hidden');
-                if (mobileView) mobileView.classList.add('hidden');
-                favView.classList.add('hidden');
-
-                if (!tbody) return;
-
-                // 设置表格为固定布局
-                const table = tbody.closest('table');
-                if (table) {
-                    table.style.tableLayout = 'fixed';
-                    table.style.width = '100%';
-                }
-
-                // 更新表头为6列
-                const thead = table ? table.querySelector('thead tr') : null;
-                if (thead) {
+                } else {
                     thead.innerHTML = `
                         <th style="width: 80px;">领域</th>
                         <th style="width: auto;">期刊名称</th>
@@ -4563,9 +4427,49 @@
                         <th style="width: 60px; text-align: center;">收藏</th>
                     `;
                 }
-
+            }
+            
+            const categories = [
+                { key: 'pa', name: '公共行政', class: 'tag-pa' },
+                { key: 'pp', name: '公共政策', class: 'tag-pp' },
+                { key: 'pol', name: '政治学', class: 'tag-pol' },
+                { key: 'china', name: '中国研究', class: 'tag-china' },
+                { key: 'cn', name: '国内期刊', class: 'tag-cn' }
+            ];
+            
+            // 收集所有符合条件的期刊
+            let allJournalsList = [];
+            categories.forEach(cat => {
+                if (currentJournalFilter !== 'all' && currentJournalFilter !== cat.key) return;
+                journalCategories[cat.key].forEach(journal => {
+                    allJournalsList.push({ journal, category: cat });
+                });
+            });
+            
+            let html = '';
+            
+            if (isMobile) {
+                // 移动端：单列渲染，只显示期刊名称和收藏两列
+                allJournalsList.forEach(item => {
+                    const url = journalUrls[item.journal] || '#';
+                    const fav = isJournalFavorited(item.journal);
+                    html += `
+                        <tr>
+                            <td onclick="window.open('${url}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="点击访问 ${item.journal} 官网">
+                                ${item.journal}
+                            </td>
+                            <td class="text-center" style="width: 60px;">
+                                <span class="journal-star ${fav ? 'favorited' : ''}" 
+                                      onclick="toggleFavoriteJournal('${item.journal}', '${item.category.key}')"
+                                      title="${fav ? '取消收藏' : '收藏该期刊'}">
+                                    <i class="${fav ? 'fas' : 'far'} fa-star"></i>
+                                </span>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } else {
                 // 桌面端：双列渲染（固定列宽：领域80px | 期刊名自适应 | 收藏60px）
-                let tableHtml = '';
                 for (let i = 0; i < allJournalsList.length; i += 2) {
                     const left = allJournalsList[i];
                     const right = allJournalsList[i + 1];
@@ -4582,14 +4486,14 @@
                                 ${left.journal}
                             </td>
                             <td class="text-center" onclick="event.stopPropagation()" style="width: 60px;">
-                                <span class="journal-star ${leftFav ? 'favorited' : ''}"
+                                <span class="journal-star ${leftFav ? 'favorited' : ''}" 
                                       onclick="toggleFavoriteJournal('${left.journal}', '${left.category.key}')"
                                       title="${leftFav ? '取消收藏' : '收藏该期刊'}">
                                     <i class="${leftFav ? 'fas' : 'far'} fa-star"></i>
                                 </span>
                             </td>
                     `;
-
+                    
                     if (right) {
                         const rightUrl = journalUrls[right.journal] || '#';
                         const rightFav = isJournalFavorited(right.journal);
@@ -4613,10 +4517,11 @@
                     }
                     
                     rowHtml += '</tr>';
-                    tableHtml += rowHtml;
+                    html += rowHtml;
                 }
-                tbody.innerHTML = tableHtml || '<tr><td colspan="6" class="text-center py-8 text-slate-400">暂无数据</td></tr>';
             }
+            
+            tbody.innerHTML = html || `<tr><td colspan="${isMobile ? 2 : 6}" class="text-center py-8 text-slate-400">暂无数据</td></tr>`;
         }
         
         // 监听窗口大小变化，重新渲染期刊表格
