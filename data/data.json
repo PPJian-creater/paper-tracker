@@ -46909,24 +46909,693 @@
       "keywords": [],
       "authors": [],
       "category": "POL"
+    },
+    {
+      "openalex_id": "W7154045486",
+      "title": "Populist attitudes among civil servants: A source of liberal robustness?",
+      "abstract": "This study examines civil servants’ normative orientations toward democracy, focusing on the absence of populist attitudes as a potential source of resilience against democratic backsliding in public administration. Drawing on the concept of democratic anchoring, we expect civil servants and public sector employees to display lower levels of populism than their private-sector counterparts. Panel data from Germany confirm this expectation and show that the public/private sector gap in populist attitudes persists despite an overall increase in populism between 2021 and 2023. A complementary cross-national analysis of 16 democratic states reveals robust evidence for such a gap only in Germany and Austria. Both countries witnessed the collapse of constitutionally fully developed interwar democracies. We discuss whether the experience of a democratic breakdown may have left a lasting imprint on civil servants’ democratic attitudes in these countries. We further discuss how such imprints may shape behaviors that support administrative resilience against illiberal threats. Points for practitioners Only in Germany and Austria do civil servants exhibit systematically lower populist attitudes than private-sector employees, indicating that the public workforce could function as a source of democratic resilience. However, populist attitudes are increasing overall, including within the public sector, highlighting the importance of democratic education and training. Strengthening collective and protected channels for expressing reservations about illiberal political demands could help civil servants respond more effectively and confidently.",
+      "journal_name": "International Review of Administrative Sciences",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1177/00208523261434833",
+      "doi": "https://doi.org/10.1177/00208523261434833",
+      "keywords": [
+        "Populism",
+        "Democracy",
+        "Politics",
+        "Civil servants",
+        "Democratization",
+        "Public sector",
+        "Psychological resilience",
+        "Public opinion"
+      ],
+      "authors": [
+        "Markus Tepe",
+        "Ekaterina Widmer-Lytkina"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7154062206",
+      "title": "What Works for Whom? Exploring the Determinants and Hierarchical Tensions of Public Network Effectiveness: A Configurational Analysis",
+      "abstract": "ABSTRACT Existing research on public network effectiveness has largely overlooked the issue of performance stratification in hierarchical systems, failing to adequately answer the critical question, “effective for whom?” Focusing on China's business environment governance (BEG) networks (2016–2022), this study employs panel fuzzy‐set qualitative comparative analysis (Panel fsQCA) to identify which governance configurations—composed of formalized management strategies, network structure, and resource carrying capacity—differentially drive client‐level and network‐level effectiveness. The findings reveal a stark divergence between two logics: client‐level effectiveness is highly dependent on a supportive network structure (especially a large‐scale network), whereas network‐level effectiveness relies more on active management strategies and resource support (especially performance‐based incentives and resource carrying capacity). This disparity provides clear configurational evidence for the performance tensions inherent in hybrid governance systems and demonstrates that the effect of formalization is highly contingent on the effectiveness goal being pursued. We therefore emphasize that understanding network effectiveness requires a multi‐level, dynamic analytical framework. It also calls for vigilance against the risk of goal displacement, whereby networks satisfy their superiors while failing to serve their external clients.",
+      "journal_name": "Public Administration",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1111/padm.70064",
+      "doi": "https://doi.org/10.1111/padm.70064",
+      "keywords": [
+        "Incentive",
+        "Corporate governance",
+        "Resource (disambiguation)",
+        "Network governance",
+        "Organizational network analysis",
+        "Qualitative comparative analysis",
+        "Network analysis",
+        "Divergence (linguistics)"
+      ],
+      "authors": [
+        "Yulong Jie",
+        "Shuigen Hu"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7154130181",
+      "title": "How NGOs facilitate value co-creation through multilevel and processual mechanisms: evidence from China",
+      "abstract": "",
+      "journal_name": "Public Management Review",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1080/14719037.2026.2658069",
+      "doi": "https://doi.org/10.1080/14719037.2026.2658069",
+      "keywords": [
+        "Value (mathematics)",
+        "China",
+        "Public value",
+        "Multilevel model"
+      ],
+      "authors": [
+        "Shuhui Tan",
+        "Yu Du",
+        "Xiaonan Wang"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7154074634",
+      "title": "The Diffusion of International Environmental Agreements: The Role of Learning, Competition and Emulation",
+      "abstract": "ABSTRACT International environmental agreements are key instruments for addressing transboundary environmental problems, but treaty ratification remains uneven and clustered across countries despite the proliferation of multilateral treaties. While existing research has concentrated largely on domestic political‐economic determinants, less is known about the role of cross‐national interdependence and strategic interactions in the ratification of treaties. To address this gap, we present a comprehensive analytical framework drawing on policy diffusion theory to assess whether and through which channels environmental treaty ratification diffuses internationally. Using static and dynamic spatial econometric models on a global panel of 140 countries over the period 1990–2018, we specifically examine learning, competition, and emulation through theoretically grounded interaction matrices that reflect one‐to‐one relationships between countries and clearly identify trade competitors, cultural peers, and learning channels. The results prove that spatial dependence and significant spatial spillover effects exist across countries. Learning and competition are dominant mechanisms, while the magnitude of the peer‐based emulation effect is weaker but statistically significant. Dynamic specifications indicate strong temporal persistence in treaty ratification, reflecting policy path dependence. Prior actions of neighbors play a significant role in shaping current decisions; early adopters act as policy laboratories. The study advances diffusion research by moving beyond distance‐only proxies and explicitly modeling cross‐national interdependence through mechanism‐specific interaction matrices, offering a stronger empirical basis for assessing how cross‐national spillover shapes IEA ratification.",
+      "journal_name": "Regulation & Governance",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1111/rego.70163",
+      "doi": "https://doi.org/10.1111/rego.70163",
+      "keywords": [
+        "Ratification",
+        "Spillover effect",
+        "Emulation",
+        "Competition (biology)",
+        "Treaty",
+        "Counterfactual thinking",
+        "Econometric model",
+        "Spatial econometrics",
+        "Panel data"
+      ],
+      "authors": [
+        "Elif Korkmaz Tümer",
+        "Mehmet Güçlü"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7154150113",
+      "title": "Hybridity of Accountability Logics in Voluntary Sustainability Governance: The Case of Commitment 2050",
+      "abstract": "ABSTRACT Governance of sustainable development increasingly relies on voluntary standards and commitments, the credibility and effectiveness of which hinge on accountability—ensuring actors align with shared goals and follow through on them. However, voluntary initiatives operate outside traditional control structures and blend elements of state, market, and community governance. This study examines how accountability is constructed and practiced through the lens of accountability logics. Using Finland's Commitment 2050 platform as a case, it analyzes how bureau–legal, economic–managerialist, and community logics shape the motivations, standards, processes, and consequences of account‐giving. The findings indicate that commitment‐based accountability emerges from the shifting and often uneven balance between these logics. While Commitment 2050 fosters multiple motivations and relations, accountability remains largely unrewarded and unsanctioned. This flexibility can broaden participation but weaken effectiveness and legitimacy. Future studies should examine how logic configurations evolve and how voluntary initiatives can achieve credible flexibility.",
+      "journal_name": "Regulation & Governance",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1111/rego.70165",
+      "doi": "https://doi.org/10.1111/rego.70165",
+      "keywords": [
+        "Accountability",
+        "Credibility",
+        "Hybridity",
+        "Flexibility (engineering)",
+        "Sustainability",
+        "Balance (ability)",
+        "Consistency (knowledge bases)",
+        "Corporate governance"
+      ],
+      "authors": [
+        "Elina Vikstedt",
+        "Visa Penttilä",
+        "Olga Welinder",
+        "Jarmo Vakkuri"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7154156508",
+      "title": "Policy experts’ strategy in deliberative polling on Korean pension reform: utilizing valence and polysemic ideas through framing and narrative strategies",
+      "abstract": "",
+      "journal_name": "Critical Policy Studies",
+      "published_date": "2026-04-12",
+      "url": "https://doi.org/10.1080/19460171.2026.2655672",
+      "doi": "https://doi.org/10.1080/19460171.2026.2655672",
+      "keywords": [
+        "Framing (construction)",
+        "Narrative",
+        "Polling",
+        "Valence (chemistry)",
+        "Pension",
+        "Deliberation",
+        "Credibility",
+        "Rhetoric"
+      ],
+      "authors": [
+        "Hong Bum Lee",
+        "Dae-Eun Kim"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7154001054",
+      "title": "Countering autocratization in a contested liberal international order: comparing the role of EU conditionality in Georgia (2022–2024) and Slovakia (1994–1998)",
+      "abstract": "",
+      "journal_name": "Journal of European Public Policy",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1080/13501763.2026.2657994",
+      "doi": "https://doi.org/10.1080/13501763.2026.2657994",
+      "keywords": [
+        "Conditionality",
+        "International relations",
+        "European union",
+        "Foreign policy",
+        "Work (physics)"
+      ],
+      "authors": [
+        "Anastasia Mgaloblishvili"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7153985681",
+      "title": "Successful liberal democracy as a self-reinforcing condition",
+      "abstract": "",
+      "journal_name": "Journal of European Public Policy",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1080/13501763.2026.2657997",
+      "doi": "https://doi.org/10.1080/13501763.2026.2657997",
+      "keywords": [
+        "Democracy",
+        "Liberal democracy",
+        "Government (linguistics)",
+        "Politics",
+        "Representative democracy"
+      ],
+      "authors": [
+        "Carl Henrik Knutsen"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7153979068",
+      "title": "Caring after COVID: swiss health policy, windows of opportunity, and programmatic groups",
+      "abstract": "Abstract The COVID-19 pandemic presented a window of opportunity for policy change, but was not exploited as such everywhere. Surprisingly, in Switzerland, usually characterized by a stable political landscape and incremental policy changes, an unexpected reform, the Nursing Initiative, was adopted. This paper examines the underlying mechanisms driving this adoption, employing a cross-fertilization of the multiple streams framework with the programmatic action framework and relying on expert interviews. The analysis shows that partial streams coupling began years before the pandemic, facilitated by the strengthening of nursing care professions’ identity into a programmatic group. Switzerland’s direct democracy enabled the opening of an agenda window, allowing the programmatic group to effectively couple their policy with political dynamics in the policy process. Finally, the COVID-19 crisis acted as a decision window, opening from the problem stream and providing momentum for policy action and decision-making.",
+      "journal_name": "Journal of Public Policy",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s0143814x25100974",
+      "doi": "https://doi.org/10.1017/s0143814x25100974",
+      "keywords": [
+        "Politics",
+        "Action (physics)",
+        "Window of opportunity",
+        "Pandemic",
+        "Policy analysis",
+        "Democracy",
+        "Identity (music)"
+      ],
+      "authors": [
+        "Lisa Asticher",
+        "Johanna Hornung"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7154055157",
+      "title": "Bent Greve (2025), The Future of Social Policy, London and New York: Routledge, 102 pp., ISBN: 978-1-032-84728-3, €47.99, pbk. doi: 10.4324/9781003516422",
+      "abstract": "",
+      "journal_name": "Journal of Social Policy",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s0047279426101408",
+      "doi": "https://doi.org/10.1017/s0047279426101408",
+      "keywords": [
+        "Bent molecular geometry"
+      ],
+      "authors": [
+        "Ivan Cerrillo"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7153970647",
+      "title": "Steven Haines and David Ruebain (Eds.), Education, Disability and Social Policy (2nd Edition), Policy Press, 2025, 180 pages, ISBN: 978-1447369851, GBP 27.99",
+      "abstract": "",
+      "journal_name": "Journal of Social Policy",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s0047279426101421",
+      "doi": "https://doi.org/10.1017/s0047279426101421",
+      "keywords": [
+        "Social policy",
+        "Public policy",
+        "Disability benefits"
+      ],
+      "authors": [
+        "Silvia Behrens"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7154177907",
+      "title": "Governing by Ambiguity: Sociotechnical Imaginaries of Platforms in China",
+      "abstract": "ABSTRACT Besides clear policy directives, the unresolved and open‐ended elements in policy communication also create discursive politics. This article argues that ambiguity in policy communication reflects the state's exercise of power within a fractured sociocultural landscape. Examining state policies around the platform economy, we demonstrate how China's techno‐politics are constructed upon visions of the future and their ambiguous articulations—ambiguous imaginaries. By integrating the concepts of sociotechnical imaginaries and strategic ambiguity, we conduct a longitudinal qualitative analysis to identify and trace the evolution of three functional imaginaries (transformative, conflict‐mediating, and regulatory). Together, these functional imaginaries co‐constitute an ultimate imaginary (healthy platforms). Each type mobilizes ambiguity respectively via metaphors, contradictory descriptions, and shifting emphases. This produces ambiguities that either evoke modernization or mediate tensions around the platform's role as an enterprise or capital within the socialist market economy. We argue that these ambiguous imaginaries serve as a discursive “glue,” temporarily reconciling deep‐seated ideological fractures through surface‐level uncertainty and future promises. This article contributes a framework that interprets the futuristic ambiguities embedded in policy as both an actionable instrument and a future gaze, making development possible in the (centralized) developmentalist state.",
+      "journal_name": "Policy & Internet",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1002/poi3.70040",
+      "doi": "https://doi.org/10.1002/poi3.70040",
+      "keywords": [
+        "Sociotechnical system",
+        "Ambiguity",
+        "Vision",
+        "Ideology",
+        "The Imaginary",
+        "China",
+        "Sociocultural evolution",
+        "Modernization theory"
+      ],
+      "authors": [
+        "Fangyu Qing",
+        "Ngai Keung Chan"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7154082669",
+      "title": "Quantifying the effects of ageing on the composition of government spending",
+      "abstract": "",
+      "journal_name": "Policy Studies",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1080/01442872.2026.2654505",
+      "doi": "https://doi.org/10.1080/01442872.2026.2654505",
+      "keywords": [
+        "Government spending",
+        "Government (linguistics)",
+        "Ageing",
+        "Composition (language)",
+        "Public spending",
+        "Consumer spending",
+        "Government expenditure"
+      ],
+      "authors": [
+        "Hüseyin Şen",
+        "Ahmet Kaya"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7154055217",
+      "title": "Limits on Terms, Limits on Control: The Effect of Chief Executive Term Limits on Bureaucratic Responsiveness",
+      "abstract": "ABSTRACT Term limits for elected officials are often advocated to enhance responsiveness to constituents. We argue however, that they can weaken executive power by reducing bureaucratic deference. Using an experimental survey of state bureaucrats across nine U.S. states, we investigate the impact of gubernatorial term limits on bureaucratic effort and prioritization of executive preferences. Our findings reveal that bureaucrats exert less effort and place lower importance on the preferences of term‐limited governors compared to those at the beginning of their term or running for re‐election. However, these effects are modest in size, suggesting that while gubernatorial term limits create space for bureaucrats to afford executives less deference, the degree to which they ultimately shirk is limited. Our findings highlight the unique ways in which term limits affect elected executives and that term limits affect not only how the officials subject to them represent the public, but also how others in government interact with them.",
+      "journal_name": "Policy Studies Journal",
+      "published_date": "2026-04-12",
+      "url": "https://doi.org/10.1111/psj.70122",
+      "doi": "https://doi.org/10.1111/psj.70122",
+      "keywords": [
+        "Bureaucracy",
+        "Term (time)",
+        "Government (linguistics)",
+        "Affect (linguistics)",
+        "Power (physics)",
+        "Prioritization",
+        "State (computer science)"
+      ],
+      "authors": [
+        "David R. Miller",
+        "Daniel M. Butler"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7153974551",
+      "title": "Distinguishing hares and tortoises in the field: Applicants' prediction of patent value flows",
+      "abstract": "",
+      "journal_name": "Research Policy",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1016/j.respol.2026.105481",
+      "doi": "https://doi.org/10.1016/j.respol.2026.105481",
+      "keywords": [
+        "Value (mathematics)",
+        "Future value"
+      ],
+      "authors": [
+        "Siwei Cao",
+        "Zhen Lei",
+        "Brian Davern Wright"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7153993953",
+      "title": "Revisiting the Core of Policy Feedback Theory: A Systematic Review",
+      "abstract": "ABSTRACT Policy feedback theory introduces the concept that “new policies create new politics” through feedback loops where policies reshape the political environment and influence future policy formulation. However, few studies have fully realized this initial promise, with limited attention being paid to the feedback loop. This study conducts a systematic review of 183 SSCI articles to assess the gap between current research and the original promise of policy feedback theory. Our analysis revealed three key findings: More than half of the articles did not address policy feedback loops, limiting the theory's potential; While the original framework provides a foundation for the discussion of mechanisms, misuses persist, and further exploration of the relationships between these mechanisms is required; The absence of feedback loops has left discussions on the self‐reinforcing and self‐undermining effects at an early stage. This study argues that future policy feedback research should more frequently treat policy as both the starting and ending points of analysis and calls for a deeper exploration of feedback mechanisms and their long‐term effects. By addressing these gaps, this study aims to refine the concept of policy feedback and enhance our understanding of the long‐term impacts of policies.",
+      "journal_name": "Review of Policy Research",
+      "published_date": "2026-04-12",
+      "url": "https://doi.org/10.1111/ropr.70095",
+      "doi": "https://doi.org/10.1111/ropr.70095",
+      "keywords": [
+        "Core (optical fiber)",
+        "Limiting",
+        "Foundation (evidence)",
+        "Key (lock)",
+        "Policy analysis",
+        "Politics",
+        "Feedback control"
+      ],
+      "authors": [
+        "J. Hong",
+        "Ciqi Mei"
+      ],
+      "category": "PP"
+    },
+    {
+      "openalex_id": "W7154065621",
+      "title": "Generational legacies of authoritarianism: Evidence from Spain",
+      "abstract": "Abstract What are the long-term legacies of authoritarian repression on civil society? While much research has focused on high-intensity repression, we examine the more pervasive, low-intensity repression characteristic of many authoritarian regimes. We argue that repression’s effects vary by generation, reducing civic engagement among those who came of age during the authoritarian period but not among younger generations who either only lived their childhood under the regime or were children and grew up under democracy. Using data from around 140,000 individual surveys conducted between 1989 and 2017, we find that cohorts who reached adulthood during the Franco regime consistently exhibit lower civic engagement than those who came of age in democratic Spain. We show evidence consistent with the main results from complementary analyses using local-level data on repression. These findings contribute to the literature on authoritarian legacies, emphasizing the generational and contextual variability of their effects on civil society.",
+      "journal_name": "European Journal of Political Research",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s1475676526101042",
+      "doi": "https://doi.org/10.1017/s1475676526101042",
+      "keywords": [
+        "Authoritarianism",
+        "Democracy",
+        "Period (music)",
+        "Survey data collection",
+        "Psychological repression"
+      ],
+      "authors": [
+        "Laia Balcells",
+        "Francisco Villamil"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154116669",
+      "title": "President Trump and the Federal Personnel System: Theory and Practice",
+      "abstract": "ABSTRACT President Donald Trump’s actions to assert control of the executive branch in his second term have been breathtaking in their speed, volume, and diversity. Trump’s actions raise the more general question of how to make sense of his presidency in historical perspective. Presidency scholars have contributed landmark research characterizing presidents based on personal characteristics, historic patterns, common incentives at work in different institutional configurations, and behaviors associated with populist leaders more generally. This article is a distillation of the theory behind Trump’s actions and describes the mechanics of how the president has asserted control over federal personnel in his second term. It concludes with the implications of these actions for governance and for our understanding of the Trump presidency in history more generally.",
+      "journal_name": "PS: Political Science & Politics",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s1049096526101875",
+      "doi": "https://doi.org/10.1017/s1049096526101875",
+      "keywords": [
+        "Presidency",
+        "Incentive",
+        "Corporate governance",
+        "Control (management)",
+        "Work (physics)",
+        "Dismissal"
+      ],
+      "authors": [
+        "David E. Lewis"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154153357",
+      "title": "Political Leverage and Legislative Strategy: How Trump Overperformed with Congress in 2025",
+      "abstract": "ABSTRACT As gauged by the factors usually believed to determine legislative success with Congress—party control, seat share, and presidential approval—President Trump was situated similarly during the first years of each of his terms. Yet, he achieved substantially greater legislative success in 2025 than in 2017. This contrast indicates that the conventional explanatory factors no longer fully capture what drives presidential success in an era of intense party polarization. Instead, intraparty dynamics and legislative strategy have an important role in shaping outcomes under unified government today. Understanding contemporary presidential effectiveness requires looking beyond seat shares and public opinion to the internal politics of the governing coalition.",
+      "journal_name": "PS: Political Science & Politics",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s1049096526101978",
+      "doi": "https://doi.org/10.1017/s1049096526101978",
+      "keywords": [
+        "Legislature",
+        "Presidential system",
+        "Divided government",
+        "Leverage (statistics)",
+        "Politics",
+        "Government (linguistics)",
+        "Public opinion"
+      ],
+      "authors": [
+        "F Eun-Hyung Lee"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154068187",
+      "title": "Introduction to Understanding the Early Trump 47 Presidency",
+      "abstract": "In his second term, President Donald Trump has pushed beyond the limits that have constrained previous presidents, suggesting that he should not be bound by norms, statutes, or constitutional language. The logic of the US Constitution is that majorities are required for change but that it also is necessary to protect minority interests. The system of checks and balances forces most majorities to grow and broaden before they are empowered. The Constitution provides an incentive for public officials to negotiate and compromise. Donald Trump has ignored this constitutional imperative. Instead of persuasion, compromise, and negotiation, he has employed unilateral action.",
+      "journal_name": "PS: Political Science & Politics",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s1049096526101966",
+      "doi": "https://doi.org/10.1017/s1049096526101966",
+      "keywords": [
+        "Presidency",
+        "Constitution",
+        "Negotiation",
+        "Incentive",
+        "Constitutional economics"
+      ],
+      "authors": [
+        "GEORGE C. EDWARDS"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154098288",
+      "title": "Swept Away: The Trump 2.0 Tidal Wave of Executive Action",
+      "abstract": "ABSTRACT Donald J. Trump began his second term with a tidal wave of presidential directives. A simple count does not equate to consequence—but, in aggregate, Trump’s directives had an important impact. Many of their targets were consistent with past presidential practice, although even then expanding prior claims to executive authority. Others, which exacted retribution on specific individuals or entities or ordered subordinates to disregard the law, were new and potentially dangerous. The long-term failure of Congress to rein in discretion embedded in past statute has empowered this and future presidencies.",
+      "journal_name": "PS: Political Science & Politics",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s1049096526101917",
+      "doi": "https://doi.org/10.1017/s1049096526101917",
+      "keywords": [
+        "Presidential system",
+        "Discretion",
+        "Statute",
+        "Action (physics)",
+        "Retributive justice",
+        "Simple (philosophy)"
+      ],
+      "authors": [
+        "Andrew Rudalevige"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154092969",
+      "title": "Trump’s Remaking of Unilateral Politics",
+      "abstract": "ABSTRACT Unilateral activities permeate almost every aspect of Donald Trump’s second presidency. While his use of these tools bears some resemblance to that of past presidents, he departs from established practices in two critical ways. The first difference concerns the sheer audacity of his actions. By employing unilateral directives with little regard for long-standing legal constraints, Trump—more than any of his predecessors—routinely and brazenly defies constitutional and statutory boundaries. Second, his unilateral actions reorient the traditional relationship between power and policy. Whereas past presidents viewed power as a means to advance policy, Trump routinely treats policies as staging grounds for redefining power relations.",
+      "journal_name": "PS: Political Science & Politics",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s1049096526101905",
+      "doi": "https://doi.org/10.1017/s1049096526101905",
+      "keywords": [
+        "Politics",
+        "Power (physics)",
+        "Statutory law",
+        "Constitutional law"
+      ],
+      "authors": [
+        "W. H. Howell"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154076599",
+      "title": "Trump 47 and the Judicial Burdens of Presidential Unilateralism",
+      "abstract": "ABSTRACT In 2025, President Donald Trump expanded his own powers through unprecedented interpretations of congressional statutes and Article II of the US Constitution. Ensuing waves of litigation and a record number of emergency-relief applications by the administration to the US Supreme Court placed extraordinary pressure on the federal judiciary. Although US district judges have delayed or halted a range of significant administrative actions, this article’s overview of Trump 47 in court highlights three different scholarly approaches that doubt that the US Supreme Court alone can or ultimately will reverse the administration’s agenda. First, the Roberts Court’s emergency docket decisions thus far comport with recent polarization trends in presidential-power cases. Second, the US Supreme Court lacks institutional capacity and consistent jurisprudence to challenge each area of alleged presidential overreach. Third, the administration’s use of broad authorities previously delegated by Congress serves as a reminder that constitutional interpretation and executive-branch powers are rooted in the broader political system. Congress cannot easily retract granted authority but curtailing presidential unilateralism requires more than litigation.",
+      "journal_name": "PS: Political Science & Politics",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s1049096526101899",
+      "doi": "https://doi.org/10.1017/s1049096526101899",
+      "keywords": [
+        "Supreme court",
+        "Unilateralism",
+        "Presidential system",
+        "Statute",
+        "Jurisprudence",
+        "Judicial review",
+        "Separation of powers",
+        "Politics"
+      ],
+      "authors": [
+        "Jasmine Farrier"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7153973895",
+      "title": "Not with a Bang but a Whimper: Congressional Silence Amid an Historic Assault on the Power of the Purse",
+      "abstract": "ABSTRACT Although all presidents pursue their agendas unilaterally, President Donald Trump’s early second-term actions shocked the political system for their scope and breadth. One of Trump’s boldest moves was a frontal assault on Congress’s constitutional power of the purse through unprecedented impoundments and unilateral tariffs. Despite widespread public opposition to Trump’s gambits and clear statutory violations, Congress has offered little resistance, marking a stark departure from historical precedent. This analysis situates Trump’s actions within broader debates over the scope of executive authority and the weakening of institutional checks and balances. Partisan incentives and Trump’s dominance of the Republican Party have muted congressional resistance, raising urgent questions about the future of the separation of powers in an era of unprecedented executive overreach.",
+      "journal_name": "PS: Political Science & Politics",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s1049096525101704",
+      "doi": "https://doi.org/10.1017/s1049096525101704",
+      "keywords": [
+        "Opposition (politics)",
+        "Silence",
+        "Statutory law",
+        "Scope (computer science)",
+        "Dominance (genetics)",
+        "Power (physics)",
+        "Politics"
+      ],
+      "authors": [
+        "Douglas L. Kriner"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154145616",
+      "title": "Determined by place or party? Issue salience in local election manifestos",
+      "abstract": "Compared to national-level studies research on parties’ issue salience in local politics remains significantly underdeveloped. How local party branches balance the general party ideology with local context when deciding which issues to prioritise is still not well understood. This article addresses this gap by examining the drivers of issue salience in local election manifestos, specifically investigating the extent to which it is determined by the national party organisation and place-based municipal conditions. Drawing on an unprecedented dataset of 262 local election manifestos from 36 municipalities across two election cycles in Flanders (Belgium), the study measures and explains the emphasis on 17 policy issues using a supervised machine learning approach. Findings indicate that local parties’ issue salience is influenced by both national party preferences and local context, demonstrating their role as strategic actors who make deliberate choices about which issues to emphasise and de-emphasise.",
+      "journal_name": "Party Politics",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1177/13540688261442347",
+      "doi": "https://doi.org/10.1177/13540688261442347",
+      "keywords": [
+        "Salience (neuroscience)",
+        "Politics",
+        "Ideology",
+        "National election",
+        "Primary election",
+        "Context (archaeology)"
+      ],
+      "authors": [
+        "Raf Reuse"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154117871",
+      "title": "Political Regimes in an Egyptian Mirror",
+      "abstract": "For the past 13 years, Egypt has been ruled by the personalist-cum-military dictatorship of Abdel Fattah El-Sisi. In 2013, El-Sisi seized power after overthrowing the first freely elected civilian president in Egypt’s history, Mohamed Morsi, and has since undertaken a sweeping reconfiguration of Egypt’s political economy. He narrowed the ruling coalition to privilege military, intelligence, and police officers while demoting and surveilling civilian state elites such as judges and parliamentarians. The praetorian ruling clique is kept intact by unbroken streams of foreign financing. Recipient of an annual $1.3 billion of military aid from the United States since 1979, the military is now also the beneficiary of some of the largest arms transfers in its history; Egypt was the world’s eighth-largest arms importer between 2020 and 2024. Another income stream is the military’s extensive enterprises in the civilian economy; they pay no taxes, control public land, and enjoy the free labor of conscripts. Intelligence agencies own media companies that produce agitprop valorizing El-Sisi as a handsome visionary, as satirized in the thriller Eagles of the Republic (dir. Tarik Saleh) that premiered at the Cannes Film Festival in 2025.",
+      "journal_name": "Perspectives on Politics",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s1537592726104605",
+      "doi": "https://doi.org/10.1017/s1537592726104605",
+      "keywords": [
+        "Politics",
+        "State (computer science)",
+        "Dictatorship",
+        "Beneficiary",
+        "Power (physics)",
+        "Privilege (computing)"
+      ],
+      "authors": [
+        "Mona El-Ghobashy"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7153995951",
+      "title": "Transnational party activism: why do migrants become active in political parties from their country of origin?",
+      "abstract": "",
+      "journal_name": "Political Geography",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1016/j.polgeo.2026.103554",
+      "doi": "https://doi.org/10.1016/j.polgeo.2026.103554",
+      "keywords": [
+        "Politics",
+        "Work (physics)",
+        "International relations",
+        "Immigration"
+      ],
+      "authors": [
+        "Nicolas Fliess"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154011474",
+      "title": "The Visibility of the State: Symbolic and Allegorical Representations in the Work of Carl Schmitt",
+      "abstract": "This article argues that Carl Schmitt’s approach to the visual expression of political power evolves from an early reliance on symbolic form to a later adoption of allegory, influenced by Walter Benjamin. Initially attracted to the Catholic Church as a symbolic synthesis of bureaucracy and charisma, Schmitt grew disillusioned with its modes of visual representation. He then turned to political myth, envisioning the national leader as the symbolic incarnation of a unified people. This model, however, also proved untenable. In search of an alternative, Schmitt drew on Benjamin’s theory of allegory to retrieve the Baroque tradition of state personification: Sovereigns, like actors on a stage, outwardly represent the state without claiming to exhaust its meaning. I contend that this allegorical framework allowed Schmitt not only to sidestep the totalizing tendencies of political myth but also to open a conceptual path for reimagining Europe’s postwar fractured space.",
+      "journal_name": "Political Theory",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1177/00905917261433978",
+      "doi": "https://doi.org/10.1177/00905917261433978",
+      "keywords": [
+        "Allegory",
+        "Incarnation",
+        "The Symbolic",
+        "Politics",
+        "State (computer science)",
+        "Metaphysics",
+        "Power (physics)",
+        "Symbolic power",
+        "Bureaucracy"
+      ],
+      "authors": [
+        "Jerónimo Rilla"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154074300",
+      "title": "The 2025 Norwegian election",
+      "abstract": "",
+      "journal_name": "West European Politics",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1080/01402382.2026.2646662",
+      "doi": "https://doi.org/10.1080/01402382.2026.2646662",
+      "keywords": [],
+      "authors": [
+        "Johannes Bergh",
+        "Bernt Aardal"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154134302",
+      "title": "Provincial Governance and Variation in China’s Belt and Road Initiative",
+      "abstract": "",
+      "journal_name": "Journal of Chinese Political Science",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1007/s11366-026-09940-1",
+      "doi": "https://doi.org/10.1007/s11366-026-09940-1",
+      "keywords": [
+        "Bureaucracy",
+        "Corporate governance",
+        "Variation (astronomy)",
+        "Sustainability",
+        "Process (computing)",
+        "Qualitative comparative analysis",
+        "Multi-level governance",
+        "Quality (philosophy)"
+      ],
+      "authors": [
+        "Zheng Gong",
+        "David T. Richens"
+      ],
+      "category": "CHINA"
+    },
+    {
+      "openalex_id": "W7154112202",
+      "title": "From Contention to Clientelism: Evidence from the Ten-Year Fishing Ban in China",
+      "abstract": "Abstract How do ordinary Chinese people circumvent unpopular state policies? The existing literature primarily focuses on resistance against local bureaucrats. Drawing on ethnographic research on the ten-year fishing ban in the Yangtze River Basin, this article finds that fishermen (clients) continue to fish by maintaining patron–client relationships with the enforcers of the fishing ban (patrons). Ordinary fishermen seek the protection of enforcers through bribery. Enhanced state monitoring under the fishing ban facilitates bribery-based clientelism by weakening the fishermen’s everyday resistance, but it also constrains the power of enforcers by increasing the risk that their corruption will be discovered by upper-level authorities. For extremely poor fishermen, who are barely able to afford to pay bribes, their daily acts of resistance are morally justified by the need for subsistence safety, presenting enforcers with a dilemma: they must fulfil their law enforcement duties while also ensuring the survival of these individuals to maintain social stability. Therefore, cultivating a clientelist relationship with impoverished fishermen enables enforcers to manage their noncompliance, thereby balancing these conflicting goals. While clientelism protects people from unpopular policies to some extent, it more fundamentally strengthens the power of local bureaucrats, creating the potential for greater exploitation and larger-scale popular grievances in the long run.",
+      "journal_name": "The China Quarterly",
+      "published_date": "2026-04-13",
+      "url": "https://doi.org/10.1017/s030574102610215x",
+      "doi": "https://doi.org/10.1017/s030574102610215x",
+      "keywords": [
+        "Clientelism",
+        "Enforcement",
+        "Fishing",
+        "China",
+        "State (computer science)",
+        "Language change",
+        "Resistance (ecology)",
+        "Power (physics)"
+      ],
+      "authors": [
+        "Jingping Liu"
+      ],
+      "category": "CHINA"
     }
   ],
   "stats": {
-    "total": 2145,
-    "pa_count": 524,
-    "pp_count": 493,
-    "pol_count": 973,
-    "china_count": 155,
+    "total": 2176,
+    "pa_count": 529,
+    "pp_count": 504,
+    "pol_count": 986,
+    "china_count": 157,
     "journals": 86,
-    "last_update": "2026-04-14 03:48:27",
+    "last_update": "2026-04-14 12:06:15",
     "by_journal": [
       {
         "name": "Perspectives on Politics",
-        "count": 97
+        "count": 98
       },
       {
         "name": "Research Policy",
-        "count": 69
+        "count": 70
       },
       {
         "name": "Public Administration Review",
@@ -46934,23 +47603,23 @@
       },
       {
         "name": "Public Management Review",
-        "count": 57
+        "count": 58
       },
       {
         "name": "European Journal of Political Research",
-        "count": 57
-      },
-      {
-        "name": "Political Geography",
-        "count": 53
+        "count": 58
       },
       {
         "name": "PS: Political Science & Politics",
-        "count": 49
+        "count": 56
+      },
+      {
+        "name": "Political Geography",
+        "count": 54
       },
       {
         "name": "Regulation & Governance",
-        "count": 47
+        "count": 49
       },
       {
         "name": "The China Journal",
@@ -46966,15 +47635,19 @@
       },
       {
         "name": "Party Politics",
-        "count": 45
+        "count": 46
       },
       {
         "name": "Journal of European Public Policy",
-        "count": 40
+        "count": 42
       },
       {
         "name": "Public Choice",
         "count": 40
+      },
+      {
+        "name": "The China Quarterly",
+        "count": 39
       },
       {
         "name": "Political Psychology",
@@ -46982,10 +47655,6 @@
       },
       {
         "name": "Political Science Research and Methods",
-        "count": 38
-      },
-      {
-        "name": "The China Quarterly",
         "count": 38
       },
       {
@@ -47002,6 +47671,10 @@
       },
       {
         "name": "Social Policy & Administration",
+        "count": 31
+      },
+      {
+        "name": "Policy Studies Journal",
         "count": 31
       },
       {
@@ -47025,10 +47698,6 @@
         "count": 30
       },
       {
-        "name": "Policy Studies Journal",
-        "count": 30
-      },
-      {
         "name": "Journal of democracy",
         "count": 30
       },
@@ -47045,16 +47714,16 @@
         "count": 29
       },
       {
+        "name": "Public Administration",
+        "count": 27
+      },
+      {
         "name": "Journal of Asian Public Policy",
         "count": 27
       },
       {
-        "name": "Public Administration",
-        "count": 26
-      },
-      {
         "name": "Review of Policy Research",
-        "count": 26
+        "count": 27
       },
       {
         "name": "American Political Science Review",
@@ -47074,6 +47743,10 @@
       },
       {
         "name": "Political Theory",
+        "count": 23
+      },
+      {
+        "name": "International Review of Administrative Sciences",
         "count": 22
       },
       {
@@ -47085,12 +47758,16 @@
         "count": 21
       },
       {
-        "name": "International Review of Administrative Sciences",
+        "name": "Comparative Political Studies",
         "count": 21
       },
       {
-        "name": "Comparative Political Studies",
-        "count": 21
+        "name": "Critical Policy Studies",
+        "count": 20
+      },
+      {
+        "name": "Policy & Internet",
+        "count": 20
       },
       {
         "name": "British Journal of Political Science",
@@ -47098,14 +47775,6 @@
       },
       {
         "name": "International Public Management Journal",
-        "count": 19
-      },
-      {
-        "name": "Critical Policy Studies",
-        "count": 19
-      },
-      {
-        "name": "Policy & Internet",
         "count": 19
       },
       {
@@ -47117,6 +47786,10 @@
         "count": 19
       },
       {
+        "name": "Policy Studies",
+        "count": 18
+      },
+      {
         "name": "European Political Science Review",
         "count": 18
       },
@@ -47125,7 +47798,11 @@
         "count": 18
       },
       {
-        "name": "Policy Studies",
+        "name": "Journal of Public Policy",
+        "count": 17
+      },
+      {
+        "name": "Journal of Social Policy",
         "count": 17
       },
       {
@@ -47141,7 +47818,7 @@
         "count": 17
       },
       {
-        "name": "Journal of Public Policy",
+        "name": "West European Politics",
         "count": 16
       },
       {
@@ -47149,15 +47826,7 @@
         "count": 15
       },
       {
-        "name": "Journal of Social Policy",
-        "count": 15
-      },
-      {
         "name": "Philosophy & Public Affairs",
-        "count": 15
-      },
-      {
-        "name": "West European Politics",
         "count": 15
       },
       {
@@ -47173,15 +47842,15 @@
         "count": 14
       },
       {
+        "name": "Journal of Chinese Political Science",
+        "count": 14
+      },
+      {
         "name": "European Policy Analysis",
         "count": 13
       },
       {
         "name": "International Organization",
-        "count": 13
-      },
-      {
-        "name": "Journal of Chinese Political Science",
         "count": 13
       },
       {
@@ -47376,11 +48045,11 @@
       },
       {
         "date": "2026-04-12",
-        "count": 1
+        "count": 4
       },
       {
         "date": "2026-04-13",
-        "count": 0
+        "count": 28
       },
       {
         "date": "2026-04-14",
@@ -47389,5 +48058,5 @@
     ],
     "today": 0
   },
-  "export_time": "2026-04-14T03:48:27.055317"
+  "export_time": "2026-04-14T12:06:15.182580"
 }
