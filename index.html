@@ -1475,6 +1475,65 @@
             font-weight: 500;
         }
         #themeRiverChart { width: 100%; height: 400px; }
+        
+        /* ==================== 热词标签样式 ==================== */
+        .hotwords-tab {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #64748b;
+        }
+        .hotwords-tab:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
+        }
+        .hotwords-tab.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        
+        .hotword-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid #e2e8f0;
+            background: white;
+            color: #334155;
+        }
+        .hotword-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .hotword-tag.high-freq {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            border-color: #3b82f6;
+            font-size: 16px;
+            padding: 8px 16px;
+        }
+        .hotword-tag.medium-freq {
+            background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+            color: white;
+            border-color: #60a5fa;
+            font-size: 14px;
+        }
+        .hotword-tag.low-freq {
+            background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
+            color: #1e40af;
+            border-color: #bfdbfe;
+            font-size: 13px;
+        }
+        
         .loading {
             display: inline-block;
             width: 24px;
@@ -1733,10 +1792,10 @@
                     </h2>
                     <div class="flex gap-2 flex-wrap">
                         <button onclick="setTrendCategory('all')" class="trend-filter-btn active" data-trend-category="all">全部</button>
-                        <button onclick="setTrendCategory('pa')" class="trend-filter-btn" data-trend-category="pa">PA</button>
-                        <button onclick="setTrendCategory('pp')" class="trend-filter-btn" data-trend-category="pp">PP</button>
-                        <button onclick="setTrendCategory('pol')" class="trend-filter-btn" data-trend-category="pol">POL</button>
-                        <button onclick="setTrendCategory('china')" class="trend-filter-btn" data-trend-category="china">CHINA</button>
+                        <button onclick="setTrendCategory('pa')" class="trend-filter-btn" data-trend-category="pa">公共行政</button>
+                        <button onclick="setTrendCategory('pp')" class="trend-filter-btn" data-trend-category="pp">公共政策</button>
+                        <button onclick="setTrendCategory('pol')" class="trend-filter-btn" data-trend-category="pol">政治学</button>
+                        <button onclick="setTrendCategory('china')" class="trend-filter-btn" data-trend-category="china">中国研究</button>
                     </div>
                 </div>
                 <div class="h-64">
@@ -1744,38 +1803,50 @@
                 </div>
             </div>
 
-            <!-- 热门研究主题 -->
-            <div class="bg-white rounded-xl border border-slate-200 p-6">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-center mb-6 gap-4">
-                    <div>
-                        <h2 class="text-xl font-bold text-slate-800">
-                            <i class="fas fa-fire text-orange-500 mr-2"></i>热门研究主题
-                        </h2>
-                        <p class="text-sm text-slate-500 mt-1">各领域高频关键词统计</p>
+            <!-- 近90天热词分析 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- 标题热词 -->
+                <div class="bg-white rounded-xl border border-slate-200 p-6">
+                    <div class="flex flex-col gap-4 mb-5">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800">
+                                <i class="fas fa-heading text-blue-500 mr-2"></i>近90天标题热词
+                            </h2>
+                            <p class="text-sm text-slate-500 mt-1">高频出现的研究主题词</p>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <button onclick="setHotWordsCategory('title', 'all')" class="hotwords-tab active" data-hotwords-type="title" data-hotwords-category="all">全部</button>
+                            <button onclick="setHotWordsCategory('title', 'pa')" class="hotwords-tab" data-hotwords-type="title" data-hotwords-category="pa">公共行政</button>
+                            <button onclick="setHotWordsCategory('title', 'pp')" class="hotwords-tab" data-hotwords-type="title" data-hotwords-category="pp">公共政策</button>
+                            <button onclick="setHotWordsCategory('title', 'pol')" class="hotwords-tab" data-hotwords-type="title" data-hotwords-category="pol">政治学</button>
+                            <button onclick="setHotWordsCategory('title', 'china')" class="hotwords-tab" data-hotwords-type="title" data-hotwords-category="china">中国研究</button>
+                        </div>
                     </div>
-                    <div class="flex gap-2 flex-wrap">
-                        <button onclick="setThemeCategory('all')" class="filter-tab active" data-theme-category="all">全部</button>
-                        <button onclick="setThemeCategory('pa')" class="filter-tab" data-theme-category="pa">PA</button>
-                        <button onclick="setThemeCategory('pp')" class="filter-tab" data-theme-category="pp">PP</button>
-                        <button onclick="setThemeCategory('pol')" class="filter-tab" data-theme-category="pol">POL</button>
-                        <button onclick="setThemeCategory('china')" class="filter-tab" data-theme-category="china">CHINA</button>
+                    <div id="title-hotwords-container" class="flex flex-wrap gap-2 min-h-[200px]">
+                        <!-- 动态生成热词标签 -->
                     </div>
                 </div>
-                <div id="keywords-table-container" class="overflow-x-auto">
-                    <table class="w-full text-sm keywords-table">
-                        <thead>
-                            <tr class="border-b border-slate-200">
-                                <th class="text-left py-3 px-4 font-semibold text-slate-700">排名</th>
-                                <th class="text-left py-3 px-4 font-semibold text-slate-700">关键词</th>
-                                <th class="text-left py-3 px-4 font-semibold text-slate-700">出现次数</th>
-                                <th class="text-left py-3 px-4 font-semibold text-slate-700 hidden-mobile">相关文献数</th>
-                                <th class="text-left py-3 px-4 font-semibold text-slate-700 hidden-mobile">趋势</th>
-                            </tr>
-                        </thead>
-                        <tbody id="keywords-table-body">
-                            <!-- 动态生成 -->
-                        </tbody>
-                    </table>
+
+                <!-- 摘要热词 -->
+                <div class="bg-white rounded-xl border border-slate-200 p-6">
+                    <div class="flex flex-col gap-4 mb-5">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800">
+                                <i class="fas fa-align-left text-teal-500 mr-2"></i>近90天摘要热词
+                            </h2>
+                            <p class="text-sm text-slate-500 mt-1">摘要中高频出现的概念词</p>
+                        </div>
+                        <div class="flex gap-2 flex-wrap">
+                            <button onclick="setHotWordsCategory('abstract', 'all')" class="hotwords-tab active" data-hotwords-type="abstract" data-hotwords-category="all">全部</button>
+                            <button onclick="setHotWordsCategory('abstract', 'pa')" class="hotwords-tab" data-hotwords-type="abstract" data-hotwords-category="pa">公共行政</button>
+                            <button onclick="setHotWordsCategory('abstract', 'pp')" class="hotwords-tab" data-hotwords-type="abstract" data-hotwords-category="pp">公共政策</button>
+                            <button onclick="setHotWordsCategory('abstract', 'pol')" class="hotwords-tab" data-hotwords-type="abstract" data-hotwords-category="pol">政治学</button>
+                            <button onclick="setHotWordsCategory('abstract', 'china')" class="hotwords-tab" data-hotwords-type="abstract" data-hotwords-category="china">中国研究</button>
+                        </div>
+                    </div>
+                    <div id="abstract-hotwords-container" class="flex flex-wrap gap-2 min-h-[200px]">
+                        <!-- 动态生成热词标签 -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -2337,6 +2408,38 @@
         let currentThemeCategory = 'all';
         let searchFields = ['title', 'abstract'];
         let trendChart = null;
+        
+        // 热词分析配置
+        let currentHotWordsCategory = { title: 'all', abstract: 'all' };
+        const HOTWORDS_STOP_WORDS = new Set([
+            // 通用停用词
+            'the', 'a', 'an', 'and', 'or', 'of', 'in', 'to', 'for', 'with', 'on', 'by', 'is', 'are', 'was', 'were',
+            'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should',
+            'may', 'might', 'can', 'this', 'that', 'these', 'those', 'it', 'its', 'we', 'our', 'us', 'i', 'my',
+            'me', 'he', 'she', 'his', 'her', 'him', 'they', 'them', 'their', 'as', 'at', 'from', 'up', 'about',
+            'into', 'through', 'during', 'before', 'after', 'above', 'below', 'between', 'among', 'within',
+            // 学术常用停用词
+            'study', 'research', 'paper', 'article', 'analysis', 'data', 'results', 'findings', 'discussion',
+            'conclusion', 'introduction', 'methodology', 'methods', 'literature', 'review', 'theory', 'theories',
+            'framework', 'model', 'models', 'approach', 'approaches', 'concept', 'concepts', 'perspective',
+            'perspectives', 'implications', 'contribution', 'contributions', 'limitation', 'limitations',
+            'future', 'suggestion', 'suggestions', 'recommendation', 'recommendations', 'practical', 'theoretical',
+            'empirical', 'evidence', 'finding', 'finding', 'argue', 'argues', 'argued', 'suggest', 'suggests',
+            'examine', 'examines', 'examined', 'explore', 'explores', 'explored', 'investigate', 'investigates',
+            'investigated', 'analyze', 'analyzes', 'analyzed', 'discuss', 'discusses', 'discussed',
+            // 公共行政/政策领域停用词
+            'public', 'administration', 'administrative', 'policy', 'policies', 'government', 'governance',
+            'management', 'organizational', 'organizations', 'organization', 'institutions', 'institutional',
+            'bureaucracy', 'bureaucratic', 'service', 'services', 'delivery', 'performance', 'reform',
+            'reforms', 'change', 'changes', 'development', 'developments', 'process', 'processes',
+            'system', 'systems', 'level', 'levels', 'local', 'national', 'state', 'federal', 'central',
+            'role', 'roles', 'function', 'functions', 'impact', 'impacts', 'effect', 'effects',
+            'relationship', 'relationships', 'between', 'among', 'within', 'across', 'during', 'over',
+            'based', 'using', 'use', 'used', 'via', 'through', 'under', 'more', 'less', 'most', 'least',
+            'such', 'also', 'however', 'therefore', 'thus', 'furthermore', 'moreover', 'additionally',
+            'particularly', 'especially', 'significantly', 'importantly', 'notably', 'specifically',
+            'et', 'al', 'etc', 'eg', 'ie', 'vs', 'amongst', 'whilst', 'toward', 'towards'
+        ]);
         
         // ==================== 分页配置 ====================
         const PAPERS_PER_PAGE = 20;
@@ -2980,8 +3083,6 @@
             if (showNewTag) {
                 html += '<span class="new-tag">NEW</span>';
             }
-            html += '<span class="separator">·</span>';
-            html += '<span class="category-tag tag-' + (paper.category ? paper.category.toLowerCase() : 'pa') + '">' + (paper.category || 'PA') + '</span>';
             html += '</div>';
             
             // 摘要（可展开）
@@ -3063,7 +3164,7 @@
         
         function initCharts(stats) {
             renderTrendChart(currentTrendCategory);
-            initThemeRiverChart();
+            initHotWordsAnalysis();
         }
         
         function renderTrendChart(category) {
@@ -3140,83 +3241,13 @@
             renderTrendChart(category);
         }
         
+        // 兼容旧代码调用（已替换为热词分析）
         function initThemeRiverChart() {
-            // 不再初始化河流图，改为渲染关键词表格
-            renderKeywordsTable();
+            // 热词分析已在 initHotWordsAnalysis 中初始化
         }
         
         function renderKeywordsTable() {
-            const tbody = document.getElementById('keywords-table-body');
-            if (!tbody) return;
-            
-            let papers = allPapers;
-            if (currentThemeCategory !== 'all') {
-                papers = allPapers.filter(p => p.category === currentThemeCategory.toUpperCase());
-            }
-            
-            // 统计关键词
-            const keywordStats = {};
-            papers.forEach(paper => {
-                const keywords = paper.keywords || [];
-                keywords.forEach(keyword => {
-                    if (!keywordStats[keyword]) {
-                        keywordStats[keyword] = { count: 0, papers: new Set() };
-                    }
-                    keywordStats[keyword].count++;
-                    keywordStats[keyword].papers.add(paper.openalex_id);
-                });
-            });
-            
-            // 排序并取前20
-            const sortedKeywords = Object.entries(keywordStats)
-                .map(([keyword, stats]) => ({
-                    keyword,
-                    count: stats.count,
-                    paperCount: stats.papers.size
-                }))
-                .sort((a, b) => b.count - a.count)
-                .slice(0, 20);
-            
-            // 检测是否为移动端
-            const isMobile = window.innerWidth <= 768;
-            
-            if (sortedKeywords.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="' + (isMobile ? 3 : 5) + '" class="text-center py-8 text-slate-400">暂无关键词数据</td></tr>';
-                return;
-            }
-            
-            // 渲染表格
-            tbody.innerHTML = sortedKeywords.map((item, index) => {
-                const rank = index + 1;
-                let rankClass = '';
-                let rankIcon = '';
-                if (rank === 1) { rankClass = 'text-amber-600 font-bold'; rankIcon = '<i class="fas fa-crown text-amber-500 mr-1"></i>'; }
-                else if (rank === 2) { rankClass = 'text-slate-600 font-bold'; rankIcon = '<i class="fas fa-medal text-slate-400 mr-1"></i>'; }
-                else if (rank === 3) { rankClass = 'text-orange-700 font-bold'; rankIcon = '<i class="fas fa-medal text-orange-600 mr-1"></i>'; }
-                
-                // 计算趋势（模拟：根据排名判断）
-                const trend = rank <= 5 ? '<span class="text-green-500"><i class="fas fa-arrow-up mr-1"></i>热门</span>' : 
-                               rank <= 10 ? '<span class="text-blue-500"><i class="fas fa-minus mr-1"></i>稳定</span>' :
-                               '<span class="text-slate-400"><i class="fas fa-arrow-down mr-1"></i>一般</span>';
-                
-                if (isMobile) {
-                    // 移动端：简化显示，只显示排名、关键词、出现次数
-                    return '<tr class="border-b border-slate-100 hover:bg-slate-50 transition">' +
-                        '<td class="py-3 px-2 ' + rankClass + '">' + rankIcon + rank + '</td>' +
-                        '<td class="py-3 px-2 font-medium text-slate-800">' + escapeHtml(item.keyword) + '</td>' +
-                        '<td class="py-3 px-2"><span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs font-semibold">' + item.count + '</span></td>' +
-                        '</tr>';
-                } else {
-                    // 桌面端：完整显示
-                    return '<tr class="border-b border-slate-100 hover:bg-slate-50 transition">' +
-                        '<td class="py-3 px-4 ' + rankClass + '">' + rankIcon + rank + '</td>' +
-                        '<td class="py-3 px-4 font-medium text-slate-800">' + escapeHtml(item.keyword) + '</td>' +
-                        '<td class="py-3 px-4"><span class="px-2 py-1 bg-blue-50 text-blue-600 rounded text-xs font-semibold">' + item.count + '</span></td>' +
-                        '<td class="py-3 px-4 text-slate-600 hidden-mobile">' + item.paperCount + ' 篇</td>' +
-                        '<td class="py-3 px-4 hidden-mobile">' + trend + '</td>' +
-                        '</tr>';
-                }
-            }).join('');
+            // 已替换为热词分析功能
         }
         
         function setThemeCategory(category) {
@@ -3230,8 +3261,6 @@
                     btn.classList.remove('active');
                 }
             });
-            
-            renderKeywordsTable();
         }
 
         function updateThemeRiverChart() {
@@ -3241,6 +3270,149 @@
 
         function setThemeRiverCategory(category) {
             setThemeCategory(category);
+        }
+
+        // ==================== 热词分析功能 ====================
+        
+        // 提取词组（2-3个词）
+        function extractPhrases(text, minLength = 3) {
+            if (!text) return [];
+            
+            // 清理文本
+            const cleaned = text.toLowerCase()
+                .replace(/[^\w\s-]/g, ' ')  // 保留连字符
+                .replace(/\s+/g, ' ')
+                .trim();
+            
+            const words = cleaned.split(' ').filter(w => w.length >= minLength);
+            const phrases = [];
+            
+            // 提取单个词
+            words.forEach(word => {
+                if (!HOTWORDS_STOP_WORDS.has(word) && !/^\d+$/.test(word)) {
+                    phrases.push(word);
+                }
+            });
+            
+            // 提取2词短语
+            for (let i = 0; i < words.length - 1; i++) {
+                const phrase = words[i] + ' ' + words[i + 1];
+                const phraseWords = phrase.split(' ');
+                if (phraseWords.every(w => !HOTWORDS_STOP_WORDS.has(w) || w.length > 4)) {
+                    phrases.push(phrase);
+                }
+            }
+            
+            // 提取3词短语
+            for (let i = 0; i < words.length - 2; i++) {
+                const phrase = words[i] + ' ' + words[i + 1] + ' ' + words[i + 2];
+                const phraseWords = phrase.split(' ');
+                if (phraseWords.every(w => !HOTWORDS_STOP_WORDS.has(w) || w.length > 4)) {
+                    phrases.push(phrase);
+                }
+            }
+            
+            return phrases;
+        }
+        
+        // 统计热词
+        function calculateHotWords(papers, field, topN = 30) {
+            const wordCounts = {};
+            
+            papers.forEach(paper => {
+                const text = paper[field] || '';
+                const phrases = extractPhrases(text);
+                
+                phrases.forEach(phrase => {
+                    wordCounts[phrase] = (wordCounts[phrase] || 0) + 1;
+                });
+            });
+            
+            // 转换为数组并排序
+            const sorted = Object.entries(wordCounts)
+                .filter(([word, count]) => count >= 2)  // 至少出现2次
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, topN);
+            
+            return sorted;
+        }
+        
+        // 获取近90天的论文
+        function getRecentPapers(days = 90, category = 'all') {
+            const cutoffDate = new Date();
+            cutoffDate.setDate(cutoffDate.getDate() - days);
+            
+            let papers = allPapers.filter(p => {
+                const pubDate = new Date(p.published_date);
+                return pubDate >= cutoffDate;
+            });
+            
+            if (category !== 'all') {
+                papers = papers.filter(p => p.category === category.toUpperCase());
+            }
+            
+            return papers;
+        }
+        
+        // 渲染热词标签
+        function renderHotWords(type, category) {
+            const container = document.getElementById(type + '-hotwords-container');
+            if (!container) return;
+            
+            const papers = getRecentPapers(90, category);
+            const hotWords = calculateHotWords(papers, type === 'title' ? 'title' : 'abstract', 30);
+            
+            if (hotWords.length === 0) {
+                container.innerHTML = '<div class="text-slate-400 text-sm">暂无数据</div>';
+                return;
+            }
+            
+            // 计算词频分档
+            const maxCount = hotWords[0][1];
+            const minCount = hotWords[hotWords.length - 1][1];
+            const range = maxCount - minCount || 1;
+            
+            let html = '';
+            hotWords.forEach(([word, count]) => {
+                const ratio = (count - minCount) / range;
+                let freqClass = 'low-freq';
+                if (ratio >= 0.7) freqClass = 'high-freq';
+                else if (ratio >= 0.3) freqClass = 'medium-freq';
+                
+                html += `<span class="hotword-tag ${freqClass}" onclick="searchByKeyword('${word.replace(/'/g, "\\'")}')" title="出现 ${count} 次">${escapeHtml(word)}</span>`;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // 设置热词分类
+        function setHotWordsCategory(type, category) {
+            currentHotWordsCategory[type] = category;
+            
+            // 更新按钮状态
+            document.querySelectorAll(`[data-hotwords-type="${type}"]`).forEach(btn => {
+                if (btn.dataset.hotwordsCategory === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // 重新渲染
+            renderHotWords(type, category);
+        }
+        
+        // 点击热词搜索
+        function searchByKeyword(keyword) {
+            document.getElementById('search-input').value = keyword;
+            performSearch();
+            switchTab('search');
+        }
+        
+        // 初始化热词分析
+        function initHotWordsAnalysis() {
+            renderHotWords('title', 'all');
+            renderHotWords('abstract', 'all');
         }
 
         function renderAll() {
