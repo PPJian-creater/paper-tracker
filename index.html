@@ -2418,6 +2418,14 @@
             'may', 'might', 'can', 'this', 'that', 'these', 'those', 'it', 'its', 'we', 'our', 'us', 'i', 'my',
             'me', 'he', 'she', 'his', 'her', 'him', 'they', 'them', 'their', 'as', 'at', 'from', 'up', 'about',
             'into', 'through', 'during', 'before', 'after', 'above', 'below', 'between', 'among', 'within',
+            // 疑问词、连词、副词等
+            'when', 'how', 'what', 'where', 'why', 'who', 'which', 'whether', 'not', 'both', 'either', 'neither',
+            'new', 'two', 'other', 'another', 'all', 'any', 'some', 'many', 'much', 'more', 'most', 'few', 'several',
+            'but', 'while', 'although', 'though', 'however', 'therefore', 'thus', 'hence', 'so', 'because', 'since',
+            'if', 'unless', 'until', 'unless', 'once', 'than', 'then', 'only', 'just', 'even', 'also', 'too',
+            'very', 'quite', 'rather', 'still', 'already', 'yet', 'always', 'often', 'sometimes', 'never',
+            // URL和技术相关
+            'doi', 'https', 'http', 'www', 'com', 'org', 'net', 'html', 'scp', 'sup', 'sub', 'em', 'strong',
             // 学术常用停用词
             'study', 'research', 'paper', 'article', 'analysis', 'data', 'results', 'findings', 'discussion',
             'conclusion', 'introduction', 'methodology', 'methods', 'literature', 'review', 'theory', 'theories',
@@ -2435,10 +2443,15 @@
             'system', 'systems', 'level', 'levels', 'local', 'national', 'state', 'federal', 'central',
             'role', 'roles', 'function', 'functions', 'impact', 'impacts', 'effect', 'effects',
             'relationship', 'relationships', 'between', 'among', 'within', 'across', 'during', 'over',
-            'based', 'using', 'use', 'used', 'via', 'through', 'under', 'more', 'less', 'most', 'least',
+            'based', 'using', 'use', 'used', 'via', 'through', 'under',
             'such', 'also', 'however', 'therefore', 'thus', 'furthermore', 'moreover', 'additionally',
             'particularly', 'especially', 'significantly', 'importantly', 'notably', 'specifically',
             'et', 'al', 'etc', 'eg', 'ie', 'vs', 'amongst', 'whilst', 'toward', 'towards'
+        ]);
+        
+        // 有意义的短词白名单（长度<=3但有实际意义）
+        const HOTWORDS_SHORT_WORD_WHITELIST = new Set([
+            'ai', 'eu', 'uk', 'us', 'un', 'phd', 'ngo', 'oecd', 'gdp', 'pfi', 'ppp'
         ]);
         
         // ==================== 分页配置 ====================
@@ -3274,41 +3287,72 @@
 
         // ==================== 热词分析功能 ====================
         
+        // 清理文本（移除HTML标签等）
+        function cleanTextForHotWords(text) {
+            if (!text) return '';
+            return text
+                .toLowerCase()
+                // 移除HTML标签
+                .replace(/<[^>]+>/g, ' ')
+                // 移除URL
+                .replace(/https?:\/\/[^\s]+/g, ' ')
+                // 移除DOI
+                .replace(/doi[\s:]?[^\s]*/g, ' ')
+                // 保留字母、数字、连字符、空格
+                .replace(/[^\w\s-]/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+        
+        // 检查是否为有效词（非停用词或白名单短词）
+        function isValidWord(word) {
+            if (!word || /^\d+$/.test(word)) return false;
+            // 白名单短词直接通过
+            if (word.length <= 3 && HOTWORDS_SHORT_WORD_WHITELIST.has(word)) return true;
+            // 长度小于3的词过滤掉（除非是白名单）
+            if (word.length < 3) return false;
+            // 检查停用词
+            return !HOTWORDS_STOP_WORDS.has(word);
+        }
+        
         // 提取词组（2-3个词）
         function extractPhrases(text, minLength = 3) {
             if (!text) return [];
             
             // 清理文本
-            const cleaned = text.toLowerCase()
-                .replace(/[^\w\s-]/g, ' ')  // 保留连字符
-                .replace(/\s+/g, ' ')
-                .trim();
-            
-            const words = cleaned.split(' ').filter(w => w.length >= minLength);
+            const cleaned = cleanTextForHotWords(text);
+            const words = cleaned.split(' ').filter(w => w.length >= 2);
             const phrases = [];
             
             // 提取单个词
             words.forEach(word => {
-                if (!HOTWORDS_STOP_WORDS.has(word) && !/^\d+$/.test(word)) {
+                if (isValidWord(word)) {
                     phrases.push(word);
                 }
             });
             
             // 提取2词短语
             for (let i = 0; i < words.length - 1; i++) {
-                const phrase = words[i] + ' ' + words[i + 1];
-                const phraseWords = phrase.split(' ');
-                if (phraseWords.every(w => !HOTWORDS_STOP_WORDS.has(w) || w.length > 4)) {
-                    phrases.push(phrase);
+                const word1 = words[i];
+                const word2 = words[i + 1];
+                // 短语中至少有一个词是有效的（非停用词）
+                if ((isValidWord(word1) || HOTWORDS_SHORT_WORD_WHITELIST.has(word1)) && 
+                    (isValidWord(word2) || HOTWORDS_SHORT_WORD_WHITELIST.has(word2))) {
+                    phrases.push(word1 + ' ' + word2);
                 }
             }
             
             // 提取3词短语
             for (let i = 0; i < words.length - 2; i++) {
-                const phrase = words[i] + ' ' + words[i + 1] + ' ' + words[i + 2];
-                const phraseWords = phrase.split(' ');
-                if (phraseWords.every(w => !HOTWORDS_STOP_WORDS.has(w) || w.length > 4)) {
-                    phrases.push(phrase);
+                const word1 = words[i];
+                const word2 = words[i + 1];
+                const word3 = words[i + 2];
+                // 短语中至少有两个词是有效的
+                const validCount = [word1, word2, word3].filter(w => 
+                    isValidWord(w) || HOTWORDS_SHORT_WORD_WHITELIST.has(w)
+                ).length;
+                if (validCount >= 2) {
+                    phrases.push(word1 + ' ' + word2 + ' ' + word3);
                 }
             }
             
