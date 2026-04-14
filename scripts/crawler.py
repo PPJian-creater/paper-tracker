@@ -9,6 +9,7 @@ import time
 import os
 import sys
 import html
+import re
 from datetime import datetime, timedelta
 
 # OpenAlex API配置
@@ -372,11 +373,24 @@ def is_non_academic_title(title):
     return False
 
 
+def clean_text(text):
+    """清理文本中的HTML标签"""
+    if not text:
+        return ''
+    # 移除HTML标签
+    text = re.sub(r'<[^>]+>', '', text)
+    # 清理多余空格
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
 def parse_work(work):
     """解析OpenAlex work对象"""
     try:
         openalex_id = work.get('id', '').replace('https://openalex.org/', '')
         title = work.get('display_name', '')
+        
+        # 清理标题中的HTML标签
+        title = clean_text(title)
         
         # 过滤非学术文章
         if is_non_academic_title(title):
