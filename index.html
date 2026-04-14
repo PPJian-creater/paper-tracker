@@ -1771,40 +1771,8 @@
                 </div>
             </div>
 
-            <!-- 精彩推荐 -->
-            <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-slate-800">
-                        <i class="fas fa-dice text-amber-500 mr-2"></i>精彩推荐
-                    </h2>
-                    <button onclick="refreshRandomPapers()" class="text-blue-600 hover:text-blue-800 font-medium">
-                        <i class="fas fa-sync-alt mr-1"></i>换一批
-                    </button>
-                </div>
-                <div id="random-papers" class="grid grid-cols-1 lg:grid-cols-3 gap-6"></div>
-            </div>
-
-            <!-- 近30天发文趋势 - 支持分模块展示 -->
-            <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
-                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
-                    <h2 class="text-xl font-bold text-slate-800">
-                        <i class="fas fa-chart-line text-blue-500 mr-2"></i>近30天发文趋势
-                    </h2>
-                    <div class="flex gap-2 flex-wrap">
-                        <button onclick="setTrendCategory('all')" class="trend-filter-btn active" data-trend-category="all">全部</button>
-                        <button onclick="setTrendCategory('pa')" class="trend-filter-btn" data-trend-category="pa">公共行政</button>
-                        <button onclick="setTrendCategory('pp')" class="trend-filter-btn" data-trend-category="pp">公共政策</button>
-                        <button onclick="setTrendCategory('pol')" class="trend-filter-btn" data-trend-category="pol">政治学</button>
-                        <button onclick="setTrendCategory('china')" class="trend-filter-btn" data-trend-category="china">中国研究</button>
-                    </div>
-                </div>
-                <div class="h-64">
-                    <canvas id="trendChart"></canvas>
-                </div>
-            </div>
-
             <!-- 近90天热词分析 -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
                 <!-- 标题热词 -->
                 <div class="bg-white rounded-xl border border-slate-200 p-6">
                     <div class="flex flex-col gap-4 mb-5">
@@ -1848,6 +1816,38 @@
                         <!-- 动态生成热词标签 -->
                     </div>
                 </div>
+            </div>
+
+            <!-- 近30天发文趋势 - 支持分模块展示 -->
+            <div class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
+                <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-4">
+                    <h2 class="text-xl font-bold text-slate-800">
+                        <i class="fas fa-chart-line text-blue-500 mr-2"></i>近30天发文趋势
+                    </h2>
+                    <div class="flex gap-2 flex-wrap">
+                        <button onclick="setTrendCategory('all')" class="trend-filter-btn active" data-trend-category="all">全部</button>
+                        <button onclick="setTrendCategory('pa')" class="trend-filter-btn" data-trend-category="pa">公共行政</button>
+                        <button onclick="setTrendCategory('pp')" class="trend-filter-btn" data-trend-category="pp">公共政策</button>
+                        <button onclick="setTrendCategory('pol')" class="trend-filter-btn" data-trend-category="pol">政治学</button>
+                        <button onclick="setTrendCategory('china')" class="trend-filter-btn" data-trend-category="china">中国研究</button>
+                    </div>
+                </div>
+                <div class="h-64">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+
+            <!-- 精彩推荐 -->
+            <div class="bg-white rounded-xl border border-slate-200 p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-slate-800">
+                        <i class="fas fa-dice text-amber-500 mr-2"></i>精彩推荐
+                    </h2>
+                    <button onclick="refreshRandomPapers()" class="text-blue-600 hover:text-blue-800 font-medium">
+                        <i class="fas fa-sync-alt mr-1"></i>换一批
+                    </button>
+                </div>
+                <div id="random-papers" class="grid grid-cols-1 lg:grid-cols-3 gap-6"></div>
             </div>
         </div>
 
@@ -3010,7 +3010,6 @@
                     html += '<div class="category-summary" onclick="toggleCategoryExpand(\'' + cat.key + '\', \'' + dateStr + '\')">';
                     html += '<div class="category-summary-left">';
                     html += '<div class="category-expand-icon"><i class="fas fa-chevron-right"></i></div>';
-                    html += '<span class="category-tag tag-' + cat.key.toLowerCase() + '">' + cat.key + '</span>';
                     html += '<span class="category-name">' + cat.name + '</span>';
                     html += '</div>';
                     html += '<span class="category-count">' + catPapers.length + ' 篇</span>';
@@ -3035,7 +3034,6 @@
                 html += '<div class="category-summary" onclick="toggleCategoryExpand(\'OTHER\', \'' + dateStr + '\')">';
                 html += '<div class="category-summary-left">';
                 html += '<div class="category-expand-icon"><i class="fas fa-chevron-right"></i></div>';
-                html += '<span class="category-tag" style="background:#f1f5f9;color:#64748b;">其他</span>';
                 html += '<span class="category-name">其他</span>';
                 html += '</div>';
                 html += '<span class="category-count">' + uncategorized.length + ' 篇</span>';
