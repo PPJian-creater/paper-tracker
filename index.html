@@ -808,6 +808,163 @@
                 height: 44px;
                 font-size: 16px;
             }
+            
+            /* ==================== 移动端期刊导航手风琴样式 ==================== */
+            #journals-normal-view {
+                display: none; /* 移动端隐藏桌面表格 */
+            }
+            
+            .journal-accordion-mobile {
+                display: block !important;
+                background: white;
+                border-radius: 12px;
+                overflow: hidden;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
+            
+            .journal-accordion-mobile.hidden {
+                display: none !important;
+            }
+            
+            /* 分组标题栏 */
+            .journal-group {
+                border-bottom: 1px solid #e2e8f0;
+            }
+            
+            .journal-group:last-child {
+                border-bottom: none;
+            }
+            
+            .journal-group-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 16px 20px;
+                background: #f8fafc;
+                cursor: pointer;
+                user-select: none;
+                transition: background 0.2s ease;
+                min-height: 56px;
+            }
+            
+            .journal-group-header:active {
+                background: #f1f5f9;
+            }
+            
+            .journal-group-title-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                flex: 1;
+            }
+            
+            /* 领域标签 */
+            .journal-group-tag {
+                padding: 4px 10px;
+                border-radius: 6px;
+                font-size: 12px;
+                font-weight: 600;
+                color: white;
+                flex-shrink: 0;
+            }
+            
+            .journal-group-tag.pa { background: #3b82f6; }
+            .journal-group-tag.pp { background: #10b981; }
+            .journal-group-tag.pol { background: #8b5cf6; }
+            .journal-group-tag.china { background: #f59e0b; }
+            .journal-group-tag.cn { background: #ef4444; }
+            
+            .journal-group-title {
+                font-size: 15px;
+                font-weight: 600;
+                color: #334155;
+            }
+            
+            .journal-group-count {
+                font-size: 13px;
+                color: #64748b;
+                margin-left: 8px;
+            }
+            
+            .journal-group-arrow {
+                font-size: 14px;
+                color: #94a3b8;
+                transition: transform 0.3s ease;
+                margin-left: 10px;
+            }
+            
+            .journal-group.expanded .journal-group-arrow {
+                transform: rotate(180deg);
+            }
+            
+            /* 内容区（可折叠） */
+            .journal-group-content {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                background: white;
+            }
+            
+            .journal-group.expanded .journal-group-content {
+                max-height: 2000px;
+            }
+            
+            /* 期刊列表项 */
+            .journal-list-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 14px 20px;
+                border-bottom: 1px solid #f1f5f9;
+                transition: background 0.15s ease;
+                min-height: 56px;
+            }
+            
+            .journal-list-item:last-child {
+                border-bottom: none;
+            }
+            
+            .journal-list-item:active {
+                background: #f8fafc;
+            }
+            
+            .journal-list-name {
+                font-size: 15px;
+                color: #1e293b;
+                font-weight: 500;
+                flex: 1;
+                padding-right: 12px;
+                line-height: 1.5;
+                word-wrap: break-word;
+                word-break: break-word;
+            }
+            
+            /* 收藏按钮 */
+            .journal-list-favorite {
+                width: 44px;
+                height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                border-radius: 8px;
+                transition: all 0.15s ease;
+                flex-shrink: 0;
+            }
+            
+            .journal-list-favorite:active {
+                transform: scale(0.9);
+            }
+            
+            .journal-list-favorite i {
+                font-size: 18px;
+                color: #94a3b8;
+                transition: all 0.2s ease;
+            }
+            
+            .journal-list-favorite.favorited i {
+                color: #fbbf24;
+            }
         }
         
         /* ==================== 期刊导航收藏功能样式 ==================== */
@@ -1744,9 +1901,9 @@
             <div id="today-papers-section" class="bg-white rounded-xl border border-slate-200 p-6 mb-8">
                 <div class="flex justify-between items-center mb-4">
                     <div>
-                        <h2 class="text-xl font-bold text-slate-800" title="展示数据库中最新收录的文献日期（考虑数据爬取延迟）">
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center" title="展示数据库中最新收录的文献日期（考虑数据爬取延迟）">
                             <i class="fas fa-bolt text-amber-500 mr-2"></i>最新更新
-                            <span id="today-count-badge" class="ml-2 px-2 py-0.5 bg-amber-100 text-amber-700 text-sm rounded-full">0</span>
+                            <span id="today-count-badge" class="ml-2 px-2 py-0.5 bg-amber-100 text-amber-700 text-sm rounded-full align-middle">0</span>
                         </h2>
                         <p class="text-sm text-slate-500 mt-1">最新收录的文献（数据更新至 <span id="latest-date-display" class="font-medium text-amber-600">-</span>）</p>
                     </div>
@@ -1961,7 +2118,7 @@
                 </div>
             </div>
             
-            <!-- 普通筛选：双列表格 -->
+            <!-- 普通筛选：双列表格（桌面端） -->
             <div id="journals-normal-view" class="table-container bg-white rounded-xl border border-slate-200 overflow-hidden">
                 <table class="journal-table" style="table-layout: fixed; width: 100%;">
                     <thead>
@@ -1976,6 +2133,11 @@
                     </thead>
                     <tbody id="journals-table-body"></tbody>
                 </table>
+            </div>
+            
+            <!-- 移动端分组折叠列表 -->
+            <div id="journal-accordion-mobile" class="journal-accordion-mobile hidden">
+                <!-- 动态渲染分组内容 -->
             </div>
             
             <!-- 我的收藏：卡片网格 -->
@@ -2421,13 +2583,16 @@
             // 疑问词、连词、副词等
             'when', 'how', 'what', 'where', 'why', 'who', 'which', 'whether', 'not', 'both', 'either', 'neither',
             'new', 'two', 'other', 'another', 'all', 'any', 'some', 'many', 'much', 'more', 'most', 'few', 'several',
+            // 数字和序数词
+            'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten',
+            'first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth',
             'but', 'while', 'although', 'though', 'however', 'therefore', 'thus', 'hence', 'so', 'because', 'since',
             'if', 'unless', 'until', 'unless', 'once', 'than', 'then', 'only', 'just', 'even', 'also', 'too',
             'very', 'quite', 'rather', 'still', 'already', 'yet', 'always', 'often', 'sometimes', 'never',
             // URL和技术相关
             'doi', 'https', 'http', 'www', 'com', 'org', 'net', 'html', 'scp', 'sup', 'sub', 'em', 'strong',
             // 学术常用停用词
-            'study', 'research', 'paper', 'article', 'analysis', 'data', 'results', 'findings', 'discussion',
+            'study', 'studies', 'research', 'paper', 'article', 'analysis', 'data', 'results', 'findings', 'discussion',
             'conclusion', 'introduction', 'methodology', 'methods', 'literature', 'review', 'theory', 'theories',
             'framework', 'model', 'models', 'approach', 'approaches', 'concept', 'concepts', 'perspective',
             'perspectives', 'implications', 'contribution', 'contributions', 'limitation', 'limitations',
@@ -2435,6 +2600,11 @@
             'empirical', 'evidence', 'finding', 'finding', 'argue', 'argues', 'argued', 'suggest', 'suggests',
             'examine', 'examines', 'examined', 'explore', 'explores', 'explored', 'investigate', 'investigates',
             'investigated', 'analyze', 'analyzes', 'analyzed', 'discuss', 'discusses', 'discussed',
+            'abstract', 'context', 'background', 'purpose', 'objective', 'aim', 'aims', 'goal', 'goals',
+            'method', 'procedure', 'procedures', 'measure', 'measures', 'measurement', 'variable', 'variables',
+            'factor', 'factors', 'dimension', 'dimensions', 'aspect', 'aspects', 'element', 'elements',
+            'component', 'components', 'feature', 'features', 'characteristic', 'characteristics',
+            'pattern', 'patterns', 'trend', 'trends', 'difference', 'differences', 'similarity', 'similarities',
             // 公共行政/政策领域停用词
             'public', 'administration', 'administrative', 'policy', 'policies', 'government', 'governance',
             'management', 'organizational', 'organizations', 'organization', 'institutions', 'institutional',
@@ -2446,7 +2616,33 @@
             'based', 'using', 'use', 'used', 'via', 'through', 'under',
             'such', 'also', 'however', 'therefore', 'thus', 'furthermore', 'moreover', 'additionally',
             'particularly', 'especially', 'significantly', 'importantly', 'notably', 'specifically',
-            'et', 'al', 'etc', 'eg', 'ie', 'vs', 'amongst', 'whilst', 'toward', 'towards'
+            'et', 'al', 'etc', 'eg', 'ie', 'vs', 'amongst', 'whilst', 'toward', 'towards',
+            // 程度副词和可能性词汇
+            'likely', 'unlikely', 'probably', 'possibly', 'perhaps', 'maybe', 'certainly', 'surely', 'definitely',
+            'absolutely', 'relatively', 'approximately', 'roughly', 'nearly', 'almost', 'practically', 'virtually',
+            // 比较级词汇
+            'less', 'least', 'more', 'most', 'better', 'best', 'worse', 'worst', 'farther', 'farthest',
+            'further', 'furthest', 'greater', 'greatest', 'lower', 'lowest', 'higher', 'highest',
+            // 常见尺寸/程度形容词
+            'high', 'low', 'large', 'small', 'big', 'little', 'major', 'minor', 'main', 'key', 'core',
+            'larger', 'smaller', 'bigger', 'long', 'longer', 'short', 'shorter', 'old', 'older', 'newer',
+            'young', 'younger', 'early', 'earlier', 'late', 'later', 'recent', 'recently', 'current',
+            // 常见副词
+            'actually', 'basically', 'essentially', 'generally', 'typically', 'usually', 'commonly',
+            'normally', 'naturally', 'obviously', 'clearly', 'apparently', 'evidently', 'presumably',
+            'especially', 'particularly', 'notably', 'remarkably', 'considerably', 'significantly',
+            'basically', 'literally', 'simply', 'merely', 'just', 'only', 'simply', 'completely',
+            'totally', 'entirely', 'fully', 'partly', 'partially', 'wholly', 'largely', 'mainly',
+            'mostly', 'partly', 'hardly', 'barely', 'scarcely', 'rarely', 'seldom', 'frequently',
+            'often', 'sometimes', 'usually', 'always', 'never', 'ever', 'once', 'twice',
+            // 时间和顺序
+            'finally', 'eventually', 'initially', 'originally', 'previously', 'formerly', 'lately',
+            'currently', 'presently', 'recently', 'already', 'yet', 'still', 'soon', 'immediately',
+            'before', 'after', 'earlier', 'later', 'then', 'next', 'firstly', 'secondly', 'thirdly',
+            // 逻辑连接词
+            'thereby', 'whereby', 'somehow', 'anyway', 'anyhow', 'besides', 'instead', 'otherwise',
+            'rather', 'else', 'furthermore', 'moreover', 'nevertheless', 'nonetheless', 'notwithstanding',
+            'nonetheless', 'hence', 'accordingly', 'consequently', 'subsequently'
         ]);
         
         // 有意义的短词白名单（长度<=3但有实际意义）
@@ -4381,53 +4577,38 @@
             }
         }
 
+        // 移动端分组展开状态（按领域）
+        const mobileGroupExpanded = {
+            pa: true, pp: true, pol: true, china: true, cn: true
+        };
+        
+        // 切换分组展开状态
+        function toggleJournalGroup(categoryKey) {
+            mobileGroupExpanded[categoryKey] = !mobileGroupExpanded[categoryKey];
+            renderJournalsTable();
+        }
+
         function renderJournalsTable() {
             const tbody = document.getElementById('journals-table-body');
             const normalView = document.getElementById('journals-normal-view');
             const favView = document.getElementById('journals-favorites-view');
+            const accordionMobile = document.getElementById('journal-accordion-mobile');
             
-            if (!tbody || !normalView || !favView) return;
+            if (!tbody || !normalView || !favView || !accordionMobile) return;
             
             // 切换视图显示
             if (currentJournalFilter === 'favorites') {
                 normalView.classList.add('hidden');
+                accordionMobile.classList.add('hidden');
                 favView.classList.remove('hidden');
                 renderFavoriteJournalsGrid();
                 return;
             }
             
-            normalView.classList.remove('hidden');
             favView.classList.add('hidden');
             
             // 检测是否为移动端
             const isMobile = window.innerWidth <= 768;
-            
-            // 设置表格为固定布局
-            const table = tbody.closest('table');
-            if (table) {
-                table.style.tableLayout = 'fixed';
-                table.style.width = '100%';
-            }
-            
-            // 更新表头（移动端2列：期刊名称+收藏，桌面端6列）
-            const thead = table ? table.querySelector('thead tr') : null;
-            if (thead) {
-                if (isMobile) {
-                    thead.innerHTML = `
-                        <th style="width: auto;">期刊名称</th>
-                        <th style="width: 60px; text-align: center;">收藏</th>
-                    `;
-                } else {
-                    thead.innerHTML = `
-                        <th style="width: 80px;">领域</th>
-                        <th style="width: auto;">期刊名称</th>
-                        <th style="width: 60px; text-align: center;">收藏</th>
-                        <th style="width: 80px;">领域</th>
-                        <th style="width: auto;">期刊名称</th>
-                        <th style="width: 60px; text-align: center;">收藏</th>
-                    `;
-                }
-            }
             
             const categories = [
                 { key: 'pa', name: '公共行政', class: 'tag-pa' },
@@ -4437,38 +4618,96 @@
                 { key: 'cn', name: '国内期刊', class: 'tag-cn' }
             ];
             
-            // 收集所有符合条件的期刊
-            let allJournalsList = [];
-            categories.forEach(cat => {
-                if (currentJournalFilter !== 'all' && currentJournalFilter !== cat.key) return;
-                journalCategories[cat.key].forEach(journal => {
-                    allJournalsList.push({ journal, category: cat });
-                });
-            });
-            
-            let html = '';
-            
             if (isMobile) {
-                // 移动端：单列渲染，只显示期刊名称和收藏两列
-                allJournalsList.forEach(item => {
-                    const url = journalUrls[item.journal] || '#';
-                    const fav = isJournalFavorited(item.journal);
-                    html += `
-                        <tr>
-                            <td onclick="window.open('${url}', '_blank')" class="cursor-pointer hover:bg-blue-50 font-medium text-slate-800" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="点击访问 ${item.journal} 官网">
-                                ${item.journal}
-                            </td>
-                            <td class="text-center" style="width: 60px;">
-                                <span class="journal-star ${fav ? 'favorited' : ''}" 
-                                      onclick="toggleFavoriteJournal('${item.journal}', '${item.category.key}')"
-                                      title="${fav ? '取消收藏' : '收藏该期刊'}">
+                // 移动端：渲染手风琴折叠列表
+                normalView.classList.add('hidden');
+                accordionMobile.classList.remove('hidden');
+                
+                let accordionHtml = '';
+                
+                categories.forEach(cat => {
+                    if (currentJournalFilter !== 'all' && currentJournalFilter !== cat.key) return;
+                    
+                    const journals = journalCategories[cat.key] || [];
+                    if (journals.length === 0) return;
+                    
+                    const isExpanded = mobileGroupExpanded[cat.key];
+                    const expandClass = isExpanded ? 'expanded' : '';
+                    
+                    // 生成分组标题
+                    accordionHtml += `
+                        <div class="journal-group ${expandClass}" data-category="${cat.key}">
+                            <div class="journal-group-header" onclick="toggleJournalGroup('${cat.key}')">
+                                <div class="journal-group-title-wrapper">
+                                    <span class="journal-group-tag ${cat.key}">${cat.name}</span>
+                                    <span class="journal-group-count">${journals.length}本</span>
+                                </div>
+                                <i class="journal-group-arrow fas fa-chevron-down"></i>
+                            </div>
+                            <div class="journal-group-content">
+                    `;
+                    
+                    // 生成分组内的期刊列表
+                    journals.forEach(journal => {
+                        const url = journalUrls[journal] || '#';
+                        const fav = isJournalFavorited(journal);
+                        accordionHtml += `
+                            <div class="journal-list-item">
+                                <div class="journal-list-name" onclick="window.open('${url}', '_blank')">
+                                    ${journal}
+                                </div>
+                                <div class="journal-list-favorite ${fav ? 'favorited' : ''}" 
+                                     onclick="event.stopPropagation(); toggleFavoriteJournal('${journal}', '${cat.key}')"
+                                     title="${fav ? '取消收藏' : '收藏该期刊'}">
                                     <i class="${fav ? 'fas' : 'far'} fa-star"></i>
-                                </span>
-                            </td>
-                        </tr>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    accordionHtml += `
+                            </div>
+                        </div>
                     `;
                 });
+                
+                accordionMobile.innerHTML = accordionHtml;
+                
             } else {
+                // 桌面端：显示表格，隐藏移动端折叠列表
+                normalView.classList.remove('hidden');
+                accordionMobile.classList.add('hidden');
+                
+                // 设置表格为固定布局
+                const table = tbody.closest('table');
+                if (table) {
+                    table.style.tableLayout = 'fixed';
+                    table.style.width = '100%';
+                }
+                
+                // 更新表头（桌面端6列）
+                const thead = table ? table.querySelector('thead tr') : null;
+                if (thead) {
+                    thead.innerHTML = `
+                        <th style="width: 80px;">领域</th>
+                        <th style="width: auto;">期刊名称</th>
+                        <th style="width: 60px; text-align: center;">收藏</th>
+                        <th style="width: 80px;">领域</th>
+                        <th style="width: auto;">期刊名称</th>
+                        <th style="width: 60px; text-align: center;">收藏</th>
+                    `;
+                }
+                
+                // 收集所有符合条件的期刊
+                let allJournalsList = [];
+                categories.forEach(cat => {
+                    if (currentJournalFilter !== 'all' && currentJournalFilter !== cat.key) return;
+                    journalCategories[cat.key].forEach(journal => {
+                        allJournalsList.push({ journal, category: cat });
+                    });
+                });
+                
+                let html = '';
                 // 桌面端：双列渲染（固定列宽：领域80px | 期刊名自适应 | 收藏60px）
                 for (let i = 0; i < allJournalsList.length; i += 2) {
                     const left = allJournalsList[i];
@@ -4519,9 +4758,9 @@
                     rowHtml += '</tr>';
                     html += rowHtml;
                 }
+                
+                tbody.innerHTML = html || '<tr><td colspan="6" class="text-center py-8 text-slate-400">暂无数据</td></tr>';
             }
-            
-            tbody.innerHTML = html || `<tr><td colspan="${isMobile ? 2 : 6}" class="text-center py-8 text-slate-400">暂无数据</td></tr>`;
         }
         
         // 监听窗口大小变化，重新渲染期刊表格
