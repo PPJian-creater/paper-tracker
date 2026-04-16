@@ -47898,16 +47898,306 @@
         "Michael Laver"
       ],
       "category": "POL"
+    },
+    {
+      "openalex_id": "W7154476608",
+      "title": "Introduction to the special issue: Megatrends and grand challenges: The strategic organization of long-term and large-scale policy interventions",
+      "abstract": "This article advances a conceptual framework to understand how long-term and large-scale policy interventions can be strategically organized in response to contemporary grand challenges. It argues that today’s interconnected environmental, economic, technological, and geopolitical crises are rooted in megatrends—large-scale, persistent, and transformative forces reshaping social, political, and economic systems. Megatrends generate constellations of wicked problems characterized by complexity, uncertainty, and conflict among actors holding divergent values and interests. When these interconnected problems attain systemic relevance, they become grand challenges, whose resolution requires sustained collective action, interorganizational coordination, and long-term political commitment. To address these challenges, we propose a strategic organization perspective grounded in foresight, anticipatory governance, and participatory evidence-based policy-making. The article also introduces the contributions to the special issue and identifies four cross-cutting dimensions of strategic policy organization: robust policy and administrative capacities, activation and alignment of stakeholder networks, context-sensitive design, and the central role of politics.",
+      "journal_name": "International Review of Administrative Sciences",
+      "published_date": "2026-04-15",
+      "url": "https://doi.org/10.1177/00208523261438641",
+      "doi": "https://doi.org/10.1177/00208523261438641",
+      "keywords": [
+        "Psychological intervention",
+        "Geopolitics",
+        "Citizen journalism",
+        "Transformative learning",
+        "Stakeholder",
+        "Perspective (graphical)",
+        "Politics"
+      ],
+      "authors": [
+        "Giovanni Esposito",
+        "Andrea Terlizzi"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7154448623",
+      "title": "Illiberal bureaucrats? A comparative study of illiberal attitudes among public and private workers in Europe",
+      "abstract": "Although research on illiberal threats to public administration is growing, limited attention has been given to how illiberalism manifests in the attitudes of civil servants. This article addresses this gap by focusing on whether public workers exhibit illiberal attitudes to a greater or lesser extent compared to their counterparts in the private sector, and how these attitudes are shaped by the macro-political context. Using data from the 2019 European Election Study across 28 European countries, the results reveal attitudinal isomorphism. Civil servants display illiberal attitudes to a similar degree as private sector workers, accounting for variation in illiberalism at the country level. These findings hold important implications for the study of public administration and for efforts aimed at curbing the rise of illiberalism within public institutions.",
+      "journal_name": "International Review of Administrative Sciences",
+      "published_date": "2026-04-15",
+      "url": "https://doi.org/10.1177/00208523261433882",
+      "doi": "https://doi.org/10.1177/00208523261433882",
+      "keywords": [
+        "Civil servants",
+        "Comparative research",
+        "Public sector",
+        "Administration (probate law)",
+        "Survey data collection",
+        "Private sector",
+        "Survey research"
+      ],
+      "authors": [
+        "Guillem Ripoll"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7154481771",
+      "title": "Digital Sentiments: Toward a Theory of Emotions in Digital Governance",
+      "abstract": "ABSTRACT We propose an interdisciplinary theoretical framework that integrates insights from political science, public administration, organizational theory, economics, psychology, sociology, and cognitive science to better understand the role of emotions in governance in the digital age. We argue that citizens' sentiments and emotional responses are central to their relationships with government institutions and bureaucracies. Building on bounded rationality and technology acceptance models, we develop a conceptual model that captures the bi‐directional relationship between emotions and digital governance interactions. This gap is increasingly important as traditional human‐to‐human interactions are progressively replaced by citizen engagement with digital platforms, where emotional responses are directed toward technological systems rather than human officials. We therefore introduce a theory of emotional digital governance and propose a set of propositions that incorporate cultural values as key moderating factors. Finally, we outline the theoretical, methodological, empirical, and practical contributions of this framework for advancing research on digital governance and data‐driven public administration.",
+      "journal_name": "Public Administration Review",
+      "published_date": "2026-04-15",
+      "url": "https://doi.org/10.1111/puar.70125",
+      "doi": "https://doi.org/10.1111/puar.70125",
+      "keywords": [
+        "Corporate governance",
+        "Bounded rationality",
+        "Set (abstract data type)",
+        "Rationality",
+        "Conceptual framework",
+        "Digital government",
+        "Government (linguistics)"
+      ],
+      "authors": [
+        "Galina Vissoky",
+        "Eran Vigoda‐Gadot",
+        "Evgeny Styrin"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7154457332",
+      "title": "Shaping watershed collaboration: how government attention transforms informal interaction into formal cooperation",
+      "abstract": "",
+      "journal_name": "Public Management Review",
+      "published_date": "2026-04-15",
+      "url": "https://doi.org/10.1080/14719037.2026.2660237",
+      "doi": "https://doi.org/10.1080/14719037.2026.2660237",
+      "keywords": [
+        "Government (linguistics)",
+        "Watershed",
+        "Local government",
+        "Public policy"
+      ],
+      "authors": [
+        "Jing Cui",
+        "Yichen Tang"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7154513717",
+      "title": "Integrity for English Eyes Only? Evidence of Means‐Ends Decoupling in B razilian Corporate Compliance",
+      "abstract": "ABSTRACT This study investigates whether the consolidation of corporate compliance in Brazil after Law No. 12.846/2013 resulted in substantial gains in effectiveness or reinforced predominantly symbolic compliance patterns. The research uses administrative data from the National Registry of Substantiated Complaints between 2009 and 2024 and applies a quasi‐experimental strategy composed of interrupted time series, logistic regression with clustered errors, and fixed‐effects models. The results show no structural break following the law and a statistically significant decrease in the probability of conflict resolution in the post‐law period (OR = 0.941; 95% CI: 0.909–0.974). Additional robustness analyses with a balanced recurrent‐firm panel point in the same direction, but the event‐study specification does not fully satisfy the parallel‐trends diagnostic (Wald p = 0.010). The findings therefore provide convergent evidence consistent with means‐ends decoupling in the post‐law regulatory environment, while suggesting caution in stronger causal interpretations. These findings contribute to debates on legal endogeneity, the audit society, and society‐level compliance washing, showing that the expansion of formal integrity apparatuses has not been matched by verifiable gains in corporate responsiveness.",
+      "journal_name": "Regulation & Governance",
+      "published_date": "2026-04-14",
+      "url": "https://doi.org/10.1111/rego.70164",
+      "doi": "https://doi.org/10.1111/rego.70164",
+      "keywords": [
+        "Audit",
+        "Consolidation (business)",
+        "Robustness (evolution)",
+        "Decoupling (probability)",
+        "Panel data",
+        "Logistic regression",
+        "Compliance (psychology)"
+      ],
+      "authors": [
+        "Marco Antonio Portugal"
+      ],
+      "category": "PA"
+    },
+    {
+      "openalex_id": "W7154516175",
+      "title": "Why resistance fails: unpopular legislative autocratization and opposition weakness in Peru",
+      "abstract": "",
+      "journal_name": "Democratization",
+      "published_date": "2026-04-15",
+      "url": "https://doi.org/10.1080/13510347.2026.2650393",
+      "doi": "https://doi.org/10.1080/13510347.2026.2650393",
+      "keywords": [
+        "Opposition (politics)",
+        "Legislature",
+        "Resistance (ecology)",
+        "Weakness",
+        "Politics"
+      ],
+      "authors": [
+        "Omar Coronel"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154463364",
+      "title": "Do Women Legislators Legislate Differently Than Men on Gun‐Related Policy? A Suggestive Yes",
+      "abstract": "ABSTRACT Polls show that men are less likely to support gun restrictions than women, but do voter preferences translate into elite behavior? To answer this question, we use a novel dataset of hand‐coded state firearm legislation across six politically diverse states (California, Florida, Iowa, Illinois, Michigan, Texas) to construct an 11‐year panel dataset. Our results demonstrate that descriptively, women generally cosponsor more restrictive and fewer permissive gun policy bills than men, even after accounting for partisanship. Using multiple staggered difference‐in‐differences specifications, we find women are no more likely than men to advance restrictive gun bills, yet they do cosponsor fewer efforts to expand gun rights (permissive bills). Our findings imply that electing more women may not substantially increase efforts to tighten gun laws but could curb gun rights expansion, showcasing how gender may shape legislation through agenda restraint rather than by promoting active policymaking.",
+      "journal_name": "Legislative Studies Quarterly",
+      "published_date": "2026-04-14",
+      "url": "https://doi.org/10.1111/lsq.70065",
+      "doi": "https://doi.org/10.1111/lsq.70065",
+      "keywords": [
+        "Legislation",
+        "Gun control",
+        "Construct (python library)",
+        "State (computer science)",
+        "Elite",
+        "Permissive"
+      ],
+      "authors": [
+        "Patrick Cunha Silva",
+        "G. Agustin Markarian",
+        "Brady Mudge"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154508266",
+      "title": "District-level drivers of voter turnout: Evidence from a longitudinal study in Turkey",
+      "abstract": "A growing body of research points to heterogeneity in the predictors of turnout and highlights the importance of longitudinal designs in exploring within-country variation as a remedy. Building on this perspective, the present study examines the determinants of district-level voter turnout in Turkey using a panel dataset covering all provinces across 18 general elections between 1950 and 2023. Leveraging the country’s unique variation in institutional and socioeconomic structure across time and space, results based on the Mundlak regression show that compulsory voting, socioeconomic development, and democratizing elections are associated with higher turnout, while political fragmentation and larger party systems are linked to lower turnout. Surprisingly, elections held under majoritarian systems experienced higher turnout than those under PR. Findings from additional analyses further suggest that higher levels of wasted votes, driven by the 10% national electoral threshold, may have dampened voter turnout in PR elections in the more recent decades, particularly in some districts. Overall, these findings suggest that voter turnout is a function of both local-level contextual factors and aggregate-level institutional features.",
+      "journal_name": "Party Politics",
+      "published_date": "2026-04-15",
+      "url": "https://doi.org/10.1177/13540688261441145",
+      "doi": "https://doi.org/10.1177/13540688261441145",
+      "keywords": [
+        "Turnout",
+        "Voter turnout",
+        "Socioeconomic status",
+        "Longitudinal study",
+        "Panel data",
+        "Politics",
+        "Longitudinal data",
+        "Variation (astronomy)"
+      ],
+      "authors": [
+        "Tevfik Murat Yıldırım"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154480855",
+      "title": "Placing disability front and centre in political geography",
+      "abstract": "",
+      "journal_name": "Political Geography",
+      "published_date": "2026-04-15",
+      "url": "https://doi.org/10.1016/j.polgeo.2026.103561",
+      "doi": "https://doi.org/10.1016/j.polgeo.2026.103561",
+      "keywords": [
+        "Front (military)",
+        "Political geography",
+        "Human geography",
+        "Politics"
+      ],
+      "authors": [
+        "David A. Alexander"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154535678",
+      "title": "“What Will You Tell Them When They Ask You?” Reflexive Accountability in a Democratic Regime",
+      "abstract": "In a democracy, ordinary citizens enjoy formal unaccountability, a condition that characterized classical Athens and that persists in a modified form in modern representative democracies. Popular unaccountability is both constitutive of democratic rule and inherently risky: Will citizens vote responsibly, and what might encourage them to do so? This article returns to classical Athens to analyze a paradigmatic scene of democratic politics whose dynamics remain relevant today: Elite orators addressing large, empowered, and formally unaccountable audiences. As the Athenian case indicates, democratic plurality, answerability, and intersubjective identity together create the conditions for what I call “reflexive accountability.” “Reflexive accountability” refers to citizens endeavoring to hold themselves accountable to those on behalf of whom, or in whose interest, they are expected to make political decisions. Political orators addressing empowered audiences initiate reflexive accountability when they ask citizens to imagine what they will say when other citizens, neighbors, or family members ask them how they voted and why. Reflexive accountability, as a distinctly democratic form of accountability and as a democratic ideal, is a litmus test for a healthy democratic regime, one in which citizens are encouraged to hold in mind those who will be affected by their actions and to take seriously another’s claim to a persuasive account of the soundness and justice of their vote.",
+      "journal_name": "Political Theory",
+      "published_date": "2026-04-15",
+      "url": "https://doi.org/10.1177/00905917261436337",
+      "doi": "https://doi.org/10.1177/00905917261436337",
+      "keywords": [
+        "Accountability",
+        "Democracy",
+        "Reflexivity",
+        "Politics",
+        "Elite",
+        "Economic Justice",
+        "Litmus"
+      ],
+      "authors": [
+        "Ella Street"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154475628",
+      "title": "USAID Women, Peace, and Security Policy Advisor",
+      "abstract": "The Women, Peace, and Security Policy Advisor at the United States Agency for International Development (USAID) served as the agency’s lead responsible for implementing the Women, Peace, and Security (WPS) Act of 2017 and the 2023 U.S. Strategy on Women, Peace, and Security. Tazreen Hussain (TH) served as the USAID Women, Peace, and Security Policy Advisor from 2024 to 2025. In early 2025, the Donald Trump administration officially shut down USAID, including the women, peace, and security portfolio. This is a slightly edited version of an interview that took place with Mona Lena Krook (MLK) via Zoom on December 12, 2025.",
+      "journal_name": "Politics & Gender",
+      "published_date": "2026-04-15",
+      "url": "https://doi.org/10.1017/s1743923x2610066x",
+      "doi": "https://doi.org/10.1017/s1743923x2610066x",
+      "keywords": [
+        "Agency (philosophy)",
+        "Security policy",
+        "Administration (probate law)",
+        "Foreign policy",
+        "International security",
+        "Security council",
+        "Policy development"
+      ],
+      "authors": [
+        "Tazreen Hussain",
+        "Mona Lena Krook"
+      ],
+      "category": "POL"
+    },
+    {
+      "openalex_id": "W7154498344",
+      "title": "Governing through Visibility: Local Government Experimentation with Internet Celebrity Cities in China",
+      "abstract": "Abstract The rise of internet celebrity cities has become one of the most striking phenomena in China since 2021. How do local governments respond and harness this trend to advance their development goals? This study focuses on local experimentation in creating such cities, drawing on the case of the Village Football Super League ( Cun chao 村超) in Guizhou. We identify policy entrepreneurship as a key driver of local experimentation and highlight three core strategies for creating internet celebrity cities: crafting local symbols, co-producing viral content and mitigating public opinion risk. Further analysis shows that this experimentation, by attracting massive public attention, simultaneously promotes economic growth, strengthens social cohesion, reinforces state narratives and projects China’s national image onto the global stage. Overall, the findings suggest an emerging model in which public attention becomes a core resource for local development and governance in China’s digital era.",
+      "journal_name": "The China Quarterly",
+      "published_date": "2026-04-15",
+      "url": "https://doi.org/10.1017/s0305741026102148",
+      "doi": "https://doi.org/10.1017/s0305741026102148",
+      "keywords": [
+        "China",
+        "The Internet",
+        "Local government",
+        "League",
+        "Public diplomacy",
+        "Football",
+        "State (computer science)",
+        "Social media",
+        "Core (optical fiber)",
+        "Corporate governance"
+      ],
+      "authors": [
+        "Lu Liu",
+        "Yahua Wang"
+      ],
+      "category": "CHINA"
+    },
+    {
+      "openalex_id": "W7154491344",
+      "title": "Solving Agency Problems in Chinese Universities: Academics in the Shadow of the Party’s Declared Leadership",
+      "abstract": "Abstract How does the party-state exercise leadership over universities and manage the individuals embedded in the university system without restraining their capacity for excellence and innovation? I argue that the presidential responsibility system has resolved a fundamental agency problem in Chinese universities. The system is supported by a set of mechanisms designed to enforce loyalty to the leadership of the Chinese Communist Party. It can easily adapt to political changes and thus maintain authoritarian rule without compromising the overarching agenda of research excellence.",
+      "journal_name": "The China Quarterly",
+      "published_date": "2026-04-15",
+      "url": "https://doi.org/10.1017/s0305741026102112",
+      "doi": "https://doi.org/10.1017/s0305741026102112",
+      "keywords": [
+        "Shadow (psychology)",
+        "Agency (philosophy)",
+        "Excellence",
+        "Authoritarianism",
+        "Politics",
+        "Loyalty",
+        "Presidential system",
+        "Set (abstract data type)"
+      ],
+      "authors": [
+        "Alexandra Kaiser"
+      ],
+      "category": "CHINA"
     }
   ],
   "stats": {
-    "total": 2191,
-    "pa_count": 535,
+    "total": 2204,
+    "pa_count": 540,
     "pp_count": 508,
-    "pol_count": 991,
-    "china_count": 157,
+    "pol_count": 997,
+    "china_count": 159,
     "journals": 86,
-    "last_update": "2026-04-15 19:57:51",
+    "last_update": "2026-04-16 19:53:50",
     "by_journal": [
       {
         "name": "Perspectives on Politics",
@@ -47919,11 +48209,11 @@
       },
       {
         "name": "Public Administration Review",
-        "count": 60
+        "count": 61
       },
       {
         "name": "Public Management Review",
-        "count": 60
+        "count": 61
       },
       {
         "name": "European Journal of Political Research",
@@ -47935,11 +48225,19 @@
       },
       {
         "name": "Political Geography",
-        "count": 54
+        "count": 55
       },
       {
         "name": "Regulation & Governance",
-        "count": 50
+        "count": 51
+      },
+      {
+        "name": "Democratization",
+        "count": 47
+      },
+      {
+        "name": "Party Politics",
+        "count": 47
       },
       {
         "name": "The China Journal",
@@ -47950,16 +48248,12 @@
         "count": 46
       },
       {
-        "name": "Democratization",
-        "count": 46
-      },
-      {
-        "name": "Party Politics",
-        "count": 46
-      },
-      {
         "name": "Journal of European Public Policy",
         "count": 42
+      },
+      {
+        "name": "The China Quarterly",
+        "count": 41
       },
       {
         "name": "Public Choice",
@@ -47967,10 +48261,6 @@
       },
       {
         "name": "International Journal of Public Administration",
-        "count": 39
-      },
-      {
-        "name": "The China Quarterly",
         "count": 39
       },
       {
@@ -48058,16 +48348,16 @@
         "count": 25
       },
       {
-        "name": "Journal of Comparative Policy Analysis",
-        "count": 23
+        "name": "International Review of Administrative Sciences",
+        "count": 24
       },
       {
         "name": "Political Theory",
-        "count": 23
+        "count": 24
       },
       {
-        "name": "International Review of Administrative Sciences",
-        "count": 22
+        "name": "Journal of Comparative Policy Analysis",
+        "count": 23
       },
       {
         "name": "Journal of Contemporary China",
@@ -48122,15 +48412,15 @@
         "count": 18
       },
       {
+        "name": "Legislative Studies Quarterly",
+        "count": 18
+      },
+      {
         "name": "Journal of Public Policy",
         "count": 17
       },
       {
         "name": "Annual Review of Political Science",
-        "count": 17
-      },
-      {
-        "name": "Legislative Studies Quarterly",
         "count": 17
       },
       {
@@ -48214,15 +48504,15 @@
         "count": 10
       },
       {
+        "name": "Politics & Gender",
+        "count": 10
+      },
+      {
         "name": "Journal of Chinese Governance",
         "count": 9
       },
       {
         "name": "Public Policy and Administration",
-        "count": 9
-      },
-      {
-        "name": "Politics & Gender",
         "count": 9
       },
       {
@@ -48255,10 +48545,6 @@
       }
     ],
     "trend": [
-      {
-        "date": "2026-03-17",
-        "count": 15
-      },
       {
         "date": "2026-03-18",
         "count": 12
@@ -48369,14 +48655,18 @@
       },
       {
         "date": "2026-04-14",
-        "count": 13
+        "count": 15
       },
       {
         "date": "2026-04-15",
+        "count": 11
+      },
+      {
+        "date": "2026-04-16",
         "count": 0
       }
     ],
     "today": 0
   },
-  "export_time": "2026-04-15T19:57:51.498068"
+  "export_time": "2026-04-16T19:53:50.441039"
 }
