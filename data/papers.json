@@ -48187,5 +48187,802 @@
       "Alexandra Kaiser"
     ],
     "category": "CHINA"
+  },
+  {
+    "openalex_id": "W7154707500",
+    "title": "Navigating complexity: A relational perspective on generative AI adoption in government",
+    "abstract": "Abstract This research note presents preliminary findings from exploratory research examining how Australian public servants understand and use generative AI (GenAI) in government work. Drawing on 37 interviews across 22 agencies, we highlight the importance of a relational view of GenAI adoption, that is, the co‐creation of meanings that emerges from the relations between users, technologies, and organisational contexts. Based on our empirical work, we offer three propositions as an initial research agenda: GenAI's equivocal nature triggers fragmented sensemaking processes across agencies; GenAI's affordances become entangled with bureaucratic institutional norms that require negotiation; and GenAI adoption necessitates reconstituting public sector legitimacy. These findings challenge narratives of straightforward technological integration, demonstrating that GenAI adoption is a fundamental renegotiation of core public sector work aspects. Points for practitioners Generative Artificial Intelligence (GenAI) promises to deliver a number of positive impacts on productivity, and governments are under pressure to use these tools. However, there is a range of risks that these tools raise for how governments work. Public agencies are grappling with how to enable controlled experimentation with GenAI while maintaining accountability frameworks. GenAI adoption fundamentally involves relational processes that require moving beyond treating technology as a fixed entity to examine the evolving relations between users, technologies, and organisational contexts.",
+    "journal_name": "Australian Journal of Public Administration",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1111/1467-8500.70044",
+    "doi": "https://doi.org/10.1111/1467-8500.70044",
+    "keywords": [
+      "Sensemaking",
+      "Accountability",
+      "Government (linguistics)",
+      "Public sector",
+      "Generative grammar",
+      "Relational view",
+      "Bureaucracy",
+      "Enabling",
+      "Narrative",
+      "Corporate governance"
+    ],
+    "authors": [
+      "Shibaab Rahman",
+      "James Connor",
+      "Helen Dickinson",
+      "Kate Henne",
+      "Vanessa McDermott"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7154680501",
+    "title": "Participatory Budgeting in Angola: Nongovernmental Contributions from Development Workshop Angola and Acção para o Desenvolvimento Rural e Ambiente",
+    "abstract": "",
+    "journal_name": "International Journal of Public Administration",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1080/01900692.2026.2640407",
+    "doi": "https://doi.org/10.1080/01900692.2026.2640407",
+    "keywords": [
+      "Participatory budgeting",
+      "Rural development",
+      "Citizen journalism",
+      "Participatory development",
+      "Rural area",
+      "Developing country"
+    ],
+    "authors": [
+      "Pedro Domingos Paposseco Manuel"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7154587902",
+    "title": "The Role of Generative Artificial Intelligence Use in Street-Level Bureaucrats’ Discretion and Enforcement Styles: A Multigroup Analysis",
+    "abstract": "",
+    "journal_name": "International Journal of Public Administration",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1080/01900692.2026.2646471",
+    "doi": "https://doi.org/10.1080/01900692.2026.2646471",
+    "keywords": [
+      "Discretion",
+      "Enforcement",
+      "Generative grammar",
+      "Intelligence analysis",
+      "Generative model"
+    ],
+    "authors": [
+      "Mohammed Salah",
+      "Alhamzah Alnoor",
+      "Fadi Abdelfattah",
+      "Ahmad Bayiz Ahmad",
+      "Hussam Al Halbusi",
+      "Aisha Al Araimi"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7154562935",
+    "title": "Geographic Networks, Fiscal Incentives, and Coercive Federalism: Policy Diffusion of 287(g) Immigration Enforcement Agreements",
+    "abstract": "When 287(g) immigration enforcement agreements surged from 135 to 1,035 across U.S. agencies in 9 months during 2025, adoption patterns revealed surprising dynamics of local policy diffusion under federal-state coercion. Using comprehensive county-level data and Cox proportional hazards models with time-varying covariates, I find that geographic proximity dominated adoption decisions despite unprecedented top-down pressure. Each neighboring adopter increased a focal county’s adoption likelihood by 25%, the single strongest predictor. State-level peer effects operated independently, creating compounding regional pressures. Fiscal findings challenge conventional wisdom: counties more dependent on intergovernmental transfers were 64% less likely to adopt, while debt burdens and deficits showed no effects, revealing that institutional capacity, not fiscal desperation, determines responsiveness to federal incentives. State mandates accelerated adoption but did not eliminate geographic variation in timing. These findings demonstrate that spatial networks structure local policy decisions even when higher governments actively direct outcomes, with important implications for understanding federalism, policy diffusion mechanisms, and the limits of coercive intergovernmental relations.",
+    "journal_name": "Public Administration Quarterly",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1177/07349149261433590",
+    "doi": "https://doi.org/10.1177/07349149261433590",
+    "keywords": [
+      "Enforcement",
+      "Immigration",
+      "Debt",
+      "Immigration policy",
+      "Fiscal policy",
+      "Peer effects",
+      "Geographic variation",
+      "State (computer science)"
+    ],
+    "authors": [
+      "Dallin Overstreet"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7154732810",
+    "title": "Green Budgeting in South Korea: Issue Ownership and Ministerial Leadership",
+    "abstract": "ABSTRACT As climate governance gains urgency, green budgeting has emerged as a vital policy tool to align fiscal systems with environmental goals. Yet, institutional and leadership factors shaping its success remain underexplored. This study examines how issue ownership and ministerial leadership jointly influence green budgeting outcomes in South Korea. Using fuzzy‐set qualitative comparative analysis of 13 central government bodies implementing green budgeting in 2023, we identify four pathways to high performance. Institutionalized long‐term environmental planning emerges as a necessary condition. Two key mechanisms are identified: alignment between ministerial leadership and issue ownership, and politically experienced ministers who leverage institutional and external resources despite weak personal environmental commitment. These findings suggest that effective green budgeting depends not only on leadership but also on embedded institutional arrangements. Our study contributes to the public management literature by offering a dynamic understanding of issue ownership and expanding the scope of ministerial leadership in environmental governance.",
+    "journal_name": "Public Administration Review",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1111/puar.70133",
+    "doi": "https://doi.org/10.1111/puar.70133",
+    "keywords": [
+      "Leverage (statistics)",
+      "Corporate governance",
+      "Scope (computer science)",
+      "Government (linguistics)",
+      "Institutional analysis",
+      "Institutional theory",
+      "Qualitative research",
+      "Public ownership"
+    ],
+    "authors": [
+      "Minjung KIM",
+      "Rosa Minhyo Cho"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7154611413",
+    "title": "Managing Value Conflicts Through Formal and Informal Institutions: A Longitudinal Case Study in Local Government Service Reform",
+    "abstract": "ABSTRACT When governments adopt private‐sector techniques to reform public services, a tension arises between efforts to improve administrative efficiency and to secure democratic values. While scholars acknowledge this tradeoff, the specific institutional processes through which managers resolve these competing values in practice remain a puzzle. To bridge this gap, this study presents a longitudinal case study of Lean Government initiatives, based on 2.5 years of ethnographic fieldwork in an Ohio municipality. Using Constructive Grounded Theory, the analysis reveals that public managers are not passive executors of efficiency mandates; rather, they actively reconstruct public values through sophisticated social and institutional interactions. This research introduces a conceptual framework for the dynamic construction of good governance, demonstrating how value conflicts are mitigated via meso‐level institutional processes. By illustrating how good government and equity are operationalized in managerial decision‐making, the research findings offer a practical roadmap for maintaining democratic legitimacy amid administrative reform.",
+    "journal_name": "Public Administration Review",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1111/puar.70130",
+    "doi": "https://doi.org/10.1111/puar.70130",
+    "keywords": [
+      "Operationalization",
+      "Legitimacy",
+      "Local government",
+      "Public value",
+      "Constructive",
+      "Democracy",
+      "Value (mathematics)",
+      "Participatory budgeting",
+      "Public service"
+    ],
+    "authors": [
+      "Jin Hong Kim"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7154623849",
+    "title": "Do Performance Budgeting Reforms Reduce Corruption? Evidence From a Quasi‐Experimental Study",
+    "abstract": "ABSTRACT Performance budgeting has been widely advocated as a tool to strengthen fiscal accountability and improve public spending efficiency. However, its role in deterring corruption remains underexplored. This study examines the impact of performance budgeting reforms on corruption in Chinese local governments. Using a difference‐in‐differences approach with the staggered implementation of performance budgeting reforms across Chinese provinces, we find significant reductions in actual corruption cases and perceived corruption levels. These effects are particularly pronounced in provinces with early pilot experience and incorporated external oversight during the implementation of the reform. Mechanism analyses indicate that the performance budgeting reforms curb corruption by improving fiscal transparency, reducing financial irregularities, enhancing expenditure efficiency, and increasing public scrutiny of government activities. This study contributes to the literature by providing robust empirical evidence and advancing theoretical understanding of how well‐designed budgeting systems can promote fiscal accountability and ethical governance.",
+    "journal_name": "Public Administration Review",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1111/puar.70134",
+    "doi": "https://doi.org/10.1111/puar.70134",
+    "keywords": [
+      "Accountability",
+      "Scrutiny",
+      "Language change",
+      "Government (linguistics)",
+      "Empirical evidence",
+      "Fiscal policy",
+      "Empirical research"
+    ],
+    "authors": [
+      "Andong Zhuge",
+      "Can Chen",
+      "Weijie Wang",
+      "Ping Zhang"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7154729713",
+    "title": "Perception of Key Public Services in Chile: Comparison and Determinants",
+    "abstract": "ABSTRACT How are key public services perceived to be governed across the different Chilean regions? Are they considered to be of high quality, governed impartially and free of corruption? To answer this question, we construct a Regional Quality of Governance Index (QGI) for Chile using original survey data and assess the QGI based on user's perception of quality, impartiality, and probity of three key public services: police, health and public education and compare the results to previous European measures. Results reveal stark disparities, with Chile ranking low, near Eastern European counterparts like Croatia and Bulgaria, scoring lowest on probity. When analyzing individual determinants, we find that women and those with higher interpersonal trust report better governance evaluations, while the indigenous and self‐employed report poor evaluations. We also find that wealthier municipalities score higher on governance perceptions, while those in more populous areas tend to have negative assessments of impartiality. Our findings advance the study of governance in Latin America by highlighting some of the individual, institutional, and geographic determinants in shaping citizen evaluations of regional governance.",
+    "journal_name": "Public Administration and Development",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1002/pad.70076",
+    "doi": "https://doi.org/10.1002/pad.70076",
+    "keywords": [
+      "Corporate governance",
+      "Ranking (information retrieval)",
+      "Latin Americans",
+      "Construct (python library)",
+      "Perception",
+      "Interpersonal communication",
+      "Quality (philosophy)",
+      "Index (typography)"
+    ],
+    "authors": [
+      "Sebastián Huneeus",
+      "William Foster",
+      "Gustavo Anríquez",
+      "Otoniel Aguiar"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7154574166",
+    "title": "Framing AI in public innovation: the engagement-manipulation nexus",
+    "abstract": "",
+    "journal_name": "Public Management Review",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1080/14719037.2026.2659262",
+    "doi": "https://doi.org/10.1080/14719037.2026.2659262",
+    "keywords": [
+      "Framing (construction)",
+      "Nexus (standard)",
+      "Public discourse",
+      "Public policy"
+    ],
+    "authors": [
+      "Adedapo Adebajo",
+      "Ngozi Okpara",
+      "Aisha Kolawole"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7154758140",
+    "title": "Relational by default? Inserting elected officials into relational public service debates",
+    "abstract": "",
+    "journal_name": "Public Money & Management",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1080/09540962.2026.2656273",
+    "doi": "https://doi.org/10.1080/09540962.2026.2656273",
+    "keywords": [
+      "Public service",
+      "Service (business)",
+      "Service provider",
+      "Public authority",
+      "Statistical relational learning"
+    ],
+    "authors": [
+      "Catherine Needham",
+      "Catherine Mangan",
+      "Dave McKenna"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7154568354",
+    "title": "How public employees address the tensions between bureaucratization and de-bureaucratization: A relational approach in hiring",
+    "abstract": "",
+    "journal_name": "Public Money & Management",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1080/09540962.2026.2658114",
+    "doi": "https://doi.org/10.1080/09540962.2026.2658114",
+    "keywords": [
+      "Bureaucracy",
+      "Government (linguistics)",
+      "Key (lock)",
+      "Public sector",
+      "Work (physics)"
+    ],
+    "authors": [
+      "Marta Ingaggiati",
+      "Giovanni Barbato",
+      "Renato Ruffini"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7154706325",
+    "title": "Administrative Burdens in Digital Services: Insights from Citizen Experiences",
+    "abstract": "",
+    "journal_name": "Public Performance & Management Review",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1080/15309576.2026.2644998",
+    "doi": "https://doi.org/10.1080/15309576.2026.2644998",
+    "keywords": [
+      "Work (physics)",
+      "Government (linguistics)",
+      "Public policy",
+      "Key (lock)"
+    ],
+    "authors": [
+      "Jing Chen",
+      "Peijie Wang"
+    ],
+    "category": "PA"
+  },
+  {
+    "openalex_id": "W7154696765",
+    "title": "Social nudges in policymaking: information selection by civil servants under differing levels of complexity",
+    "abstract": "Abstract Diverse information is key for informed and effective policymaking when addressing complex policy issues. Policymakers need to decide what information to process given their limited time and cognitive capacity. This paper presents an online vignette experiment in which 157 civil servants from a Dutch medium-sized municipality participated. We test how civil servants respond to the presence of a social nudge that stimulates more diverse information selection under conditions of low and high complexity. The results show that the effect of a social nudge on information selection is larger in a context characterized by high complexity than by low complexity. This study contributes to understanding how civil servants select information. Moreover, it shows how social nudges can improve the information selection process and provides actionable advice to governmental organizations seeking to improve the information selection process.",
+    "journal_name": "Behavioural Public Policy",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1017/bpp.2026.10039",
+    "doi": "https://doi.org/10.1017/bpp.2026.10039",
+    "keywords": [
+      "Nudge theory",
+      "Vignette",
+      "Civil servants",
+      "Selection (genetic algorithm)",
+      "Context (archaeology)",
+      "Process (computing)"
+    ],
+    "authors": [
+      "Bora Lancee",
+      "Coen Rigtering",
+      "Marjan Gorgievski",
+      "Stephanie Rosenkranz"
+    ],
+    "category": "PP"
+  },
+  {
+    "openalex_id": "W7154639567",
+    "title": "Correction",
+    "abstract": "",
+    "journal_name": "Critical Policy Studies",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1080/19460171.2026.2656092",
+    "doi": "https://doi.org/10.1080/19460171.2026.2656092",
+    "keywords": [],
+    "authors": [],
+    "category": "PP"
+  },
+  {
+    "openalex_id": "W7154583475",
+    "title": "Enforcement styles unraveled: how cognitive biases and policy cognition shape compliance?",
+    "abstract": "",
+    "journal_name": "Journal of Asian Public Policy",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1080/17516234.2026.2654512",
+    "doi": "https://doi.org/10.1080/17516234.2026.2654512",
+    "keywords": [
+      "Cognitive bias",
+      "Cognition",
+      "Enforcement",
+      "Cognitive style",
+      "Motivated reasoning",
+      "Cognitive load"
+    ],
+    "authors": [
+      "Yan Li",
+      "Jing Zhang",
+      "W. Mao"
+    ],
+    "category": "PP"
+  },
+  {
+    "openalex_id": "W7154566800",
+    "title": "‘Show me the money!’ - The Changing Dynamics of Economic Governance in the European Union",
+    "abstract": "",
+    "journal_name": "Journal of European Public Policy",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1080/13501763.2026.2658000",
+    "doi": "https://doi.org/10.1080/13501763.2026.2658000",
+    "keywords": [
+      "European union",
+      "Economic governance",
+      "Dynamics (music)",
+      "Multi-level governance",
+      "Corporate governance",
+      "Economic and monetary union"
+    ],
+    "authors": [
+      "Lucia Quaglia",
+      "Thomas Christiansen"
+    ],
+    "category": "PP"
+  },
+  {
+    "openalex_id": "W7154572666",
+    "title": "Credible resistance or political ploy? How government status and consistency shape citizen perceptions of parliamentarians’ democratic defence",
+    "abstract": "",
+    "journal_name": "Journal of European Public Policy",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1080/13501763.2026.2659798",
+    "doi": "https://doi.org/10.1080/13501763.2026.2659798",
+    "keywords": [
+      "Politics",
+      "Resistance (ecology)",
+      "Consistency (knowledge bases)",
+      "Perception",
+      "Government (linguistics)"
+    ],
+    "authors": [
+      "Joep van Lit",
+      "Maurits J. Meijers",
+      "Carolien van Ham"
+    ],
+    "category": "PP"
+  },
+  {
+    "openalex_id": "W7154718130",
+    "title": "How Can Researchers Have Greater Policy Impact?",
+    "abstract": "ABSTRACT Researchers seeking public policy impact lack consistent, coherent, and practical definitions, strategies, and measurement approaches. This article addresses these gaps through four questions using literature, practitioner expertise, and real‐world examples. What does it mean to have policy impact? Three levels of impact are defined: contributing to new policy conversations; shaping policy narrative direction; and influencing decisions that create, reform, or stop policies. How does research influence policy? Research and policy interact bi‐directionally and iteratively. Strategies to maximize the supply, demand, and co‐production of research in policymaking are operationalized for both individual researchers and research organizations. How can the impact of research on policy be evaluated? Contribution analysis is the most appropriate approach because it goes beyond simple correlations—revealing how and why evidence was used in policymaking, guiding future influencing strategies. How can researchers achieve greater policy impact? While each researcher and research organization should develop their own theory of change to inform an effective and testable impact strategy for their operating context, four generalizable principles are presented with a case study demonstration.",
+    "journal_name": "Policy Studies Journal",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1111/psj.70120",
+    "doi": "https://doi.org/10.1111/psj.70120",
+    "keywords": [
+      "Operationalization",
+      "Public policy",
+      "Research policy",
+      "Policy analysis",
+      "Government (linguistics)",
+      "Policy studies",
+      "Narrative"
+    ],
+    "authors": [
+      "Kizzy Gandy"
+    ],
+    "category": "PP"
+  },
+  {
+    "openalex_id": "W7154771240",
+    "title": "Public Nuclear Preferences in the United States in the Context of Climate Change: Exploring Inter‐ and Intra‐Group Variations",
+    "abstract": "ABSTRACT Beliefs about climate change vary widely among members of the American public, encompassing opinions on whether the climate is changing, its causes, and what actions humans can take (or should take) to mitigate its effects. Some policy elites and environmentalists argue that nuclear energy—the largest source of carbon‐free energy in the U.S. – will act as a crucial bridge in the transition to renewable energy, while others hold strong opposition to it. Using data from three nationwide internet surveys involving over 6000 American adults, we analyze the relationship between beliefs about climate change and support for nuclear energy among the broader U.S. public. Additionally, we investigate how beliefs about climate change affect support for nuclear energy based on political ideology, partisanship, and cultural worldviews among different subsets of respondents, as well as intra‐group differences among stronger and weaker ideological and partisan groups. We also examine broader environmental attitudes in all our models and find that these underlying values continue to shape the U.S. public's positions on their preferred role of nuclear energy. Our findings have both theoretical and policy implications concerning the influence of public opinion on the future role of nuclear energy.",
+    "journal_name": "Policy Studies Journal",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1111/psj.70121",
+    "doi": "https://doi.org/10.1111/psj.70121",
+    "keywords": [
+      "Opposition (politics)",
+      "Climate change",
+      "Public opinion",
+      "Ideology",
+      "Politics",
+      "Nuclear energy policy",
+      "Context (archaeology)",
+      "Climate science"
+    ],
+    "authors": [
+      "Ani Ter‐Mkrtchyan",
+      "Kuhika Gupta",
+      "Hank C. Jenkins‐Smith",
+      "Joseph Ripberger",
+      "Carol L. Silva"
+    ],
+    "category": "PP"
+  },
+  {
+    "openalex_id": "W7154612828",
+    "title": "Open-Source software activities and on-chain performance in decentralized applications",
+    "abstract": "",
+    "journal_name": "Research Policy",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1016/j.respol.2026.105505",
+    "doi": "https://doi.org/10.1016/j.respol.2026.105505",
+    "keywords": [
+      "Software",
+      "Software development",
+      "Software system",
+      "Work (physics)",
+      "Key (lock)"
+    ],
+    "authors": [
+      "Jin Hu",
+      "Cong Ma",
+      "Daning Hu"
+    ],
+    "category": "PP"
+  },
+  {
+    "openalex_id": "W7154609825",
+    "title": "The Limits of Public Support for Fiscal Consolidation: Survey Evidence From Great Britain",
+    "abstract": "In many European democracies, fiscal consolidation is back on the agenda. A common claim is that electoral constraints—stemming from public resistance to tax increases and spending cuts—limit policymakers’ ability to pursue deficit reduction. However, recent research suggests that public support for fiscal consolidation may be stronger than previously thought, calling this line of reasoning into question. This paper re-examines the issue in the British context. We find that, while a majority of respondents express support for fiscal consolidation in principle, only a minority prioritize it when faced with concrete trade-offs. Moreover, voters appear receptive to counter-narratives portraying public debt as sustainable and fail to link high debt levels to future economic hardship, undermining claims that this pro-consolidation minority will grow as fiscal conditions worsen. Overall, support for consolidation appears too shallow to generate pro-consolidation electoral incentives, even in a high-debt context. We discuss implications for future research.",
+    "journal_name": "Comparative Political Studies",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1177/00104140261431821",
+    "doi": "https://doi.org/10.1177/00104140261431821",
+    "keywords": [
+      "Consolidation (business)",
+      "Public support",
+      "Debt",
+      "Fiscal policy",
+      "Survey data collection",
+      "Public spending"
+    ],
+    "authors": [
+      "Björn Bremer",
+      "Charlotte Cavaillé",
+      "Lisanne de Blok",
+      "Catherine E. De Vries"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154615596",
+    "title": "Winning incumbent mayors: Causal effects on local public spending, service delivery, and governance-related conflict in Indonesia",
+    "abstract": "",
+    "journal_name": "Electoral Studies",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1016/j.electstud.2026.103077",
+    "doi": "https://doi.org/10.1016/j.electstud.2026.103077",
+    "keywords": [
+      "Public service",
+      "Service (business)",
+      "Postal service",
+      "Causal model"
+    ],
+    "authors": [
+      "Blane D. Lewis"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154706593",
+    "title": "Excluded but affected? The winner-loser gap in satisfaction with democracy among non-citizens",
+    "abstract": "Abstract Previous research has extensively examined the winner-loser gap with regard to satisfaction with democracy (SWD). However, this phenomenon has not yet been studied for a group with considerable shares in Western democracies’ populations, foreign citizens, who are often not entitled to vote. We hypothesise that electoral outcomes influence not only voters but also non-citizens. We argue that the overall winner-loser gap may be less pronounced among non-citizens than among citizens. Since they are unable to influence the outcome, they may perceive both winning and losing scenarios as similarly distant from their own preferences. Additionally, we investigate whether the winner-loser gap remains stable over time for both citizens and non-citizens. We test these propositions using novel panel data from Germany (2021–2024, N = 2390 citizens, 273 non-citizens). Our findings reveal significant differences in satisfaction with democracy between winners and losers, with only citizens showing a stable significant gap. Overall, the results suggest that electoral participation enhances responsiveness to electoral outcomes: those who can vote show greater fluctuations in democratic satisfaction depending on whether they won or lost according to their actual vote choice. In contrast, politically excluded individuals do not exhibit a similarly pronounced winner-loser gap based on their hypothetical vote choice.",
+    "journal_name": "European Journal of Political Research",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1017/s1475676526101108",
+    "doi": "https://doi.org/10.1017/s1475676526101108",
+    "keywords": [
+      "Democracy",
+      "Gender gap",
+      "Phenomenon",
+      "Test (biology)",
+      "Panel data",
+      "Panel survey"
+    ],
+    "authors": [
+      "Madeleine Siegel",
+      "Sabrina Jasmin Mayer"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154583274",
+    "title": "Assessing the presidentialisation thesis: Prime ministerial authority in an era of rising centralisation and personalisation",
+    "abstract": "Abstract The ‘presidentialisation’ of prime ministers has become a prominent theory in political science, particularly within the study of executive politics. The central claim that prime ministers and their agents exert increasing authority over government has sparked considerable definitional and theoretical debate. Empirical testing, however, has largely been limited to case studies of individual leaders and countries. Using a reliable metric for prime ministerial power across 21 countries over 40 years, we provide a large-N testing of the thesis. Our analysis finds no secular trend towards increasing prime ministerial power. In some countries, we observe a sharp decline in prime ministerial control over policy, potentially linked to the fragmentation of party systems in Western democracies. At the same time, the data point to a broader trend toward centralisation and personalisation, suggesting that the growing focus on leaders is subtly and profoundly transforming the exercise of executive power in contemporary democracies. The findings indicate that caution is warranted about unidirectional claims of presidentialisation.",
+    "journal_name": "European Journal of Political Research",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1017/s147567652610108x",
+    "doi": "https://doi.org/10.1017/s147567652610108x",
+    "keywords": [
+      "Centralisation",
+      "Prime (order theory)",
+      "Politics",
+      "Government (linguistics)",
+      "Prime minister",
+      "Power (physics)",
+      "Cabinet (room)",
+      "Personalization"
+    ],
+    "authors": [
+      "Eoin O’Malley",
+      "Alex Marland",
+      "Gala Palavicini"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154567640",
+    "title": "Conceptualizing and measuring district magnitude for comparative research: How to do it and why it matters",
+    "abstract": "Abstract District magnitude, the number of seats per district, is a critical component of electoral systems. It affects key outcomes such as accountability, legislative fragmentation, and disproportionality in representation by providing incentives for voters, candidates, and representatives. Some democracies have identical-magnitude districts (whether under majoritarian or districted proportional representation), yet many elect their representatives through districts of varying magnitudes. Thus, in cross-country analyses, researchers first come up with a summary score of district magnitudes per country. This is often considered merely a mechanical, pre-analysis step of preparing the data. We show that the national score of district magnitude is a thorny business, consequential for inference on substantive questions. Specifically, different conceptualizations and measurements of district magnitude lead to different scores, and those, in turn, may both mischaracterize countries and lead to different inferences. Moreover, the status quo in the measurement of district magnitude – equally weighing all districts – is often misleading, and the problem is compounded by within-country variation in magnitude and malapportionment, common in Europe and Latin America, respectively. We propose two alternative measures of district magnitude – weighing districts by the share of representatives or voters in them – and provide guidance on the circumstances under which each measure should be utilized. Our analysis has implications for how this key component of electoral systems should be conceptualized, measured, and employed in cross-country analyses.",
+    "journal_name": "European Journal of Political Research",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1017/s1475676525100054",
+    "doi": "https://doi.org/10.1017/s1475676525100054",
+    "keywords": [
+      "Magnitude (astronomy)",
+      "Legislature",
+      "Representation (politics)",
+      "Incentive",
+      "Latin Americans",
+      "Status quo",
+      "Variation (astronomy)"
+    ],
+    "authors": [
+      "Orit Kedar",
+      "Gilad Hurvitz"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154601705",
+    "title": "Affinity voting in Europe: the impact of religion, migration background and gender on preferences for in-group politicians",
+    "abstract": "Abstract To what extent does sharing the same religion, migration background and gender versus policy positions impact voting? Most evidence comes from the US and majority populations, but European minorities may respond differently. In this study, respondents from France, Germany and the Netherlands choose between profiles of hypothetical politicians with randomised politician religion, migration background, gender and policy positions. Oversampling voters with a migration background ( N = 1,889/3,058), among which a portion identifies as Muslim ( N = 649/3,058), reveals that instead of minorities, majorities are just as, if not more, likely to engage in affinity voting. Shared religion is the most influential affinity impacting Muslim and non-religious voters. Sharing the same migration background or gender has no positive impact on voting likelihood; on the contrary, the findings suggest that voters with a migration background tend to prefer politicians without a migration background. Non-religious voters exhibit an in-group preference both when the voter and politician agree but especially when the voter and politician disagree about policy. These findings reveal the electoral challenges to achieving diversity in politics and minority representation, particularly concerning the political inclusion of Muslims.",
+    "journal_name": "European Political Science Review",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1017/s1755773926100393",
+    "doi": "https://doi.org/10.1017/s1755773926100393",
+    "keywords": [
+      "Politics",
+      "Voting",
+      "Diversity (politics)",
+      "Inclusion (mineral)",
+      "Preference",
+      "Voting behavior",
+      "Ethnic group"
+    ],
+    "authors": [
+      "Sanne van Oosten"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154735396",
+    "title": "Testing the Firebreak: Experimental Evidence on Low-Yield Nuclear Weapons and Deterrence in India and Pakistan",
+    "abstract": "A cross-national shift toward lower-yield nuclear weapons has generated renewed interest in the integrity of the firebreak: the conceptual barrier between conventional and nuclear warfare. We theorize that low-yield nuclear weapons alter nuclear nonuse mechanisms. They threaten to breach the firebreak by offering a more credible, but less costly, deterrent and undercut norms grounded in nuclear weapons’ effects. To test the integrity of the firebreak, we conduct simultaneous survey experiments investigating how Pakistani and Indian citizens consider low-yield nuclear weapons use in an escalating crisis. We find a low-yield nuclear weapons threat to be credible, but not necessarily stabilizing. Both publics in this rivalry exhibit substantial willingness not only to issue a nuclear response to a low-yield nuclear strike, but also to introduce nuclear weapons into conflict. However, neither universally seeks retribution. Vivid information about nuclear effects moderates retaliation preferences among citizens who strongly favor their co-nationals.",
+    "journal_name": "Journal of Conflict Resolution",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1177/00220027261441496",
+    "doi": "https://doi.org/10.1177/00220027261441496",
+    "keywords": [
+      "Nuclear weapon",
+      "Nuclear ethics",
+      "Deterrence theory",
+      "Rivalry",
+      "Nuclear material",
+      "Nuclear test",
+      "Backdoor"
+    ],
+    "authors": [
+      "Lisa Langdon Koch",
+      "Kristyn L. Karl",
+      "Matthew Wells"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154606671",
+    "title": "From patronage to crisis: Welfare politics and the breakdown of rule of law in Bangladesh’s political transformation",
+    "abstract": "This article theorizes and traces a mechanism in which welfare provision, once routed through partisan brokers, morphs into patronage that corrodes the rule of law, culminating in crisis and an interim political settlement. Using a qualitative, theory-guided case of Bangladesh (2024–2025), we combine process tracing with critical discourse analysis of domestic and international media, elite speeches, and rights reports, and we benchmark trajectories with V-Dem and International IDEA indicators. This study shows that campus welfare arenas (residential hall seats, stipends, and student-union access) plausibly operated as transmission belts linking micro-level brokerage to macro-level selective legality. As a youth-led movement, it reframed distributive grievances as justice claims, triggering preference cascades and elite defections that led to leadership exit, parliamentary dissolution, and the establishment a civilian interim government. The interim has exposed institutional fragility (constitutional ambiguity; sticky patronage networks) yet also opened reform avenues—most notably investigations into disappearances and attempts to depoliticize student welfare. Theoretically, we propose a framework—brokered welfare → selective legality → crisis → liminal interim → legal re-embedding or patronage recovery—with a preliminary shadow comparison to Sri Lanka and Nepal.",
+    "journal_name": "Party Politics",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1177/13540688261443621",
+    "doi": "https://doi.org/10.1177/13540688261443621",
+    "keywords": [
+      "Principle of legality",
+      "Elite",
+      "Politics",
+      "Rule of law",
+      "Welfare",
+      "Democracy",
+      "Interim",
+      "Liminality",
+      "Democratization"
+    ],
+    "authors": [
+      "Md Nazirul Islam Sarker"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154270749",
+    "title": "From strategic voters to strategic options: Recasting strategic voting for multiparty simple plurality elections",
+    "abstract": "Research on strategic voting in simple plurality systems has focussed largely on voters faced with three options. This is problematic, first because strategically minded voters may prefer candidates outside of the three leading contenders; second, they may consider voting for third (or worse) placed parties; and third, some voters might have more than one strategic option. We demonstrate that conceptualising strategic voting in terms of strategic voters restricts our ability to accurately answer important questions about strategic voting. We set out a new approach to strategic voting which identifies the strategic options available to voters in multiparty contests. We then examine the number, distribution and character of strategic options and strategic votes in four British general elections using data from the British Election Study. We find that across these four elections 7% of options open to voters could be considered strategic and more than one third of these were voted for, accounting for 11% of all votes cast.",
+    "journal_name": "Party Politics",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1177/13540688261443622",
+    "doi": "https://doi.org/10.1177/13540688261443622",
+    "keywords": [
+      "Voting",
+      "Simple (philosophy)",
+      "Ranked voting system",
+      "Strategic planning",
+      "Cardinal voting systems",
+      "Key (lock)"
+    ],
+    "authors": [
+      "E Fieldhouse",
+      "J Fisher"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154683041",
+    "title": "“Good job reporting this!”: Examining psychological needs and community building in YouTube conspiracy narratives",
+    "abstract": "Abstract The proliferation of conspiracy theories online has tangible offline consequences, both on an individual and collective level. Conspiracy narratives have been associated with reduced belief in democracy, the rise of populist parties, and can act as a radicalization multiplier in such contexts. These narratives capitalize on pre‐existing beliefs and grievances and add urgency to act through a narrative of imminent danger. Previous research has proposed that belief in conspiracy narratives is driven by unfulfilled psychological needs such as existential threat, epistemic motives, and social motives and calls have been made to examine conspiracy belief as a form of affective community investment. In the present research, we explored how conspiracy narratives address grievances and psychological needs through a 1‐month digital observation of conspiracy‐related YouTube videos. We performed an LDA topic model analysis of 102 videos and 455,738 comments and qualitatively examined 24 videos and 1200 comments using an abductive approach. This study validated and extended existing models of conspiracy beliefs, highlighting how conspiracy narratives address and amplify grievances and psychological needs in both official content and community‐generated discourse. This research contributes to a deeper understanding of the mechanisms underlying the spread and impact of conspiracy theories in online environments.",
+    "journal_name": "Political Psychology",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1111/pops.70137",
+    "doi": "https://doi.org/10.1111/pops.70137",
+    "keywords": [
+      "Narrative",
+      "Radicalization",
+      "Narrative inquiry",
+      "Existentialism",
+      "Social media",
+      "Symbolic interactionism"
+    ],
+    "authors": [
+      "Darja Wischerath",
+      "Lukasz Piwek",
+      "Jonathan F. Roscoe",
+      "Brittany I Davidson"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154565530",
+    "title": "When virtues are weaponized: Moral superiority aggravates outgroup dehumanization",
+    "abstract": "ABSTRACT Moral superiority has been suggested to exacerbate intergroup relations. However, empirical studies testing the negative intergroup outcomes arising from moral superiority are limited, and the underlying mechanisms remain to be explored. We aimed to fill this research gap by examining whether and how moral superiority increases outgroup dehumanization. Five studies ( N = 1158) were conducted to test our proposition that moral superiority increases outgroup dehumanization via enhanced perceived ingroup status. Study 1 detected that moral superiority is positively associated with outgroup dehumanization, while perceived ingroup status accounts for this relationship. Then, Studies 2 and 3 revealed the causal effect of moral superiority on outgroup dehumanization, along with the mediating effect of perceived ingroup status. Afterward, Study 4 replicated the findings of Studies 2 and 3 with a minimal group paradigm and identified the downstream outgroup aggression. Finally, Study 5 showed that emphasizing equal intergroup status mitigates the effect of moral superiority on outgroup dehumanization. Together, our findings offered compelling evidence for the link between moral superiority and outgroup dehumanization, and for the mediating role of perceived ingroup status. We also suggested the crucial role of moral superiority in intergroup conflict perpetuation, and a potential strategy to mitigate its negative consequences.",
+    "journal_name": "Political Psychology",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1111/pops.70140",
+    "doi": "https://doi.org/10.1111/pops.70140",
+    "keywords": [
+      "Outgroup",
+      "Ingroups and outgroups",
+      "Dehumanization",
+      "Prosocial behavior",
+      "Moral disengagement",
+      "Proposition",
+      "In-group favoritism"
+    ],
+    "authors": [
+      "Zaixuan Zhang",
+      "Zhansheng Chen"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154567839",
+    "title": "The Limits of Executive Discretion in John Marshall’s Constitutionalism",
+    "abstract": "Current debates on presidential power hinge on whether discretionary actions may be constrained by either Congress or the Supreme Court. In a little-noted remark in Marbury v. Madison , John Marshall considers the Court’s power to review political matters within the president’s sphere of executive “discretion.” On one hand, Marshall says that on discretionary matters, or “questions, in their nature political,” the courts “can never” restrict the executive acting “by the constitution and laws.” On the other, he declares it is the province of the Court “to say what the law is.” The tension at the heart of Marbury v. Madison invites us to consider what constraints Congress and the Court can impose on the president’s discretionary powers. Advocates of the Unitary Executive Theory claim Marshall supports the idea that the president possesses “complete” discretion in foreign affairs. This Article challenges that assertion by reconstructing Marshall’s understanding of the limits of presidential power in the realms of foreign affairs and war powers. Energy in the executive requires independent discretion, but those actions remain subject to institutional constraints. Marshall’s constitutionalism continues to shape debates today.",
+    "journal_name": "Political Research Quarterly",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1177/10659129261443534",
+    "doi": "https://doi.org/10.1177/10659129261443534",
+    "keywords": [
+      "Presidential system",
+      "Constitutionalism",
+      "Discretion",
+      "Constitution",
+      "Supreme court",
+      "Power (physics)",
+      "Separation of powers",
+      "Inherent powers"
+    ],
+    "authors": [
+      "Garrett Jeffrey Jones"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154701857",
+    "title": "The Utilitarian Classical Liberalism of Ludwig von Mises and Its Libertarian Misreception",
+    "abstract": "This article examines Ludwig von Mises’s utilitarianism in the context of his liberal social theory. It contends that he sought to reorient classical liberalism away from natural law theory and refound it in utilitarianism. This significant shift distinguishes and differentiates Misesian liberalism from the classical liberal tradition with which Mises consciously identified it, as well as later Rothbardian libertarianism, which, while identifying with the Misesian tradition, reverted to a natural law philosophy that produced irreconcilable differences with Misesian liberalism over the legitimacy of the state.",
+    "journal_name": "Political Theory",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1177/00905917261433967",
+    "doi": "https://doi.org/10.1177/00905917261433967",
+    "keywords": [
+      "Liberalism",
+      "Classical liberalism",
+      "Legitimacy",
+      "Utilitarianism",
+      "Context (archaeology)",
+      "Natural law",
+      "Natural (archaeology)",
+      "Political philosophy"
+    ],
+    "authors": [
+      "Jonathan Cole"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154563064",
+    "title": "The White House Gender Policy Council",
+    "abstract": "The White House Gender Policy Council (GPC) was established by President Joe Biden in 2021. It built on earlier offices like the White House Council on Women and Girls, which was created during the Barack Obama administration but was dissolved under the first Donald Trump administration, and the White House Office for Women’s Initiatives and Outreach, which existed during the Bill Clinton administration but was eliminated by the George W. Bush administration. The GPC was responsible for the advancement of gender equity and equality in both domestic and foreign policy. Jennifer Klein (JK) and Rachel Vogelstein (RV) served, respectively, as Director and Deputy Director until the GPC was dismantled by the second Trump administration in 2025. This is a slightly edited version of an interview that took place with Mona Lena Krook (MLK) via Zoom on February 16, 2026.",
+    "journal_name": "Politics & Gender",
+    "published_date": "2026-04-16",
+    "url": "https://doi.org/10.1017/s1743923x26100658",
+    "doi": "https://doi.org/10.1017/s1743923x26100658",
+    "keywords": [
+      "Administration (probate law)",
+      "White (mutation)",
+      "House of Representatives",
+      "George (robot)",
+      "Gender equity",
+      "Equity (law)"
+    ],
+    "authors": [
+      "Jennifer Klein",
+      "Rachel Vogelstein",
+      "Mona Lena Krook"
+    ],
+    "category": "POL"
+  },
+  {
+    "openalex_id": "W7154735378",
+    "title": "Equal in Private, Unequal in Public? Coeducation and Sexism in the Soviet Union",
+    "abstract": "",
+    "journal_name": "The Journal of Politics",
+    "published_date": "2026-04-17",
+    "url": "https://doi.org/10.1086/741810",
+    "doi": "https://doi.org/10.1086/741810",
+    "keywords": [
+      "Soviet union",
+      "Gender equality",
+      "Inequality",
+      "Period (music)"
+    ],
+    "authors": [
+      "Marco Giani",
+      "Krakowski Krzysztof"
+    ],
+    "category": "POL"
   }
 ]
