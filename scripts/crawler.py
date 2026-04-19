@@ -355,7 +355,8 @@ NON_ACADEMIC_TITLE_EXACT = [
     'acknowledgments',
     'preface',
     'editorial',
-    'commentary'
+    'commentary',
+    'correction'
 ]
 
 def is_non_academic_title(title):
